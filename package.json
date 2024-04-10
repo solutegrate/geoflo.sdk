@@ -1,6 +1,6 @@
 {
   "name": "@solutegrate/mapboxgl-geoflo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
   "main": "dist/mapboxgl-geoflo.js",
   "scripts": {
@@ -44,7 +44,9 @@
   "homepage": "https://www.geoflo.pro",
   "dependencies": {
     "mapbox-gl": "^3.3.0",
-    "@turf/turf": "^6.5.0"
+    "@turf/turf": "^6.5.0",
+    "jszip": "^3.10.1",
+    "@mapbox/leaflet-omnivore": "0.3.4"
   },
   "devDependencies": {},
   "peerDependencies": {
