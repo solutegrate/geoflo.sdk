@@ -7,9 +7,9 @@
         "sort": true,
 		"readme": "./readme.md",
 		"encoding": "utf8",
-		"destination": "./jsdocs/",
-		"template": "../node_modules/tui-jsdoc-template",
-		"tutorials": "./jsdocs/tutorials"
+		"destination": "./docs/website/",
+		"template": "../../node_modules/tui-jsdoc-template",
+		"tutorials": "./docs/tutorials"
 	},
 	"source": {
 		"include": [ "./index.js", "./src/" ],
@@ -33,7 +33,7 @@
 			"link": "https://www.geoflo.pro"
 		},
 		"css": [
-			"styles/custom.css"
+			"./styles/custom.css"
 		],
 		"tabNames": {
 			"api": "API",

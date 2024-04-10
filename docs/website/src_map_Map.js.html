@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: src/map/Map.js | Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <a href="https://www.geoflo.pro" rel="noopener noreferrer" target="_blank">
+                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Documentation</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-editor.html">TUI Editor</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="editor_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-GeoFlo.html">GeoFlo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.html#.activateExploring">activateExploring</a></li><li><a href="module-GeoFlo.html#.activatePainting">activatePainting</a></li><li><a href="module-GeoFlo.html#.activatePinning">activatePinning</a></li><li><a href="module-GeoFlo.html#.activateRouting">activateRouting</a></li><li><a href="module-GeoFlo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-GeoFlo.html#.addFeatures">addFeatures</a></li><li><a href="module-GeoFlo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-GeoFlo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-GeoFlo.html#.addGamepad">addGamepad</a></li><li><a href="module-GeoFlo.html#.addPlugin">addPlugin</a></li><li><a href="module-GeoFlo.html#.addTooltip">addTooltip</a></li><li><a href="module-GeoFlo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-GeoFlo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-GeoFlo.html#.createPolygon">createPolygon</a></li><li><a href="module-GeoFlo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-GeoFlo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-GeoFlo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-GeoFlo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-GeoFlo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-GeoFlo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-GeoFlo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-GeoFlo.html#.disable">disable</a></li><li><a href="module-GeoFlo.html#.editFeature">editFeature</a></li><li><a href="module-GeoFlo.html#.enable">enable</a></li><li><a href="module-GeoFlo.html#.fire">fire</a></li><li><a href="module-GeoFlo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-GeoFlo.html#.getButtons">getButtons</a></li><li><a href="module-GeoFlo.html#.getColors">getColors</a></li><li><a href="module-GeoFlo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-GeoFlo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-GeoFlo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-GeoFlo.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-GeoFlo.html#.getMap">getMap</a></li><li><a href="module-GeoFlo.html#.getMode">getMode</a></li><li><a href="module-GeoFlo.html#.getModes">getModes</a></li><li><a href="module-GeoFlo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-GeoFlo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-GeoFlo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-GeoFlo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-GeoFlo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-GeoFlo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-GeoFlo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-GeoFlo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-GeoFlo.html#.hasControls">hasControls</a></li><li><a href="module-GeoFlo.html#.hasSelection">hasSelection</a></li><li><a href="module-GeoFlo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-GeoFlo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-GeoFlo.html#.init">init</a></li><li><a href="module-GeoFlo.html#.initialize">initialize</a></li><li><a href="module-GeoFlo.html#.load">load</a></li><li><a href="module-GeoFlo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-GeoFlo.html#.moveFeature">moveFeature</a></li><li><a href="module-GeoFlo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-GeoFlo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-GeoFlo.html#.off">off</a></li><li><a href="module-GeoFlo.html#.on">on</a></li><li><a href="module-GeoFlo.html#.once">once</a></li><li><a href="module-GeoFlo.html#.redraw">redraw</a></li><li><a href="module-GeoFlo.html#.refresh">refresh</a></li><li><a href="module-GeoFlo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-GeoFlo.html#.removeControls">removeControls</a></li><li><a href="module-GeoFlo.html#.removeFeature">removeFeature</a></li><li><a href="module-GeoFlo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-GeoFlo.html#.removeGamepad">removeGamepad</a></li><li><a href="module-GeoFlo.html#.removePopup">removePopup</a></li><li><a href="module-GeoFlo.html#.removeSelection">removeSelection</a></li><li><a href="module-GeoFlo.html#.saveEdit">saveEdit</a></li><li><a href="module-GeoFlo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-GeoFlo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-GeoFlo.html#.setButtons">setButtons</a></li><li><a href="module-GeoFlo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-GeoFlo.html#.setControls">setControls</a></li><li><a href="module-GeoFlo.html#.setCustomLayers">setCustomLayers</a></li><li><a href="module-GeoFlo.html#.setIcon">setIcon</a></li><li><a href="module-GeoFlo.html#.setMapClass">setMapClass</a></li><li><a href="module-GeoFlo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-GeoFlo.html#.setMode">setMode</a></li><li><a href="module-GeoFlo.html#.setOptions">setOptions</a></li><li><a href="module-GeoFlo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-GeoFlo.html#.setTheme">setTheme</a></li><li><a href="module-GeoFlo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-GeoFlo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-GeoFlo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-GeoFlo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-GeoFlo.Mesh.html">Mesh</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Mesh_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Mesh.html#.addNewFeatures">addNewFeatures</a></li><li><a href="module-GeoFlo.Mesh.html#.getFeatureById">getFeatureById</a></li><li><a href="module-GeoFlo.Mesh.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.Mesh.html#.getFeaturesByParentId">getFeaturesByParentId</a></li><li><a href="module-GeoFlo.Mesh.html#.getFeaturesFromIndex">getFeaturesFromIndex</a></li><li><a href="module-GeoFlo.Mesh.html#.removeFeature">removeFeature</a></li><li><a href="module-GeoFlo.Mesh.html#.splitSegmentAtPoint">splitSegmentAtPoint</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Namespaces</h3><ul><li><a href="module-GeoFlo.Features.html">GeoFlo.Features</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Features_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Features.html#.addFeature">addFeature</a></li><li><a href="module-GeoFlo.Features.html#.addFeatures">addFeatures</a></li><li><a href="module-GeoFlo.Features.html#.addUnits">addUnits</a></li><li><a href="module-GeoFlo.Features.html#.convertUnits">convertUnits</a></li><li><a href="module-GeoFlo.Features.html#.deleteFeatures">deleteFeatures</a></li><li><a href="module-GeoFlo.Features.html#.getColdFeatures">getColdFeatures</a></li><li><a href="module-GeoFlo.Features.html#.getFeatureById">getFeatureById</a></li><li><a href="module-GeoFlo.Features.html#.getFeaturesById">getFeaturesById</a></li><li><a href="module-GeoFlo.Features.html#.getType">getType</a></li><li><a href="module-GeoFlo.Features.html#.getUnits">getUnits</a></li><li><a href="module-GeoFlo.Features.html#.removeFeatures">removeFeatures</a></li><li><a href="module-GeoFlo.Features.html#.setFeatureState">setFeatureState</a></li><li><a href="module-GeoFlo.Features.html#.setFeaturesState">setFeaturesState</a></li><li><a href="module-GeoFlo.Features.html#.setText">setText</a></li><li><a href="module-GeoFlo.Features.html#.updateFeatures">updateFeatures</a></li><li><a href="module-GeoFlo.Features.html#.updateSource">updateSource</a></li></ul></div></li><li><a href="module-GeoFlo.Layers.html">GeoFlo.Layers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Layers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Layers.html#.addEventListeners">addEventListeners</a></li><li><a href="module-GeoFlo.Layers.html#.addLayer">addLayer</a></li><li><a href="module-GeoFlo.Layers.html#.addLayers">addLayers</a></li><li><a href="module-GeoFlo.Layers.html#.addSource">addSource</a></li><li><a href="module-GeoFlo.Layers.html#.addSources">addSources</a></li><li><a href="module-GeoFlo.Layers.html#.getCustomLayers">getCustomLayers</a></li><li><a href="module-GeoFlo.Layers.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.Layers.html#.getLayer">getLayer</a></li><li><a href="module-GeoFlo.Layers.html#.getLayerIds">getLayerIds</a></li><li><a href="module-GeoFlo.Layers.html#.getLayers">getLayers</a></li><li><a href="module-GeoFlo.Layers.html#.getSelection">getSelection</a></li><li><a href="module-GeoFlo.Layers.html#.getSource">getSource</a></li><li><a href="module-GeoFlo.Layers.html#.getSourceIds">getSourceIds</a></li><li><a href="module-GeoFlo.Layers.html#.getSources">getSources</a></li><li><a href="module-GeoFlo.Layers.html#.getType">getType</a></li><li><a href="module-GeoFlo.Layers.html#.hasCustomLayers">hasCustomLayers</a></li><li><a href="module-GeoFlo.Layers.html#.init">init</a></li><li><a href="module-GeoFlo.Layers.html#.moveLayers">moveLayers</a></li><li><a href="module-GeoFlo.Layers.html#.refresh">refresh</a></li><li><a href="module-GeoFlo.Layers.html#.removeEventListeners">removeEventListeners</a></li><li><a href="module-GeoFlo.Layers.html#.removeLayer">removeLayer</a></li><li><a href="module-GeoFlo.Layers.html#.removeLayers">removeLayers</a></li><li><a href="module-GeoFlo.Layers.html#.removeSource">removeSource</a></li><li><a href="module-GeoFlo.Layers.html#.removeSources">removeSources</a></li><li><a href="module-GeoFlo.Layers.html#.setCustomLayers">setCustomLayers</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-GeoFlo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-GeoFlo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-GeoFlo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li></ul></div></li><li><a href="module-GeoFlo.Map.html">GeoFlo.Map</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Map_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Map.html#.init">init</a></li><li><a href="module-GeoFlo.Map.html#.setExtent">setExtent</a></li><li><a href="module-GeoFlo.Map.html#.setOptions">setOptions</a></li><li><a href="module-GeoFlo.Map.html#.setPadding">setPadding</a></li><li><a href="module-GeoFlo.Map.html#.setStyle">setStyle</a></li><li><a href="module-GeoFlo.Map.html#.setViewport">setViewport</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-GeoFlo.Map.html#.event:onEvent">onEvent</a></li><li><a href="module-GeoFlo.Map.html#.event:onLoad">onLoad</a></li><li><a href="module-GeoFlo.Map.html#.event:onMapMove">onMapMove</a></li><li><a href="module-GeoFlo.Map.html#.event:onStyleLoad">onStyleLoad</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-GeoFlo.Draw.html">Draw</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Draw_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Draw.html#.activate">activate</a></li><li><a href="module-GeoFlo.Draw.html#.canHandle">canHandle</a></li><li><a href="module-GeoFlo.Draw.html#.cancelEdit">cancelEdit</a></li><li><a href="module-GeoFlo.Draw.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Draw.html#.deleteVertex">deleteVertex</a></li><li><a href="module-GeoFlo.Draw.html#.getFeature">getFeature</a></li><li><a href="module-GeoFlo.Draw.html#.handleClick">handleClick</a></li><li><a href="module-GeoFlo.Draw.html#.handleContext">handleContext</a></li><li><a href="module-GeoFlo.Draw.html#.handleDown">handleDown</a></li><li><a href="module-GeoFlo.Draw.html#.handleDrag">handleDrag</a></li><li><a href="module-GeoFlo.Draw.html#.handleHistory">handleHistory</a></li><li><a href="module-GeoFlo.Draw.html#.handleIcon">handleIcon</a></li><li><a href="module-GeoFlo.Draw.html#.handleMove">handleMove</a></li><li><a href="module-GeoFlo.Draw.html#.handleOffMap">handleOffMap</a></li><li><a href="module-GeoFlo.Draw.html#.handleOnMap">handleOnMap</a></li><li><a href="module-GeoFlo.Draw.html#.handlePainting">handlePainting</a></li><li><a href="module-GeoFlo.Draw.html#.handleRectangle">handleRectangle</a></li><li><a href="module-GeoFlo.Draw.html#.handleRedo">handleRedo</a></li><li><a href="module-GeoFlo.Draw.html#.handleText">handleText</a></li><li><a href="module-GeoFlo.Draw.html#.handleTouch">handleTouch</a></li><li><a href="module-GeoFlo.Draw.html#.handleUndo">handleUndo</a></li><li><a href="module-GeoFlo.Draw.html#.handleUp">handleUp</a></li><li><a href="module-GeoFlo.Draw.html#.saveEdit">saveEdit</a></li><li><a href="module-GeoFlo.Draw.html#.selectFeature">selectFeature</a></li><li><a href="module-GeoFlo.Draw.html#.updateHotSource">updateHotSource</a></li></ul></div></li><li><a href="module-GeoFlo.Exploring.html">Exploring</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Exploring_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Exploring.html#.activate">activate</a></li><li><a href="module-GeoFlo.Exploring.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Exploring.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.Exploring.html#.getMatch">getMatch</a></li><li><a href="module-GeoFlo.Exploring.html#.getRoute">getRoute</a></li><li><a href="module-GeoFlo.Exploring.html#.setFeature">setFeature</a></li><li><a href="module-GeoFlo.Exploring.html#.setFeatures">setFeatures</a></li></ul></div></li><li><a href="module-GeoFlo.Gamepad.html">Gamepad</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Gamepad_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Gamepad.html#.init">init</a></li><li><a href="module-GeoFlo.Gamepad.html#.refresh">refresh</a></li><li><a href="module-GeoFlo.Gamepad.html#.remove">remove</a></li><li><a href="module-GeoFlo.Gamepad.html#.setBearing">setBearing</a></li><li><a href="module-GeoFlo.Gamepad.html#.setCenter">setCenter</a></li><li><a href="module-GeoFlo.Gamepad.html#.setContainer">setContainer</a></li><li><a href="module-GeoFlo.Gamepad.html#.setGamepad">setGamepad</a></li><li><a href="module-GeoFlo.Gamepad.html#.setLocation">setLocation</a></li><li><a href="module-GeoFlo.Gamepad.html#.setMap">setMap</a></li><li><a href="module-GeoFlo.Gamepad.html#.setMarker">setMarker</a></li><li><a href="module-GeoFlo.Gamepad.html#.setPitch">setPitch</a></li><li><a href="module-GeoFlo.Gamepad.html#.setSpeed">setSpeed</a></li><li><a href="module-GeoFlo.Gamepad.html#.setZoom">setZoom</a></li><li><a href="module-GeoFlo.Gamepad.html#.trigger">trigger</a></li></ul></div></li><li><a href="module-GeoFlo.Locate.html">Locate</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Locate_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Locate.html#.bearing">bearing</a></li><li><a href="module-GeoFlo.Locate.html#.build">build</a></li><li><a href="module-GeoFlo.Locate.html#.follow">follow</a></li><li><a href="module-GeoFlo.Locate.html#.getButton">getButton</a></li><li><a href="module-GeoFlo.Locate.html#.heading">heading</a></li><li><a href="module-GeoFlo.Locate.html#.init">init</a></li><li><a href="module-GeoFlo.Locate.html#.locate">locate</a></li><li><a href="module-GeoFlo.Locate.html#.ready">ready</a></li><li><a href="module-GeoFlo.Locate.html#.relocate">relocate</a></li><li><a href="module-GeoFlo.Locate.html#.removeClasses">removeClasses</a></li><li><a href="module-GeoFlo.Locate.html#.state">state</a></li><li><a href="module-GeoFlo.Locate.html#.unlocate">unlocate</a></li><li><a href="module-GeoFlo.Locate.html#.update">update</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-GeoFlo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-GeoFlo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-GeoFlo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-GeoFlo.Locate.html#.event:onMapMove">onMapMove</a></li></ul></div></li><li><a href="module-GeoFlo.Painting.html">Painting</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Painting_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Painting.html#.activate">activate</a></li><li><a href="module-GeoFlo.Painting.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Painting.html#.handleUp">handleUp</a></li><li><a href="module-GeoFlo.Painting.html#.setFeature">setFeature</a></li><li><a href="module-GeoFlo.Painting.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-GeoFlo.Pinning.html">Pinning</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Pinning_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Pinning.html#.activate">activate</a></li><li><a href="module-GeoFlo.Pinning.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Pinning.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.Pinning.html#.getNearByFeatures">getNearByFeatures</a></li><li><a href="module-GeoFlo.Pinning.html#.resetFeatures">resetFeatures</a></li><li><a href="module-GeoFlo.Pinning.html#.setBuffer">setBuffer</a></li><li><a href="module-GeoFlo.Pinning.html#.setFeatures">setFeatures</a></li><li><a href="module-GeoFlo.Pinning.html#.updateFeatures">updateFeatures</a></li></ul></div></li><li><a href="module-GeoFlo.Routing.html">Routing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Routing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Routing.html#.activate">activate</a></li><li><a href="module-GeoFlo.Routing.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Routing.html#.getClosest">getClosest</a></li><li><a href="module-GeoFlo.Routing.html#.getFeatures">getFeatures</a></li><li><a href="module-GeoFlo.Routing.html#.getMatch">getMatch</a></li><li><a href="module-GeoFlo.Routing.html#.getRoute">getRoute</a></li></ul></div></li><li><a href="module-GeoFlo.Select.html">Select</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Select_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Select.html#.activate">activate</a></li><li><a href="module-GeoFlo.Select.html#.addPopup">addPopup</a></li><li><a href="module-GeoFlo.Select.html#.canHandle">canHandle</a></li><li><a href="module-GeoFlo.Select.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Select.html#.deselectCurrentFeature">deselectCurrentFeature</a></li><li><a href="module-GeoFlo.Select.html#.handleClick">handleClick</a></li><li><a href="module-GeoFlo.Select.html#.handleDrag">handleDrag</a></li><li><a href="module-GeoFlo.Select.html#.handleMove">handleMove</a></li><li><a href="module-GeoFlo.Select.html#.removePopup">removePopup</a></li><li><a href="module-GeoFlo.Select.html#.selectFeature">selectFeature</a></li></ul></div></li><li><a href="module-GeoFlo.Snapping.html">Snapping</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Snapping_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Snapping.html#.activate">activate</a></li><li><a href="module-GeoFlo.Snapping.html#.addFeature">addFeature</a></li><li><a href="module-GeoFlo.Snapping.html#.deactivate">deactivate</a></li><li><a href="module-GeoFlo.Snapping.html#.getClosest">getClosest</a></li><li><a href="module-GeoFlo.Snapping.html#.setClosest">setClosest</a></li><li><a href="module-GeoFlo.Snapping.html#.setFeature">setFeature</a></li><li><a href="module-GeoFlo.Snapping.html#.setVertex">setVertex</a></li><li><a href="module-GeoFlo.Snapping.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-GeoFlo.Styles.html">Styles</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Styles_sub"></div></li><li><a href="module-GeoFlo.Utilities.html">Utilities</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:GeoFlo.Utilities_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-GeoFlo.Utilities.html#.assignDeep">assignDeep</a></li><li><a href="module-GeoFlo.Utilities.html#.clone">clone</a></li><li><a href="module-GeoFlo.Utilities.html#.cloneDeep">cloneDeep</a></li><li><a href="module-GeoFlo.Utilities.html#.combineSameTypeFeatures">combineSameTypeFeatures</a></li><li><a href="module-GeoFlo.Utilities.html#.compareDeep">compareDeep</a></li><li><a href="module-GeoFlo.Utilities.html#.consumableArray">consumableArray</a></li><li><a href="module-GeoFlo.Utilities.html#.createBbox">createBbox</a></li><li><a href="module-GeoFlo.Utilities.html#.createLineAndSaveLength">createLineAndSaveLength</a></li><li><a href="module-GeoFlo.Utilities.html#.createLineWithLength">createLineWithLength</a></li><li><a href="module-GeoFlo.Utilities.html#.createMesh">createMesh</a></li><li><a href="module-GeoFlo.Utilities.html#.createRandomStroke">createRandomStroke</a></li><li><a href="module-GeoFlo.Utilities.html#.createSimpleMesh">createSimpleMesh</a></li><li><a href="module-GeoFlo.Utilities.html#.degrees2meters">degrees2meters</a></li><li><a href="module-GeoFlo.Utilities.html#.extend">extend</a></li><li><a href="module-GeoFlo.Utilities.html#.findClosestFeatures">findClosestFeatures</a></li><li><a href="module-GeoFlo.Utilities.html#.getLastIndexCoords">getLastIndexCoords</a></li><li><a href="module-GeoFlo.Utilities.html#.getRandomColor">getRandomColor</a></li><li><a href="module-GeoFlo.Utilities.html#.isEmptyLineString">isEmptyLineString</a></li><li><a href="module-GeoFlo.Utilities.html#.isLastIndex">isLastIndex</a></li><li><a href="module-GeoFlo.Utilities.html#.isLineString">isLineString</a></li><li><a href="module-GeoFlo.Utilities.html#.isOverlapping">isOverlapping</a></li><li><a href="module-GeoFlo.Utilities.html#.isPoint">isPoint</a></li><li><a href="module-GeoFlo.Utilities.html#.isPointAtVertex">isPointAtVertex</a></li><li><a href="module-GeoFlo.Utilities.html#.isPointEqual">isPointEqual</a></li><li><a href="module-GeoFlo.Utilities.html#.isPointNotTooClose">isPointNotTooClose</a></li><li><a href="module-GeoFlo.Utilities.html#.isPolygon">isPolygon</a></li><li><a href="module-GeoFlo.Utilities.html#.isValidLineString">isValidLineString</a></li><li><a href="module-GeoFlo.Utilities.html#.lineSplit">lineSplit</a></li><li><a href="module-GeoFlo.Utilities.html#.meters2degrees">meters2degrees</a></li><li><a href="module-GeoFlo.Utilities.html#.pointInCoordinates">pointInCoordinates</a></li><li><a href="module-GeoFlo.Utilities.html#.processFiles">processFiles</a></li><li><a href="module-GeoFlo.Utilities.html#.reducePrecision">reducePrecision</a></li><li><a href="module-GeoFlo.Utilities.html#.sameBorders">sameBorders</a></li><li><a href="module-GeoFlo.Utilities.html#.setProperties">setProperties</a></li><li><a href="module-GeoFlo.Utilities.html#.setProperty">setProperty</a></li><li><a href="module-GeoFlo.Utilities.html#.splitLines">splitLines</a></li><li><a href="module-GeoFlo.Utilities.html#.stringToDOM">stringToDOM</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @namespace
+ * @memberof module:GeoFlo
+ * @name Map
+ * @description A class that handles map functionality in a mapping context.
+ * @param {Object} ctx - The GeoFlo context object
+ */
+const Map = function (ctx, options) {
+
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name init
+	 * @description This function initializes the map with the given options, including setting up the Mapbox instance, SDK, and viewport.
+	 * @param {Object} options - The options object for configuring the map.
+	 * @returns {Object} - The current instance of the map.
+	 */
+    this.init = function (options={}) {
+        this.options = ctx.Utilities.extend({}, options);
+        this.mapbox = new ctx.Mapbox.Map(this.options);
+        this.sdk = window.mapboxSdk &amp;&amp; this.options.sdkToken ? window.mapboxSdk({ accessToken: this.options.sdkToken }) : false;
+        this.viewport = document.createElement('div');
+        this.viewportHeightOffset = 110;
+        this.viewportWidthOffset = 20;
+        this.viewportLeft = '10px';
+        this.viewportBottom = '5%';
+        this.mapbox.on('load', this.onLoad.bind(this));
+        return this;
+    }
+
+
+    this.getMap = function () {
+        return this.map;
+    }
+
+    this.getContainer = function () {
+        return this.container;
+    }
+
+    this.getViewport = function () {
+        return this.viewport;
+    }
+
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name setStyle
+	 * @description Sets the style of the map and returns the updated style.
+	 * @param {Object} style - The style object to be applied to the map.
+	 * @returns {Object} The updated style object of the map.
+	 */
+    this.setStyle = function (style) {
+        if (!style) { return false };
+        this.map.setStyle(style, {});
+        return this.map.getStyle();
+    }
+
+	/**
+	 * @description Sets the extent of the map based on the provided features or a given extent. If no features are provided, it uses the rendered drawn features. If extent is specified, it sets the map extent to the extent polygon. If center is not specified and isPoint is true, it centers the map at the centroid of the extent. If center is false, it fits the map to the bounding box of the features. If center is true, it centers the map at the centroid of the bounding box.
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name setExtent
+	 * @param {Array} features - Array of features to set the extent based on.
+	 * @param {Array} extent - Extent polygon to set the map extent to.
+	 * @param {Object} options - Additional options for setting the extent (center, isPoint).
+	 * @returns {Object} - The map object after setting the extent.
+	 */
+    this.setExtent = function (features, extent, options={}) {
+        var noFeatures = !features || !features.length;
+        var center = options.center;
+        !center &amp;&amp; options.isPoint ? center = true : false;
+        
+        if (extent) {
+            this.preventDefault = true;
+            features = !this.options.extent ? [] : [turf.polygon(this.options.extent)];
+        } else if (noFeatures) {
+            features = ctx.getRenderedDrawnFeatures();
+        }
+
+        if (!features) return this.map.jumpTo({
+            bearing: this.options.bearing || this.map.getBearing(),
+            center: this.options.center || this.map.getCenter(),
+            zoom: this.options.zoom || this.map.getZoom(),
+            pitch: this.options.pitch || this.map.getPitch()
+        });
+
+        var bbox = turf.bbox(turf.featureCollection(features));
+        var polygon = turf.bboxPolygon(bbox);
+        var centroid = turf.centroid(polygon);
+        var jumpTo = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] }
+
+        this.setViewport();
+
+        !center ? this.map.fitBounds(bbox) : jumpTo &amp;&amp; jumpTo.lng ? this.map.jumpTo({ center: jumpTo }) : false;
+        ctx.fire('features.zoom', { features: features, center: this.map.getCenter(), bbox: bbox });
+        return this.map;
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name setViewport
+	 * @description This function sets the style of the viewport based on the options provided. It resizes the map, calculates the height and width of the container, adjusts the height and width of the viewport, extends the viewport style, sets padding, and returns the updated viewport element.
+	 * @param {Object} options - The options object containing style properties for the viewport.
+	 * @param {string} [options.position='absolute'] - The position property for the viewport.
+	 * @param {string} [options.margin='auto'] - The margin property for the viewport.
+	 * @param {string} [options.top=''] - The top property for the viewport.
+	 * @param {string} [options.left=this.viewportLeft] - The left property for the viewport.
+	 * @param {string} [options.bottom=this.viewportBottom] - The bottom property for the viewport.
+	 * @returns {Element} The updated viewport element.
+	 */
+    this.setViewport = function (options) {
+        var style = options || {
+            position: 'absolute',
+            margin: 'auto',
+            top: '',
+            left: this.viewportLeft,
+            bottom: this.viewportBottom
+        };
+
+        this.map.resize();
+
+        var height = this.container.getBoundingClientRect().height;
+        var width = this.container.getBoundingClientRect().width;
+
+        style.height = `${Number.parseInt(height) - this.viewportHeightOffset}px`;
+        style.width = `${Number.parseInt(width) - this.viewportWidthOffset}px`;
+
+        ctx.Utilities.extend(this.viewport.style, style);
+
+        this.setPadding();
+        return this.viewport;
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name setOptions
+	 * @description This function allows setting various options for the map such as maxPitch, maxZoom, minPitch, and minZoom.
+	 * @param {Object} options - The options object containing the map options.
+	 * @param {number} [options.maxPitch] - The maximum pitch value for the map.
+	 * @param {number} [options.maxZoom] - The maximum zoom level for the map.
+	 * @param {number} [options.minPitch] - The minimum pitch value for the map.
+	 * @param {number} [options.minZoom] - The minimum zoom level for the map.
+	 */
+    this.setOptions = function (options) {
+        options = options || this.options;
+        if (options.maxPitch) this.map.setMaxPitch(options.maxPitch);
+        if (options.maxZoom) this.map.setMaxZoom(options.maxZoom);
+        if (options.minPitch) this.map.setMinPitch(options.minPitch);
+        if (options.minZoom) this.map.setMinZoom(options.minZoom);
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name setPadding
+	 * @description Calculates the padding values for the container by comparing its position with the viewport.
+	 * @returns {Object} The padding object containing left, right, top, and bottom padding values.
+	 * @params {void}
+	 */
+    this.setPadding = function () {
+        var left = (this.container.getBoundingClientRect().left) - (this.viewport.getBoundingClientRect().left);
+        var right = (this.container.getBoundingClientRect().right) - (this.viewport.getBoundingClientRect().right);
+        var top = (this.container.getBoundingClientRect().top) - (this.viewport.getBoundingClientRect().top);
+        var bottom = (this.container.getBoundingClientRect().bottom) - (this.viewport.getBoundingClientRect().bottom);
+        var noPadding = this.container.getBoundingClientRect().width &lt; 20;
+
+        this.padding = {
+            left: noPadding ? 0 : Math.abs(left),
+            right: noPadding ? 0 : Math.abs(right),
+            top: noPadding ? 0 : Math.abs(top),
+            bottom: noPadding ? 0 : Math.abs(bottom)
+        };
+
+        this.map.setPadding(this.padding);    
+        return this.padding;
+    }
+
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name onEvent
+	 * @description Logs the event passed as a parameter to the console.
+	 * @param {Event} event - The event object to be logged.
+     * @event
+	 */
+    this.onEvent = function (event) {
+        console.log(event)
+    }
+    
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name onLoad
+	 * @description This function is triggered when the map loads. It sets up the map container, inserts the viewport, sets options, and loads the map.
+	 * @param {Event} event - The event object triggered when the map loads.
+     * @event
+	 */
+    this.onLoad = function (event) {
+        if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
+        this.map = event.target;
+        this.container = this.map._container;
+        this.container.insertBefore(this.viewport, this.container.firstChild);
+        this.setOptions();
+        this.map.off('style.load', this.onStyleLoad.bind(this));
+        this.map.on('style.load', this.onStyleLoad.bind(this));
+        return ctx.load();
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name onStyleLoad
+	 * @description This function sets the URL for the glyph manager based on the provided parameters and triggers a redraw after a delay.
+	 * @param {Event} event - The event object triggering the function.
+     * @event
+	 */
+    this.onStyleLoad = function (event) {
+        this.map.style &amp;&amp; this.map.style.glyphManager ? this.map.style.glyphManager.setURL(`mapbox://fonts/${ctx.dev}/{fontstack}/{range}.pbf`, ctx.dev) : false;
+        setTimeout(function() { ctx.redraw(); }, 500)
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Map
+	 * @name onMapMove
+	 * @description This function is called when the map is moved. It handles the event triggered by the map movement.
+	 * @param {Event} event - The event object containing information about the map movement.
+	 * @returns {void}
+     * @event
+	 */
+    this.onMapMove = function (event) {
+
+    }
+
+    this.init(options);
+}
+
+export { Map as default };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
+    <div class="footer-text">Solutegrate/GeoFlo © 2024</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
