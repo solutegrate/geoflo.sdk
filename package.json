@@ -53,6 +53,7 @@
     "mapbox-gl": "^2.10.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "dev"
   ]
 }

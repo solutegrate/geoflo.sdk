@@ -125,14 +125,12 @@ const Features = function (ctx) {
 	 * @returns {Array} - The updated array of features with the new state.
 	 */
     this.setFeaturesState = function (features=[], state) {
-        if (!state) return [];
+        if (!state || !features.length) return [];
         
-        features = features.length ? features : coldFeatures;
-
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
             if (ctx.hotFeature && ctx.hotFeature.id === id) return;
-            this.setFeatureState(id, state)
+            this.setFeatureState(id, state);
         }, this)
 
         return features;
@@ -433,7 +431,8 @@ const Features = function (ctx) {
     function getFeaturesByParent (id) {
         var feature = typeof id === 'object' && id.id ? id : getFeatureById(id);
         if (!feature || !feature.source) return [];
-        var features = ctx.map.getSource(feature.source)._data.features.filter(function(f) { return f.parent === id || f.properties.parent === id; });
+        var field = ctx.options.offsetOverlappingLines ? 'parent' : 'id';
+        var features = ctx.map.getSource(feature.source)._data.features.filter(function(f) { return f[field] === id || f.properties[field] === id });
         return features;
     };
 

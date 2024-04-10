@@ -112,11 +112,11 @@ const GeoFlo = function () {
         if (this.isReady) return this.build(this._container);
         this.onReady = onReady && typeof onReady === 'function' ? onReady : false;
         
-        ready().then(function (res, rej) {
+        ready(id).then(function (res, rej) {
             if (!res || rej) throw new Error(`Element with id "${id}" is required in the DOM for the map!`)
 
             ctx.isReady = true;
-            ctx._container = element;
+            ctx._container = res;
             ctx._container.classList.add(ctx.statics.id);
             ctx.Map = new Map(ctx, ctx.options.map);
         })
@@ -2056,3 +2056,5 @@ async function ready (id) {
         }, 1);
     })
 }
+
+export { geoflo as default }
