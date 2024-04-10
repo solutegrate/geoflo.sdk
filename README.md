@@ -1,148 +1,74 @@
-# GeoFlo Documentation
-## version 1.0.0
 
-Demo: https://demo.geoflo.pro/
+[<img width="300" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)<br>
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
-## Install
+# MapboxGL-GeoFlo! 🌎
+### *Professional Geospatial Management Library for Mapbox GL JS*
 
-```
-npm i -D tui-jsdoc-template
-```
+[![GitHub Release](https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social)](https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo)
 
-## Feature
+[![GitHub Repo stars](https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo)](https://github.com/solutegrate/mapboxgl-geoflo)
 
-TUI JSDoc template has the following features:
+![GitHub File size](https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&logo=github&label=Size&color=333333)
 
-* Navigation:
-  * AutoComplete Searchbox
-  * Collapsible
-  * Members / Methods / Events
-  * API / Examples (Tutorials) switcher
-  * Resizable
-* Examples: HTML/JS source tab in example pages
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&logo=github)](https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE)
 
-![Example](https://cloud.githubusercontent.com/assets/12269563/20049432/69d2ed42-a506-11e6-980e-53b991e5ee5b.png)
+[![Demo](https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github)](https://demo.geoflo.pro/)
 
-## Configuration
+## 🌟 Features  
+- Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...
+- Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...
+- Import and Export Features
+- Custom Color Schema
+- Offset Overlapping Lines
+- Embedded Overpass API and OSRM Router
+- Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)
+- User Location Follow Mode
+- Mapbox Style Switcher Control
+## ⚡ Deployment  
+Before you get started with GeoFlo,
+you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `mapboxgl-geoflo` npm package.
 
-([*jsdoc page - configuration*](http://usejsdoc.org/about-configuring-jsdoc.html#incorporating-command-line-options-into-the-configuration-file))
+For more information on creating and using Mapbox access tokens:
+[<img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png">](https://docs.mapbox.com/accounts/guides/tokens/)
 
-### Template
 
-```
-"opts": {
-    "template": "node_modules/tui-jsdoc-template"
-}
-```
+```bash
+  npm install @solutegrate/mapboxgl-geoflo@1.0.0
+```  
+## 🛠️ Usage/Examples
 
-### Logo
+~~~javascript  
+  import geoflo from '@solutegrate/mapboxgl-geoflo'
 
-```
-"templates": {
-    "logo": {
-        "url": "http://nhnent.github.io/tui.component.tree/latest/styles/logo.png",
-        "width": "150px",
-        "height": "13px",
-        "link": "https://github.com/nhnent/tui.jsdoc-template"
-    }
-}
-```
+  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
+  const onReady = function (ctx) { console.log('onReady', ctx) }
+  
+  geoflo.init(options, onReady);
+~~~  
 
-### Page title
+## 🗺️ Roadmap  
+- MongoDB Atlas/Realm Pro Version
 
-```
-"templates": {
-    "name": "Tui JSDoc Template"
-}
-```
+- AWS Integration
 
-### Footer text
+- Project Management/Tracking
 
-```
-"templates": {
-    "footerText": "My awesome footer text"
-}
-```
+- Data Grid, Kanban, Gantt, Calendar, Pivot
 
-### Use collapsible api list
+- FontAwesome Pro Icons
 
-*Default: `true`*
-```
-"templates": {
-    "useCollapsibles": true
-}
-```
+- Advanced Network Node Optimization
 
-### Tab Names
+- Real-Time GPS Tracking
 
-```
-"templates": {
-    "tabNames": {
-        "api": "API",
-        "tutorials": "Examples"
-    }
-}
-```
+- Actual/Forecast Analysis
 
-`api` defaults to the value `API` and `tutorials` defaults to the value `Examples`.
+- Budget/Cost Reporting
 
-### Custom Styles
+- Integrated Material Procurement
 
-With a folder structure like this:
-```
-static
-└── styles
-    └── custom.css
-    └── another.css
-```
-And a config like this:
-```js
-"templates": {
-    "default": {
-        "staticFiles": {
-            "include": ["static/"]
-        }
-    },
-    "css": [
-        "styles/custom.css",
-        "styles/another.css",
-        "http://example.com/remote.css"
-    ]
-}
-```
+- More and more to come.......
 
-`styles/custom.css`, `styles/another.css`, and `remote.css` get included in the layout.
-`default.staticFiles` is the build-in jsdoc way of copying extra files.
 
-## Expose the html/js code to example page
-
-If `script` or `div` elements have `code-js` or `code-html` class, expose their innerHTML.
-
-1. innerHTML of `script.code-js` tag
-2. innerHTML of `div.code-html` tag
-
-```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>example</title>
-</head>
-<body>
-    <div class="code-html">
-        <h3> Base Example </h3>
-        <p> Hello world </p>
-    </div>
-
-    <script class="code-js">
-        console.log('hello world');
-    </script>
-</body>
-</html>
-
-```
-
-## Development
-
-1. Use `npm run serve` or `gulp serve` command to ascertain realtime.
-3. Api-Example tab, Auto-Complete and Resize functions are written in the `static/scripts/tui-doc.js` file.
+[<img alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)

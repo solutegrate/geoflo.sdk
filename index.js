@@ -1,3 +1,6 @@
+// CSS //
+import css from './index.css' with { type: 'css' };
+
 // REQUIRE //
 import Mapbox from "./src/require/Mapbox.js"
 import Turf from "./src/require/Turf.js"
@@ -38,7 +41,6 @@ import Routing from "./src/action/Routing.js"
 import Painting from "./src/action/Painting.js"
 import Exploring from "./src/action/Exploring.js"
 
-
 const version = '1.0.0';
 
 var selectedFeatures = [];
@@ -51,6 +53,8 @@ var hiddenFeatures = [];
  * @returns {Object} The GeoFlo object with various methods for managing the entire app.
  */
 const GeoFlo = function () {
+    document.adoptedStyleSheets = [css];
+    
     if (!Mapbox) throw new Error('MapboxGL script is required!')
     if (!Turf) throw new Error('TurfJS script is required!');
     if (!Omnivore) throw new Error('Omnivore script is required!');

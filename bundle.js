@@ -53,4 +53,6 @@ async function build(err, stats) {
 	const bundle = `./${dest}/${name}`;
 	const data = await fs.readFile(bundle, 'utf8');
 	if (!data) return false;
+	const css = await fs.readFile('./index.css', 'utf8');
+	await fs.writeFile('./dist/mapboxgl-geoflo.css', css);
 }

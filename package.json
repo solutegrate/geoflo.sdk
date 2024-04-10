@@ -30,9 +30,7 @@
     "turf",
     "geospatial",
     "tracking",
-    "management",
-    "mapbox-gl-draw",
-    "mapbox-gl-plugin"
+    "management"
   ],
   "author": {
     "name": "Solutegrate",
