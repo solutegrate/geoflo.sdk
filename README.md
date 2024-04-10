@@ -1,5 +1,5 @@
 
-[<img width="300" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)<br>
+[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_black.png">](https://www.geoflo.pro/)<br>
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
 # MapboxGL-GeoFlo! 🌎
@@ -39,14 +39,34 @@ For more information on creating and using Mapbox access tokens:
 ```  
 ## 🛠️ Usage/Examples
 
+### Module Import
 ~~~javascript  
   import geoflo from '@solutegrate/mapboxgl-geoflo'
+~~~  
 
+### CDN Import
+
+~~~javascript  
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css">
+  <link rel="stylesheet" href="https://sdk.geoflo.pro/mapboxgl-geoflo.css">
+
+  <div id="map"></div>
+
+  <script type="text/javascript" src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+  <script type="text/javascript" src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js"></script>
+  <script type="text/javascript" src="https://sdk.geoflo.pro/mapboxgl-geoflo.min.js"></script>
+~~~  
+
+### Initialization
+~~~javascript  
   const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
   const onReady = function (ctx) { console.log('onReady', ctx) }
   
   geoflo.init(options, onReady);
 ~~~  
+
 
 ## 🗺️ Roadmap  
 - MongoDB Atlas/Realm Pro Version
