@@ -1,0 +1,58 @@
+{
+  "name": "@solutegrate/mapboxgl-geoflo",
+  "version": "1.0.0",
+  "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
+  "main": "dist/mapboxgl-geoflo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solutegrate/mapboxgl-geoflo.git"
+  },
+  "keywords": [
+    "solutegrate",
+    "geoflo",
+    "mapboxgl",
+    "turf",
+    "geospatial",
+    "tracking",
+    "management",
+    "mapboxgl-draw",
+    "mapboxgl-plugin",
+    "mapbox",
+    "geometry editing",
+    "map data",
+    "mapbox-gl",
+    "turf",
+    "geospatial",
+    "tracking",
+    "management",
+    "mapbox-gl-draw",
+    "mapbox-gl-plugin"
+  ],
+  "author": {
+    "name": "Solutegrate",
+    "email": "support@solutegrate.com",
+    "url": "https://www.geoflo.pro"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solutegrate/mapboxgl-geoflo/issues"
+  },
+  "homepage": "https://www.geoflo.pro",
+  "dependencies": {
+    "mapbox-gl": "^2.10.0",
+    "turf": "^6.5.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "mapbox-gl": "^2.10.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

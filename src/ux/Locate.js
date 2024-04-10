@@ -1,0 +1,302 @@
+/**
+ * @mixin
+ * @memberof module:GeoFlo
+ * @name Locate
+ * @description The Locate module provides a user interface for locating the user's current position on the map.
+ * @param {Object} ctx - The GeoFlo context object
+ */
+const Locate = function (ctx, options={}) {
+    this.options = options;
+    
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name init
+	 * @description This function initializes the geolocation control on the map with the specified options.
+	 * @param {Object} options - The options for configuring the geolocation control.
+	 * @param {boolean} [options.enableHighAccuracy=true] - Whether to enable high accuracy for geolocation.
+	 * @param {boolean} [options.trackUserLocation=true] - Whether to track the user's location.
+	 * @param {boolean} [options.showUserHeading=true] - Whether to show the user's heading.
+	 * @param {boolean} [options.showAccuracyCircle=false] - Whether to show the accuracy circle.
+	 * @returns {Object} The current instance of the map with the geolocation control added.
+	 */
+    this.init = function (options={}) {
+        ctx.Utilities.extend(this.options, options);
+
+        this.control = new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true,
+            showUserHeading: true,
+            showAccuracyCircle: false
+        });
+
+        this.control.on('geolocate', this.onControlEvent.bind(this))
+        ctx.map.addControl(this.control);
+        return this;
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name ready
+	 * @description This function checks if the geolocate button is available in the control and then calls the build function.
+	 * @params {Object} control - The control object containing the geolocate button.
+	 * @returns {void}
+	 */
+    this.ready = function () {
+        var _this = this;
+        var control = this.control;
+
+        var ready = setInterval(function() {
+            if (!control._geolocateButton) return;
+            _this.build();
+            return clearInterval(ready);
+        }, 1);
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name build
+	 * @description This function hides the user location dot marker and the associated button.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.build = function () {
+        this.marker = this.control._userLocationDotMarker;
+        this.getButton().style.display = 'none';
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name update
+	 * @description This function updates the map bearing and center based on the provided options.
+	 * @param {Object} options - The options object.
+	 * @param {number} options.alpha - The alpha value.
+	 * @returns {void}
+	 */
+    this.update = function (options={}) {
+        const alpha = options.alpha;
+        const heading = this.heading();
+        const bearing = this.bearing();
+        const following = this.following;
+        if (!heading || !following || ctx.mapMoving) return;
+        ctx.map.setBearing(heading - 1);
+        ctx.map.setCenter(this.marker._lngLat);
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name heading
+	 * @description Retrieves the heading value from the control object.
+	 * @returns {string} The heading value from the control object.
+	 */
+    this.heading = function () {
+        return this.control._heading;
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name bearing
+	 * @description This function retrieves the current bearing of the map.
+	 * @returns {number} The bearing of the map.
+	 */
+    this.bearing = function () {
+        return ctx.map.getBearing();
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name locate
+	 * @description Initiates the process of locating the user's current position on the map.
+	 * @returns {void}
+	 */
+    this.locate = function () {
+        this.locating = true;
+        this.unlocated = false;
+        this.control._follow = this.following = false;
+        addClasses(this.button, ['mapboxgl-ctrl-geolocate-waiting']);
+        return this.control.trigger();
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name relocate
+	 * @description Relocates the geolocation control to the user's current location. If the control is set to follow the user's location, it changes the state to 'ACTIVE_LOCK'. Adds the 'mapboxgl-ctrl-geolocate-active' class to the button element. Triggers the control
+	 * @params {void}
+	 * @returns {void}
+	 */
+    this.relocate = function () {
+        if (this.following) this.state('ACTIVE_LOCK');
+        addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
+        return this.control.trigger();
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name unlocate
+	 * @description Sets the state to 'ACTIVE_LOCK', disables following, enables drag pan on the map, and triggers the control.
+	 * @returns {Object} The result of triggering the control.
+	 */
+    this.unlocate = function () {
+        this.state('ACTIVE_LOCK');
+        this.control._follow = this.following = false;
+        ctx.map.dragPan.enable();
+        this.unlocated = true;
+        return this.control.trigger();
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name follow
+	 * @description Enables the follow functionality for the geolocate control. When activated, adds a specific class to the button, disables drag panning on the map, and sets the follow state to true.
+	 * @params {Object} ctx - The context object containing the map and control references.
+	 * @returns {boolean} - Returns true to indicate that the follow functionality has been enabled.
+	 */
+    this.follow = function () {
+        addClasses(this.button, ['mapboxgl-ctrl-geolocate-follow']);
+        ctx.map.dragPan.disable();
+        return this.control._follow = this.following = true;
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name state
+	 * @description This function is used to get or set the state of the control. If a state parameter is provided, it sets the control's watch state to that value. If no state parameter is provided, it returns the current watch state of the control.
+	 * @param {boolean} state - The state to set for the control.
+	 * @returns {boolean} - The current watch state of the control.
+	 */
+    this.state = function (state) {
+        return state ? this.control._watchState = state : this.control._watchState;
+    }
+
+
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name getButton
+	 * @description Returns the geolocate button element from the control.
+	 * @returns {Element} The geolocate button element.
+	 */
+    this.getButton = function () {
+        return this.control._geolocateButton;
+    }
+
+
+    
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name removeClasses
+	 * @description This function removes classes related to geolocation control from a button element.
+	 * @params {Element} button - The button element from which classes will be removed.
+	 */
+    this.removeClasses = function () {
+        var button = this.button;
+        if (!button) return;
+        button.classList.remove('mapboxgl-ctrl-geolocate-waiting');
+        button.classList.remove('mapboxgl-ctrl-geolocate-active');
+        button.classList.remove('mapboxgl-ctrl-geolocate-active-error');
+        button.classList.remove('mapboxgl-ctrl-geolocate-background');
+        button.classList.remove('mapboxgl-ctrl-geolocate-background-error');
+        button.classList.remove('mapboxgl-ctrl-geolocate-follow');
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name onAdd
+	 * @description Logs the event passed as a parameter.
+	 * @param {Event} event - The event object to be logged.
+     * @event
+	 */
+    this.onAdd = function (event) {
+        console.log(event)
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name onControlEvent
+	 * @description Handles events related to user location functionality initiated by the locate control button.
+	 * @param {Object} event - The event object containing information about the event.
+	 * @returns {void}
+     * @event
+	 */
+    this.onControlEvent = function (event) {
+        this.button = this.button || event.button;
+        this.marker = this.control._userLocationDotMarker;
+
+        this.removeClasses();
+        console.log('Locate: ', this.state());
+
+        if (event.coords) {
+            this.onLocate(event)
+        } else if (event.button) {
+            ctx.map.dragPan.enable();
+            if (this.state() === 'OFF') return this.locate();
+            if (this.state() === 'BACKGROUND' && !this.following) return this.relocate();
+            if (this.state() === 'ACTIVE_LOCK' && !this.following) return this.follow();
+            this.unlocate();
+        } 
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name onLocate
+	 * @description Handles the event when the geolocation is triggered.
+	 * @param {Event} event - The event object containing the coordinates.
+	 * @returns {void}
+     * @event
+	 */
+    this.onLocate = function (event) {
+        console.log(event);
+
+        if (this.state() === 'ACTIVE_LOCK' && this.locating) {
+            this.locating = false;
+            this.currentLocation = event.coords;
+            addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
+        } 
+    }
+
+	/**
+	 * @function
+     * @memberof module:GeoFlo.Locate
+	 * @name onMapMove
+	 * @description This function is triggered when a map movement event occurs. It updates the button classes based on the state of the geolocate control.
+	 * @param {Event} event - The event object triggered by the map movement.
+	 * @returns {void}
+     * @event
+	 */
+    this.onMapMove = function (event) {
+        if (!this.button || this.following || this.unlocated) return;
+        if (this.state() === 'ACTIVE_LOCK') return addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
+        addClasses(this.button, ['mapboxgl-ctrl-geolocate-background']);
+    }
+
+
+
+    this.options.init ? this.init(this.options) : this;
+
+
+    
+    function addClasses (button, classes=[]) {
+        if (!button) return;
+        classes.forEach(function(c) { c ? button.classList.add(c) : false })
+    }
+}
+
+export { Locate as default }

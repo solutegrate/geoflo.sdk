@@ -1,0 +1,43 @@
+{
+	"plugins": [],
+	"recurseDepth": 10,
+	"opts": {
+		"recurse": true,
+		"lenient": false,
+        "sort": true,
+		"readme": "./readme.md",
+		"encoding": "utf8",
+		"destination": "./jsdocs/",
+		"template": "../node_modules/tui-jsdoc-template",
+		"tutorials": "./jsdocs/tutorials"
+	},
+	"source": {
+		"include": [ "./index.js", "./src/" ],
+		"includePattern": ".+\\.js(doc|x)?$",
+		"excludePattern": "node_modules"
+	},
+	"sourceType": "module",
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": [
+			"jsdoc",
+			"closure"
+		]
+	},
+	"templates": {
+		"name": "Documentation",
+		"footerText": "Solutegrate/GeoFlo © 2024",
+		"useCollapsibles": true,
+		"logo": {
+			"url": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
+			"link": "https://www.geoflo.pro"
+		},
+		"css": [
+			"styles/custom.css"
+		],
+		"tabNames": {
+			"api": "API",
+			"tutorials": "Examples"
+		}
+	}
+}
