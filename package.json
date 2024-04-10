@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@solutegrate:registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
