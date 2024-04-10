@@ -1,5 +1,6 @@
 
-[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_black.png">](https://www.geoflo.pro/)<br>
+[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)  
+
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
 # MapboxGL-GeoFlo! 🌎
@@ -90,6 +91,3 @@ For more information on creating and using Mapbox access tokens:
 - Integrated Material Procurement
 
 - More and more to come.......
-
-
-[<img alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)
