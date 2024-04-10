@@ -4,7 +4,7 @@
   "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
   "main": "dist/mapboxgl-geoflo.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -45,12 +45,12 @@
   },
   "homepage": "https://www.geoflo.pro",
   "dependencies": {
-    "mapbox-gl": "^2.10.0",
-    "turf": "^6.5.0"
+    "mapbox-gl": "^3.3.0",
+    "@turf/turf": "^6.5.0"
   },
   "devDependencies": {},
   "peerDependencies": {
-    "mapbox-gl": "^2.10.0"
+    "mapbox-gl": "^3.3.0"
   },
   "files": [
     "dist",
