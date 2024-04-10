@@ -25,6 +25,7 @@
 - Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)
 - User Location Follow Mode
 - Mapbox Style Switcher Control
+
 ## ⚡ Deployment  
 Before you get started with GeoFlo,
 you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `mapboxgl-geoflo` npm package.
