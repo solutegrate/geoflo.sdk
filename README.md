@@ -38,7 +38,7 @@ For more information on creating and using Mapbox access tokens:
 
 
 ```bash
-  npm install @solutegrate/mapboxgl-geoflo@
+  npm install @solutegrate/mapboxgl-geoflo
 ```  
 ## 🛠️ Usage/Examples
 
