@@ -1,20 +1,20 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+title: "[FEATURE]"
+labels: enhancement
+assignees: solutegrate
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Description
+A brief description of the feature you'd like to see.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## Use Case
+Explain the use case or scenario where this feature would be beneficial.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Proposed Solution
+Share your ideas on how this feature could be implemented.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## Additional Context
+Any additional information or context related to the feature request.
