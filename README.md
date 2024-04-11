@@ -1,24 +1,38 @@
-
-[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)  
+[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)
 
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
 # MapboxGL-GeoFlo
-### *Professional Geospatial Management Library for Mapbox GL JS*
 
-[![GitHub Release](https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social)](https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo)
+### _Professional Geospatial Management Library for Mapbox GL JS_
+<div style="display:block;">
+  <p style="display:flex;margin:5px;">
+    <a style="margin:2px;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
+    </a>
+    <a style="margin:2px;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Stars&color=333333" alt="GitHub Stars" />
+    </a>
+    <a style="margin:2px;">
+      <img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&logo=github&label=Size&color=333333" alt="GitHub Size" />
+    </a>
+    <a style="margin:2px;" href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat&logo=github&label=License&color=333333" alt="MIT License" />
+    </a>
+  </p>
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo)](https://github.com/solutegrate/mapboxgl-geoflo)
+  <p style="display:flex;margin:5px;">
+    <a style="margin:2px;" href="https://demo.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo Demo" />
+    </a>
+    <a style="margin:2px;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=6fafdb&logo=github" alt="GeoFlo Docs" />
+    </a>
+  </p>
+</div>
 
-![GitHub File size](https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&logo=github&label=Size&color=333333)
+## 🌟 Features
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&logo=github)](https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE)
-
-[![Demo](https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github)](https://demo.geoflo.pro/)
-
-[![Docs](https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&logo=github)](https://docs.geoflo.pro/)
-
-## 🌟 Features  
 - Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...
 - Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...
 - Import and Export Features
@@ -29,7 +43,8 @@
 - User Location Follow Mode
 - Mapbox Style Switcher Control
 
-## ⚡ Deployment  
+## ⚡ Deployment
+
 Before you get started with GeoFlo,
 you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `mapboxgl-geoflo` npm package.
 
@@ -40,16 +55,17 @@ For more information on creating and using Mapbox access tokens:
 
 ```bash
   npm install @solutegrate/mapboxgl-geoflo
-```  
+```
 
 ### Module Import
-~~~javascript  
-  import geoflo from '@solutegrate/mapboxgl-geoflo'
-~~~  
+
+```javascript
+import geoflo from "@solutegrate/mapboxgl-geoflo";
+```
 
 ### CDN Import
 
-~~~javascript  
+```javascript
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css">
   <link rel="stylesheet" href="https://sdk.geoflo.pro/mapboxgl-geoflo.css">
 
@@ -60,18 +76,21 @@ For more information on creating and using Mapbox access tokens:
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js"></script>
   <script type="text/javascript" src="https://sdk.geoflo.pro/mapboxgl-geoflo.min.js"></script>
-~~~  
+```
 
 ### Initialization
-~~~javascript  
-  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-~~~  
 
+```javascript
+const options = { enable: true, container: "map", accessToken: "MAPBOX_TOKEN" };
+const onReady = function (ctx) {
+  console.log("onReady", ctx);
+};
 
-## 🗺️ Roadmap  
+geoflo.init(options, onReady);
+```
+
+## 🗺️ Roadmap
+
 - MongoDB Atlas/Realm Pro Version
 
 - AWS Integration
