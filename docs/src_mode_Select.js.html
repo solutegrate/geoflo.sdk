@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
+    <title>Source: src/mode/Select.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -57,109 +59,308 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p><a href="https://www.geoflo.pro/"><img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png"></a></p>
-<p><a href="https://www.linkedin.com/company/geoflopro/about"><img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="linkedin"></a></p>
-<h1>MapboxGL-GeoFlo! 🌎</h1>
-<h3><em>Professional Geospatial Management Library for Mapbox GL JS</em></h3>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo"><img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social" alt="GitHub Release"></a></p>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo"><img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo" alt="GitHub Repo stars"></a></p>
-<p><img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&amp;logo=github&amp;label=Size&amp;color=333333" alt="GitHub File size"></p>
-<p><a href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&amp;logo=github" alt="MIT License"></a></p>
-<p><a href="https://demo.geoflo.pro/"><img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&amp;logo=github" alt="Demo"></a></p>
-<p><a href="https://docs.geoflo.pro/"><img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&amp;logo=github" alt="Docs"></a></p>
-<h2>🌟 Features</h2>
-<ul>
-<li>Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Offset Overlapping Lines</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location Follow Mode</li>
-<li>Mapbox Style Switcher Control</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>mapboxgl-geoflo</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png"></a></p>
-<pre class="prettyprint source lang-bash"><code>  npm install @solutegrate/mapboxgl-geoflo
-</code></pre>
-<h2>🛠️ Usage/Examples</h2>
-<h3>Module Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  import geoflo from '@solutegrate/mapboxgl-geoflo'
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css&quot;>
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.css&quot;>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Select
+ * @description A class that handles selecting functionality in a mapping context.
+ * @param {Object} ctx - The GeoFlo context object
+ */
+function Select (ctx) {
+    var lastKnownSelectIds = [];
+    var removedFeatures = [];
+    var nearFeatures = [];
+    var clickCoords;
+    var multipleSelect;
+    var selectedId;
 
-  &lt;div id=&quot;map&quot;>&lt;/div>
+    this.id = 'select';
 
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/@turf/turf@6/turf.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<ul>
-<li>
-<p>MongoDB Atlas/Realm Pro Version</p>
-</li>
-<li>
-<p>AWS Integration</p>
-</li>
-<li>
-<p>Project Management/Tracking</p>
-</li>
-<li>
-<p>Data Grid, Kanban, Gantt, Calendar, Pivot</p>
-</li>
-<li>
-<p>FontAwesome Pro Icons</p>
-</li>
-<li>
-<p>Advanced Network Node Optimization</p>
-</li>
-<li>
-<p>Real-Time GPS Tracking</p>
-</li>
-<li>
-<p>Actual/Forecast Analysis</p>
-</li>
-<li>
-<p>Budget/Cost Reporting</p>
-</li>
-<li>
-<p>Integrated Material Procurement</p>
-</li>
-<li>
-<p>More and more to come.......</p>
-</li>
-</ul></article>
+    /**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name activate
+	 * @description This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
+	 * @param {Object} options - The options object for activation.
+	 * @param {string} [options.id] - The ID of the feature to select.
+	 * @param {Object} [options.feature] - The feature object to select.
+	 * @returns {boolean} Returns false if already activated.
+	 */
+    this.activate = function (options={}) {
+        if (this.activated) return false;
+        if (ctx.currentMode.id !== this.id) return options.mode = this.id, ctx.setMode(options);
+
+        this.activated = true;
+        ctx.map.dragPan.enable();
+        ctx.setButtons();
+        ctx.setActiveButton('select');
+        ctx.fire('select.activate', { activated: true, options: options })
+        if (this.gamepad) {}
+        setTimeout(function(e) { e.selectFeature(options.id ? options.id : options.feature ? options.feature.id : false) }, 5, this)
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deactivate
+	 * @description This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
+	 * @returns {boolean} Returns false if the feature is not activated.
+	 */
+    this.deactivate = function () {
+        if (!this.activated) return false;
+
+        this.activated = false;
+        this.deselectCurrentFeature();
+        
+        ctx.setButtons();
+        ctx.fire('select.deactivate', { activated: true });
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name canHandle
+	 * @description This function determines if the given mode name is equal to the SELECT mode.
+	 * @param {string} modeName - The mode name to be checked.
+	 * @returns {boolean} Returns true if the mode name is SELECT, false otherwise.
+	 */
+    this.canHandle = function (modeName) {
+        return ctx.statics.constants.modes.SELECT === modeName;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name selectFeature
+	 * @description Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
+	 * @param {string} id - The ID of the feature to be selected.
+	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
+	 */
+    this.selectFeature = function (id) {
+        const popup = ctx.options.select.popup;
+
+        if (!id) return false;
+        if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
+        if (ctx.hasSelection()) ctx.forEachSelectedFeature((feature) => { });
+
+        removedFeatures = ctx.Features.removeFeatures(id);
+
+        ctx.addFeaturesToSelected(removedFeatures);
+        popup ? this.addPopup(removedFeatures) : false;
+        
+        if (!ctx.wantingToEdit) return removedFeatures;
+        if (removedFeatures.length == 1 &amp;&amp; id === removedFeatures[0].id) editFeature(removedFeatures[0]);
+        return removedFeatures;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deselectCurrentFeature
+	 * @description Deselects the current feature by removing its selection.
+	 */
+    this.deselectCurrentFeature = function () {
+        ctx.removeSelection();
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name addPopup
+	 * @description This function creates a popup element with the specified features and adds it to the map at the click coordinates.
+	 * @param {Object} features - The features to be displayed in the popup.
+	 * @param {string} features.title - The title of the popup.
+	 * @param {string} features.description - The description of the popup.
+	 * @param {number} features.latitude - The latitude coordinate for the popup location.
+	 * @param {number} features.longitude - The longitude coordinate for the popup location.
+	 */
+    this.addPopup = function (features) {
+        this.popupElement = buildPopup(features);
+
+        this.popup = new mapboxgl.Popup({ closeOnClick: false })
+            .setLngLat(clickCoords)
+            .setDOMContent(this.popupElement)
+            .addTo(ctx.map)
+            .setOffset(12);
+
+        this.popup._container.style['margin-bottom'] = '10px'
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name removePopup
+	 * @description Removes the popup element from the DOM if it exists.
+	 * @return {boolean} Returns true if the popup element was successfully removed, otherwise false.
+	 */
+    this.removePopup = function () {
+        return this.popup &amp;&amp; this.popup.remove ? this.popup.remove() : false;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleMove
+	 * @description Handles the mouse move event.
+	 * @param {Event} event - The event object representing the mouse move event.
+	 */
+    this.handleMove = function (event) {
+        //ctx.setMapClass('pointer');
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleClick
+	 * @description Handles the click event on the map and selects features based on the event.
+	 * @param {Object} event - The event object containing information about the click event.
+	 * @returns {boolean} Returns false if ctx.noSelect is true, otherwise selects features based on the event.
+	 */
+    this.handleClick = function (event) {
+        if (ctx.noSelect) return false;
+        
+        var features = ctx.getRenderedDrawnFeatures(event.lngLat);
+
+        clickCoords = [event.lngLat.lng, event.lngLat.lat];
+        multipleSelect = event.originalEvent &amp;&amp; event.originalEvent.shiftKey &amp;&amp; ctx.options.select.multiple;
+
+        if (features.length > 0) {
+            if (!ctx.Layers.getSelection(features, clickCoords)) return;
+            selectFeature.call(this, features);
+        } else if (!multipleSelect) {
+            lastKnownSelectIds = [];
+            nearFeatures = [];
+            clickCoords = false;
+            selectedId = false;
+            this.deselectCurrentFeature();
+        }
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleDrag
+	 * @description Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
+	 * @param {Event} event - The event object representing the drag event.
+	 */
+    this.handleDrag = function (event) {
+        //ctx.setMapClass('grabbing');
+    }
+
+
+    function buildPopup (features) {
+        const element = document.createElement('div');
+        element.classList.add('popup-table-holder');
+
+        const table = buildTable(features);
+
+        element.appendChild(table);
+
+        if (nearFeatures.length > 1) {
+            var button = document.createElement('div');
+            button.classList.add('popup-table-button');
+            button.innerHTML = `&lt;button> Next &lt;/button>`;
+            button.addEventListener('click', selectFeature.bind(this));
+            element.appendChild(button);
+        }
+
+        return element;
+        
+        /* const button = document.createElement('div');
+        button.innerHTML = `&lt;button class="btn btn-success btn-simple text-white" > Assign&lt;/button>`;
+        element.appendChild(button);
+        button.addEventListener('click', (e) => { console.log('Button clicked' + name); }); */
+    };
+
+    function buildTable (features) {
+        var table = document.createElement('table');
+        var properties = ['id', 'type'];
+
+        table.style.width = '100%';
+        table.style.height = '100%';
+        table.setAttribute('border', '1');
+        table.classList.add('popup-table');
+
+        var tableBody = document.createElement('tbody');
+
+        features.forEach(function(feature, index) {
+            var type = feature.properties.type;
+
+            properties.forEach(function(prop) {
+                tableBody.appendChild(buildRow(prop, feature.properties[prop]));
+            })
+
+            tableBody.appendChild(buildRow('geometry', feature.geometry.type));
+
+            if (feature.geometry.type === 'LineString') {
+                ctx.Features.addUnits(feature, 'feet');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            } else if (type === 'Text') {
+                tableBody.appendChild(buildRow('content', feature.properties.text));
+            } else if (feature.geometry.type === 'Polygon') {
+                ctx.Features.addUnits(feature, 'acres');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            }
+        })
+
+        table.appendChild(tableBody);
+        return table;
+    };
+
+    function buildRow (header, data) {
+        var tr = document.createElement('tr');
+        tr.classList.add('popup-table-row');
+
+        if (header) {
+            var th = document.createElement('th');
+            th.classList.add('popup-table-header');
+            th.appendChild(document.createTextNode(header));
+            tr.appendChild(th);
+        }
+        
+        var td = document.createElement('td');
+        td.classList.add('popup-table-data');
+        td.classList.add(header);
+        td.appendChild(document.createTextNode(data));
+        tr.appendChild(td);
+
+        return tr;
+    }
+
+    function selectFeature (features) {
+        nearFeatures = features;
+        lastKnownSelectIds = lastKnownSelectIds === undefined ? [] : lastKnownSelectIds;
+
+        if (features.length >= lastKnownSelectIds.length) {
+            lastKnownSelectIds.splice(0, features.length - lastKnownSelectIds.length + 1);
+        }
+
+        selectedId = features[0].id || features[0].properties['id'];
+
+        if (features.length > 1) {
+            features.forEach((feature) => {
+                const id = feature.id || feature.properties['id'];
+                if (lastKnownSelectIds.indexOf(id) === -1) selectedId = id;
+            });
+        }
+
+        if (!multipleSelect) ctx.currentMode.deselectCurrentFeature();
+        ctx.currentMode.selectFeature(selectedId);
+    }
+
+    function editFeature (feature) {
+        ctx.wantingToEdit = false;
+        ctx.setMode('edit', feature.properties.type, feature);
+    }
+};
+
+export { Select as default }</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -176,7 +377,7 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

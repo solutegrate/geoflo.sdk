@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
+    <title>Source: src/map/Mesh.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -57,109 +59,448 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p><a href="https://www.geoflo.pro/"><img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png"></a></p>
-<p><a href="https://www.linkedin.com/company/geoflopro/about"><img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="linkedin"></a></p>
-<h1>MapboxGL-GeoFlo! 🌎</h1>
-<h3><em>Professional Geospatial Management Library for Mapbox GL JS</em></h3>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo"><img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social" alt="GitHub Release"></a></p>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo"><img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo" alt="GitHub Repo stars"></a></p>
-<p><img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&amp;logo=github&amp;label=Size&amp;color=333333" alt="GitHub File size"></p>
-<p><a href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&amp;logo=github" alt="MIT License"></a></p>
-<p><a href="https://demo.geoflo.pro/"><img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&amp;logo=github" alt="Demo"></a></p>
-<p><a href="https://docs.geoflo.pro/"><img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&amp;logo=github" alt="Docs"></a></p>
-<h2>🌟 Features</h2>
-<ul>
-<li>Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Offset Overlapping Lines</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location Follow Mode</li>
-<li>Mapbox Style Switcher Control</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>mapboxgl-geoflo</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png"></a></p>
-<pre class="prettyprint source lang-bash"><code>  npm install @solutegrate/mapboxgl-geoflo
-</code></pre>
-<h2>🛠️ Usage/Examples</h2>
-<h3>Module Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  import geoflo from '@solutegrate/mapboxgl-geoflo'
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css&quot;>
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.css&quot;>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class
+ * @memberof module:geoflo
+ * @name Mesh
+ * @description A class that handles the snapping mesh index functionality in a mapping context.
+ * @param {Object} originalFeatures - The original features to be meshed
+ * @param {Boolean} linesOnly - A boolean value to determine if only lines are to be considered
+ */
+const Mesh = function (originalFeatures, linesOnly) {
+    var segmentId = 1;
+    var allSegments = [];
+    var featureIndex = {};
 
-  &lt;div id=&quot;map&quot;>&lt;/div>
+    const ctx = this.geoflo;
 
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/@turf/turf@6/turf.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<ul>
-<li>
-<p>MongoDB Atlas/Realm Pro Version</p>
-</li>
-<li>
-<p>AWS Integration</p>
-</li>
-<li>
-<p>Project Management/Tracking</p>
-</li>
-<li>
-<p>Data Grid, Kanban, Gantt, Calendar, Pivot</p>
-</li>
-<li>
-<p>FontAwesome Pro Icons</p>
-</li>
-<li>
-<p>Advanced Network Node Optimization</p>
-</li>
-<li>
-<p>Real-Time GPS Tracking</p>
-</li>
-<li>
-<p>Actual/Forecast Analysis</p>
-</li>
-<li>
-<p>Budget/Cost Reporting</p>
-</li>
-<li>
-<p>Integrated Material Procurement</p>
-</li>
-<li>
-<p>More and more to come.......</p>
-</li>
-</ul></article>
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name addNewFeatures
+	 * @description This function takes new features, splits them into segments, checks for intersections, and updates the existing segments accordingly.
+	 * @param {Array} features - An array of new features to be added.
+	 * @return {Array} Returns an array containing all mesh segments.
+	 */
+    this.addNewFeatures = function(features) {
+        var allNewFeatures = splitAndCheckForIntersections(features);
+        var newSegments = splitIntoTwoPointSegmentsAndAddIds(allNewFeatures);
+        var segmentsWithCutPoints = checkForIntersections(newSegments, allSegments);
+        allSegments = [].concat(ctx.Utilities.consumableArray(cutSegments(allSegments, segmentsWithCutPoints)), ctx.Utilities.consumableArray(cutSegments(newSegments, segmentsWithCutPoints)));
+        return this.getFeatures();
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name getFeatures
+	 * @description Returns all of the features in the mesh.
+	 * @return {Array} Returns an array containing all feature segments.
+	 */
+    this.getFeatures = function() {
+        return allSegments;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name splitSegmentAtPoint
+	 * @description This function takes a segment ID and coordinates of a point to split the segment. It creates two new segments by splitting the original segment at the specified point and updates the feature index.
+	 * @param {string} segmentId - The ID of the segment to be split.
+	 * @param {Array&lt;number>} pointCoords - The coordinates of the point where the segment should be split.
+	 */
+    this.splitSegmentAtPoint = function(segmentId, pointCoords) {
+        var feature = featureIndex[segmentId];
+        if (feature !== undefined) {
+            var pos = allSegments.indexOf(feature);
+            allSegments.splice(pos, 1);
+            var line1 = ctx.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[0]]);
+            var line2 = ctx.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[1]]);
+            addFeatureToIndex(line1);
+            addFeatureToIndex(line2);
+            allSegments.push(line1, line2);
+        } else {
+            console.error("splitSegmentAtPoint: no original feature for id ", segmentId);
+        }
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name getFeaturesFromIndex
+	 * @description This function takes an array of features and retrieves the corresponding features from an index based on their IDs.
+	 * @param {Array} features - The array of features to retrieve from the index.
+	 * @returns {Array} The array of features retrieved from the index.
+	 */
+    this.getFeaturesFromIndex = function(features) {
+        var result = [];
+        features.forEach(function(feature) {
+            var id = feature.id || feature.properties.id;
+            var originalFeature = featureIndex[id];
+            if (originalFeature !== undefined) {
+                result.push(originalFeature);
+            }
+        });
+        return result;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name getFeatureById
+	 * @description Retrieves a feature by its ID.
+	 * @param {number} id - The ID of the feature to retrieve.
+	 * @returns {object} The feature object corresponding to the provided ID.
+	 */
+    this.getFeatureById = function(id) {
+        return getFeatureById(id);
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name getFeaturesByParentId
+	 * @description Retrieves features based on the parent ID. The parent ID is used to retrieve cold features associated with the segment.
+	 * @param {number} id - The parent ID to retrieve features for.
+	 * @returns {Array} - An array of features associated with the parent ID.
+	 */
+    this.getFeaturesByParentId = function(id) {
+        return getFeaturesByParentId(id);
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Mesh
+	 * @name removeFeature
+	 * @description Removes a feature with the specified ID.
+	 * @param {number} id - The ID of the feature to be removed.
+	 * @returns {boolean} - Returns true if the feature was successfully removed, false otherwise.
+	 */
+    this.removeFeature = function (id) {
+        return removeFeature(id);
+    };
+
+
+    if (originalFeatures) allSegments = splitAndCheckForIntersections(originalFeatures);
+
+
+    function addFeatureToIndex(feature, parent) {
+        if (featureIndex[segmentId] || getFeatureById(segmentId)) return false;
+
+        featureIndex[segmentId] = feature;
+        feature.id = segmentId;
+        feature.parent = parent;
+
+        ctx.Utilities.setProperty(feature, 'id', segmentId);
+        ctx.Utilities.setProperty(feature, 'parent', parent);
+
+        segmentId++;
+        return true;
+    }
+
+    function addClickSegementsToMesh() {
+        if (!ctx.options.snapping.enable) return false;
+    
+        var meshFeatures = [];
+    
+        if (ctx.closestPoint &amp;&amp; ctx.closestPoint.borders &amp;&amp; ctx.closestPoint.id !== undefined) {
+            ctx.meshIndex.splitSegmentAtPoint(ctx.closestPoint.id, ctx.closestPoint.coords);
+            ctx.updateMeshData();
+        }
+    
+        if (ctx.snapFeature) {
+            if (ctx.snapFeature.geometry.type === "LineString") {
+                if (!ctx.Utilities.isEmptyLineString(ctx.snapFeature)) {
+                    meshFeatures.push(ctx.snapFeature);
+                }
+            } else if (ctx.snapFeature.geometry.type === "Point") {
+                ctx.Utilities.setProperty(ctx.snapFeature, 'startPoint', true);
+                ctx.startPoint = ctx.Utilities.cloneDeep(ctx.snapFeature);
+                meshFeatures.push(ctx.snapFeature);
+            }
+        }
+    
+        if (meshFeatures.length > 0) ctx.addFeaturesToMesh(meshFeatures);
+    }
+
+    function coordinatesToLineStrings(coords, result, parent) {
+        var firstPoint = turf.truncate(turf.point(coords[0]), { precision: 7, coordinates: 2, mutate: true });
+        var secondPoint = null;
+
+        for (var index = 1; index &lt; coords.length; index++) {
+            secondPoint = turf.truncate(turf.point(coords[index]), { precision: 7, coordinates: 2, mutate: true });
+            
+            if (!ctx.Utilities.isPointEqual(firstPoint.geometry.coordinates, secondPoint.geometry.coordinates)) {
+                var line = turf.lineString([firstPoint.geometry.coordinates, secondPoint.geometry.coordinates]);
+                var added = addFeatureToIndex(line, parent);
+                added ? result.push(line) : false;
+            }
+
+            firstPoint = secondPoint;
+        }
+    }
+
+    function splitIntoTwoPointSegmentsAndAddIds(features) {
+        var result = [];
+        if (!features || !features.length) return result;
+
+        features.forEach(function(feature) {
+            var type = feature.geometry.type;
+            var id = feature.parent || feature.properties.parent || feature.id || feature.properties.id;
+            var added;
+
+            if (linesOnly &amp;&amp; type !== "LineString" &amp;&amp; !feature.properties.unfill) {
+                feature = ctx.Utilities.cloneDeep(feature);
+                added = addFeatureToIndex(feature, id);
+                return added ? result.push(feature) : false;
+            }
+
+            if (type === "MultiPolygon") {
+                feature.geometry.coordinates.forEach(function(coords) {
+                    coords.forEach(function(subCoords) {
+                        coordinatesToLineStrings(subCoords, result, id);
+                    });
+                });
+            } else if (type === "Polygon") {
+                feature.geometry.coordinates.forEach(function(coords) {
+                    coordinatesToLineStrings(coords, result, id);
+                });
+            } else if (type === "MultiLineString") {
+                feature.geometry.coordinates.forEach(function(coords) {
+                    coordinatesToLineStrings(coords, result, id);
+                });
+            } else if (type === "LineString") {
+                coordinatesToLineStrings(feature.geometry.coordinates, result, id);
+            } else if (type === "Point") {
+                feature = ctx.Utilities.cloneDeep(feature);
+                added = addFeatureToIndex(feature, id);
+                added ? result.push(feature) : false;
+            }
+        });
+
+        return result;
+    }
+
+    function appendCutFeatures(segmentsWithCutPoints, feature, cutPointFeatures) {
+        var id = feature.id || feature.properties.id;
+        var segCutPoints = segmentsWithCutPoints[id];
+    
+        if (segCutPoints === undefined) {
+            segCutPoints = [];
+            segmentsWithCutPoints[id] = segCutPoints;
+        }
+    
+        cutPointFeatures.forEach(function(feature) {
+            var newCutPoint = ctx.Utilities.reducePrecision(feature.geometry.coordinates);
+            var cutPoint = segCutPoints.findIndex(function(element) { return element[0] === newCutPoint[0] &amp;&amp; element[1] === newCutPoint[1]; });
+            if (cutPoint === -1) { segCutPoints.push(newCutPoint); }
+        });
+    };
+
+    function checkForIntersections(knownSegments, newSegments) {
+        var segmentsWithCutPoints = {};
+
+        var processIntersectionPoint = function processIntersectionPoint(point, feature1, feature2) {
+            var pointCoords = point.geometry.coordinates;
+            var seg1Coords = feature1.geometry.coordinates;
+            var seg2Coords = feature2.geometry.coordinates;
+            var addFeature1Point = false;
+            var addFeature2Point = false;
+            var closestPointAdded = false;
+
+            if (!ctx.Utilities.isPointEqual(pointCoords, seg1Coords[0]) &amp;&amp; !ctx.Utilities.isPointEqual(pointCoords, seg1Coords[1])) {
+                var endpoint1 = turf.point(seg1Coords[0]);
+                var endpoint2 = turf.point(seg1Coords[1]);
+                var distanceEndpoint1 = turf.distance(point, endpoint1);
+                var distanceEndpoint2 = turf.distance(point, endpoint2);
+
+                var closestEndpoint = distanceEndpoint1 &lt; distanceEndpoint2 ? endpoint1 : endpoint2;
+
+                var pointOnLine = turf.pointOnLine(feature2, closestEndpoint);
+                if (pointOnLine.properties.dist &lt; ctx.statics.constants.MIN_DISTANCE) {
+                    appendCutFeatures(segmentsWithCutPoints, feature2, [closestEndpoint]);
+                    closestPointAdded = true;
+                } else {
+                    addFeature1Point = true;
+                }
+            }
+            if (!ctx.Utilities.isPointEqual(pointCoords, seg2Coords[0]) &amp;&amp; !ctx.Utilities.isPointEqual(pointCoords, seg2Coords[1])) {
+                var _endpoint = turf.point(seg2Coords[0]);
+                var _endpoint2 = turf.point(seg2Coords[1]);
+                var _distanceEndpoint = turf.distance(point, _endpoint);
+                var _distanceEndpoint2 = turf.distance(point, _endpoint2);
+
+                var _closestEndpoint = _distanceEndpoint &lt; _distanceEndpoint2 ? _endpoint : _endpoint2;
+
+                var _pointOnLine = turf.pointOnLine(feature1, _closestEndpoint);
+                if (_pointOnLine.properties.dist &lt; ctx.statics.constants.MIN_DISTANCE) {
+                    appendCutFeatures(segmentsWithCutPoints, feature1, [_closestEndpoint]);
+                    closestPointAdded = true;
+                } else {
+                    addFeature2Point = true;
+                }
+            }
+
+            if (!closestPointAdded) {
+                if (addFeature1Point) {
+                    appendCutFeatures(segmentsWithCutPoints, feature1, [point]);
+                }
+                if (addFeature2Point) {
+                    appendCutFeatures(segmentsWithCutPoints, feature2, [point]);
+                }
+            }
+        };
+
+        var checkIfPointInCloseRange = function checkIfPointInCloseRange(feature, coords) {
+            var pointOnline = turf.pointOnLine(feature, turf.point(coords));
+            if (pointOnline.properties.dist &lt; ctx.statics.constants.MIN_DISTANCE) {
+                if (!ctx.Utilities.isPointAtVertex(feature.geometry.coordinates, coords)) {
+                    appendCutFeatures(segmentsWithCutPoints, feature, [pointOnline]);
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        var sameSegments = knownSegments === newSegments;
+
+        for (var knownIndex = 0; knownIndex &lt; knownSegments.length; knownIndex++) {
+            var segmentFeature1 = knownSegments[knownIndex];
+            var feature1Type = segmentFeature1.geometry.type;
+
+            for (var newIndex = sameSegments ? knownIndex + 1 : 0; newIndex &lt; newSegments.length; newIndex++) {
+                var segmentFeature2 = newSegments[newIndex];
+                var feature2Type = segmentFeature2.geometry.type;
+                var id = segmentFeature2.id || segmentFeature2.properties.id;
+
+                if (feature1Type === "LineString" &amp;&amp; feature2Type === "LineString") {
+                    if (ctx.Utilities.isOverlapping(segmentFeature1, segmentFeature2)) {
+                        var intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
+
+                        if (intersectionPoints.length > 0) {
+                            if (intersectionPoints.length > 1) console.error(intersectionPoints.length + " intersection points received");
+                            var point = intersectionPoints[0];
+                            processIntersectionPoint(point, segmentFeature1, segmentFeature2);
+                        } else {
+                            var seg1Coords = segmentFeature1.geometry.coordinates;
+                            var seg2Coords = segmentFeature2.geometry.coordinates;
+                            checkIfPointInCloseRange(segmentFeature1, seg2Coords[0]);
+                            checkIfPointInCloseRange(segmentFeature1, seg2Coords[1]);
+                            checkIfPointInCloseRange(segmentFeature2, seg1Coords[0]);
+                            checkIfPointInCloseRange(segmentFeature2, seg1Coords[1]);
+                        }
+
+                        if (getFeatureById(id)) {
+                            console.log('Existing Line: ', segmentFeature2)
+                            var pos = allSegments.indexOf(getFeatureById(id));
+                            allSegments.splice(pos, 1);
+                        }
+                    }
+                } else if (feature1Type === "Point" || feature2Type === "Point") {
+                    if (feature2Type === "Point" &amp;&amp; feature2Type === "Point") {
+                        console.log("Point &amp; Point");
+                    } else {
+                        console.log("Point &amp; LineString");
+                        var _point = feature1Type === "Point" ? segmentFeature1 : segmentFeature2;
+                        var line = feature1Type === "LineString" ? segmentFeature1 : segmentFeature2;
+
+                        id = _point.id || _point.properties.id;
+
+                        if (checkIfPointInCloseRange(line, _point.geometry.coordinates)) {
+                            segmentsWithCutPoints[id] = [];
+                        }
+                    }
+
+                    if (getFeatureById(id)) {
+                        console.log('Existing Point: ', segmentFeature2)
+                        var pos = allSegments.indexOf(getFeatureById(id));
+                        allSegments.splice(pos, 1);
+                    }
+                }
+            }
+        }
+
+        return segmentsWithCutPoints;
+    }
+
+    function cutSegments(newSegments, segmentsWithCutPoints) {
+        var result = [];
+
+        newSegments.forEach(function(segment) {
+            var id = segment.id || segment.properties.id;
+
+            if (segment.geometry.type === "LineString") {
+                var cutPoints = segmentsWithCutPoints[id];
+
+                if (cutPoints !== undefined) {
+                    var fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
+                    turf.featureEach(fc, function(feature) {
+                        var length = turf.lineDistance(feature);
+                        if (length > ctx.statics.constants.MIN_SEGMENT_LENGTH) {
+                            ctx.Utilities.setProperties(feature, { length: length });
+                            addFeatureToIndex(feature);
+                            result.push(feature);
+                        } else {
+                            console.error("0 length feature (", length, ") after line split: ", JSON.stringify(feature));
+                        }
+                    });
+                } else {
+                    var length = turf.lineDistance(segment);
+                    if (length > ctx.statics.constants.MIN_SEGMENT_LENGTH) {
+                        ctx.Utilities.setProperties(segment, { length: length });
+                        result.push(segment);
+                    } else {
+                        console.error("0 length feature (", length, ") existing segment: ", JSON.stringify(segment));
+                    }
+                }
+            } else {
+                var _cutPoints = segmentsWithCutPoints[id];
+
+                if (_cutPoints === undefined) {
+                    result.push(segment);
+                }
+            }
+        });
+
+        return result;
+    }
+
+    function splitAndCheckForIntersections(newFeatures) {
+        var newFeaturesSegments = splitIntoTwoPointSegmentsAndAddIds(newFeatures);
+        if (linesOnly) return newFeaturesSegments;
+        var newFeaturesWithCutPoints = checkForIntersections(newFeaturesSegments, newFeaturesSegments);
+        return cutSegments(newFeaturesSegments, newFeaturesWithCutPoints);
+    }
+
+    function getFeatureById(id) {
+        return allSegments.find(function(f) { return f.id === id || f.properties.id === id }) 
+    }
+
+    function getFeaturesByParentId(id) {
+        return allSegments.filter(function(f) { return f.parent === id || f.properties.parent === id })
+    }
+
+    function removeFeature(id) {
+        var features = getFeaturesByParentId(id);
+        
+        if (features &amp;&amp; features.length) {
+            features.forEach(function(feature) {
+                var pos = allSegments.indexOf(feature);
+                allSegments.splice(pos, 1);
+            })
+            
+            ctx.updateMeshData();
+        }
+
+        return allSegments;
+    }
+};
+
+export { Mesh as default }</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -176,7 +517,7 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

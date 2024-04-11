@@ -1,0 +1,6598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mixin: Utilities | Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <a href="https://demo.geoflo.pro" rel="noopener noreferrer" target="_blank">
+                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Documentation</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-demo.html">GeoFlo Demo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="demo_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.html#.activateExploring">activateExploring</a></li><li><a href="module-geoflo.html#.activatePainting">activatePainting</a></li><li><a href="module-geoflo.html#.activatePinning">activatePinning</a></li><li><a href="module-geoflo.html#.activateRouting">activateRouting</a></li><li><a href="module-geoflo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-geoflo.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-geoflo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-geoflo.html#.addGamepad">addGamepad</a></li><li><a href="module-geoflo.html#.addPlugin">addPlugin</a></li><li><a href="module-geoflo.html#.addTooltip">addTooltip</a></li><li><a href="module-geoflo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-geoflo.html#.createPolygon">createPolygon</a></li><li><a href="module-geoflo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-geoflo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-geoflo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-geoflo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-geoflo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-geoflo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-geoflo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-geoflo.html#.disable">disable</a></li><li><a href="module-geoflo.html#.editFeature">editFeature</a></li><li><a href="module-geoflo.html#.enable">enable</a></li><li><a href="module-geoflo.html#.fire">fire</a></li><li><a href="module-geoflo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-geoflo.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.html#.getColors">getColors</a></li><li><a href="module-geoflo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-geoflo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-geoflo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-geoflo.html#.getMap">getMap</a></li><li><a href="module-geoflo.html#.getMode">getMode</a></li><li><a href="module-geoflo.html#.getModes">getModes</a></li><li><a href="module-geoflo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-geoflo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-geoflo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-geoflo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-geoflo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-geoflo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-geoflo.html#.hasControls">hasControls</a></li><li><a href="module-geoflo.html#.hasSelection">hasSelection</a></li><li><a href="module-geoflo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-geoflo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-geoflo.html#.init">init</a></li><li><a href="module-geoflo.html#.initialize">initialize</a></li><li><a href="module-geoflo.html#.load">load</a></li><li><a href="module-geoflo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-geoflo.html#.moveFeature">moveFeature</a></li><li><a href="module-geoflo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-geoflo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-geoflo.html#.off">off</a></li><li><a href="module-geoflo.html#.on">on</a></li><li><a href="module-geoflo.html#.once">once</a></li><li><a href="module-geoflo.html#.redraw">redraw</a></li><li><a href="module-geoflo.html#.refresh">refresh</a></li><li><a href="module-geoflo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-geoflo.html#.removeControls">removeControls</a></li><li><a href="module-geoflo.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.html#.removeGamepad">removeGamepad</a></li><li><a href="module-geoflo.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.html#.removeSelection">removeSelection</a></li><li><a href="module-geoflo.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-geoflo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-geoflo.html#.setButtons">setButtons</a></li><li><a href="module-geoflo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-geoflo.html#.setControls">setControls</a></li><li><a href="module-geoflo.html#.setCustomLayers">setCustomLayers</a></li><li><a href="module-geoflo.html#.setIcon">setIcon</a></li><li><a href="module-geoflo.html#.setMapClass">setMapClass</a></li><li><a href="module-geoflo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-geoflo.html#.setMode">setMode</a></li><li><a href="module-geoflo.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-geoflo.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-geoflo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-geoflo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-geoflo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-geoflo.Mesh.html">Mesh</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Mesh_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Mesh.html#.addNewFeatures">addNewFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Mesh.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesByParentId">getFeaturesByParentId</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesFromIndex">getFeaturesFromIndex</a></li><li><a href="module-geoflo.Mesh.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.Mesh.html#.splitSegmentAtPoint">splitSegmentAtPoint</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Namespaces</h3><ul><li><a href="module-geoflo.Features.html">geoflo.Features</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Features_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Features.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Features.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.Features.html#.addUnits">addUnits</a></li><li><a href="module-geoflo.Features.html#.convertUnits">convertUnits</a></li><li><a href="module-geoflo.Features.html#.deleteFeatures">deleteFeatures</a></li><li><a href="module-geoflo.Features.html#.getColdFeatures">getColdFeatures</a></li><li><a href="module-geoflo.Features.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Features.html#.getFeaturesById">getFeaturesById</a></li><li><a href="module-geoflo.Features.html#.getType">getType</a></li><li><a href="module-geoflo.Features.html#.getUnits">getUnits</a></li><li><a href="module-geoflo.Features.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.Features.html#.setFeatureState">setFeatureState</a></li><li><a href="module-geoflo.Features.html#.setFeaturesState">setFeaturesState</a></li><li><a href="module-geoflo.Features.html#.setText">setText</a></li><li><a href="module-geoflo.Features.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.Features.html#.updateSource">updateSource</a></li></ul></div></li><li><a href="module-geoflo.Layers.html">geoflo.Layers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Layers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.addEventListeners">addEventListeners</a></li><li><a href="module-geoflo.Layers.html#.addLayer">addLayer</a></li><li><a href="module-geoflo.Layers.html#.addLayers">addLayers</a></li><li><a href="module-geoflo.Layers.html#.addSource">addSource</a></li><li><a href="module-geoflo.Layers.html#.addSources">addSources</a></li><li><a href="module-geoflo.Layers.html#.getCustomLayers">getCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Layers.html#.getLayer">getLayer</a></li><li><a href="module-geoflo.Layers.html#.getLayerIds">getLayerIds</a></li><li><a href="module-geoflo.Layers.html#.getLayers">getLayers</a></li><li><a href="module-geoflo.Layers.html#.getSelection">getSelection</a></li><li><a href="module-geoflo.Layers.html#.getSource">getSource</a></li><li><a href="module-geoflo.Layers.html#.getSourceIds">getSourceIds</a></li><li><a href="module-geoflo.Layers.html#.getSources">getSources</a></li><li><a href="module-geoflo.Layers.html#.getType">getType</a></li><li><a href="module-geoflo.Layers.html#.hasCustomLayers">hasCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.init">init</a></li><li><a href="module-geoflo.Layers.html#.moveLayers">moveLayers</a></li><li><a href="module-geoflo.Layers.html#.refresh">refresh</a></li><li><a href="module-geoflo.Layers.html#.removeEventListeners">removeEventListeners</a></li><li><a href="module-geoflo.Layers.html#.removeLayer">removeLayer</a></li><li><a href="module-geoflo.Layers.html#.removeLayers">removeLayers</a></li><li><a href="module-geoflo.Layers.html#.removeSource">removeSource</a></li><li><a href="module-geoflo.Layers.html#.removeSources">removeSources</a></li><li><a href="module-geoflo.Layers.html#.setCustomLayers">setCustomLayers</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li></ul></div></li><li><a href="module-geoflo.Map.html">geoflo.Map</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Map_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Map.html#.init">init</a></li><li><a href="module-geoflo.Map.html#.setExtent">setExtent</a></li><li><a href="module-geoflo.Map.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.Map.html#.setPadding">setPadding</a></li><li><a href="module-geoflo.Map.html#.setStyle">setStyle</a></li><li><a href="module-geoflo.Map.html#.setViewport">setViewport</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Map.html#.event:onEvent">onEvent</a></li><li><a href="module-geoflo.Map.html#.event:onLoad">onLoad</a></li><li><a href="module-geoflo.Map.html#.event:onMapMove">onMapMove</a></li><li><a href="module-geoflo.Map.html#.event:onStyleLoad">onStyleLoad</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-geoflo.Draw.html">Draw</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Draw_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Draw.html#.activate">activate</a></li><li><a href="module-geoflo.Draw.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Draw.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.Draw.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Draw.html#.deleteVertex">deleteVertex</a></li><li><a href="module-geoflo.Draw.html#.getFeature">getFeature</a></li><li><a href="module-geoflo.Draw.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Draw.html#.handleContext">handleContext</a></li><li><a href="module-geoflo.Draw.html#.handleDown">handleDown</a></li><li><a href="module-geoflo.Draw.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Draw.html#.handleHistory">handleHistory</a></li><li><a href="module-geoflo.Draw.html#.handleIcon">handleIcon</a></li><li><a href="module-geoflo.Draw.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Draw.html#.handleOffMap">handleOffMap</a></li><li><a href="module-geoflo.Draw.html#.handleOnMap">handleOnMap</a></li><li><a href="module-geoflo.Draw.html#.handlePainting">handlePainting</a></li><li><a href="module-geoflo.Draw.html#.handleRectangle">handleRectangle</a></li><li><a href="module-geoflo.Draw.html#.handleRedo">handleRedo</a></li><li><a href="module-geoflo.Draw.html#.handleText">handleText</a></li><li><a href="module-geoflo.Draw.html#.handleTouch">handleTouch</a></li><li><a href="module-geoflo.Draw.html#.handleUndo">handleUndo</a></li><li><a href="module-geoflo.Draw.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Draw.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.Draw.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.Draw.html#.updateHotSource">updateHotSource</a></li></ul></div></li><li><a href="module-geoflo.Exploring.html">Exploring</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Exploring_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Exploring.html#.activate">activate</a></li><li><a href="module-geoflo.Exploring.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Exploring.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Exploring.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Exploring.html#.getRoute">getRoute</a></li><li><a href="module-geoflo.Exploring.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Exploring.html#.setFeatures">setFeatures</a></li></ul></div></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Gamepad_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Gamepad.html#.init">init</a></li><li><a href="module-geoflo.Gamepad.html#.refresh">refresh</a></li><li><a href="module-geoflo.Gamepad.html#.remove">remove</a></li><li><a href="module-geoflo.Gamepad.html#.setBearing">setBearing</a></li><li><a href="module-geoflo.Gamepad.html#.setCenter">setCenter</a></li><li><a href="module-geoflo.Gamepad.html#.setContainer">setContainer</a></li><li><a href="module-geoflo.Gamepad.html#.setGamepad">setGamepad</a></li><li><a href="module-geoflo.Gamepad.html#.setLocation">setLocation</a></li><li><a href="module-geoflo.Gamepad.html#.setMap">setMap</a></li><li><a href="module-geoflo.Gamepad.html#.setMarker">setMarker</a></li><li><a href="module-geoflo.Gamepad.html#.setPitch">setPitch</a></li><li><a href="module-geoflo.Gamepad.html#.setSpeed">setSpeed</a></li><li><a href="module-geoflo.Gamepad.html#.setZoom">setZoom</a></li><li><a href="module-geoflo.Gamepad.html#.trigger">trigger</a></li></ul></div></li><li><a href="module-geoflo.Locate.html">Locate</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Locate_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.bearing">bearing</a></li><li><a href="module-geoflo.Locate.html#.build">build</a></li><li><a href="module-geoflo.Locate.html#.follow">follow</a></li><li><a href="module-geoflo.Locate.html#.getButton">getButton</a></li><li><a href="module-geoflo.Locate.html#.heading">heading</a></li><li><a href="module-geoflo.Locate.html#.init">init</a></li><li><a href="module-geoflo.Locate.html#.locate">locate</a></li><li><a href="module-geoflo.Locate.html#.ready">ready</a></li><li><a href="module-geoflo.Locate.html#.relocate">relocate</a></li><li><a href="module-geoflo.Locate.html#.removeClasses">removeClasses</a></li><li><a href="module-geoflo.Locate.html#.state">state</a></li><li><a href="module-geoflo.Locate.html#.unlocate">unlocate</a></li><li><a href="module-geoflo.Locate.html#.update">update</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul></div></li><li><a href="module-geoflo.Painting.html">Painting</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Painting_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Painting.html#.activate">activate</a></li><li><a href="module-geoflo.Painting.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Painting.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Painting.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Painting.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Pinning.html">Pinning</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Pinning_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Pinning.html#.activate">activate</a></li><li><a href="module-geoflo.Pinning.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Pinning.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Pinning.html#.getNearByFeatures">getNearByFeatures</a></li><li><a href="module-geoflo.Pinning.html#.resetFeatures">resetFeatures</a></li><li><a href="module-geoflo.Pinning.html#.setBuffer">setBuffer</a></li><li><a href="module-geoflo.Pinning.html#.setFeatures">setFeatures</a></li><li><a href="module-geoflo.Pinning.html#.updateFeatures">updateFeatures</a></li></ul></div></li><li><a href="module-geoflo.Routing.html">Routing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Routing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Routing.html#.activate">activate</a></li><li><a href="module-geoflo.Routing.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Routing.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Routing.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Routing.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Routing.html#.getRoute">getRoute</a></li></ul></div></li><li><a href="module-geoflo.Select.html">Select</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Select_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Select.html#.activate">activate</a></li><li><a href="module-geoflo.Select.html#.addPopup">addPopup</a></li><li><a href="module-geoflo.Select.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Select.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Select.html#.deselectCurrentFeature">deselectCurrentFeature</a></li><li><a href="module-geoflo.Select.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Select.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Select.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Select.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.Select.html#.selectFeature">selectFeature</a></li></ul></div></li><li><a href="module-geoflo.Snapping.html">Snapping</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Snapping_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Snapping.html#.activate">activate</a></li><li><a href="module-geoflo.Snapping.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Snapping.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Snapping.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Snapping.html#.setClosest">setClosest</a></li><li><a href="module-geoflo.Snapping.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Snapping.html#.setVertex">setVertex</a></li><li><a href="module-geoflo.Snapping.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Styles.html">Styles</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Styles_sub"></div></li><li><a href="module-geoflo.Utilities.html">Utilities</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Utilities_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Utilities.html#.assignDeep">assignDeep</a></li><li><a href="module-geoflo.Utilities.html#.clone">clone</a></li><li><a href="module-geoflo.Utilities.html#.cloneDeep">cloneDeep</a></li><li><a href="module-geoflo.Utilities.html#.combineSameTypeFeatures">combineSameTypeFeatures</a></li><li><a href="module-geoflo.Utilities.html#.compareDeep">compareDeep</a></li><li><a href="module-geoflo.Utilities.html#.consumableArray">consumableArray</a></li><li><a href="module-geoflo.Utilities.html#.createBbox">createBbox</a></li><li><a href="module-geoflo.Utilities.html#.createLineAndSaveLength">createLineAndSaveLength</a></li><li><a href="module-geoflo.Utilities.html#.createLineWithLength">createLineWithLength</a></li><li><a href="module-geoflo.Utilities.html#.createMesh">createMesh</a></li><li><a href="module-geoflo.Utilities.html#.createRandomStroke">createRandomStroke</a></li><li><a href="module-geoflo.Utilities.html#.createSimpleMesh">createSimpleMesh</a></li><li><a href="module-geoflo.Utilities.html#.degrees2meters">degrees2meters</a></li><li><a href="module-geoflo.Utilities.html#.extend">extend</a></li><li><a href="module-geoflo.Utilities.html#.findClosestFeatures">findClosestFeatures</a></li><li><a href="module-geoflo.Utilities.html#.getLastIndexCoords">getLastIndexCoords</a></li><li><a href="module-geoflo.Utilities.html#.getRandomColor">getRandomColor</a></li><li><a href="module-geoflo.Utilities.html#.isEmptyLineString">isEmptyLineString</a></li><li><a href="module-geoflo.Utilities.html#.isLastIndex">isLastIndex</a></li><li><a href="module-geoflo.Utilities.html#.isLineString">isLineString</a></li><li><a href="module-geoflo.Utilities.html#.isOverlapping">isOverlapping</a></li><li><a href="module-geoflo.Utilities.html#.isPoint">isPoint</a></li><li><a href="module-geoflo.Utilities.html#.isPointAtVertex">isPointAtVertex</a></li><li><a href="module-geoflo.Utilities.html#.isPointEqual">isPointEqual</a></li><li><a href="module-geoflo.Utilities.html#.isPointNotTooClose">isPointNotTooClose</a></li><li><a href="module-geoflo.Utilities.html#.isPolygon">isPolygon</a></li><li><a href="module-geoflo.Utilities.html#.isValidLineString">isValidLineString</a></li><li><a href="module-geoflo.Utilities.html#.lineSplit">lineSplit</a></li><li><a href="module-geoflo.Utilities.html#.meters2degrees">meters2degrees</a></li><li><a href="module-geoflo.Utilities.html#.pointInCoordinates">pointInCoordinates</a></li><li><a href="module-geoflo.Utilities.html#.processFiles">processFiles</a></li><li><a href="module-geoflo.Utilities.html#.reducePrecision">reducePrecision</a></li><li><a href="module-geoflo.Utilities.html#.sameBorders">sameBorders</a></li><li><a href="module-geoflo.Utilities.html#.setProperties">setProperties</a></li><li><a href="module-geoflo.Utilities.html#.setProperty">setProperty</a></li><li><a href="module-geoflo.Utilities.html#.splitLines">splitLines</a></li><li><a href="module-geoflo.Utilities.html#.stringToDOM">stringToDOM</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Utilities</h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description">This module provides utility functions for processing and manipulating GeoJSON features and geometries.</div>
+            
+
+            
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id=".assignDeep">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>assignDeep<span class="signature">(target, source, options)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line991">line 991</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Recursively assigns properties of source object to target object deeply.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The target object to which properties will be assigned.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The source object whose properties will be assigned to the target.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Optional parameters for the assignment process.
+                <h6>Properties</h6>
+                
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>isMutatingOk</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Flag to allow mutating the target object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isStrictlySafe</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Flag to enforce strict safety checks during assignment.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- The target object with assigned properties from the source object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".clone">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>clone<span class="signature">(thing, opts)</span><span class="type-signature"> &rarr; {Object|Array|Date|RegExp|function|Symbol}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line682">line 682</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function recursively clones the input object or array, preserving the structure and types of the elements.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>thing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">RegExp</span>
+|
+
+<span class="param-type">function</span>
+|
+
+<span class="param-type">Symbol</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The object or array to be cloned.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Optional settings for cloning functions and symbols.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">RegExp</span>
+|
+
+<span class="param-type">function</span>
+|
+
+<span class="param-type">Symbol</span>
+
+
+
+
+
+- - A deep clone of the input object or array.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".cloneDeep">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>cloneDeep<span class="signature">(value, instance)</span><span class="type-signature"> &rarr; {any}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line718">line 718</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Recursively clones a value, including objects and arrays, preserving the original structure deeply.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The value to be cloned.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>instance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A function that can be used to clone custom instances.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">any</span>
+
+
+
+
+
+- - The deeply cloned value.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".combineSameTypeFeatures">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>combineSameTypeFeatures<span class="signature">(features)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line592">line 592</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of line features and combines them by connecting them based on their coordinates. It checks the endpoints of each line feature and connects them accordingly to form a continuous line.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>features</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of line features to be combined.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- - An array of coordinates representing the combined line features.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".compareDeep">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>compareDeep<span class="signature">(x, y)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line1018">line 1018</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Recursively compares two objects deeply to check if they are equal.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first object to compare.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second object to compare.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the objects are deeply equal, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".consumableArray">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>consumableArray<span class="signature">(arr)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line1137">line 1137</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Creates a consumable copy of an array or array-like object.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">Array-like</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input array or array-like object to be copied.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- A consumable copy of the input array or array-like object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createBbox">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createBbox<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line523">line 523</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of two coordinates and constructs a bounding box object with west, east, south, and north properties.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of two coordinates in the format [[lon1, lat1], [lon2, lat2]].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- Returns a bounding box object with west, east, south, and north properties.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createLineAndSaveLength">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createLineAndSaveLength<span class="signature">(lineCoords, props)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line78">line 78</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of line coordinates and properties, creates a line string with random stroke properties, calculates the length of the line, and saves it in the properties.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineCoords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of coordinates for the line string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Properties object for the line string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- - The created line string with saved length in properties.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createLineWithLength">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createLineWithLength<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line494">line 494</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of coordinates and creates a line string using Turf.js. It then calculates the length of the line and sets it as a property of the line.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of coordinates [ [x1, y1], [x2, y2], ... ].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- - A Turf.js line string with the calculated length property.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createMesh">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createMesh<span class="signature">(features)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line189">line 189</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of line string features and splits them at intersection points to create a mesh.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>features</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of line string features to create the mesh from.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- - An array representing the mesh created by splitting the line strings at intersection points.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createRandomStroke">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createRandomStroke<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line65">line 65</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Generates a random stroke color for a shape.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- An object containing the randomly generated stroke color.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".createSimpleMesh">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>createSimpleMesh<span class="signature">(features)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line162">line 162</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Creates a simple mesh by processing a list of features containing line strings.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>features</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of line string features to be processed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- - An array of processed line segments forming the mesh.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".degrees2meters">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>degrees2meters<span class="signature">(px)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line636">line 636</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an array of latitude and longitude in degrees and converts it to meters using the Mercator projection formula.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>px</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array containing latitude and longitude in degrees [longitude, latitude].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array.&lt;number></span>
+
+
+
+
+
+- An array containing the converted x and y coordinates in meters.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".extend">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>extend<span class="signature">(target, &hellip;sources)</span><span class="type-signature"> &rarr; {Object}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line665">line 665</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Extends the properties of the first object with the properties of the subsequent objects.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The object to be extended.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sources</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The objects whose properties will be added to the target object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Object</span>
+
+
+
+
+
+- The extended object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".findClosestFeatures">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>findClosestFeatures<span class="signature">(indexData, point, radius)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line286">line 286</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes an indexData object, a point object, and a radius value as parameters. It then retrieves the feature IDs within the specified radius from the point index in the indexData object. It ensures unique features are included in the result and returns an array of closest features.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>indexData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The index data object containing pointIndex, pointFeatureMap, and featureById.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The point object with lng (longitude) and lat (latitude) properties.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>radius</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The radius within which to search for features.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- An array of closest features to the given point within the specified radius.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".getLastIndexCoords">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>getLastIndexCoords<span class="signature">(f)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line396">line 396</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function returns the last coordinates of a given geometry object.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>f</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The geometry object to extract the last coordinates from.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- The last coordinates of the geometry object.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".getRandomColor">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>getRandomColor<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line49">line 49</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function generates a random color by randomly selecting hexadecimal values for each digit of the color code.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">string</span>
+
+
+
+
+
+- A random color in hexadecimal format.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isEmptyLineString">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isEmptyLineString<span class="signature">(feature)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line410">line 410</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function determines if the provided feature is a LineString with only two identical points, making it an empty LineString.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>feature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object to be checked.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the feature is an empty LineString, otherwise false.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isLastIndex">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isLastIndex<span class="signature">(i, f)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line379">line 379</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function determines if the provided index is the last index in the coordinates array of a feature.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>i</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The index to check.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>f</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object containing the coordinates array.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the index is the last index, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isLineString">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isLineString<span class="signature">(f)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line352">line 352</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes a GeoJSON feature object and determines if it represents a LineString geometry.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>f</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The GeoJSON feature object to be checked.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the feature is a LineString, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isOverlapping">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isOverlapping<span class="signature">(feature1, feature2)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line467">line 467</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes two features and determines if they overlap by comparing their bounding boxes.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>feature1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first feature object with geometry.coordinates.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>feature2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second feature object with geometry.coordinates.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the features overlap, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isPoint">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isPoint<span class="signature">(f)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line325">line 325</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes a feature object and determines if it represents a Point geometry.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>f</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object to be checked.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the feature is a Point geometry, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isPointAtVertex">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isPointAtVertex<span class="signature">(geometryCoords, pointCoords)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line432">line 432</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function determines if a point is at the first or last vertex of a geometry by comparing it with the first and last coordinates.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>geometryCoords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The array of coordinates representing the geometry.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pointCoords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the point to check.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the point is at the first or last vertex, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isPointEqual">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isPointEqual<span class="signature">(coords1, coords2)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line312">line 312</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Checks if two points are equal based on their coordinates.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>coords1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the first point [x, y].</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>coords2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the second point [x, y].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the points have the same coordinates, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isPointNotTooClose">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isPointNotTooClose<span class="signature">(coords1, coords2)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line447">line 447</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function calculates the distance between two points and checks if it exceeds a minimum distance threshold.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>coords1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the first point [x, y].</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>coords2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;number></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the second point [x, y].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the distance between the points is greater than or equal to the minimum distance threshold, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isPolygon">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isPolygon<span class="signature">(feature)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line337">line 337</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function determines if a feature represents a polygon by comparing its first and last coordinates.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>feature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object to be checked.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the feature is a polygon, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".isValidLineString">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>isValidLineString<span class="signature">(f)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line364">line 364</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Checks if the input feature is a valid LineString by verifying its geometry coordinates.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>f</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input feature to be validated.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the input feature is a valid LineString, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".lineSplit">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>lineSplit<span class="signature">(lineString, pointIndexes)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line94">line 94</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Splits a line string based on the provided point indexes and returns an array of split line strings.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The line string object to split.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pointIndexes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of indexes where the line string should be split.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- - An array of split line strings.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".meters2degrees">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>meters2degrees<span class="signature">(px)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line651">line 651</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes a pixel value and converts it to longitude and latitude in degrees.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>px</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The pixel value to be converted, in the format [x, y].</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- An array containing the longitude and latitude in degrees, [lon, lat].
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".pointInCoordinates">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>pointInCoordinates<span class="signature">(lineString, pointCoords)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line9">line 9</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes a line string and a point's coordinates as input and returns an array of indices where the point is found in the line string's coordinates.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The line string object containing geometry coordinates.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pointCoords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The coordinates of the point to search for in the line string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- An array containing the indices of the point in the line string's coordinates.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".processFiles">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>processFiles<span class="signature">(files, handler)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line563">line 563</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function reads each file in the input array, extracts the file name and extension, and then reads the file content using FileReader. The content is passed to the handler function along with the file name and extension.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>files</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;File></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of File objects to be processed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>handler</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A function that will be called for each file with the file content, name, and extension as parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".reducePrecision">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>reducePrecision<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Array}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line509">line 509</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function reduces the precision of the coordinates to 7 decimal places.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array containing the coordinates to be processed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+
+
+
+
+
+- The coordinates with reduced precision to 7 decimal places.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".sameBorders">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>sameBorders<span class="signature">(fromBorders, toBorders)</span><span class="type-signature"> &rarr; {boolean}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line32">line 32</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function compares two sets of borders to determine if they are the same.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fromBorders</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first set of borders to compare.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>toBorders</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second set of borders to compare.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">boolean</span>
+
+
+
+
+
+- Returns true if the borders are the same, false otherwise.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".setProperties">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>setProperties<span class="signature">(feature, newProps)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line274">line 274</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates the properties of a given feature object with new properties.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>feature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object whose properties will be updated.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newProps</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new properties to be merged with the existing properties of the feature.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".setProperty">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>setProperty<span class="signature">(feature, name, value)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line246">line 246</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function sets a property value for a given feature. If the feature does not have properties, it creates a new properties object. If the property name includes a dot (.), it creates nested objects to set the value.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>feature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The feature object to set the property for.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name of the property to set.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The value to set for the property.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".splitLines">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>splitLines<span class="signature">(lineString1, lineString2)</span><span class="type-signature"> &rarr; {Array|null}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line131">line 131</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This function takes two line strings and splits them at their intersection points.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>lineString1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The first line string object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lineString2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The second line string object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+
+
+- - An array containing the split line strings or null if no intersection points are found.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+                
+
+<dt>
+    
+        <h4 class="name" id=".stringToDOM">
+            
+                <span class="type-signature"><span class="icon green">static</span> </span>stringToDOM<span class="signature">(str)</span><span class="type-signature"> &rarr; {Document}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="src_system_Utilities.js.html">src/system/Utilities.js</a></code>,
+                <code><a href="src_system_Utilities.js.html#line550">line 550</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Converts a string to a DOM object using DOMParser.
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The input string to be converted to a DOM object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">Document</span>
+
+
+
+
+
+- - The DOM object created from the input string.
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
+    <div class="footer-text">Solutegrate/GeoFlo © 2024</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'module:geoflo.Utilities_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>

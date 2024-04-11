@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
+    <title>Tutorial: GeoFlo Demo | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -54,114 +54,101 @@
 <div class="main" id="main">
     
 
+<section>
+    <header>
+        
 
-
-    
-
-
-
-
-
-
-
-
+        <h2>GeoFlo Demo</h2>
+    </header>
 
     
+        
+
+        <ul id="example-nav" class="nav nav-tabs">
+            <li role="presentation" id="example-result-btn" class="active" onclick="showResult()">
+                <a href="#">Result</a>
+            </li>
+            <li role="presentation" id="example-js-btn" class="" onclick="showJs()">
+                <a href="#">JS</a>
+            </li>
+            <li role="presentation" id="example-html-btn" class="" onclick="showHtml()">
+                <a href="#">HTML</a>
+            </li>
+        </ul>
+        <article>
+            
+            <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/demo.html></iframe>
+            <div id="example-js" class="hidden"><pre class="prettyprint source">
+    geoflo.init({
+        enable: true,
+        container: 'map',
+        accessToken: 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY2x1dW1iYWc2MGF0MjJucDZudXV5bGM1ZiJ9.OptTI4UZJzysAm13McN6rg'
+    }, function onReady(ctx) {
+        console.log('onReady', ctx)
+    });
+</pre></div>
+            <div id="example-html" class="hidden"><pre class="prettyprint source">
+    &lt;div id="map">&lt;/div>
+</pre></div>
+        </article>
+    
+</section>
 
 
-    <section>
-        <article class="readme"><p><a href="https://www.geoflo.pro/"><img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png"></a></p>
-<p><a href="https://www.linkedin.com/company/geoflopro/about"><img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="linkedin"></a></p>
-<h1>MapboxGL-GeoFlo! 🌎</h1>
-<h3><em>Professional Geospatial Management Library for Mapbox GL JS</em></h3>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo"><img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social" alt="GitHub Release"></a></p>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo"><img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo" alt="GitHub Repo stars"></a></p>
-<p><img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&amp;logo=github&amp;label=Size&amp;color=333333" alt="GitHub File size"></p>
-<p><a href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&amp;logo=github" alt="MIT License"></a></p>
-<p><a href="https://demo.geoflo.pro/"><img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&amp;logo=github" alt="Demo"></a></p>
-<p><a href="https://docs.geoflo.pro/"><img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&amp;logo=github" alt="Docs"></a></p>
-<h2>🌟 Features</h2>
-<ul>
-<li>Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Offset Overlapping Lines</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location Follow Mode</li>
-<li>Mapbox Style Switcher Control</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>mapboxgl-geoflo</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png"></a></p>
-<pre class="prettyprint source lang-bash"><code>  npm install @solutegrate/mapboxgl-geoflo
-</code></pre>
-<h2>🛠️ Usage/Examples</h2>
-<h3>Module Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  import geoflo from '@solutegrate/mapboxgl-geoflo'
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css&quot;>
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.css&quot;>
+    <script>
+        var exampleResult = document.getElementById('example-result');
+        var exampleJs = document.getElementById('example-js');
+        var exampleHtml = document.getElementById('example-html');
+        var exampleResultBtn = document.getElementById('example-result-btn');
+        var exampleJsBtn = document.getElementById('example-js-btn');
+        var exampleHtmlBtn = document.getElementById('example-html-btn');
 
-  &lt;div id=&quot;map&quot;>&lt;/div>
+        function setActive(el) {
+            el.className += ' active';
+        }
 
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/@turf/turf@6/turf.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<ul>
-<li>
-<p>MongoDB Atlas/Realm Pro Version</p>
-</li>
-<li>
-<p>AWS Integration</p>
-</li>
-<li>
-<p>Project Management/Tracking</p>
-</li>
-<li>
-<p>Data Grid, Kanban, Gantt, Calendar, Pivot</p>
-</li>
-<li>
-<p>FontAwesome Pro Icons</p>
-</li>
-<li>
-<p>Advanced Network Node Optimization</p>
-</li>
-<li>
-<p>Real-Time GPS Tracking</p>
-</li>
-<li>
-<p>Actual/Forecast Analysis</p>
-</li>
-<li>
-<p>Budget/Cost Reporting</p>
-</li>
-<li>
-<p>Integrated Material Procurement</p>
-</li>
-<li>
-<p>More and more to come.......</p>
-</li>
-</ul></article>
-    </section>
+        function setInactive(el) {
+            el.className = el.className.replace(/\s*active\s*/g, '');
+        }
 
+        function show(el) {
+            el.className = el.className.replace(/\s*hidden\s*/g, '');
+        }
 
+        function hide(el) {
+            el.className += ' hidden';
+        }
 
+        function showJs() {
+            hide(exampleHtml);
+            hide(exampleResult);
+            setInactive(exampleHtmlBtn);
+            setInactive(exampleResultBtn);
 
+            show(exampleJs);
+            setActive(exampleJsBtn);
+        }
+
+        function showHtml() {
+            hide(exampleJs);
+            hide(exampleResult);
+            setInactive(exampleJsBtn);
+            setInactive(exampleResultBtn);
+
+            show(exampleHtml);
+            setActive(exampleHtmlBtn);
+        }
+
+        function showResult() {
+            hide(exampleJs);
+            hide(exampleHtml);
+            setInactive(exampleJsBtn);
+            setInactive(exampleHtmlBtn);
+
+            show(exampleResult);
+            setActive(exampleResultBtn);
+        }
+    </script>
 
 
 </div>
@@ -176,13 +163,7 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
-        var selectedApi = document.getElementById(id); // do not use jquery selector
-        var $selectedApi = $(selectedApi);
-
-        $selectedApi.removeClass('hidden');
-        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-        showLnbApi();
+        showLnbExamples();
     </script>
 
 </body>

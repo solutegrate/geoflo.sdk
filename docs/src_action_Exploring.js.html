@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
+    <title>Source: src/action/Exploring.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -57,109 +59,290 @@
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Exploring
+ * @description A class that handles exploring functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
+ * @param {Object} ctx - The GeoFlo context object
+ * @param {Object} mode - The currentMode
+ */
+const Exploring = function (ctx, mode) {
+    this.type = mode.type;
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name activate
+	 * @description Activates by setting the 'enabled' property to true and enabling the 'exploring' option.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.enabled = true;
+        ctx.options['exploring'].enable = true;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name deactivate
+	 * @description This function sets the 'enabled' and 'currentMatch' properties to false, and disables the 'exploring' option in the context.
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        this.currentMatch = false;
+        ctx.options['exploring'].enable = false;
+    }
 
 
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name setFeatures
+	 * @description This function sets features on the map based on the provided coordinates and options. It calculates the buffer based on the map zoom level and retrieves features within the buffer area. If routing is enabled, it calculates the route between two points.
+	 * @param {Array&lt;number>} coords - The coordinates to set features around.
+	 * @param {Object} [options={}] - Additional options for setting features.
+	 * @returns {boolean} Returns false if the function is not executed successfully.
+	 */
+    this.setFeatures = function (coords, options={}) {
+        if (ctx.mapMoving || !this.enabled || ctx.currentMode.id !== 'draw') return false;
+        
+        if (!ctx.Routing.enabled) {
+            if (ctx.hotFeature) ctx.hotFeature.geometry.coordinates.pop();
+            var fromPoint = ctx.currentMode.firstClick || !ctx.hotFeature ? ctx.firstClick.coords : ctx.hotFeature.geometry.coordinates[ctx.hotFeature.geometry.coordinates.length - 1];
+            var coords = [fromPoint, coords];
+            if (ctx.Utilities.isPointEqual(coords[0], coords[1])) return false;
+            return this.getRoute(coords, options);
+        }
+
+        if (ctx.map.getZoom() &lt; ctx.options.exploring.minZoom) return alert(`Zoom must be lower than ${ctx.options.exploring.minZoom}`);
+
+        var buffer = options.buffer || ((ctx.options.exploring.buffer * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()))) / 100);
+        var polygon = turf.bboxPolygon([ ctx.map.getBounds().getWest(), ctx.map.getBounds().getSouth(), ctx.map.getBounds().getEast(), ctx.map.getBounds().getNorth() ]);
+
+        if (coords) polygon = turf.polygon(turf.buffer(turf.point(coords), buffer).geometry.coordinates);
+
+        ctx.map.getSource(ctx.statics.constants.sources['SNAP']).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources['VERTEX']).setData(turf.featureCollection([polygon]));
+
+        this.getFeatures(turf.bbox(polygon)).then(features => { setFeatures(features, options); });
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name setFeature
+	 * @description This function creates a line feature using the given coordinates and updates the current match based on the options. It also triggers an event and updates the source data on the map.
+	 * @param {Array} coords - The coordinates to create the line feature. Default is an empty array.
+	 * @param {Object} options - Additional options for setting the feature, such as the starting point. Default is an empty object.
+	 * @returns {Object} The updated feature based on the provided coordinates and options.
+	 */
+    this.setFeature = function (coords=[], options={}) {
+        if (!coords.length) return ctx.hotFeature;
+
+        var feature = turf.lineString(coords);
+        feature.geometry.coordinates[0] = options.start || feature.geometry.coordinates[0];
+
+        if (this.currentMatch) feature = turf.lineString(ctx.Utilities.combineSameTypeFeatures([this.currentMatch, feature]));
+        this.currentMatch = feature;
+
+        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        ctx.fire('exploring.match', { route: this.currentMatch });
+        return mode.updateHotSource(this.currentMatch);
+    }
 
 
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name getFeatures
+	 * @description Retrieves features based on the provided bounds using Overpass API.
+	 * @param {Array} bounds - An array containing the bounding box coordinates [minLon, minLat, maxLon, maxLat].
+	 * @returns {Promise&lt;Array>} An array of GeoJSON features within the specified bounds.
+	 */
+    this.getFeatures = async function (bounds) {
+        if (!bounds || !bounds.length || bounds.length != 4) return false;
 
+        var tag = `way["highway"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});`;
 
+        if (ctx.map.getZoom() &lt; 12) {
+            tag = `way["highway"="motorway"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});`
+            /* way["highway"="primary"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});
+            way["highway"="secondary"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});` */
+        }
 
+        ctx.overpassDownloading = true;
 
+        const query = '[out:json][timeout:25];(' + tag + ');out body;>;out skel qt;';
+        const data = await fetch("//overpass-api.de/api/interpreter?data=" + query, { method: 'GET' } );
+        const response = await data.json();
+        const geojson = convertFromOverpassToGeojson(response);
+        return geojson &amp;&amp; geojson.features ? geojson.features : [];
+    }
 
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name getMatch
+	 * @description This function takes an array of coordinates and optional options to fetch a matched route from the OSRM API.
+	 * @param {Array} coords - An array of coordinates to match the route against.
+	 * @param {Object} options - Optional parameters for customization.
+	 * @param {Object} options.feature - Optional feature to match against.
+	 * @param {Number|Function} options.radius - Optional radius for matching or a function to calculate it.
+	 * @param {String} options.profile - Optional profile for routing (default: 'driving').
+	 * @param {Boolean} options.set - Optional flag to set the feature if matching is successful.
+	 * @returns {Promise&lt;Array|Boolean>} The matched route response object or false if no coordinates are provided or matching fails.
+	 */
+    this.getMatch = async function (coords=[], options={}) {
+        if (!coords.length) return false;
+
+        var tolerance = ctx.options.exploring.tolerance;
+        var feature = options.feature || turf.cleanCoords(turf.lineString(coords));
+        feature = turf.simplify(feature, { mutate: true, tolerance: typeof tolerance === 'function' ? tolerance(ctx.map) : tolerance, highQuality: true });
+
+        var coordinates = feature.geometry.coordinates;
+        if (coordinates.length &lt; 2) return false;
+
+        ctx.overpassDownloading = true;
+
+        options.radius = options.radius || 50;
+        options.profile = options.profile || 'driving';
+        coords = coordinates.join(';');
+
+        const radiuses = coordinates.map(() => options.radius).join(';');
+
+        const query = 'https://router.project-osrm.org/match/v1/' + options.profile + '/' + coords +
+            '?overview=simplified' +
+            '&amp;radiuses=' + radiuses +
+            '&amp;generate_hints=false' +
+            '&amp;skip_waypoints=true' +
+            '&amp;gaps=ignore' +
+            '&amp;annotations=nodes' +
+            '&amp;tidy=true' +
+            '&amp;geometries=geojson';
+
+        const match = await fetch(query, { method: 'GET' } );
+        const response = await match.json();
+
+        ctx.overpassDownloading = false;
+        if (response.code !== 'Ok') alert(`${response.code} - ${response.message}.`);
+        return !options.set ? response : !response.matchings || !response.matchings.length ? feature : this.setFeature(response.matchings[0].geometry.coordinates, options);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Exploring
+	 * @name getRoute
+	 * @description Retrieves a route based on the provided coordinates using the OSRM routing service.
+	 * @param {Array} coords - Array of coordinates representing the route.
+	 * @param {Object} options - Additional options for the route calculation.
+	 * @param {Object} options.feature - Feature object to use for the route calculation.
+	 * @param {String} options.profile - Profile type for the route calculation (default: 'driving').
+	 * @param {Boolean} options.set - Flag to indicate whether to set the route as a feature.
+	 * @returns {Promise&lt;Array|Boolean>} The route response object or false if no coordinates are provided or the route calculation fails.
+	 */
+    this.getRoute = async function (coords=[], options={}) {
+        if (!coords.length) return false;
+
+        var feature = options.feature || turf.cleanCoords(turf.lineString(coords));
+        var coordinates = feature.geometry.coordinates;
+        if (coordinates.length &lt; 2) return false;
+
+        ctx.overpassDownloading = true;
+        options.profile = options.profile || 'driving';
+        coords = coordinates.join(';');
+
+        const query = 'https://router.project-osrm.org/route/v1/' + options.profile + '/' + coords +
+            '?overview=simplified' +
+            '&amp;continue_straight=true' +
+            '&amp;annotations=nodes' +
+            '&amp;geometries=geojson';
+
+        const match = await fetch(query, { method: 'GET' } );
+        const response = await match.json();
+
+        ctx.overpassDownloading = false;
+        if (response.code !== 'Ok') alert(`${response.code} - ${response.message}.`);
+        return !options.set ? response : !response.routes || !response.routes.length ? feature : this.setFeature(response.routes[0].geometry.coordinates, options);
+    }
     
 
 
-    <section>
-        <article class="readme"><p><a href="https://www.geoflo.pro/"><img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png"></a></p>
-<p><a href="https://www.linkedin.com/company/geoflopro/about"><img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="linkedin"></a></p>
-<h1>MapboxGL-GeoFlo! 🌎</h1>
-<h3><em>Professional Geospatial Management Library for Mapbox GL JS</em></h3>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo"><img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social" alt="GitHub Release"></a></p>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo"><img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo" alt="GitHub Repo stars"></a></p>
-<p><img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&amp;logo=github&amp;label=Size&amp;color=333333" alt="GitHub File size"></p>
-<p><a href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&amp;logo=github" alt="MIT License"></a></p>
-<p><a href="https://demo.geoflo.pro/"><img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&amp;logo=github" alt="Demo"></a></p>
-<p><a href="https://docs.geoflo.pro/"><img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&amp;logo=github" alt="Docs"></a></p>
-<h2>🌟 Features</h2>
-<ul>
-<li>Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Offset Overlapping Lines</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location Follow Mode</li>
-<li>Mapbox Style Switcher Control</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>mapboxgl-geoflo</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png"></a></p>
-<pre class="prettyprint source lang-bash"><code>  npm install @solutegrate/mapboxgl-geoflo
-</code></pre>
-<h2>🛠️ Usage/Examples</h2>
-<h3>Module Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  import geoflo from '@solutegrate/mapboxgl-geoflo'
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css&quot;>
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.css&quot;>
+    if (ctx.options['exploring'].enable) this.activate();
 
-  &lt;div id=&quot;map&quot;>&lt;/div>
 
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/@turf/turf@6/turf.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<ul>
-<li>
-<p>MongoDB Atlas/Realm Pro Version</p>
-</li>
-<li>
-<p>AWS Integration</p>
-</li>
-<li>
-<p>Project Management/Tracking</p>
-</li>
-<li>
-<p>Data Grid, Kanban, Gantt, Calendar, Pivot</p>
-</li>
-<li>
-<p>FontAwesome Pro Icons</p>
-</li>
-<li>
-<p>Advanced Network Node Optimization</p>
-</li>
-<li>
-<p>Real-Time GPS Tracking</p>
-</li>
-<li>
-<p>Actual/Forecast Analysis</p>
-</li>
-<li>
-<p>Budget/Cost Reporting</p>
-</li>
-<li>
-<p>Integrated Material Procurement</p>
-</li>
-<li>
-<p>More and more to come.......</p>
-</li>
-</ul></article>
+
+    function convertFromOverpassToGeojson(op) {
+        const elementsById = {};
+
+        op.elements.forEach((element) => {
+            const key = `${element.type}-${element.id}`;
+            elementsById[key] = element;
+        });
+
+        const wayToPoints = function (way) {
+            const line = [];
+            way.nodes.forEach((nodeId) => {
+                const key = `node-${nodeId}`;
+                const nodeElement = elementsById[key];
+                if (nodeElement) {
+                    line.push([nodeElement.lon, nodeElement.lat]);
+                } else {
+                    console.error("Node ", key, " missing");
+                }
+            });
+            return line;
+        };
+
+        const lineStrings = [];
+
+        op.elements.forEach((element) => {
+            if (element.type === "way") {
+                const line = wayToPoints(element);
+                if (line.length > 1) {
+                    lineStrings.push(turf.lineString(line, element.tags));
+                }
+            } else if (element.type === "relation") {
+                element.members.forEach((member) => {
+                    const memberType = member.type;
+                    if (memberType === "way") {
+                        const key = `way-${member.ref}`;
+                        const way = elementsById[key];
+                        const line = wayToPoints(way);
+                        if (line.length > 1) {
+                            lineStrings.push(turf.lineString(line, element.tags));
+                        }
+                    }
+                });
+            }
+        });
+
+        return ctx.turf.featureCollection(lineStrings);
+    }
+
+    function setFeatures(features=[]) {
+        ctx.overpassDownloading = false;
+        if (ctx.mapMoving || !ctx.Exploring.enabled || ctx.currentMode.id !== 'draw') return ctx.updateMeshData([], true);
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+        ctx.Snapping.addFeature(ctx.snapFeature);
+        ctx.setMeshFeatures(features);
+        ctx.currentMode.updateHotSource();
+        ctx.fire('overpass.add', { features: features });
+        if (!ctx.currentMode.firstClick) return features;
+        var points = turf.explode(turf.featureCollection(features))
+        var closestPoint = turf.nearestPoint(turf.point(ctx.currentMode.firstClick.coords), points);
+        ctx.lastClick = { coords: closestPoint.geometry.coordinates };
+        return features;
+    }
+}
+
+export { Exploring as default }</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -176,7 +359,7 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
+    <title>Source: src/action/Pinning.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -57,109 +59,189 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p><a href="https://www.geoflo.pro/"><img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png"></a></p>
-<p><a href="https://www.linkedin.com/company/geoflopro/about"><img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="linkedin"></a></p>
-<h1>MapboxGL-GeoFlo! 🌎</h1>
-<h3><em>Professional Geospatial Management Library for Mapbox GL JS</em></h3>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo"><img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social" alt="GitHub Release"></a></p>
-<p><a href="https://github.com/solutegrate/mapboxgl-geoflo"><img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo" alt="GitHub Repo stars"></a></p>
-<p><img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&amp;logo=github&amp;label=Size&amp;color=333333" alt="GitHub File size"></p>
-<p><a href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?color=6fafdb&amp;logo=github" alt="MIT License"></a></p>
-<p><a href="https://demo.geoflo.pro/"><img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&amp;logo=github" alt="Demo"></a></p>
-<p><a href="https://docs.geoflo.pro/"><img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&amp;logo=github" alt="Docs"></a></p>
-<h2>🌟 Features</h2>
-<ul>
-<li>Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Offset Overlapping Lines</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location Follow Mode</li>
-<li>Mapbox Style Switcher Control</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>mapboxgl-geoflo</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png"></a></p>
-<pre class="prettyprint source lang-bash"><code>  npm install @solutegrate/mapboxgl-geoflo
-</code></pre>
-<h2>🛠️ Usage/Examples</h2>
-<h3>Module Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  import geoflo from '@solutegrate/mapboxgl-geoflo'
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css&quot;>
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.css&quot;>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Pinning
+ * @description A class that handles pinning functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
+ * @param {Object} ctx - The GeoFlo context object
+ * @param {Object} mode - The currentMode
+ */
+const Pinning = function (ctx, mode) {
+    this.type = mode.type;
+    this.updatedFeatures = [];
 
-  &lt;div id=&quot;map&quot;>&lt;/div>
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name activate
+	 * @description Activates the feature by setting the enabled flag to true and enabling pinning in the options.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.updatedFeatures = [];
+        this.enabled = true;
+        ctx.options['pinning'].enable = true;
+    }
 
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/@turf/turf@6/turf.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js&quot;>&lt;/script>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/mapboxgl-geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = { enable: true, container: 'map', accessToken: 'MAPBOX_TOKEN' }
-  const onReady = function (ctx) { console.log('onReady', ctx) }
-  
-  geoflo.init(options, onReady);
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<ul>
-<li>
-<p>MongoDB Atlas/Realm Pro Version</p>
-</li>
-<li>
-<p>AWS Integration</p>
-</li>
-<li>
-<p>Project Management/Tracking</p>
-</li>
-<li>
-<p>Data Grid, Kanban, Gantt, Calendar, Pivot</p>
-</li>
-<li>
-<p>FontAwesome Pro Icons</p>
-</li>
-<li>
-<p>Advanced Network Node Optimization</p>
-</li>
-<li>
-<p>Real-Time GPS Tracking</p>
-</li>
-<li>
-<p>Actual/Forecast Analysis</p>
-</li>
-<li>
-<p>Budget/Cost Reporting</p>
-</li>
-<li>
-<p>Integrated Material Procurement</p>
-</li>
-<li>
-<p>More and more to come.......</p>
-</li>
-</ul></article>
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name deactivate
+	 * @description This function deactivates the pinning feature by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        ctx.options['pinning'].enable = false;
+        this.resetFeatures();
+        delete this.buffer;
+        delete ctx.pinableFeatures;
+        delete ctx.pinningFeatures;
+        this.updatedFeatures = [];
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getFeatures
+	 * @description Retrieves the features from the pinnedFeatures array in the context object.
+	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
+	 */
+    this.getFeatures = function () {
+        var features = ctx.pinnedFeatures &amp;&amp; ctx.pinnedFeatures.length ? ctx.pinnedFeatures.map(function (feature) { return feature.feature }) : [];
+        return features;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setBuffer
+	 * @description This function creates a buffer around the provided coordinates based on the pinning buffer option.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to create the buffer around.
+	 * @returns {Object|boolean} Returns the buffer object containing the feature, radius, and coordinates if successful, otherwise false.
+	 */
+    this.setBuffer = function (coords) {
+        delete this.buffer;
+
+        if (!this.enabled) return false;
+        if (!coords || !ctx.options.pinning.buffer) return false;
+
+        var buffer = turf.buffer(turf.point(coords), ctx.options.pinning.buffer);
+        var radius = turf.polygon(buffer.geometry.coordinates);
+
+        this.buffer = {
+            feature: buffer,
+            radius: radius,
+            coords: coords
+        }
+
+        return this.buffer;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setFeatures
+	 * @description Sets the pinable features based on the provided coordinates and fires an event.
+	 * @param {Object} coords - The coordinates to determine nearby features.
+	 * @returns {Array} - An array of pinable features.
+	 */
+    this.setFeatures = function (coords) {
+        ctx.pinableFeatures = [];
+        if (!this.enabled || !coords) return false;
+        ctx.pinableFeatures = this.getNearByFeatures(coords);
+        ctx.fire('pinning.add', { features: ctx.pinableFeatures, buffer: this.buffer });
+        return ctx.pinableFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name resetFeatures
+	 * @description Resets the updated features by adding them to the canvas context.
+	 * @returns {boolean} Returns false if there are no updated features to reset.
+	 */
+    this.resetFeatures = function () {
+        if (!this.updatedFeatures.length) return false;
+        ctx.addFeatures(this.updatedFeatures, true);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name updateFeatures
+	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
+	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
+	 */
+    this.updateFeatures = function () {
+        if (!this.enabled) return false;
+        if (!ctx.pinableFeatures || !ctx.pinableFeatures.length) return delete ctx.pinningFeatures, false;
+        updateFeatures.call(this, ctx.pinableFeatures);
+        ctx.Features.updateFeatures(ctx.pinableFeatures, ctx.snappedVertex);
+        ctx.pinnedFeatures = ctx.Utilities.cloneDeep(ctx.pinableFeatures);
+        ctx.fire('pinning.update', { feature: ctx.hotFeature, vertex: turf.point(ctx.snappedVertex), features: ctx.pinnedFeatures });
+        return ctx.pinningFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getNearByFeatures
+	 * @description This function calculates the radius based on the map zoom level and retrieves nearby features within that radius.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to find nearby features.
+	 * @returns {Array&lt;Object>} An array of nearby features with their IDs, types, indices, and feature objects.
+	 */
+    this.getNearByFeatures = function (coords) {
+        if (!this.enabled || !coords) return false;
+
+        var hotFeature = ctx.hotFeature;
+        var calculatedRadius = ctx.options.snapping.distance * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
+        var radiusInKm = calculatedRadius / 100000;
+        var buffer = this.setBuffer(coords);
+        var features = ctx.getRenderedDrawnFeatures({lng: coords[0], lat: coords[1]}, radiusInKm);
+        var nearby = [];
+
+        features.forEach(function (feature) {
+            turf.coordEach(feature, function (coord, index) {
+                var isNearby = false;
+    
+                if (buffer.radius &amp;&amp; turf.booleanWithin(turf.point(coord), buffer.radius)) isNearby = true;
+                if (!isNearby &amp;&amp; buffer.coords &amp;&amp; ctx.Utilities.isPointEqual(coord, buffer.coords)) isNearby = true;
+                if (!isNearby) return;
+                if (hotFeature &amp;&amp; hotFeature.id === feature.id) return;
+                    
+                nearby.push({
+                    id: feature.id || feature.properties.id,
+                    type: feature.properties.type,
+                    index: index,
+                    feature: feature
+                })
+            });
+        });
+
+        return nearby;
+    }
+    
+    if (ctx.options['pinning'].enable) this.activate();
+
+
+    function updateFeatures(features) {
+        if (!features || !features.length) return false;
+
+        features.forEach(function (feature) {
+            var pinned = this.updatedFeatures.find(function (f) { return f.id === feature.id });
+            if (pinned) return;
+            this.updatedFeatures.push(ctx.Utilities.cloneDeep(feature.feature));
+        }, this);
+    }
+}
+
+export { Pinning as default }</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -176,7 +258,7 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

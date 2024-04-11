@@ -1,0 +1,1277 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: src/mode/Draw.js | Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <a href="https://demo.geoflo.pro" rel="noopener noreferrer" target="_blank">
+                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Documentation</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>API</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-demo.html">GeoFlo Demo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="demo_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.html#.activateExploring">activateExploring</a></li><li><a href="module-geoflo.html#.activatePainting">activatePainting</a></li><li><a href="module-geoflo.html#.activatePinning">activatePinning</a></li><li><a href="module-geoflo.html#.activateRouting">activateRouting</a></li><li><a href="module-geoflo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-geoflo.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-geoflo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-geoflo.html#.addGamepad">addGamepad</a></li><li><a href="module-geoflo.html#.addPlugin">addPlugin</a></li><li><a href="module-geoflo.html#.addTooltip">addTooltip</a></li><li><a href="module-geoflo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-geoflo.html#.createPolygon">createPolygon</a></li><li><a href="module-geoflo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-geoflo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-geoflo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-geoflo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-geoflo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-geoflo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-geoflo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-geoflo.html#.disable">disable</a></li><li><a href="module-geoflo.html#.editFeature">editFeature</a></li><li><a href="module-geoflo.html#.enable">enable</a></li><li><a href="module-geoflo.html#.fire">fire</a></li><li><a href="module-geoflo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-geoflo.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.html#.getColors">getColors</a></li><li><a href="module-geoflo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-geoflo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-geoflo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-geoflo.html#.getMap">getMap</a></li><li><a href="module-geoflo.html#.getMode">getMode</a></li><li><a href="module-geoflo.html#.getModes">getModes</a></li><li><a href="module-geoflo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-geoflo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-geoflo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-geoflo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-geoflo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-geoflo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-geoflo.html#.hasControls">hasControls</a></li><li><a href="module-geoflo.html#.hasSelection">hasSelection</a></li><li><a href="module-geoflo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-geoflo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-geoflo.html#.init">init</a></li><li><a href="module-geoflo.html#.initialize">initialize</a></li><li><a href="module-geoflo.html#.load">load</a></li><li><a href="module-geoflo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-geoflo.html#.moveFeature">moveFeature</a></li><li><a href="module-geoflo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-geoflo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-geoflo.html#.off">off</a></li><li><a href="module-geoflo.html#.on">on</a></li><li><a href="module-geoflo.html#.once">once</a></li><li><a href="module-geoflo.html#.redraw">redraw</a></li><li><a href="module-geoflo.html#.refresh">refresh</a></li><li><a href="module-geoflo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-geoflo.html#.removeControls">removeControls</a></li><li><a href="module-geoflo.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.html#.removeGamepad">removeGamepad</a></li><li><a href="module-geoflo.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.html#.removeSelection">removeSelection</a></li><li><a href="module-geoflo.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-geoflo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-geoflo.html#.setButtons">setButtons</a></li><li><a href="module-geoflo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-geoflo.html#.setControls">setControls</a></li><li><a href="module-geoflo.html#.setCustomLayers">setCustomLayers</a></li><li><a href="module-geoflo.html#.setIcon">setIcon</a></li><li><a href="module-geoflo.html#.setMapClass">setMapClass</a></li><li><a href="module-geoflo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-geoflo.html#.setMode">setMode</a></li><li><a href="module-geoflo.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-geoflo.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-geoflo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-geoflo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-geoflo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-geoflo.Mesh.html">Mesh</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Mesh_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Mesh.html#.addNewFeatures">addNewFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Mesh.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesByParentId">getFeaturesByParentId</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesFromIndex">getFeaturesFromIndex</a></li><li><a href="module-geoflo.Mesh.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.Mesh.html#.splitSegmentAtPoint">splitSegmentAtPoint</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Namespaces</h3><ul><li><a href="module-geoflo.Features.html">geoflo.Features</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Features_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Features.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Features.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.Features.html#.addUnits">addUnits</a></li><li><a href="module-geoflo.Features.html#.convertUnits">convertUnits</a></li><li><a href="module-geoflo.Features.html#.deleteFeatures">deleteFeatures</a></li><li><a href="module-geoflo.Features.html#.getColdFeatures">getColdFeatures</a></li><li><a href="module-geoflo.Features.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Features.html#.getFeaturesById">getFeaturesById</a></li><li><a href="module-geoflo.Features.html#.getType">getType</a></li><li><a href="module-geoflo.Features.html#.getUnits">getUnits</a></li><li><a href="module-geoflo.Features.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.Features.html#.setFeatureState">setFeatureState</a></li><li><a href="module-geoflo.Features.html#.setFeaturesState">setFeaturesState</a></li><li><a href="module-geoflo.Features.html#.setText">setText</a></li><li><a href="module-geoflo.Features.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.Features.html#.updateSource">updateSource</a></li></ul></div></li><li><a href="module-geoflo.Layers.html">geoflo.Layers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Layers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.addEventListeners">addEventListeners</a></li><li><a href="module-geoflo.Layers.html#.addLayer">addLayer</a></li><li><a href="module-geoflo.Layers.html#.addLayers">addLayers</a></li><li><a href="module-geoflo.Layers.html#.addSource">addSource</a></li><li><a href="module-geoflo.Layers.html#.addSources">addSources</a></li><li><a href="module-geoflo.Layers.html#.getCustomLayers">getCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Layers.html#.getLayer">getLayer</a></li><li><a href="module-geoflo.Layers.html#.getLayerIds">getLayerIds</a></li><li><a href="module-geoflo.Layers.html#.getLayers">getLayers</a></li><li><a href="module-geoflo.Layers.html#.getSelection">getSelection</a></li><li><a href="module-geoflo.Layers.html#.getSource">getSource</a></li><li><a href="module-geoflo.Layers.html#.getSourceIds">getSourceIds</a></li><li><a href="module-geoflo.Layers.html#.getSources">getSources</a></li><li><a href="module-geoflo.Layers.html#.getType">getType</a></li><li><a href="module-geoflo.Layers.html#.hasCustomLayers">hasCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.init">init</a></li><li><a href="module-geoflo.Layers.html#.moveLayers">moveLayers</a></li><li><a href="module-geoflo.Layers.html#.refresh">refresh</a></li><li><a href="module-geoflo.Layers.html#.removeEventListeners">removeEventListeners</a></li><li><a href="module-geoflo.Layers.html#.removeLayer">removeLayer</a></li><li><a href="module-geoflo.Layers.html#.removeLayers">removeLayers</a></li><li><a href="module-geoflo.Layers.html#.removeSource">removeSource</a></li><li><a href="module-geoflo.Layers.html#.removeSources">removeSources</a></li><li><a href="module-geoflo.Layers.html#.setCustomLayers">setCustomLayers</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li></ul></div></li><li><a href="module-geoflo.Map.html">geoflo.Map</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Map_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Map.html#.init">init</a></li><li><a href="module-geoflo.Map.html#.setExtent">setExtent</a></li><li><a href="module-geoflo.Map.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.Map.html#.setPadding">setPadding</a></li><li><a href="module-geoflo.Map.html#.setStyle">setStyle</a></li><li><a href="module-geoflo.Map.html#.setViewport">setViewport</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Map.html#.event:onEvent">onEvent</a></li><li><a href="module-geoflo.Map.html#.event:onLoad">onLoad</a></li><li><a href="module-geoflo.Map.html#.event:onMapMove">onMapMove</a></li><li><a href="module-geoflo.Map.html#.event:onStyleLoad">onStyleLoad</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-geoflo.Draw.html">Draw</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Draw_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Draw.html#.activate">activate</a></li><li><a href="module-geoflo.Draw.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Draw.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.Draw.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Draw.html#.deleteVertex">deleteVertex</a></li><li><a href="module-geoflo.Draw.html#.getFeature">getFeature</a></li><li><a href="module-geoflo.Draw.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Draw.html#.handleContext">handleContext</a></li><li><a href="module-geoflo.Draw.html#.handleDown">handleDown</a></li><li><a href="module-geoflo.Draw.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Draw.html#.handleHistory">handleHistory</a></li><li><a href="module-geoflo.Draw.html#.handleIcon">handleIcon</a></li><li><a href="module-geoflo.Draw.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Draw.html#.handleOffMap">handleOffMap</a></li><li><a href="module-geoflo.Draw.html#.handleOnMap">handleOnMap</a></li><li><a href="module-geoflo.Draw.html#.handlePainting">handlePainting</a></li><li><a href="module-geoflo.Draw.html#.handleRectangle">handleRectangle</a></li><li><a href="module-geoflo.Draw.html#.handleRedo">handleRedo</a></li><li><a href="module-geoflo.Draw.html#.handleText">handleText</a></li><li><a href="module-geoflo.Draw.html#.handleTouch">handleTouch</a></li><li><a href="module-geoflo.Draw.html#.handleUndo">handleUndo</a></li><li><a href="module-geoflo.Draw.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Draw.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.Draw.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.Draw.html#.updateHotSource">updateHotSource</a></li></ul></div></li><li><a href="module-geoflo.Exploring.html">Exploring</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Exploring_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Exploring.html#.activate">activate</a></li><li><a href="module-geoflo.Exploring.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Exploring.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Exploring.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Exploring.html#.getRoute">getRoute</a></li><li><a href="module-geoflo.Exploring.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Exploring.html#.setFeatures">setFeatures</a></li></ul></div></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Gamepad_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Gamepad.html#.init">init</a></li><li><a href="module-geoflo.Gamepad.html#.refresh">refresh</a></li><li><a href="module-geoflo.Gamepad.html#.remove">remove</a></li><li><a href="module-geoflo.Gamepad.html#.setBearing">setBearing</a></li><li><a href="module-geoflo.Gamepad.html#.setCenter">setCenter</a></li><li><a href="module-geoflo.Gamepad.html#.setContainer">setContainer</a></li><li><a href="module-geoflo.Gamepad.html#.setGamepad">setGamepad</a></li><li><a href="module-geoflo.Gamepad.html#.setLocation">setLocation</a></li><li><a href="module-geoflo.Gamepad.html#.setMap">setMap</a></li><li><a href="module-geoflo.Gamepad.html#.setMarker">setMarker</a></li><li><a href="module-geoflo.Gamepad.html#.setPitch">setPitch</a></li><li><a href="module-geoflo.Gamepad.html#.setSpeed">setSpeed</a></li><li><a href="module-geoflo.Gamepad.html#.setZoom">setZoom</a></li><li><a href="module-geoflo.Gamepad.html#.trigger">trigger</a></li></ul></div></li><li><a href="module-geoflo.Locate.html">Locate</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Locate_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.bearing">bearing</a></li><li><a href="module-geoflo.Locate.html#.build">build</a></li><li><a href="module-geoflo.Locate.html#.follow">follow</a></li><li><a href="module-geoflo.Locate.html#.getButton">getButton</a></li><li><a href="module-geoflo.Locate.html#.heading">heading</a></li><li><a href="module-geoflo.Locate.html#.init">init</a></li><li><a href="module-geoflo.Locate.html#.locate">locate</a></li><li><a href="module-geoflo.Locate.html#.ready">ready</a></li><li><a href="module-geoflo.Locate.html#.relocate">relocate</a></li><li><a href="module-geoflo.Locate.html#.removeClasses">removeClasses</a></li><li><a href="module-geoflo.Locate.html#.state">state</a></li><li><a href="module-geoflo.Locate.html#.unlocate">unlocate</a></li><li><a href="module-geoflo.Locate.html#.update">update</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul></div></li><li><a href="module-geoflo.Painting.html">Painting</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Painting_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Painting.html#.activate">activate</a></li><li><a href="module-geoflo.Painting.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Painting.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Painting.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Painting.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Pinning.html">Pinning</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Pinning_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Pinning.html#.activate">activate</a></li><li><a href="module-geoflo.Pinning.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Pinning.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Pinning.html#.getNearByFeatures">getNearByFeatures</a></li><li><a href="module-geoflo.Pinning.html#.resetFeatures">resetFeatures</a></li><li><a href="module-geoflo.Pinning.html#.setBuffer">setBuffer</a></li><li><a href="module-geoflo.Pinning.html#.setFeatures">setFeatures</a></li><li><a href="module-geoflo.Pinning.html#.updateFeatures">updateFeatures</a></li></ul></div></li><li><a href="module-geoflo.Routing.html">Routing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Routing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Routing.html#.activate">activate</a></li><li><a href="module-geoflo.Routing.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Routing.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Routing.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Routing.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Routing.html#.getRoute">getRoute</a></li></ul></div></li><li><a href="module-geoflo.Select.html">Select</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Select_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Select.html#.activate">activate</a></li><li><a href="module-geoflo.Select.html#.addPopup">addPopup</a></li><li><a href="module-geoflo.Select.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Select.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Select.html#.deselectCurrentFeature">deselectCurrentFeature</a></li><li><a href="module-geoflo.Select.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Select.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Select.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Select.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.Select.html#.selectFeature">selectFeature</a></li></ul></div></li><li><a href="module-geoflo.Snapping.html">Snapping</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Snapping_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Snapping.html#.activate">activate</a></li><li><a href="module-geoflo.Snapping.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Snapping.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Snapping.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Snapping.html#.setClosest">setClosest</a></li><li><a href="module-geoflo.Snapping.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Snapping.html#.setVertex">setVertex</a></li><li><a href="module-geoflo.Snapping.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Styles.html">Styles</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Styles_sub"></div></li><li><a href="module-geoflo.Utilities.html">Utilities</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Utilities_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Utilities.html#.assignDeep">assignDeep</a></li><li><a href="module-geoflo.Utilities.html#.clone">clone</a></li><li><a href="module-geoflo.Utilities.html#.cloneDeep">cloneDeep</a></li><li><a href="module-geoflo.Utilities.html#.combineSameTypeFeatures">combineSameTypeFeatures</a></li><li><a href="module-geoflo.Utilities.html#.compareDeep">compareDeep</a></li><li><a href="module-geoflo.Utilities.html#.consumableArray">consumableArray</a></li><li><a href="module-geoflo.Utilities.html#.createBbox">createBbox</a></li><li><a href="module-geoflo.Utilities.html#.createLineAndSaveLength">createLineAndSaveLength</a></li><li><a href="module-geoflo.Utilities.html#.createLineWithLength">createLineWithLength</a></li><li><a href="module-geoflo.Utilities.html#.createMesh">createMesh</a></li><li><a href="module-geoflo.Utilities.html#.createRandomStroke">createRandomStroke</a></li><li><a href="module-geoflo.Utilities.html#.createSimpleMesh">createSimpleMesh</a></li><li><a href="module-geoflo.Utilities.html#.degrees2meters">degrees2meters</a></li><li><a href="module-geoflo.Utilities.html#.extend">extend</a></li><li><a href="module-geoflo.Utilities.html#.findClosestFeatures">findClosestFeatures</a></li><li><a href="module-geoflo.Utilities.html#.getLastIndexCoords">getLastIndexCoords</a></li><li><a href="module-geoflo.Utilities.html#.getRandomColor">getRandomColor</a></li><li><a href="module-geoflo.Utilities.html#.isEmptyLineString">isEmptyLineString</a></li><li><a href="module-geoflo.Utilities.html#.isLastIndex">isLastIndex</a></li><li><a href="module-geoflo.Utilities.html#.isLineString">isLineString</a></li><li><a href="module-geoflo.Utilities.html#.isOverlapping">isOverlapping</a></li><li><a href="module-geoflo.Utilities.html#.isPoint">isPoint</a></li><li><a href="module-geoflo.Utilities.html#.isPointAtVertex">isPointAtVertex</a></li><li><a href="module-geoflo.Utilities.html#.isPointEqual">isPointEqual</a></li><li><a href="module-geoflo.Utilities.html#.isPointNotTooClose">isPointNotTooClose</a></li><li><a href="module-geoflo.Utilities.html#.isPolygon">isPolygon</a></li><li><a href="module-geoflo.Utilities.html#.isValidLineString">isValidLineString</a></li><li><a href="module-geoflo.Utilities.html#.lineSplit">lineSplit</a></li><li><a href="module-geoflo.Utilities.html#.meters2degrees">meters2degrees</a></li><li><a href="module-geoflo.Utilities.html#.pointInCoordinates">pointInCoordinates</a></li><li><a href="module-geoflo.Utilities.html#.processFiles">processFiles</a></li><li><a href="module-geoflo.Utilities.html#.reducePrecision">reducePrecision</a></li><li><a href="module-geoflo.Utilities.html#.sameBorders">sameBorders</a></li><li><a href="module-geoflo.Utilities.html#.setProperties">setProperties</a></li><li><a href="module-geoflo.Utilities.html#.setProperty">setProperty</a></li><li><a href="module-geoflo.Utilities.html#.splitLines">splitLines</a></li><li><a href="module-geoflo.Utilities.html#.stringToDOM">stringToDOM</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Draw
+ * @description A class that handles drawing functionality in a mapping context.
+ * @param {Object} ctx - The GeoFlo context object
+ */
+function Draw (ctx) {
+    this.id = 'draw';
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name canHandle
+	 * @description Checks if the given modeName is equal to the constant mode DRAW.
+	 * @param {string} modeName - The name of the mode to be checked.
+	 * @returns {boolean} Returns true if the modeName is equal to DRAW, false otherwise.
+	 */
+    this.canHandle = function (modeName) {
+        return ctx.statics.constants.modes.DRAW === modeName;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name activate
+	 * @description This function activates the drawing mode with the provided options. It sets up the necessary properties and event listeners for drawing features on the map.
+	 * @param {Object} options - The options for activating the drawing mode.
+	 * @param {Object} [options.feature] - The feature to be edited or drawn.
+	 * @param {String} [options.type] - The type of feature to be drawn.
+	 * @param {Object} [options.lngLat] - The longitude and latitude coordinates for drawing.
+	 * @param {String} [options.id] - The unique identifier for the feature.
+	 * @returns {Object} Returns the current instance for method chaining.
+	 */
+    this.activate = function (options={}) {
+        if (this.activated) return false;
+        if (ctx.currentMode.id !== this.id) return options.mode = this.id, ctx.setMode(options);
+
+        this.activated = true;
+        this._handleHistory = this.handleHistory.bind(this);
+        this.history = [];
+        this.undo = [];
+
+        if (options.feature) options.type = editMode(options.feature);
+        ctx.drawMode = !ctx.editMode;
+        
+        var lngLat = options.lngLat;
+        delete options.lngLat;
+
+        var newType = this.type = options.type;
+        var properties = options.feature ? options.feature.properties : options;
+        
+        this.properties = ctx.Utilities.cloneDeep(properties);
+        delete this.properties.mode;
+
+        const id = options.id || properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+
+        this.properties.id = id;
+        this.properties.type = newType;
+        this.properties.style = {};
+
+        ctx.setButtons();
+        ctx.setActiveButton(newType);
+        
+        if (ctx.Utilities.isPoint(ctx.hotFeature, newType)) this.isPoint = true;
+
+        ctx.fire('draw.activate', {
+            id: id,
+            type: newType,
+            activated: this.activated,
+            editing: ctx.editMode,
+            feature: ctx.hotFeature || options.feature,
+            properties: this.properties
+        })
+
+        ctx.on('source.hot', this._handleHistory);
+        if (lngLat) this.handleMove({ lngLat: lngLat });
+        ctx.options.painting.enable || (ctx.mobile &amp;&amp; newType === 'Rectangle') ? ctx.activatePainting() : false;
+        this.updateHotSource();
+        return this;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name deactivate
+	 * @description Deactivates the draw feature by canceling the current edit, cleaning up the draw, setting buttons, and handling events.
+	 * @param {boolean} cancel - Flag to determine if the edit should be canceled.
+	 * @param {boolean} standby - Flag to indicate if the feature is in standby mode.
+	 * @param {object} feature - The feature to be deactivated.
+	 */
+    this.deactivate = function (cancel, standby, feature) {
+        if (!this.activated) return false;
+        if (cancel) this.cancelEdit(standby, feature);
+        cleanupDraw(this);
+        ctx.setButtons();
+        ctx.off('source.hot', this._handleHistory);
+        ctx.fire('draw.deactivate', { activated: this.activated });
+        !ctx.options.repeatDraw ? ctx.setMode() : this.activate(this.properties);
+    }
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name updateHotSource
+	 * @description This function updates the hot source feature with new properties and assigns it to the ctx.hotFeature. It then updates the data of the VERTEX and HOT sources on the map with the updated feature.
+	 * @param {Object} feature - The feature object to be updated.
+	 * @param {Object} properties - The new properties to be assigned to the feature.
+	 * @returns {Object} The updated hot source feature.
+	 */
+    this.updateHotSource = function (feature, properties) {
+        if (feature) ctx.hotFeature = feature;
+        if (!ctx.hotFeature || ctx.overpassDownloading) return;
+        ctx.hotFeature.properties = ctx.Utilities.assignDeep(ctx.hotFeature.properties, properties || {});
+        ctx.hotFeature.properties.style = ctx.hotFeature.properties.style || {};
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([ctx.hotFeature]));
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+        return ctx.hotFeature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name deleteVertex
+	 * @description Deletes a vertex from the current feature being edited on the map.
+	 * @param {number} index - The index of the vertex to be deleted.
+	 * @returns {void}
+	 */
+    this.deleteVertex = function (index) {
+        if (ctx.hotFeature) {
+            const coords = ctx.hotFeature.geometry.coordinates;
+            index = index !== undefined ? index : coords.length - 1;
+
+            if (coords.length > 1) {
+                coords.splice(index, 1);
+                ctx.lastClick = { coords: coords[coords.length - 1] };
+
+                if (coords.length > 0) {
+                    ctx.snapFeature = turf.point(coords[coords.length - 1]);
+                } else {
+                    ctx.snapFeature = null;
+                }
+
+                if (coords.length > 1) {
+                    ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+                } else {
+                    ctx.hotFeature = null;
+                    ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([]));
+                }
+
+                ctx.fire('vertex.delete', { coords: coords, index: index, feature: ctx.hotFeature })
+            }
+
+            if (ctx.lastMouseEvent) {
+                ctx.currentMode.handleMove ? ctx.currentMode.handleMove(ctx.lastMouseEvent) : false;
+            }
+        } else if (ctx.snapFeature) {
+            ctx.snapFeature = null;
+            ctx.lastClick = null;
+            ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        }
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name getFeature
+	 * @description Retrieves the hot feature from the context.
+	 * @returns {any} The hot feature stored in the context.
+	 */
+    this.getFeature = function () {
+        return ctx.hotFeature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name selectFeature
+	 * @description Selects a feature based on the provided ID.
+	 * @param {string} id - The ID of the feature to be selected.
+	 * @returns {boolean} Returns false if no ID is provided, otherwise returns the result of selecting the feature.
+	 */
+    this.selectFeature = function (id) {
+        if (!id) return false;
+        ctx.setMode();
+        return ctx.currentMode.selectFeature(id);
+    }
+
+	/** 
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name saveEdit
+	 * @description This function saves the edited feature in the map.
+	 * @param {Object} feature - The feature to be saved.
+	 * @returns {boolean} - Returns true if the feature is successfully saved, false otherwise.
+	 */
+    this.saveEdit = function (feature) {
+        var hot = ctx.hotFeature;
+        if (!hot) return false;
+
+        var type = hot.properties.type || feature.properties.type || this.type;
+        feature = feature || hot;
+
+        this.savingEdit = true;
+        return finishDraw(type, feature);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name cancelEdit
+	 * @description This function cancels the current editing operation by setting the 'cancelled' flag to true. If the 'feature' parameter is not provided or does not have a 'type' property, it sets 'ctx.hotFeature' to null and finishes the draw process. It then sets the 'standby' property, updates 'ctx.hotFeature', fires a 'draw.cancel' event with the feature, and returns the result of 'finishDraw()'.
+	 * @param {boolean} standby - The standby value to set.
+	 * @param {object} feature - The feature being edited.
+	 * @returns {any} The result of the 'finishDraw()' function.
+	 */
+    this.cancelEdit = function (standby, feature) {
+        this.cancelled = true;
+        if (!feature || !feature.properties.type) return ctx.hotFeature = null, finishDraw();
+        this.standby = standby;
+        ctx.hotFeature = feature;
+        ctx.fire('draw.cancel', { feature: feature });
+        return finishDraw();
+    }
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleDown
+	 * @description Handles the mouse or touch down event on the map. Updates the mouse/touch position, adds a vertex if allowed, and sets features for pinning.
+	 * @param {Object} event - The event object containing information about the mouse or touch event.
+	 * @returns {void}
+	 */
+    this.handleDown = function (event) {
+        var point;
+
+        ctx.mouseIsDown = [event.lngLat.lng, event.lngLat.lat];
+
+        if (event.touch) {
+            ctx.touchDown = true;
+            point = turf.point(ctx.mouseIsDown);
+            onVertex(getVertex(point));
+        }
+        
+        if (ctx.canAddVertex) {
+            point = addVertex(ctx.canAddVertex, event);
+            return onVertex(getVertex(point), true);
+        }
+
+        ctx.Pinning.setFeatures(ctx.snappedVertex);
+        startIdleTime();
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleUp
+	 * @description This function is responsible for handling the mouse up event during drawing and editing operations on the map. It checks various conditions and triggers corresponding actions based on the context and user interactions.
+	 * @param {Event} event - The mouse up event object.
+	 * @returns {void}
+	 */
+    this.handleUp = function (event) {
+        ctx.mouseIsDown = false;
+        ctx.touchDown = false;
+
+        if (ctx.Painting.enabled) return ctx.Painting.handleUp(event);
+        if (ctx.addedVertexOnLine &amp;&amp; !ctx.dragMoving) return;
+        if (event.touch &amp;&amp; ctx.touchMoving) return ctx.dragMoving = false;
+
+        if (((ctx.Utilities.isPoint(ctx.hotFeature, this.type)) &amp;&amp; ctx.snappedVertex)) return ctx.editMode ? this.saveEdit() : finishDraw(this.type);
+
+        if (ctx.snappedVertex &amp;&amp; ctx.dragMoving &amp;&amp; !ctx.mapMoving &amp;&amp; this.type !== 'Rectangle') {
+            ctx.gamepadDrag = event.gamepad;
+
+            var isLastIndex = ctx.Utilities.isLastIndex(ctx.dragIndex, ctx.hotFeature);
+            isLastIndex = isLastIndex ? isLastIndex : ctx.Utilities.isPolygon(ctx.hotFeature) &amp;&amp; ctx.dragIndex == 0 ? true : false;
+           
+            var coords = ctx.Utilities.getLastIndexCoords(ctx.hotFeature);
+
+            onVertex(getVertex(turf.point(ctx.snappedVertex)));
+            this.updateHotSource();
+            if (isLastIndex) setTimeout(function() { ctx.lastClick = { coords: coords } }, 100)
+        }
+        
+        ctx.pinableFeatures = [];
+        ctx.mouseIsIdle = false;
+        addText.call(this, this.type);
+        ctx.refreshMeshData();
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleClick
+	 * @description This function processes the click event for drawing features on the map. It determines the action based on the event type and context state, such as editing mode, touch input, vertex addition, and gamepad interaction.
+	 * @param {Object} event - The event object containing information about the click event.
+	 * @returns {Object} The updated event object or the result of the drawing action.
+	 */
+    this.handleClick = function (event) {
+        if (event.finish) return ctx.editMode ? this.saveEdit() : finishDraw(this.type);
+        if (event.touch &amp;&amp; ctx.touchMoving) return ctx.touchMoving = false, ctx.Snapping.setFeature(), this.updateHotSource();
+        if (event.touch) ctx.touchClick = true;
+
+        if (ctx.addedVertexOnLine) {
+            ctx.Snapping.setFeature();
+            this.updateHotSource();
+            onVertex(getVertex(ctx.addedVertexOnLine));
+            this.handleDrag(event);
+            ctx.dragMoving = false;
+            ctx.gamepadDrag = false
+            ctx.mouseIsIdle = false;
+            return event;
+        }
+
+        if (ctx.gamepadDrag) return ctx.gamepadDrag = false;
+
+        if (ctx.editMode &amp;&amp; (this.type === 'Polygon' || this.type === 'Text')) return;
+
+        if (!this.firstClick &amp;&amp; !ctx.drawStarted) {
+            ctx.drawStarted = true;
+            ctx.fire('draw.start', { type: this.type, editing: ctx.editMode, coords: [event.lngLat.lng, event.lngLat.lat] });
+        } else {
+            ctx.fire('vertex.add', { type: this.type, coords: [event.lngLat.lng, event.lngLat.lat] });
+        }
+
+        var lastPoint = ctx.closestPoint || { coords: [event.lngLat.lng, event.lngLat.lat] };
+        var point = turf.point(lastPoint.coords);
+
+        point.properties = this.properties;
+
+        ctx.lastMove = lastPoint.coords.length > 1 ? { lat: lastPoint.coords[lastPoint.coords.length-1][1], lng: lastPoint.coords[lastPoint.coords.length-1][0] } : false;        
+
+        if (!ctx.startPoint) {
+            if (this.type === 'Rectangle') {
+                ctx.startPoint = lastPoint.coords;
+
+                ctx.hotFeature = turf.polygon([[
+                    ctx.startPoint,
+                    [event.lngLat.lng, event.lngLat.lat],
+                    [ctx.startPoint[0], event.lngLat.lat],
+                    ctx.startPoint
+                ]]);
+    
+                return ctx.Utilities.setProperty(ctx.hotFeature, 'type', this.type);
+            } else if (this.type === 'Polygon') {
+                ctx.startPoint = lastPoint.coords;
+            }
+        }
+        
+        if (!ctx.snapFeature &amp;&amp; lastPoint) ctx.snapFeature = lastPoint;
+
+        if (needsToFinish(this.type, lastPoint.coords)) return finishDraw(this.type, point);
+        
+        this.firstClick = ctx.firstClick ? false : { coords: lastPoint.coords };
+
+        ctx.lastClick = lastPoint;
+        ctx.firstClick = ctx.firstClick ? ctx.firstClick : { coords: lastPoint.coords };
+        ctx.Snapping.setFeature();
+        addText.call(this, this.type);
+        ctx.Exploring.setFeatures(lastPoint.coords, { set: true });
+        delete ctx.touchClick;
+        return this.updateHotSource();
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleMove
+	 * @description This function determines the behavior based on the event type and context state. It handles various actions such as dragging, painting, snapping, routing, and snapping to points.
+	 * @param {Object} event - The event object containing information about the mouse or touch event.
+	 * @returns {boolean} Returns false in certain conditions to prevent default behavior.
+	 */
+    this.handleMove = function (event) {
+        if (event.touch &amp;&amp; ctx.mouseIsDown) ctx.touchMoving = true;
+        if (ctx.overpassDownloading) return false;
+        if (ctx.mouseIsDown &amp;&amp; ctx.canAddVertex) return false;
+        if (ctx.canDragMove &amp;&amp; ctx.snappedVertex &amp;&amp; ctx.mouseIsDown) return this.handleDrag(event);
+        if (ctx.mouseIsDown &amp;&amp; ctx.Painting.enabled) return this.handlePainting(event);
+        if (event.touch &amp;&amp; ctx.touchMoving) return ctx.snapFeature = false;
+
+        var button = !event.originalEvent ? false : event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
+        if (button === 1) return false;
+
+        var calculateRoute = ctx.Routing.enabled;
+        if (event.originalEvent &amp;&amp; event.originalEvent.altKey) calculateRoute = false;
+
+        var snapToPoint = ctx.Snapping.enabled;
+        if (event.originalEvent &amp;&amp; event.originalEvent.shiftKey) snapToPoint = false;
+
+        var evtCoords = [event.lngLat.lng, event.lngLat.lat];
+        var isPoint = ctx.Utilities.isPoint(ctx.hotFeature, this.type)
+        var editPolygon = ctx.editMode &amp;&amp; (this.type === 'Polygon' || this.type === 'Rectangle');
+        var point = turf.point(evtCoords);
+        var snapFeature = null;
+
+        if (editPolygon) {
+            snapFeature = point;
+        } else if (snapToPoint) {
+            snapFeature = ctx.Snapping.setClosest(evtCoords, isPoint);
+        } else if (!isPoint) {
+            snapFeature = ctx.Snapping.updateFeature(evtCoords);
+        } else if (isPoint) {
+            snapFeature = point;
+        }
+
+        if (calculateRoute) snapFeature = ctx.Routing.getClosest() || snapFeature;
+        if (!snapFeature) snapFeature = point;
+
+        ctx.Snapping.addFeature(snapFeature, this.properties, editPolygon);
+        onVertex(getVertex(point));
+        
+        if (!snapFeature &amp;&amp; this.isPoint) delete this.isPoint;
+        if (editPolygon &amp;&amp; calculateRoute) ctx.map.getSource(ctx.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+
+        if (this.type === 'Rectangle') return this.handleRectangle(event);
+        if (this.type === 'Icon') return this.handleIcon(event, ctx.snapFeature);
+        if (this.type === 'Text') return this.handleText(event, ctx.snapFeature);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleDrag
+	 * @description This function is responsible for handling the drag event of a vertex on the map. It updates the position of the vertex based on the user's interaction and triggers various actions accordingly.
+	 * @param {Object} event - The event object containing information about the drag event.
+	 * @returns {boolean} Returns false if the drag index is not valid.
+	 */
+    this.handleDrag = function (event) {
+        var validIndex = ctx.dragIndex > -1;
+        
+        if (!validIndex) {
+            offVertex();
+            if (ctx.mouseIsDown &amp;&amp; ctx.Painting.enabled) this.handlePainting(event);
+            return false;
+        }
+
+        !event.gamepad ? event.originalEvent.stopPropagation() : false;
+
+        ctx.dragMoving = true;
+        ctx.lastDragMove = 0;
+        ctx.snappedVertex = [event.lngLat.lng, event.lngLat.lat];
+        ctx.bypassRouting = true; //!event.gamepad ? event.originalEvent.altKey : false;
+        ctx.bypassSnapping = !event.gamepad ? event.originalEvent.shiftKey : false;
+        ctx.lastIndex = ctx.Utilities.isLastIndex(ctx.dragIndex, ctx.hotFeature);
+
+        var vertex = turf.point(ctx.snappedVertex);
+
+        if (ctx.lastIndex) ctx.lastClick = { coords: ctx.snappedVertex };
+
+        if (this.type === 'Circle' || this.type === 'Icon') {
+            if (!ctx.Painting.enabled) ctx.hotFeature.geometry.coordinates = ctx.snappedVertex;
+        } else {
+            var isLastIndex = ctx.Utilities.isLastIndex(ctx.dragIndex, ctx.hotFeature);
+            ctx.hotFeature.geometry.coordinates[ctx.dragIndex] = ctx.snappedVertex;
+
+            if (this.type === 'Polygon') {
+                if (isLastIndex) ctx.hotFeature.geometry.coordinates[0] = ctx.snappedVertex;
+                if (ctx.dragIndex == 0) ctx.hotFeature.geometry.coordinates[ctx.hotFeature.geometry.coordinates.length -1] = ctx.snappedVertex;
+            }
+        }
+
+        ctx.Utilities.setProperty(ctx.hotFeature, 'type', this.type);
+        ctx.Utilities.setProperty(vertex, 'type', this.type);
+        ctx.map.getSource(ctx.statics.constants.sources.ROUTE).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([vertex]));
+        ctx.fire('vertex.drag', { type: this.type, coords: [event.lngLat.lng, event.lngLat.lat], feature: ctx.hotFeature, vertex: vertex });
+        ctx.Pinning.updateFeatures();
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleTouch
+	 * @description This function is responsible for handling touch events and triggering corresponding actions.
+	 * @param {Event} event - The touch event object.
+	 * @returns {void}
+	 */
+    this.handleTouch = function (event) {
+        event.touch = true;
+
+        if (event.type === 'touchstart') {
+            this.handleDown(event);
+        } else if (event.type === 'touchend') {
+            this.handleUp(event);
+            this.handleClick(event);
+        } else if (event.type === 'touchmove') {
+            this.handleMove(event);
+        }
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleOffMap
+	 * @description This function is triggered when an off-map event occurs and clears the data of a specific source on the map.
+	 * @param {Event} event - The event object triggering the function.
+	 */
+    this.handleOffMap = function (event) {
+        if (ctx.map.getSource(ctx.statics.constants.sources.SNAP)) ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleOnMap
+	 * @description This function updates the data of the SNAP source on the map with the snapFeature.
+	 * @param {Event} event - The event triggering the function.
+	 */
+    this.handleOnMap = function (event) {
+        if (ctx.map.getSource(ctx.statics.constants.sources.SNAP) &amp;&amp; ctx.snapFeature) ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([ctx.snapFeature]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handlePainting
+	 * @description This function is triggered when painting on the map. It disables drag pan, sets the map class to 'painting', and updates the feature coordinates.
+	 * @param {Object} event - The event object triggering the function.
+	 * @returns {boolean} Returns false if mouse is not down or no coordinates are available, otherwise updates the feature coordinates.
+	 */
+    this.handlePainting = function (event) {
+        if (!ctx.mouseIsDown) return false;
+        ctx.map.dragPan.disable();
+        ctx.setMapClass('painting');
+
+        var snapCoords = ctx.snapFeature &amp;&amp; !ctx.Painting.feature;
+        var coords = event.lngLat &amp;&amp; event.lngLat.lng ? [event.lngLat.lng, event.lngLat.lat] : false;
+        if (snapCoords) coords = ctx.snapFeature.geometry.coordinates;
+
+        if (!coords) return false;
+        return ctx.Painting.updateFeature(coords);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleRectangle
+	 * @description Handles the creation and manipulation of a rectangle feature on a map.
+	 * @param {Object} event - The event object triggering the function.
+	 * @returns {void}
+	 */
+    this.handleRectangle = function (event) {
+        if (ctx.editMode &amp;&amp; ctx.hotFeature) ctx.startPoint = ctx.hotFeature.geometry.coordinates[0][0];
+        if (!ctx.startPoint) return;
+        if (!ctx.dragMoving) ctx.Utilities.setProperty(ctx.hotFeature, 'type', this.type);
+        ctx.dragMoving = true;
+
+        var coords = ctx.snapFeature ? ctx.snapFeature.geometry.coordinates : [event.lngLat.lng, event.lngLat.lat];
+
+        if (ctx.dragIndex > -1) {
+            var startPoint = ctx.dragIndex == 0 || ctx.dragIndex == 4 ? 4 : ctx.dragIndex;
+            var endPoint = startPoint == 1 ? 3 : startPoint == 2 ? 4 : startPoint == 3 ? 1 : 2;
+            var leftPoint = endPoint == 1 ? 4 : endPoint == 2 ? 1 : endPoint == 3 ? 2 : 3
+            var rightPoint = leftPoint == 1 ? 3 : leftPoint == 2 ? 4 : leftPoint == 3 ? 1 : 2;
+
+            updateCoordinate(ctx.hotFeature, "0." + startPoint, coords[0], coords[1]);
+            updateCoordinate(ctx.hotFeature, "0." + leftPoint, coords[0], ctx.startPoint[1]);
+            updateCoordinate(ctx.hotFeature, "0." + rightPoint, ctx.startPoint[0], coords[1]);
+            updateCoordinate(ctx.hotFeature, "0." + endPoint, ctx.startPoint[0], ctx.startPoint[1] );
+        } else {
+            updateCoordinate(ctx.hotFeature, "0.1", coords[0], ctx.startPoint[1]);
+            updateCoordinate(ctx.hotFeature, "0.2", coords[0], coords[1]);
+            updateCoordinate(ctx.hotFeature, "0.3", ctx.startPoint[0], coords[1]);
+            updateCoordinate(ctx.hotFeature, "0.4", ctx.startPoint[0], ctx.startPoint[1] );
+        }
+
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([ctx.hotFeature]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleText
+	 * @description Handles text input events and logs relevant properties.
+	 * @param {Event} event - The event object triggering the function.
+	 * @param {string} feature - The feature to be handled.
+	 */
+    this.handleText = function (event, feature) {
+        console.log('handleText', this.properties, ctx.snapFeature);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleIcon
+	 * @description Handles the icon based on the event and feature provided.
+	 * @param {Event} event - The event triggering the function.
+	 * @param {Object} feature - The feature object to be handled.
+	 */
+    this.handleIcon = function (event, feature) {
+        console.log('handleIcon', this.properties, ctx.snapFeature);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleContext
+	 * @description Handles the context of dragging and moving a feature vertex.
+	 * @param {Event} event - The event triggering the context handling.
+	 * @returns {void}
+	 */
+    this.handleContext = function (event) {
+        if (!ctx.canDragMove || !ctx.snappedVertex) return;
+        
+        var validIndex = ctx.dragIndex > -1;
+        if (!validIndex) return;
+
+        ctx.hotFeature.geometry.coordinates.splice(ctx.dragIndex, 1);
+
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([ctx.hotFeature]));
+        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleHistory
+	 * @description Handles the history of features in the current mode.
+	 * @param {Object} event - The event triggering the history update.
+	 * @returns {void}
+	 */
+    this.handleHistory = function handleHistory (event) {
+        if (ctx.dragMoving) return;
+
+        var history = ctx.currentMode.history;
+        var date = new Date();
+        
+        var features = event.detail.data.features;
+        if (!features || !features.length) return;
+
+        var feature = ctx.Utilities.cloneDeep(features[0]);
+        feature.historyDate = date;
+        history.push(feature);
+
+        ctx.fire('feature.history', { type: ctx.currentMode.type, feature: feature, history: history });
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleUndo
+	 * @description This function is responsible for undoing the last action performed in the application. It retrieves the history and undo arrays from the current mode, pops the last feature from the history, sets the undo flag to true for the feature, updates the hotFeature, pushes the feature to the undo array, and updates the map source data with the hotFeature.
+	 * @returns {void}
+	 */
+    this.handleUndo = function () {
+        return alert("UNDER DEVELOPMENT");
+        var history = ctx.currentMode.history;
+        var undo = ctx.currentMode.undo;
+
+        var feature = history.pop();
+
+        feature.undo = true;
+        ctx.hotFeature = feature;
+
+        undo.push(ctx.hotFeature);
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Draw
+	 * @name handleRedo
+	 * @description Handles the redo functionality (currently under development).
+	 * @returns {void}
+	 */
+    this.handleRedo = function () {
+        return alert("UNDER DEVELOPMENT");
+        var redo = false
+    }
+
+
+
+
+
+
+    function editMode (feature) {
+        var type = ctx.Features.getType(feature);
+        if (!type) return alert('No Feature Type Found');
+    
+        ctx.currentMode.type = type;
+        ctx.editMode = true;
+        ctx.hotFeature = feature;
+    
+        ctx.Utilities.setProperty(ctx.hotFeature, 'type', type);
+        ctx.Utilities.setProperty(ctx.hotFeature, 'edit', true);
+
+        ctx.map.getSource(ctx.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+    
+        if (type === 'Polygon') {
+            ctx.hotFeature = turf.polygonToLine(ctx.hotFeature);
+        } else if (type === 'Circle') {
+            ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+        } else if (type === 'Text') {
+            ctx.map.getSource(ctx.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([ctx.hotFeature]));
+            addText.call(ctx.currentMode, type, ctx.hotFeature);
+        } else {
+            ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([ctx.hotFeature]));
+            ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([ctx.hotFeature]));
+        }
+
+        var coords = ctx.Utilities.isPoint(ctx.hotFeature, type) ? ctx.hotFeature.geometry.coordinates : ctx.hotFeature.geometry.coordinates[ctx.hotFeature.geometry.coordinates.length - 1];
+        
+        ctx.lastClick = { coords: coords };
+        ctx.Features.removeFeatures(ctx.hotFeature.properties.id);
+        ctx.refreshMeshData();
+        
+        return ctx.currentMode.type;
+    }
+
+    function finishDraw (type, point, text) {
+        var feature;
+        var cancelled = ctx.currentMode.cancelled;
+
+        if (ctx.editMode &amp;&amp; !ctx.currentMode.savingEdit &amp;&amp; !cancelled) return ctx.currentMode.saveEdit(point);
+    
+        if (cancelled || !type) {
+            finishText();
+
+            if (ctx.hotFeature) {
+                ctx.removeSelection();
+                ctx.removeFeature(ctx.hotFeature.id, true);
+                ctx.addFeatures([ctx.hotFeature], true);
+            }
+
+            ctx.Pinning.resetFeatures();
+
+            if (!ctx.editMode) ctx.fire('draw.cancel', { cancel: true, feature: ctx.hotFeature });
+            return false;
+        } else if (type === 'Text' &amp;&amp; !text) {
+            return addText.call(ctx.currentMode, type, point);
+        } else if (ctx.hotFeature) {
+            if (ctx.Utilities.isPoint(ctx.hotFeature, type)) {
+                var coords = Array.isArray(ctx.hotFeature.geometry.coordinates[0]) ?
+                ctx.hotFeature.geometry.coordinates[0] :
+                [ctx.hotFeature.geometry.coordinates[0], ctx.hotFeature.geometry.coordinates[1]]
+    
+                point = ctx.Painting.enabled || ctx.currentMode.savingEdit ? point : turf.point(coords);
+                feature = point;
+            } else if (ctx.Utilities.isPolygon(ctx.hotFeature, type)) {
+                ctx.hotFeature.geometry.type = "Polygon";
+
+                if (type === 'Rectangle') {
+                    ctx.endPoint ? updateCoordinate(ctx.hotFeature, "0.2", ctx.endPoint[0], ctx.endPoint[1]) : false;
+                } else {
+                    ctx.hotFeature.geometry.coordinates.push(ctx.hotFeature.geometry.coordinates[0]);
+                    ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
+                }
+            } else if (ctx.Utilities.isLineString(ctx.hotFeature, type)) {
+                if (type === 'Polygon') {
+                    ctx.hotFeature.geometry.type = type;
+                    ctx.hotFeature.geometry.coordinates.push(ctx.hotFeature.geometry.coordinates[0]);
+                    ctx.hotFeature.geometry.coordinates = [ctx.hotFeature.geometry.coordinates];
+                } else if (type === 'Rectangle') {
+                    ctx.endPoint ? updateCoordinate(ctx.hotFeature, "0.2", ctx.endPoint[0], ctx.endPoint[1]) : false;
+                }
+            } else if (point) {
+                feature = point;
+            }
+    
+            if (ctx.Painting.enabled) {
+                var tolerance = ctx.options.painting.tolerance;
+    
+                ctx.hotFeature = type === 'Circle' ? ctx.hotFeature : turf.simplify(ctx.hotFeature, {
+                    mutate: true,
+                    tolerance: typeof tolerance === 'function' ? tolerance(ctx.map) : tolerance,
+                    highQuality: true
+                });
+
+                if (ctx.startPoint) ctx.hotFeature.geometry.coordinates[0] = ctx.startPoint;
+            }
+        } else if (point) {
+            feature = point;
+        }
+    
+        feature = ctx.Exploring.currentFeature || feature || ctx.hotFeature;
+        if (!feature || !ctx.currentMode.activated) return ctx.currentMode.deactivate();
+
+        feature = ctx.Features.addFeature(feature, ctx.currentMode.properties);
+        ctx.fire('draw.finish', { feature: feature, pinned: ctx.Pinning.getFeatures(), type: type, editing: ctx.editMode });
+        return ctx.currentMode.deactivate();
+    }
+
+    function finishText (e, type, feature) {
+        var marker = ctx.textMarker;
+        if (!marker) return false;
+
+        var element = marker.getElement();
+        var text = element.value;
+    
+        if (!text.length || ctx.currentMode.cancelled) return marker.remove(), ctx.textInput = false, addText.call(this, type, feature);
+    
+        var coords = [element.getAttribute('lng'), element.getAttribute('lat')];
+        type = type || element.getAttribute('type');
+
+        ctx.currentMode.properties.text = text;
+        
+        var feature = {
+            "type": "Feature",
+            "properties": {
+                type: type,
+                text: text
+            },
+            "geometry": {
+              "type": "Point",
+              "coordinates": coords
+            }
+        }
+        
+        marker.remove();
+        finishDraw(type, feature, text);
+    }
+
+    function cleanupDraw (mode) {
+        ctx.map.getSource(ctx.statics.constants.sources.ROUTE).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.HOT).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+        ctx.map.getSource(ctx.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([]));
+    
+        ctx.deleteMeshData();
+    
+        mode.history = [];
+        mode.undo = [];
+        mode.type = null;
+        mode.cancelled = false;
+        mode.activated = false;
+        mode.savingEdit = false;
+
+        ctx.editMode = false;
+        ctx.drawMode = false;
+
+        delete ctx.startPoint;
+        delete ctx.lastClick;
+        delete ctx.firstClick;
+        delete ctx.endPoint;
+        delete ctx.snapFeature;
+        delete ctx.hotFeature;
+        delete ctx.drawStarted;
+        delete ctx.dragMoving;
+        delete ctx.editing;
+        delete ctx.textMarker;
+        delete ctx.textInput;
+        delete ctx.touchMoving;
+        delete ctx.touchDown;
+        delete ctx.pinningFeatures;
+        delete ctx.pinnedFeatures;
+        delete ctx.canDragMove;
+        delete ctx.canAddVertex;
+        delete ctx.dragIndex;
+        delete ctx.addedVertexOnLine;
+        delete ctx.snappedVertex;
+    }
+
+    function getVertex (point) {
+        var hotFeature = ctx.hotFeature;
+        var vertex;
+    
+        if (ctx.dragMoving) return false;
+        if (!hotFeature) return false;
+    
+        var closest = ctx.Snapping.getClosest(point.geometry.coordinates);
+        var coords = closest.coords;
+        var type = closest.point ? closest.point.type : false;
+        
+        if (!type) return false;
+    
+        if (!coords &amp;&amp; type === 'linepoint' &amp;&amp; closest.point.borders) {
+            var segment = turf.lineString([closest.point.border1, closest.point.border2]);
+            vertex = turf.along(segment, closest.point.distance1);
+            coords = vertex.geometry.coordinates;
+        }
+    
+        if (!coords) return false;
+    
+        vertex = ctx.Utilities.isLineString(hotFeature) &amp;&amp; type === 'vertex' ? turf.pointOnLine(hotFeature, turf.point(coords)) : turf.point(coords);
+        vertex.properties.type = type;
+    
+        ctx.fire('vertex.find', { vertex: vertex, feature: ctx.hotFeature, closest: closest });
+        return vertex;
+    }
+    
+    function addVertex (point, event) {
+        var feature;
+    
+        if (event &amp;&amp; point) {
+            var coords = ctx.hotFeature.geometry.coordinates;
+            var line = turf.lineString(coords);
+            var start = turf.point(coords[0])
+            var split = turf.lineSlice(start, point, line);
+            var index = split.geometry.coordinates.length - 1;
+            var vertex = split.geometry.coordinates[index];
+    
+            point = turf.point(vertex);
+            
+            line.geometry.coordinates.splice.apply(line.geometry.coordinates, [index, 0].concat([vertex]));
+    
+            line = turf.cleanCoords(line);
+            feature = turf.truncate(line, { precision: 6, coordinates: 2, mutate: true });
+            ctx.hotFeature.geometry.coordinates = feature.geometry.coordinates;
+            ctx.hotFeature = ctx.Utilities.cloneDeep(ctx.hotFeature);
+        } else if (point) {
+            ctx.canDragMove = true;
+            ctx.canAddVertex = point;
+        }
+    
+        return point;
+    }
+    
+    function onVertex (vertex, add) {
+        var hotFeature = ctx.hotFeature;
+        var dragIndex = null;
+    
+        if (ctx.dragMoving) return offVertex();
+        if (!hotFeature || !vertex) return offVertex();
+        
+        ctx.updateMeshData();
+    
+        var type = vertex.properties.type;
+        var index = vertex.properties.index || vertex.properties.index == 0;
+    
+        dragIndex = index ? vertex.properties.index : ctx.currentMode.type === 'Circle' ? 0 : false;
+    
+        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([vertex]));
+        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([ctx.hotFeature]));
+    
+        if (type === 'linepoint') return addVertex(vertex);
+    
+        ctx.map.dragPan.disable();
+        ctx.dragIndex = dragIndex;
+        ctx.addedVertexOnLine = add ? vertex : false;
+        ctx.canAddVertex = false;
+        ctx.canDragMove = true;
+        ctx.snappedVertex = vertex.geometry.coordinates;
+        ctx.Pinning.setFeatures(ctx.snappedVertex);
+        ctx.fire('vertex.on', { vertex: vertex, index: dragIndex, feature: ctx.hotFeature });
+    }
+    
+    function offVertex () {
+        if (!ctx.hotFeature) return;    
+        if (ctx.mouseIsDown &amp;&amp; ctx.Painting.enabled) return false;
+
+        if (ctx.snappedVertex) {
+            ctx.lastIndex ? ctx.lastClick = { coords: ctx.snappedVertex } : false;
+            ctx.fire('vertex.off', { vertex: false, index: ctx.dragIndex, feature: ctx.hotFeature })
+        }
+    
+        ctx.map.dragPan.enable();
+        ctx.dragMoving = false;
+        ctx.canDragMove = false;
+        ctx.snappedVertex = null;
+        ctx.dragIndex = -1;
+        ctx.mouseIsDown = ctx.touchDown || false;
+        ctx.pinableFeatures = [];
+        ctx.lastIndex = false;
+        ctx.canAddVertex = false;
+        ctx.addedVertexOnLine = false
+    }
+
+    function addText (type, feature) {
+        feature = feature || ctx.hotFeature;
+        if (!feature) return false;
+
+        type = type || feature.properties.type;
+        feature.properties.type = type;
+
+        if (type !== 'Text') return ctx.Features.setText(feature);
+        if (ctx.textInput) return finishText(false, type, feature);
+        
+        var lngLat = { lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1] }
+        var el = ctx.textInput = document.createElement('input');
+
+        el.value = feature.properties.text || '';
+        el.className = 'text-marker';
+
+        el.setAttribute('contenteditable', 'true');
+        el.setAttribute('autocorrect', 'off');
+        el.setAttribute('spellcheck', 'false');
+        el.setAttribute('placeholder', 'Press Enter or Select Button When Done...');
+        el.setAttribute('type', type);
+        el.setAttribute('lng', lngLat.lng);
+        el.setAttribute('lat', lngLat.lat);
+        
+        ctx.textMarker = new ctx.Mapbox.Marker(el).setLngLat(lngLat).addTo(ctx.map);
+        ctx.textMarker.setOffset([0, -25])
+
+        el.addEventListener("submit", finishText);
+        el.addEventListener("keydown", inputText);
+        el.addEventListener("paste", handlePaste);
+        el.focus();
+
+        ctx.fire('text.add', { feature: feature, marker: ctx.textMarker, type: type });
+    
+        function inputText (e) {
+            if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                e.stopPropagation();
+            } else if(e.keyCode === 13) {
+                e.preventDefault();
+                finishText(e);
+            }
+        }
+
+        function handlePaste (e) {
+            var clipboardData, pastedData;
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            clipboardData = e.clipboardData || window.clipboardData;
+            pastedData = clipboardData.getData('text/plain').slice(0, CHAR_LIMIT);
+            e.target.innerText = pastedData;
+        }
+    }
+
+    function updateCoordinate (f, t, e, n) {
+        var o = t.split(".")
+            , r = parseInt(o[0], 10)
+            , i = parseInt(o[1], 10);
+        void 0 === f.geometry.coordinates[r] &amp;&amp; (f.geometry.coordinates[r] = []),
+        f.geometry.coordinates[r][i] = [e, n]
+    }
+
+    function updateRectangle (event, type) {
+        if (type !== 'Rectangle') return false;
+        
+        var geometry = ctx.hotFeature.geometry;
+        var coords = geometry.coordinates;
+        const coordType = geometry.type;
+        //coords = coordType === 'Linestring' ? coords : coords[0];
+    
+        if (ctx.currentVertexPosition === 2) {
+            const getpXY3 = calculatepXY3(geometry, event, type);
+            if (getpXY3[2]) return updateCoordinate(`0.${ctx.currentVertexPosition + 1}`, getpXY3[2][0], getpXY3[2][1]);
+            return ctx.hotFeature;
+        }
+    
+        updateCoordinate(`0.${ctx.currentVertexPosition}`, event.lngLat.lng, event.lngLat.lat);
+        ctx.currentVertexPosition++;
+        updateCoordinate(`0.${ctx.currentVertexPosition}`, event.lngLat.lng, event.lngLat.lat);
+    
+        function calculatepXY3 (geometry, event, type) {
+            var coords = geometry.coordinates;
+        
+            const pXY0 = coords[0];
+            const pXY0_3857 = ctx.Utilities.degrees2meters(pXY0);
+            const pXY1 = coords[1];
+            const pXY1_3857 = ctx.Utilities.degrees2meters(pXY1);
+            let pXY2_3857 = ctx.Utilities.degrees2meters([event.lngLat.lng, event.lngLat.lat]);
+            const mouse_3857 = ctx.Utilities.degrees2meters([event.lngLat.lng, event.lngLat.lat]);
+        
+            if (pXY0_3857[0] === pXY1_3857[0]) {
+                pXY2_3857 = [mouse_3857[0], pXY1_3857[1]];
+            } else if (pXY0_3857[1] === pXY1_3857[1]) {
+                pXY2_3857 = [pXY1_3857[0], mouse_3857[1]];
+            } else {
+                const vector1_3857 = (pXY1_3857[1] - pXY0_3857[1]) / (pXY1_3857[0] - pXY0_3857[0]);
+                const vector2_3857 = -1.0 / vector1_3857;
+        
+                if (Math.abs(vector2_3857) &lt; 1) {
+                    pXY2_3857[1] = vector2_3857 * (mouse_3857[0] - pXY1_3857[0]) + pXY1_3857[1];
+                } else {
+                    pXY2_3857[0] = pXY1_3857[0] + (pXY2_3857[1] - pXY1_3857[1]) / vector2_3857;
+                }
+            }
+        
+            const vector_3857 = [pXY1_3857[0] - pXY0_3857[0], pXY1_3857[1] - pXY0_3857[1]];
+            const pXY3_3857 = [pXY2_3857[0] - vector_3857[0], pXY2_3857[1] - vector_3857[1]];
+            const pXY2G = ctx.Utilities.meters2degrees(pXY2_3857);
+            const pXY3G = ctx.Utilities.meters2degrees(pXY3_3857);
+        
+            return [coords, pXY2G, pXY3G];
+        }
+    
+        return false;
+    }
+
+    function startIdleTime () {
+        var ready = setInterval(function() {
+            if (ctx.mouseIsDown) {
+                ctx.lastDragMove += 1;
+                checkIdleMove();
+            } else {
+                ctx.lastDragMove = 0;
+                ctx.mouseIsIdle = false;
+                clearInterval(ready);
+            }
+        }, 1);
+    }
+    
+    function checkIdleMove () {
+        if (ctx.lastDragMove &lt; ctx.options.pinning.idle) return ctx.mouseIsIdle = false, false;
+        ctx.mouseIsIdle = true;
+        ctx.Snapping.setVertex();
+        ctx.Pinning.updateFeatures();
+        return true;
+    }
+
+    function needsToFinish (type, coords) {
+        var types = ['Circle', 'Icon', 'Text'];
+        if (!type) return true;
+        if (types.includes(type)) return true;
+        if (type === 'Rectangle' &amp;&amp; ctx.startPoint) return ctx.endPoint = coords, true;
+        if (type === 'Polygon' &amp;&amp; ctx.snappedVertex &amp;&amp; ctx.startPoint &amp;&amp; ctx.Utilities.isPointEqual(ctx.startPoint, ctx.snappedVertex)) return true;
+        if (ctx.snappedVertex &amp;&amp; ctx.Utilities.isLastIndex(ctx.dragIndex, ctx.hotFeature)) return true
+        if (ctx.lastClick &amp;&amp; ctx.Utilities.isPointEqual(ctx.lastClick.coords, coords)) return true;
+        return false;
+    }
+
+    function constrainFeatureMovement (geojsonFeatures, delta) {
+        // "inner edge" = a feature's latitude closest to the equator
+        let northInnerEdge = ctx.statics.constants.LAT_MIN;
+        let southInnerEdge = ctx.statics.constants.LAT_MAX;
+        // "outer edge" = a feature's latitude furthest from the equator
+        let northOuterEdge = ctx.statics.constants.LAT_MIN;
+        let southOuterEdge = ctx.statics.constants.LAT_MAX;
+    
+        let westEdge = ctx.statics.constants.LNG_MAX;
+        let eastEdge = ctx.statics.constants.LNG_MIN;
+    
+        geojsonFeatures.forEach((feature) => {
+            //const bounds = extent(feature); Need to add Turf bounds here
+            const featureSouthEdge = bounds[1];
+            const featureNorthEdge = bounds[3];
+            const featureWestEdge = bounds[0];
+            const featureEastEdge = bounds[2];
+            if (featureSouthEdge > northInnerEdge) northInnerEdge = featureSouthEdge;
+            if (featureNorthEdge &lt; southInnerEdge) southInnerEdge = featureNorthEdge;
+            if (featureNorthEdge > northOuterEdge) northOuterEdge = featureNorthEdge;
+            if (featureSouthEdge &lt; southOuterEdge) southOuterEdge = featureSouthEdge;
+            if (featureWestEdge &lt; westEdge) westEdge = featureWestEdge;
+            if (featureEastEdge > eastEdge) eastEdge = featureEastEdge;
+        });
+    
+    
+        // These changes are not mutually exclusive: we might hit the inner
+        // edge but also have hit the outer edge and therefore need
+        // another readjustment
+        const constrainedDelta = delta;
+    
+        if (northInnerEdge + constrainedDelta.lat > ctx.statics.constants.LAT_RENDERED_MAX) {
+            constrainedDelta.lat = ctx.statics.constants.LAT_RENDERED_MAX - northInnerEdge;
+        }
+        if (northOuterEdge + constrainedDelta.lat > ctx.statics.constants.LAT_MAX) {
+            constrainedDelta.lat = ctx.statics.constants.LAT_MAX - northOuterEdge;
+        }
+        if (southInnerEdge + constrainedDelta.lat &lt; ctx.statics.constants.LAT_RENDERED_MIN) {
+            constrainedDelta.lat = ctx.statics.constants.LAT_RENDERED_MIN - southInnerEdge;
+        }
+        if (southOuterEdge + constrainedDelta.lat &lt; ctx.statics.constants.LAT_MIN) {
+            constrainedDelta.lat = ctx.statics.constants.LAT_MIN - southOuterEdge;
+        }
+        if (westEdge + constrainedDelta.lng &lt;= ctx.statics.constants.LNG_MIN) {
+            constrainedDelta.lng += Math.ceil(Math.abs(constrainedDelta.lng) / 360) * 360;
+        }
+        if (eastEdge + constrainedDelta.lng >= ctx.statics.constants.LNG_MAX) {
+            constrainedDelta.lng -= Math.ceil(Math.abs(constrainedDelta.lng) / 360) * 360;
+        }
+    
+        return constrainedDelta;
+    }
+
+    function calculateOrientedAnglePolygon (feature) {
+        var geometry = feature.geometry;
+        var coords = geometry.coordinates;
+        const coordType = geometry.type;
+        coords = coordType === 'Linestring' ? coords : coords[0];
+    
+        const pXY0 = coords[0];
+        const pXY0_3857 = ctx.Utilities.degrees2meters(pXY0);
+        const pXY1 = coords[1];
+        const pXY1_3857 = ctx.Utilities.degrees2meters(pXY1);
+        const angleStdGraus = Math.atan2(pXY1_3857[1] - pXY0_3857[1], pXY1_3857[0] - pXY0_3857[0]) * 180 / Math.PI;
+    
+        let angleSudGraus = -1.0 * (angleStdGraus + 90);
+        const angle = angleSudGraus &lt; 0 ? angleSudGraus + 360 : angleSudGraus;
+        return parseFloat((angle).toFixed(2));
+    }
+};
+
+export { Draw as default }</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
+    <div class="footer-text">Solutegrate/GeoFlo © 2024</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
