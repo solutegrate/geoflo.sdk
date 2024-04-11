@@ -4,11 +4,9 @@
   </a>
 </p>
 
-<h1 align="center">
-  MapboxGL-GeoFlo
-</h1>  
-
-### _Professional Geospatial Management Library for Mapbox GL JS_
+<h3 align="center">
+  Professional Geospatial Management Library for Mapbox GL JS
+</h3>
 
 <div style="display:block;">
   <p style="display:flex;margin:5px;">
