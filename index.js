@@ -41,7 +41,7 @@ import Routing from "./src/action/Routing.js"
 import Painting from "./src/action/Painting.js"
 import Exploring from "./src/action/Exploring.js"
 
-const version = '1.0.0';
+const version = '1.0.3';
 
 var selectedFeatures = [];
 var hiddenFeatures = [];

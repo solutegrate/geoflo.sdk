@@ -1,8 +1,8 @@
 {
   "name": "@solutegrate/mapboxgl-geoflo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
-  "main": "dist/mapboxgl-geoflo.js",
+  "main": "dist/mapboxgl-geoflo.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
   },
@@ -41,7 +41,7 @@
   "bugs": {
     "url": "https://github.com/solutegrate/mapboxgl-geoflo/issues"
   },
-  "homepage": "https://www.geoflo.pro",
+  "homepage": "https://demo.geoflo.pro",
   "dependencies": {
     "mapbox-gl": "^3.3.0",
     "@turf/turf": "^6.5.0",
