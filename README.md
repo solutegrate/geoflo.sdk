@@ -36,11 +36,11 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
 For more information on creating and using Mapbox access tokens:
 [<img width="100" alt="Mapbox logo" src="./assets/images/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
 
+## 🛠️ Usage/Examples
 
 ```bash
   npm install @solutegrate/mapboxgl-geoflo
 ```  
-## 🛠️ Usage/Examples
 
 ### Module Import
 ~~~javascript  
