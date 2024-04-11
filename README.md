@@ -8,6 +8,8 @@
   Professional Geospatial Management Library for Mapbox GL JS
 </h3>
 
+</br>
+
 <div>
   <p style="display:flex;margin:5px;">
     <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
