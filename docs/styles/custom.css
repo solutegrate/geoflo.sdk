@@ -354,7 +354,7 @@ footer img {
 }
 .readme li p {
     padding: 10px 0;
-    color: #333;
+    color: var(--theme-primary-color);
 }
 .readme p a {
     color:#c7254e;
@@ -368,6 +368,7 @@ footer img {
 .readme h3 {
     font-size: 20px;
     padding-bottom: 3px;
+    color: var(--theme-primary-text);
 }
 
 .readme h4 {
