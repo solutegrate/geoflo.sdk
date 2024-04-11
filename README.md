@@ -7,25 +7,25 @@
 
 <div style="display:block;">
   <p style="display:flex;margin:5px;">
-    <a style="margin:2px;text-decoration:none;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
     </a>
-    <a style="margin:2px;text-decoration:none;">
+    <a style="margin:2px;color:transparent;">
       <img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&logo=github&label=Size&color=333333" alt="GitHub Size" />
     </a>
-    <a style="margin:2px;text-decoration:none;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Stars&color=333333" alt="GitHub Stars" />
     </a>
-    <a style="margin:2px;text-decoration:none;" href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;color:transparent;" href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat&logo=github&label=License&color=333333" alt="MIT License" />
     </a>
   </p>
 
   <p style="display:flex;margin:5px;">
-    <a style="margin:2px;text-decoration:none;" href="https://demo.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;color:transparent;" href="https://demo.geoflo.pro/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo Demo" />
     </a>
-    <a style="margin:2px;text-decoration:none;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=6fafdb&logo=github" alt="GeoFlo Docs" />
     </a>
   </p>
