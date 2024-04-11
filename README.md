@@ -16,6 +16,8 @@
 
 [![Demo](https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github)](https://demo.geoflo.pro/)
 
+[![Docs](https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=d7ef7e&logo=github)](https://docs.geoflo.pro/)
+
 ## 🌟 Features  
 - Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...
 - Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...
@@ -36,7 +38,7 @@ For more information on creating and using Mapbox access tokens:
 
 
 ```bash
-  npm install @solutegrate/mapboxgl-geoflo@1.0.0
+  npm install @solutegrate/mapboxgl-geoflo@
 ```  
 ## 🛠️ Usage/Examples
 

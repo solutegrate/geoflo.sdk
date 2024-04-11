@@ -1,6 +1,6 @@
 {
   "name": "@solutegrate/mapboxgl-geoflo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
   "main": "dist/mapboxgl-geoflo.min.js",
   "scripts": {
