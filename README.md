@@ -3,7 +3,7 @@
 
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
-# MapboxGL-GeoFlo! 🌎
+# MapboxGL-GeoFlo
 ### *Professional Geospatial Management Library for Mapbox GL JS*
 
 [![GitHub Release](https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=social)](https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo)
@@ -34,7 +34,7 @@ Before you get started with GeoFlo,
 you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `mapboxgl-geoflo` npm package.
 
 For more information on creating and using Mapbox access tokens:
-[<img width="100" alt="Mapbox logo" src="https://static-assets.mapbox.com/www/logos/mapbox-logo-black.png">](https://docs.mapbox.com/accounts/guides/tokens/)
+[<img width="100" alt="Mapbox logo" src="./assets/images/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
 
 
 ```bash
