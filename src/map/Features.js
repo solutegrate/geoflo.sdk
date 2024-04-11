@@ -1,6 +1,6 @@
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Features
  * @description A class that handles features functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -14,7 +14,7 @@ const Features = function (ctx) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getColdFeatures
 	 * @description This function returns an array of cold features.
 	 * @return {Array} An array of cold features.
@@ -25,7 +25,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID from a given source. If the ID is an array with multiple IDs, it retrieves multiple features. If the ID is an object, it tries to extract the ID from the object's parent, properties, or id fields.
 	 * @param {string|number|Array} id - The ID or array of IDs of the feature(s) to retrieve.
@@ -39,7 +39,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getFeaturesById
 	 * @description Retrieves features by their IDs.
 	 * @param {Array} ids - An array of feature IDs to retrieve.
@@ -59,7 +59,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getType
 	 * @description This function returns the type of the input feature.
 	 * @param {any} feature - The feature whose type needs to be determined.
@@ -71,7 +71,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features getUnit
+     * @memberof module:geoflo.Features getUnit
 	 * @name getUnit
 	 * @description Retrieves the unit associated with a given feature type from the context options.
 	 * @param {Object} feature - The feature object for which the unit needs to be retrieved.
@@ -90,7 +90,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getUnits
 	 * @param {Object} feature - The feature for which units need to be calculated.
 	 * @returns {number} - The calculated units (length or area) of the feature.
@@ -117,7 +117,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setFeaturesState
 	 * @description Sets the state of multiple features in a map.
 	 * @param {Array} features - An array of features to set the state for.
@@ -138,7 +138,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setFeatureState
 	 * @description This function sets the state of a feature and its children in the map by updating their feature state.
 	 * @param {string} id - The ID of the parent feature.
@@ -160,7 +160,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setText
 	 * @description Sets text features on the map based on the provided features.
 	 * @param {Object} features - The features to set text on.
@@ -196,7 +196,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addFeature
 	 * @description This function adds a feature to the map with the given properties. It cleans the coordinates, truncates them, assigns deep properties, sets the source, and removes unnecessary properties before adding the feature to the map.
 	 * @param {Object} feature - The feature object to be added to the map.
@@ -229,7 +229,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addFeatures
 	 * @description This function takes an array of features and adds them to the map. It also updates the source if any changes are made.
 	 * @param {Array} features - An array of features to be added to the map.
@@ -265,7 +265,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addUnits
 	 * @description Adds units to a feature's geometry based on the specified conversion or default unit.
 	 * @param {Object} feature - The feature object to which units will be added.
@@ -287,7 +287,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name updateFeatures
 	 * @description This function updates the coordinates of features in a map based on the provided coordinates. It iterates through the features array, retrieves the original feature by ID, and updates its geometry coordinates based on the feature type. It then adds units to the updated feature and updates the source of the map.
 	 * @param {Array} features - An array of features to update.
@@ -319,7 +319,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name updateSource
 	 * @description Updates the source of the current object with the provided sources.
 	 * @param {Array} sources - An array of sources to update the current object with.
@@ -333,7 +333,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name removeFeatures
 	 * @description This function removes features from the map based on the provided ID or array of IDs. It updates the map source after removing the features.
 	 * @param {string|string[]} id - The ID or array of IDs of the features to be removed.
@@ -378,7 +378,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name deleteFeatures
 	 * @description Deletes all features from the coldFeatures array and updates the source.
 	 * @params {Array} coldFeatures - The array of features to be deleted.
@@ -393,7 +393,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name convertUnits
 	 * @description Converts the given units of a feature to the specified target units based on the feature type (Polyline, Polygon, or Rectangle).
 	 * @param {Object} feature - The feature object containing properties like type.

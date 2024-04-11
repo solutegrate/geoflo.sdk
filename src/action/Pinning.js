@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Pinning
  * @description A class that handles pinning functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -12,7 +12,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name activate
 	 * @description Activates the feature by setting the enabled flag to true and enabling pinning in the options.
 	 * @params {void} None
@@ -26,7 +26,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name deactivate
 	 * @description This function deactivates the pinning feature by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
 	 */
@@ -42,7 +42,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name getFeatures
 	 * @description Retrieves the features from the pinnedFeatures array in the context object.
 	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
@@ -54,7 +54,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name setBuffer
 	 * @description This function creates a buffer around the provided coordinates based on the pinning buffer option.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to create the buffer around.
@@ -80,7 +80,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name setFeatures
 	 * @description Sets the pinable features based on the provided coordinates and fires an event.
 	 * @param {Object} coords - The coordinates to determine nearby features.
@@ -96,7 +96,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name resetFeatures
 	 * @description Resets the updated features by adding them to the canvas context.
 	 * @returns {boolean} Returns false if there are no updated features to reset.
@@ -108,7 +108,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name updateFeatures
 	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
 	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
@@ -125,7 +125,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name getNearByFeatures
 	 * @description This function calculates the radius based on the map zoom level and retrieves nearby features within that radius.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find nearby features.

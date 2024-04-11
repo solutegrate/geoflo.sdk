@@ -1,6 +1,6 @@
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Map
  * @description A class that handles map functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -10,7 +10,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name init
 	 * @description This function initializes the map with the given options, including setting up the Mapbox instance, SDK, and viewport.
 	 * @param {Object} options - The options object for configuring the map.
@@ -45,7 +45,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setStyle
 	 * @description Sets the style of the map and returns the updated style.
 	 * @param {Object} style - The style object to be applied to the map.
@@ -60,7 +60,7 @@ const Map = function (ctx, options) {
 	/**
 	 * @description Sets the extent of the map based on the provided features or a given extent. If no features are provided, it uses the rendered drawn features. If extent is specified, it sets the map extent to the extent polygon. If center is not specified and isPoint is true, it centers the map at the centroid of the extent. If center is false, it fits the map to the bounding box of the features. If center is true, it centers the map at the centroid of the bounding box.
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setExtent
 	 * @param {Array} features - Array of features to set the extent based on.
 	 * @param {Array} extent - Extent polygon to set the map extent to.
@@ -100,7 +100,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setViewport
 	 * @description This function sets the style of the viewport based on the options provided. It resizes the map, calculates the height and width of the container, adjusts the height and width of the viewport, extends the viewport style, sets padding, and returns the updated viewport element.
 	 * @param {Object} options - The options object containing style properties for the viewport.
@@ -136,7 +136,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setOptions
 	 * @description This function allows setting various options for the map such as maxPitch, maxZoom, minPitch, and minZoom.
 	 * @param {Object} options - The options object containing the map options.
@@ -155,7 +155,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setPadding
 	 * @description Calculates the padding values for the container by comparing its position with the viewport.
 	 * @returns {Object} The padding object containing left, right, top, and bottom padding values.
@@ -182,7 +182,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onEvent
 	 * @description Logs the event passed as a parameter to the console.
 	 * @param {Event} event - The event object to be logged.
@@ -194,7 +194,7 @@ const Map = function (ctx, options) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onLoad
 	 * @description This function is triggered when the map loads. It sets up the map container, inserts the viewport, sets options, and loads the map.
 	 * @param {Event} event - The event object triggered when the map loads.
@@ -213,7 +213,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onStyleLoad
 	 * @description This function sets the URL for the glyph manager based on the provided parameters and triggers a redraw after a delay.
 	 * @param {Event} event - The event object triggering the function.
@@ -226,7 +226,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onMapMove
 	 * @description This function is called when the map is moved. It handles the event triggered by the map movement.
 	 * @param {Event} event - The event object containing information about the map movement.

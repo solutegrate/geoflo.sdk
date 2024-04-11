@@ -1,6 +1,6 @@
 /**
  * @class
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Mesh
  * @description A class that handles the snapping mesh index functionality in a mapping context.
  * @param {Object} originalFeatures - The original features to be meshed
@@ -15,7 +15,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name addNewFeatures
 	 * @description This function takes new features, splits them into segments, checks for intersections, and updates the existing segments accordingly.
 	 * @param {Array} features - An array of new features to be added.
@@ -31,7 +31,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeatures
 	 * @description Returns all of the features in the mesh.
 	 * @return {Array} Returns an array containing all feature segments.
@@ -42,7 +42,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name splitSegmentAtPoint
 	 * @description This function takes a segment ID and coordinates of a point to split the segment. It creates two new segments by splitting the original segment at the specified point and updates the feature index.
 	 * @param {string} segmentId - The ID of the segment to be split.
@@ -65,7 +65,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeaturesFromIndex
 	 * @description This function takes an array of features and retrieves the corresponding features from an index based on their IDs.
 	 * @param {Array} features - The array of features to retrieve from the index.
@@ -85,7 +85,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID.
 	 * @param {number} id - The ID of the feature to retrieve.
@@ -97,7 +97,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeaturesByParentId
 	 * @description Retrieves features based on the parent ID. The parent ID is used to retrieve cold features associated with the segment.
 	 * @param {number} id - The parent ID to retrieve features for.
@@ -109,7 +109,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name removeFeature
 	 * @description Removes a feature with the specified ID.
 	 * @param {number} id - The ID of the feature to be removed.

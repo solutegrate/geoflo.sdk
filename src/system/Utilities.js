@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Utilities
  * @description This module provides utility functions for processing and manipulating GeoJSON features and geometries.
  * @param {Object} ctx - The GeoFlo context object
@@ -8,7 +8,7 @@
 const Utilities = function (ctx) {
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name pointInCoordinates
 	 * @description This function takes a line string and a point's coordinates as input and returns an array of indices where the point is found in the line string's coordinates.
 	 * @param {Object} lineString - The line string object containing geometry coordinates.
@@ -31,7 +31,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name sameBorders
 	 * @description This function compares two sets of borders to determine if they are the same.
 	 * @param {Object} fromBorders - The first set of borders to compare.
@@ -48,7 +48,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name getRandomColor
 	 * @description This function generates a random color by randomly selecting hexadecimal values for each digit of the color code.
 	 * @returns {string} A random color in hexadecimal format.
@@ -64,7 +64,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createRandomStroke
 	 * @description Generates a random stroke color for a shape.
 	 * @returns {Object} An object containing the randomly generated stroke color.
@@ -77,7 +77,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createLineAndSaveLength
 	 * @description This function takes an array of line coordinates and properties, creates a line string with random stroke properties, calculates the length of the line, and saves it in the properties.
 	 * @param {Array} lineCoords - Array of coordinates for the line string.
@@ -93,7 +93,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name lineSplit
 	 * @description Splits a line string based on the provided point indexes and returns an array of split line strings.
 	 * @param {Object} lineString - The line string object to split.
@@ -130,7 +130,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name splitLines
 	 * @description This function takes two line strings and splits them at their intersection points.
 	 * @param {Object} lineString1 - The first line string object.
@@ -161,7 +161,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createSimpleMesh
 	 * @description Creates a simple mesh by processing a list of features containing line strings.
 	 * @param {Array} features - An array of line string features to be processed.
@@ -188,7 +188,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createMesh
 	 * @description This function takes an array of line string features and splits them at intersection points to create a mesh.
 	 * @param {Array} features - An array of line string features to create the mesh from.
@@ -245,7 +245,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name setProperty
 	 * @description This function sets a property value for a given feature. If the feature does not have properties, it creates a new properties object. If the property name includes a dot (.), it creates nested objects to set the value.
 	 * @param {Object} feature - The feature object to set the property for.
@@ -273,7 +273,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name setProperties
 	 * @description Updates the properties of a given feature object with new properties.
 	 * @param {Object} feature - The feature object whose properties will be updated.
@@ -285,7 +285,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name findClosestFeatures
 	 * @description This function takes an indexData object, a point object, and a radius value as parameters. It then retrieves the feature IDs within the specified radius from the point index in the indexData object. It ensures unique features are included in the result and returns an array of closest features.
 	 * @param {Object} indexData - The index data object containing pointIndex, pointFeatureMap, and featureById.
@@ -311,7 +311,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointEqual
 	 * @description Checks if two points are equal based on their coordinates.
 	 * @param {Array} coords1 - The coordinates of the first point [x, y].
@@ -324,7 +324,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPoint
 	 * @description This function takes a feature object and determines if it represents a Point geometry.
 	 * @param {Object} f - The feature object to be checked.
@@ -336,7 +336,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPolygon
 	 * @description This function determines if a feature represents a polygon by comparing its first and last coordinates.
 	 * @param {Object} feature - The feature object to be checked.
@@ -351,7 +351,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isLineString
 	 * @description This function takes a GeoJSON feature object and determines if it represents a LineString geometry.
 	 * @param {Object} f - The GeoJSON feature object to be checked.
@@ -363,7 +363,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isValidLineString
 	 * @description Checks if the input feature is a valid LineString by verifying its geometry coordinates.
 	 * @param {Object} f - The input feature to be validated.
@@ -378,7 +378,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isLastIndex
 	 * @description This function determines if the provided index is the last index in the coordinates array of a feature.
 	 * @param {number} i - The index to check.
@@ -395,7 +395,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name getLastIndexCoords
 	 * @description This function returns the last coordinates of a given geometry object.
 	 * @param {Object} f - The geometry object to extract the last coordinates from.
@@ -409,7 +409,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isEmptyLineString
 	 * @description This function determines if the provided feature is a LineString with only two identical points, making it an empty LineString.
 	 * @param {Object} feature - The feature object to be checked.
@@ -431,7 +431,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointAtVertex
 	 * @description This function determines if a point is at the first or last vertex of a geometry by comparing it with the first and last coordinates.
 	 * @param {Array} geometryCoords - The array of coordinates representing the geometry.
@@ -446,7 +446,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointNotTooClose
 	 * @description This function calculates the distance between two points and checks if it exceeds a minimum distance threshold.
 	 * @param {Array<number>} coords1 - The coordinates of the first point [x, y].
@@ -466,7 +466,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isOverlapping
 	 * @description This function takes two features and determines if they overlap by comparing their bounding boxes.
 	 * @param {Object} feature1 - The first feature object with geometry.coordinates.
@@ -493,7 +493,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createLineWithLength
 	 * @description This function takes an array of coordinates and creates a line string using Turf.js. It then calculates the length of the line and sets it as a property of the line.
 	 * @param {Array} coords - An array of coordinates [ [x1, y1], [x2, y2], ... ].
@@ -508,7 +508,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name reducePrecision
 	 * @description This function reduces the precision of the coordinates to 7 decimal places.
 	 * @param {Array} coords - An array containing the coordinates to be processed.
@@ -522,7 +522,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createBbox
 	 * @description This function takes an array of two coordinates and constructs a bounding box object with west, east, south, and north properties.
 	 * @param {Array} coords - An array of two coordinates in the format [[lon1, lat1], [lon2, lat2]].
@@ -549,7 +549,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name stringToDOM
 	 * @description Converts a string to a DOM object using DOMParser.
 	 * @param {string} str - The input string to be converted to a DOM object.
@@ -562,7 +562,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name processFiles
 	 * @description This function reads each file in the input array, extracts the file name and extension, and then reads the file content using FileReader. The content is passed to the handler function along with the file name and extension.
 	 * @param {File[]} files - An array of File objects to be processed.
@@ -591,7 +591,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name combineSameTypeFeatures
 	 * @description This function takes an array of line features and combines them by connecting them based on their coordinates. It checks the endpoints of each line feature and connects them accordingly to form a continuous line.
 	 * @param {Array} features - An array of line features to be combined.
@@ -635,7 +635,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name degrees2meters
 	 * @description This function takes an array of latitude and longitude in degrees and converts it to meters using the Mercator projection formula.
 	 * @param {Array<number>} px - An array containing latitude and longitude in degrees [longitude, latitude].
@@ -650,7 +650,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name meters2degrees
 	 * @description This function takes a pixel value and converts it to longitude and latitude in degrees.
 	 * @param {Array} px - The pixel value to be converted, in the format [x, y].
@@ -664,7 +664,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name extend
 	 * @description Extends the properties of the first object with the properties of the subsequent objects.
 	 * @param {Object} target - The object to be extended.
@@ -681,7 +681,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name clone
 	 * @description This function recursively clones the input object or array, preserving the structure and types of the elements.
 	 * @param {Object|Array|Date|RegExp|Function|Symbol} thing - The object or array to be cloned.
@@ -717,7 +717,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name cloneDeep
 	 * @description Recursively clones a value, including objects and arrays, preserving the original structure deeply.
 	 * @param {any} value - The value to be cloned.
@@ -990,7 +990,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name assignDeep
 	 * @description Recursively assigns properties of source object to target object deeply.
 	 * @param {Object} target - The target object to which properties will be assigned.
@@ -1017,7 +1017,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name compareDeep
 	 * @description Recursively compares two objects deeply to check if they are equal.
 	 * @param {Object} x - The first object to compare.
@@ -1136,7 +1136,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name consumableArray
 	 * @description Creates a consumable copy of an array or array-like object.
 	 * @param {Array|Array-like} arr - The input array or array-like object to be copied.

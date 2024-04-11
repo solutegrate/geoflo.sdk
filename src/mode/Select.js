@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Select
  * @description A class that handles selecting functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -17,7 +17,7 @@ function Select (ctx) {
 
     /**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name activate
 	 * @description This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
 	 * @param {Object} options - The options object for activation.
@@ -40,7 +40,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name deactivate
 	 * @description This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
 	 * @returns {boolean} Returns false if the feature is not activated.
@@ -57,7 +57,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name canHandle
 	 * @description This function determines if the given mode name is equal to the SELECT mode.
 	 * @param {string} modeName - The mode name to be checked.
@@ -69,7 +69,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name selectFeature
 	 * @description Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
 	 * @param {string} id - The ID of the feature to be selected.
@@ -94,7 +94,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name deselectCurrentFeature
 	 * @description Deselects the current feature by removing its selection.
 	 */
@@ -104,7 +104,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name addPopup
 	 * @description This function creates a popup element with the specified features and adds it to the map at the click coordinates.
 	 * @param {Object} features - The features to be displayed in the popup.
@@ -127,7 +127,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name removePopup
 	 * @description Removes the popup element from the DOM if it exists.
 	 * @return {boolean} Returns true if the popup element was successfully removed, otherwise false.
@@ -138,7 +138,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleMove
 	 * @description Handles the mouse move event.
 	 * @param {Event} event - The event object representing the mouse move event.
@@ -149,7 +149,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleClick
 	 * @description Handles the click event on the map and selects features based on the event.
 	 * @param {Object} event - The event object containing information about the click event.
@@ -177,7 +177,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleDrag
 	 * @description Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
 	 * @param {Event} event - The event object representing the drag event.

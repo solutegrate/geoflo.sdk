@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Snapping
  * @description A class that handles snapping functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -11,7 +11,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name activate
 	 * @description This function enables the object and sets the snapping option to true.
 	 */
@@ -22,7 +22,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name deactivate
 	 * @description This function sets the 'enabled' property to false, disables snapping, and updates the mesh data.
 	 * @returns {void}
@@ -36,7 +36,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name getClosest
 	 * @description Finds the closest point to the given coordinates within a specified radius or pixel distance.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find the closest point to.
@@ -65,7 +65,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setClosest
 	 * @description This function calculates the closest feature to the given coordinates within a specified radius and snapping parameters. It determines if the closest feature is a point or a vertex and returns the snapped feature accordingly.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find the closest feature to.
@@ -109,7 +109,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setFeature
 	 * @description This function sets a feature on the map using the provided feature and coordinates. It handles different scenarios such as creating a point, line, or polygon feature based on the input parameters.
 	 * @param {Object} feature - The feature to be set on the map.
@@ -150,7 +150,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setVertex
 	 * @description This function determines the vertex based on snapping and routing settings. It sets the closest feature when snapping is enabled and calculates the route if routing is enabled. It updates the map sources accordingly and triggers events related to vertex dragging and snapping.
 	 * @param {Object} ctx - The context object containing various settings and data.
@@ -181,7 +181,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name addFeature
 	 * @description This function adds a feature to the map by setting the data of the specified source with the provided feature. It also updates the properties of the feature if properties are provided.
 	 * @param {Object} feature - The feature to be added to the map.
@@ -200,7 +200,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name updateFeature
 	 * @description This function updates a feature based on the event coordinates provided. It determines the type of feature, calculates the necessary coordinates, creates a line feature with hint properties, and converts units if needed.
 	 * @param {Array} evtCoords - The event coordinates to update the feature.

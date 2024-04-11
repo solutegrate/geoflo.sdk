@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Styles
  * @description The Styles module provides a control to change the map style.
  * @param {Object} ctx - The GeoFlo context object

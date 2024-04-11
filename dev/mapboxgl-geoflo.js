@@ -24,7 +24,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Exploring
  * @description A class that handles exploring functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -35,7 +35,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name activate
 	 * @description Activates by setting the 'enabled' property to true and enabling the 'exploring' option.
 	 * @params {void} None
@@ -48,7 +48,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name deactivate
 	 * @description This function sets the 'enabled' and 'currentMatch' properties to false, and disables the 'exploring' option in the context.
 	 */
@@ -61,7 +61,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name setFeatures
 	 * @description This function sets features on the map based on the provided coordinates and options. It calculates the buffer based on the map zoom level and retrieves features within the buffer area. If routing is enabled, it calculates the route between two points.
 	 * @param {Array<number>} coords - The coordinates to set features around.
@@ -95,7 +95,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name setFeature
 	 * @description This function creates a line feature using the given coordinates and updates the current match based on the options. It also triggers an event and updates the source data on the map.
 	 * @param {Array} coords - The coordinates to create the line feature. Default is an empty array.
@@ -119,7 +119,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getFeatures
 	 * @description Retrieves features based on the provided bounds using Overpass API.
 	 * @param {Array} bounds - An array containing the bounding box coordinates [minLon, minLat, maxLon, maxLat].
@@ -147,7 +147,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getMatch
 	 * @description This function takes an array of coordinates and optional options to fetch a matched route from the OSRM API.
 	 * @param {Array} coords - An array of coordinates to match the route against.
@@ -196,7 +196,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getRoute
 	 * @description Retrieves a route based on the provided coordinates using the OSRM routing service.
 	 * @param {Array} coords - Array of coordinates representing the route.
@@ -318,7 +318,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Painting
  * @description A class that handles painting functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -331,7 +331,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name activate
 	 * @description Activates the painting functionality by enabling painting mode and clearing the source data.
 	 * @returns {void}
@@ -345,7 +345,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name deactivate
 	 * @description This function deactivates the current feature by setting the 'enabled' property to false, disabling the painting tool, enabling drag pan on the map, and deleting the feature.
 	 * @returns {void}
@@ -359,7 +359,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting getFeature
+     * @memberof module:geoflo.Painting getFeature
 	 * @name getFeature
 	 * @description This function retrieves the current painted feature.
 	 * @returns {any} The painted feature.
@@ -370,7 +370,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name setFeature
 	 * @description This function creates a feature based on the given type and coordinates. It updates the currentCoords array, sets the feature, and triggers a 'painting.start' event.
 	 * @param {Array} coords - The coordinates to set the feature at.
@@ -397,7 +397,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name updateFeature
 	 * @description This function updates the feature based on the provided coordinates. It handles different types of features like Rectangle, Circle, and others.
 	 * @param {Array} coords - The coordinates to update the feature with.
@@ -437,7 +437,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name handleUp
 	 * @description This function updates the feature based on the 'mouse up' event. It retrieves the current feature, updates the hot source, clones the updated feature, and sets the last click coordinates.
 	 * @param {Event} event - The event triggering the function.
@@ -520,7 +520,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Pinning
  * @description A class that handles pinning functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -532,7 +532,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name activate
 	 * @description Activates the feature by setting the enabled flag to true and enabling pinning in the options.
 	 * @params {void} None
@@ -546,7 +546,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name deactivate
 	 * @description This function deactivates the pinning feature by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
 	 */
@@ -562,7 +562,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name getFeatures
 	 * @description Retrieves the features from the pinnedFeatures array in the context object.
 	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
@@ -574,7 +574,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name setBuffer
 	 * @description This function creates a buffer around the provided coordinates based on the pinning buffer option.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to create the buffer around.
@@ -600,7 +600,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name setFeatures
 	 * @description Sets the pinable features based on the provided coordinates and fires an event.
 	 * @param {Object} coords - The coordinates to determine nearby features.
@@ -616,7 +616,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name resetFeatures
 	 * @description Resets the updated features by adding them to the canvas context.
 	 * @returns {boolean} Returns false if there are no updated features to reset.
@@ -628,7 +628,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name updateFeatures
 	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
 	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
@@ -645,7 +645,7 @@ const Pinning = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Pinning
+     * @memberof module:geoflo.Pinning
 	 * @name getNearByFeatures
 	 * @description This function calculates the radius based on the map zoom level and retrieves nearby features within that radius.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find nearby features.
@@ -713,7 +713,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Routing
  * @description A class that handles routing functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -726,7 +726,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name activate
 	 * @description Activates the functionality by setting the 'enabled' property to true and enabling routing in the options.
 	 * @params {void} None
@@ -739,7 +739,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name deactivate
 	 * @description This function deactivates the routing feature by setting the enabled flag to false, disabling routing in the options, and clearing the route data on the map.
 	 * @returns {void}
@@ -752,7 +752,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getRoute
 	 * @description This function calculates a route between two points on a map using a PathFinder object. It checks if the routing feature is enabled and if the map is not currently moving. It then creates a feature collection from the existing features, initializes a PathFinder object, and finds a path between the two points. The path is validated and then added to the map with a 'routing.add' event.
 	 * @param {Object} fromPoint - The starting point for the route.
@@ -771,7 +771,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getMatch
 	 * @description Retrieves a match for the given coordinates using the Exploring service. Sets the match as a starting point for routing.
 	 * @param {Object} coords - The coordinates for which to find a match.
@@ -785,7 +785,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getClosest
 	 * @description Calculates the closest point on a route based on the last click and the closest point to it.
 	 * @returns {Object|boolean} Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
@@ -801,7 +801,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getFeatures
 	 * @description Retrieves features of type 'LineString' from the mesh index.
 	 * @returns {Array} An array of features of type 'LineString'.
@@ -1423,7 +1423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Snapping
  * @description A class that handles snapping functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -1434,7 +1434,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name activate
 	 * @description This function enables the object and sets the snapping option to true.
 	 */
@@ -1445,7 +1445,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name deactivate
 	 * @description This function sets the 'enabled' property to false, disables snapping, and updates the mesh data.
 	 * @returns {void}
@@ -1459,7 +1459,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name getClosest
 	 * @description Finds the closest point to the given coordinates within a specified radius or pixel distance.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find the closest point to.
@@ -1488,7 +1488,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setClosest
 	 * @description This function calculates the closest feature to the given coordinates within a specified radius and snapping parameters. It determines if the closest feature is a point or a vertex and returns the snapped feature accordingly.
 	 * @param {Array<number>} coords - The coordinates [longitude, latitude] to find the closest feature to.
@@ -1532,7 +1532,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setFeature
 	 * @description This function sets a feature on the map using the provided feature and coordinates. It handles different scenarios such as creating a point, line, or polygon feature based on the input parameters.
 	 * @param {Object} feature - The feature to be set on the map.
@@ -1573,7 +1573,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name setVertex
 	 * @description This function determines the vertex based on snapping and routing settings. It sets the closest feature when snapping is enabled and calculates the route if routing is enabled. It updates the map sources accordingly and triggers events related to vertex dragging and snapping.
 	 * @param {Object} ctx - The context object containing various settings and data.
@@ -1604,7 +1604,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name addFeature
 	 * @description This function adds a feature to the map by setting the data of the specified source with the provided feature. It also updates the properties of the feature if properties are provided.
 	 * @param {Object} feature - The feature to be added to the map.
@@ -1623,7 +1623,7 @@ const Snapping = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Snapping
+     * @memberof module:geoflo.Snapping
 	 * @name updateFeature
 	 * @description This function updates a feature based on the event coordinates provided. It determines the type of feature, calculates the necessary coordinates, creates a line feature with hint properties, and converts units if needed.
 	 * @param {Array} evtCoords - The event coordinates to update the feature.
@@ -2134,7 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Features
  * @description A class that handles features functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -2148,7 +2148,7 @@ const Features = function (ctx) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getColdFeatures
 	 * @description This function returns an array of cold features.
 	 * @return {Array} An array of cold features.
@@ -2159,7 +2159,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID from a given source. If the ID is an array with multiple IDs, it retrieves multiple features. If the ID is an object, it tries to extract the ID from the object's parent, properties, or id fields.
 	 * @param {string|number|Array} id - The ID or array of IDs of the feature(s) to retrieve.
@@ -2173,7 +2173,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getFeaturesById
 	 * @description Retrieves features by their IDs.
 	 * @param {Array} ids - An array of feature IDs to retrieve.
@@ -2193,7 +2193,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getType
 	 * @description This function returns the type of the input feature.
 	 * @param {any} feature - The feature whose type needs to be determined.
@@ -2205,7 +2205,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features getUnit
+     * @memberof module:geoflo.Features getUnit
 	 * @name getUnit
 	 * @description Retrieves the unit associated with a given feature type from the context options.
 	 * @param {Object} feature - The feature object for which the unit needs to be retrieved.
@@ -2224,7 +2224,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name getUnits
 	 * @param {Object} feature - The feature for which units need to be calculated.
 	 * @returns {number} - The calculated units (length or area) of the feature.
@@ -2251,7 +2251,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setFeaturesState
 	 * @description Sets the state of multiple features in a map.
 	 * @param {Array} features - An array of features to set the state for.
@@ -2272,7 +2272,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setFeatureState
 	 * @description This function sets the state of a feature and its children in the map by updating their feature state.
 	 * @param {string} id - The ID of the parent feature.
@@ -2294,7 +2294,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name setText
 	 * @description Sets text features on the map based on the provided features.
 	 * @param {Object} features - The features to set text on.
@@ -2330,7 +2330,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addFeature
 	 * @description This function adds a feature to the map with the given properties. It cleans the coordinates, truncates them, assigns deep properties, sets the source, and removes unnecessary properties before adding the feature to the map.
 	 * @param {Object} feature - The feature object to be added to the map.
@@ -2363,7 +2363,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addFeatures
 	 * @description This function takes an array of features and adds them to the map. It also updates the source if any changes are made.
 	 * @param {Array} features - An array of features to be added to the map.
@@ -2399,7 +2399,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name addUnits
 	 * @description Adds units to a feature's geometry based on the specified conversion or default unit.
 	 * @param {Object} feature - The feature object to which units will be added.
@@ -2421,7 +2421,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name updateFeatures
 	 * @description This function updates the coordinates of features in a map based on the provided coordinates. It iterates through the features array, retrieves the original feature by ID, and updates its geometry coordinates based on the feature type. It then adds units to the updated feature and updates the source of the map.
 	 * @param {Array} features - An array of features to update.
@@ -2453,7 +2453,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name updateSource
 	 * @description Updates the source of the current object with the provided sources.
 	 * @param {Array} sources - An array of sources to update the current object with.
@@ -2467,7 +2467,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name removeFeatures
 	 * @description This function removes features from the map based on the provided ID or array of IDs. It updates the map source after removing the features.
 	 * @param {string|string[]} id - The ID or array of IDs of the features to be removed.
@@ -2512,7 +2512,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name deleteFeatures
 	 * @description Deletes all features from the coldFeatures array and updates the source.
 	 * @params {Array} coldFeatures - The array of features to be deleted.
@@ -2527,7 +2527,7 @@ const Features = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Features
+     * @memberof module:geoflo.Features
 	 * @name convertUnits
 	 * @description Converts the given units of a feature to the specified target units based on the feature type (Polyline, Polygon, or Rectangle).
 	 * @param {Object} feature - The feature object containing properties like type.
@@ -2781,7 +2781,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Layers
  * @description A class that handles layers functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -3211,7 +3211,7 @@ const Layers = function (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name init
 	 * @description Initializes the object with the provided options and refreshes it.
 	 * @param {Object} options - The options object to configure the object.
@@ -3224,7 +3224,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name refresh
 	 * @description This function refreshes the map by removing existing layers and sources, adding default layers and sources, and rebuilding the layers.
 	 * @param {Object} options - Optional parameter for additional options.
@@ -3258,7 +3258,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name setCustomLayers
 	 * @description This function takes an array of custom layers and options, builds the layers using the buildLayers function, and returns the resulting layers.
 	 * @param {Array} layers - An array of custom layers to be processed.
@@ -3273,7 +3273,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getCustomLayers
 	 * @description Retrieves the custom layers stored in the object.
 	 * @returns {Array} An array containing the custom layers.
@@ -3284,7 +3284,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name hasCustomLayers
 	 * @description This function determines if there are any custom layers present in the application.
 	 * @returns {number} The number of custom layers available.
@@ -3298,7 +3298,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getFeatures
 	 * @description Retrieves the features from a source based on the provided ID.
 	 * @param {string} id - The ID of the source to retrieve features from.
@@ -3312,7 +3312,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSelection
 	 * @description This function determines the selected feature based on the provided features array and coordinates.
 	 * @param {Array} features - An array of features to select from.
@@ -3328,7 +3328,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getType
 	 * @description This function takes a geometry type as input and returns the corresponding general type (Polygon, Polyline, or Point).
 	 * @param {string} type - The type of geometry to be evaluated.
@@ -3343,7 +3343,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSources
 	 * @description Retrieves the sources stored in the object.
 	 * @returns {Array} An array containing the sources.
@@ -3354,7 +3354,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSource
 	 * @description Retrieves a specific source object by its ID from the list of sources.
 	 * @param {string} id - The ID of the source to retrieve.
@@ -3368,7 +3368,7 @@ const Layers = function (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSourceIds
 	 * @description Retrieves the IDs of all sources.
 	 * @returns {Array} An array of source IDs.
@@ -3379,7 +3379,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayers
 	 * @description Retrieves the layers array from the object.
 	 * @returns {Array} The layers array.
@@ -3390,7 +3390,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayer
 	 * @description Retrieves a layer based on the provided ID or source ID.
 	 * @param {string} id - The ID of the layer to retrieve.
@@ -3406,7 +3406,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayerIds
 	 * @description Retrieves the IDs of the layers provided or the default layers if none are provided.
 	 * @param {Array} layers - An array of layer objects.
@@ -3423,7 +3423,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addSources
 	 * @description Adds multiple sources to the context with the given options.
 	 * @param {Array} sources - An array of sources to be added.
@@ -3438,7 +3438,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addSource
 	 * @description This function adds a new source to the map using the provided ID and type. It also accepts optional configuration options for the source.
 	 * @param {string} id - The unique identifier for the source.
@@ -3460,7 +3460,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addLayers
 	 * @description Adds multiple layers to the map.
 	 * @param {Array} layers - An array of layers to be added to the map.
@@ -3476,7 +3476,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addLayer
 	 * @description This function adds a layer to the map with the provided options. It also updates the layer's metadata, adds the layer to the map, and pushes the layer to the layers array. It triggers a 'layer.add' event and returns the added layer.
 	 * @param {Object} layer - The layer object to be added to the map.
@@ -3503,7 +3503,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeSources
 	 * @description Removes sources from the map.
 	 * @param {Array} sources - An array of source IDs to be removed. If not provided, it defaults to all source IDs.
@@ -3517,7 +3517,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeSource
 	 * @description This function removes a source from the map and the internal sources array based on the provided id.
 	 * @param {string} id - The id of the source to be removed.
@@ -3537,7 +3537,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeLayers
 	 * @description Removes multiple layers from the context.
 	 * @param {Array} layers - An array of layer objects to be removed.
@@ -3552,7 +3552,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeLayer
 	 * @description This function removes a layer from the map and the layers array based on the provided id.
 	 * @param {string} id - The id of the layer to be removed.
@@ -3574,7 +3574,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name moveLayers
 	 * @description Moves the specified layers on the map.
 	 * @param {Array} layers - An array of layer objects to be moved on the map.
@@ -3589,7 +3589,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addEventListeners
 	 * @description Attaches event listeners based on the provided options.
 	 * @param {Object} options - An object containing configuration options for event listeners.
@@ -3601,7 +3601,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeEventListeners
 	 * @description Removes event listeners from the element.
 	 * @param {Object} options - An object containing options for removing event listeners.
@@ -3614,7 +3614,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onClusterClick
 	 * @description Handles the click event on a cluster feature to expand the cluster on the map.
 	 * @param {Object} feature - The cluster feature that was clicked.
@@ -3633,7 +3633,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onLayerMouseover
 	 * @description This function is triggered when a mouseover event occurs on a layer. It checks if the map is in editing, drawing, or viewing mode, and if the layer is in the importing state. If there are no features in the event, it returns false. Otherwise, it sets the highlight on the map with the event features.
 	 * @param {Object} event - The mouseover event object.
@@ -3653,7 +3653,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onLayerMouseout
 	 * @description Handles the mouseout event on a layer in the map.
 	 * @param {Event} event - The mouseout event object.
@@ -3989,7 +3989,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Map
  * @description A class that handles map functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -3999,7 +3999,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name init
 	 * @description This function initializes the map with the given options, including setting up the Mapbox instance, SDK, and viewport.
 	 * @param {Object} options - The options object for configuring the map.
@@ -4034,7 +4034,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setStyle
 	 * @description Sets the style of the map and returns the updated style.
 	 * @param {Object} style - The style object to be applied to the map.
@@ -4049,7 +4049,7 @@ const Map = function (ctx, options) {
 	/**
 	 * @description Sets the extent of the map based on the provided features or a given extent. If no features are provided, it uses the rendered drawn features. If extent is specified, it sets the map extent to the extent polygon. If center is not specified and isPoint is true, it centers the map at the centroid of the extent. If center is false, it fits the map to the bounding box of the features. If center is true, it centers the map at the centroid of the bounding box.
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setExtent
 	 * @param {Array} features - Array of features to set the extent based on.
 	 * @param {Array} extent - Extent polygon to set the map extent to.
@@ -4089,7 +4089,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setViewport
 	 * @description This function sets the style of the viewport based on the options provided. It resizes the map, calculates the height and width of the container, adjusts the height and width of the viewport, extends the viewport style, sets padding, and returns the updated viewport element.
 	 * @param {Object} options - The options object containing style properties for the viewport.
@@ -4125,7 +4125,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setOptions
 	 * @description This function allows setting various options for the map such as maxPitch, maxZoom, minPitch, and minZoom.
 	 * @param {Object} options - The options object containing the map options.
@@ -4144,7 +4144,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name setPadding
 	 * @description Calculates the padding values for the container by comparing its position with the viewport.
 	 * @returns {Object} The padding object containing left, right, top, and bottom padding values.
@@ -4171,7 +4171,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onEvent
 	 * @description Logs the event passed as a parameter to the console.
 	 * @param {Event} event - The event object to be logged.
@@ -4183,7 +4183,7 @@ const Map = function (ctx, options) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onLoad
 	 * @description This function is triggered when the map loads. It sets up the map container, inserts the viewport, sets options, and loads the map.
 	 * @param {Event} event - The event object triggered when the map loads.
@@ -4202,7 +4202,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onStyleLoad
 	 * @description This function sets the URL for the glyph manager based on the provided parameters and triggers a redraw after a delay.
 	 * @param {Event} event - The event object triggering the function.
@@ -4215,7 +4215,7 @@ const Map = function (ctx, options) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Map
+     * @memberof module:geoflo.Map
 	 * @name onMapMove
 	 * @description This function is called when the map is moved. It handles the event triggered by the map movement.
 	 * @param {Event} event - The event object containing information about the map movement.
@@ -4246,7 +4246,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @class
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Mesh
  * @description A class that handles the snapping mesh index functionality in a mapping context.
  * @param {Object} originalFeatures - The original features to be meshed
@@ -4261,7 +4261,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name addNewFeatures
 	 * @description This function takes new features, splits them into segments, checks for intersections, and updates the existing segments accordingly.
 	 * @param {Array} features - An array of new features to be added.
@@ -4277,7 +4277,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeatures
 	 * @description Returns all of the features in the mesh.
 	 * @return {Array} Returns an array containing all feature segments.
@@ -4288,7 +4288,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name splitSegmentAtPoint
 	 * @description This function takes a segment ID and coordinates of a point to split the segment. It creates two new segments by splitting the original segment at the specified point and updates the feature index.
 	 * @param {string} segmentId - The ID of the segment to be split.
@@ -4311,7 +4311,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeaturesFromIndex
 	 * @description This function takes an array of features and retrieves the corresponding features from an index based on their IDs.
 	 * @param {Array} features - The array of features to retrieve from the index.
@@ -4331,7 +4331,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID.
 	 * @param {number} id - The ID of the feature to retrieve.
@@ -4343,7 +4343,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name getFeaturesByParentId
 	 * @description Retrieves features based on the parent ID. The parent ID is used to retrieve cold features associated with the segment.
 	 * @param {number} id - The parent ID to retrieve features for.
@@ -4355,7 +4355,7 @@ const Mesh = function (originalFeatures, linesOnly) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Mesh
+     * @memberof module:geoflo.Mesh
 	 * @name removeFeature
 	 * @description Removes a feature with the specified ID.
 	 * @param {number} id - The ID of the feature to be removed.
@@ -4698,7 +4698,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Draw
  * @description A class that handles drawing functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -4708,7 +4708,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name canHandle
 	 * @description Checks if the given modeName is equal to the constant mode DRAW.
 	 * @param {string} modeName - The name of the mode to be checked.
@@ -4720,7 +4720,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name activate
 	 * @description This function activates the drawing mode with the provided options. It sets up the necessary properties and event listeners for drawing features on the map.
 	 * @param {Object} options - The options for activating the drawing mode.
@@ -4780,7 +4780,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name deactivate
 	 * @description Deactivates the draw feature by canceling the current edit, cleaning up the draw, setting buttons, and handling events.
 	 * @param {boolean} cancel - Flag to determine if the edit should be canceled.
@@ -4801,7 +4801,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name updateHotSource
 	 * @description This function updates the hot source feature with new properties and assigns it to the ctx.hotFeature. It then updates the data of the VERTEX and HOT sources on the map with the updated feature.
 	 * @param {Object} feature - The feature object to be updated.
@@ -4820,7 +4820,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name deleteVertex
 	 * @description Deletes a vertex from the current feature being edited on the map.
 	 * @param {number} index - The index of the vertex to be deleted.
@@ -4863,7 +4863,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name getFeature
 	 * @description Retrieves the hot feature from the context.
 	 * @returns {any} The hot feature stored in the context.
@@ -4874,7 +4874,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name selectFeature
 	 * @description Selects a feature based on the provided ID.
 	 * @param {string} id - The ID of the feature to be selected.
@@ -4888,7 +4888,7 @@ function Draw (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name saveEdit
 	 * @description This function saves the edited feature in the map.
 	 * @param {Object} feature - The feature to be saved.
@@ -4907,7 +4907,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name cancelEdit
 	 * @description This function cancels the current editing operation by setting the 'cancelled' flag to true. If the 'feature' parameter is not provided or does not have a 'type' property, it sets 'ctx.hotFeature' to null and finishes the draw process. It then sets the 'standby' property, updates 'ctx.hotFeature', fires a 'draw.cancel' event with the feature, and returns the result of 'finishDraw()'.
 	 * @param {boolean} standby - The standby value to set.
@@ -4927,7 +4927,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleDown
 	 * @description Handles the mouse or touch down event on the map. Updates the mouse/touch position, adds a vertex if allowed, and sets features for pinning.
 	 * @param {Object} event - The event object containing information about the mouse or touch event.
@@ -4955,7 +4955,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleUp
 	 * @description This function is responsible for handling the mouse up event during drawing and editing operations on the map. It checks various conditions and triggers corresponding actions based on the context and user interactions.
 	 * @param {Event} event - The mouse up event object.
@@ -4992,7 +4992,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleClick
 	 * @description This function processes the click event for drawing features on the map. It determines the action based on the event type and context state, such as editing mode, touch input, vertex addition, and gamepad interaction.
 	 * @param {Object} event - The event object containing information about the click event.
@@ -5066,7 +5066,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleMove
 	 * @description This function determines the behavior based on the event type and context state. It handles various actions such as dragging, painting, snapping, routing, and snapping to points.
 	 * @param {Object} event - The event object containing information about the mouse or touch event.
@@ -5121,7 +5121,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleDrag
 	 * @description This function is responsible for handling the drag event of a vertex on the map. It updates the position of the vertex based on the user's interaction and triggers various actions accordingly.
 	 * @param {Object} event - The event object containing information about the drag event.
@@ -5173,7 +5173,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleTouch
 	 * @description This function is responsible for handling touch events and triggering corresponding actions.
 	 * @param {Event} event - The touch event object.
@@ -5194,7 +5194,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleOffMap
 	 * @description This function is triggered when an off-map event occurs and clears the data of a specific source on the map.
 	 * @param {Event} event - The event object triggering the function.
@@ -5205,7 +5205,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleOnMap
 	 * @description This function updates the data of the SNAP source on the map with the snapFeature.
 	 * @param {Event} event - The event triggering the function.
@@ -5216,7 +5216,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handlePainting
 	 * @description This function is triggered when painting on the map. It disables drag pan, sets the map class to 'painting', and updates the feature coordinates.
 	 * @param {Object} event - The event object triggering the function.
@@ -5237,7 +5237,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleRectangle
 	 * @description Handles the creation and manipulation of a rectangle feature on a map.
 	 * @param {Object} event - The event object triggering the function.
@@ -5274,7 +5274,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleText
 	 * @description Handles text input events and logs relevant properties.
 	 * @param {Event} event - The event object triggering the function.
@@ -5286,7 +5286,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleIcon
 	 * @description Handles the icon based on the event and feature provided.
 	 * @param {Event} event - The event triggering the function.
@@ -5298,7 +5298,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleContext
 	 * @description Handles the context of dragging and moving a feature vertex.
 	 * @param {Event} event - The event triggering the context handling.
@@ -5319,7 +5319,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleHistory
 	 * @description Handles the history of features in the current mode.
 	 * @param {Object} event - The event triggering the history update.
@@ -5343,7 +5343,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleUndo
 	 * @description This function is responsible for undoing the last action performed in the application. It retrieves the history and undo arrays from the current mode, pops the last feature from the history, sets the undo flag to true for the feature, updates the hotFeature, pushes the feature to the undo array, and updates the map source data with the hotFeature.
 	 * @returns {void}
@@ -5364,7 +5364,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleRedo
 	 * @description Handles the redo functionality (currently under development).
 	 * @returns {void}
@@ -5918,7 +5918,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Select
  * @description A class that handles selecting functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -5935,7 +5935,7 @@ function Select (ctx) {
 
     /**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name activate
 	 * @description This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
 	 * @param {Object} options - The options object for activation.
@@ -5958,7 +5958,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name deactivate
 	 * @description This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
 	 * @returns {boolean} Returns false if the feature is not activated.
@@ -5975,7 +5975,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name canHandle
 	 * @description This function determines if the given mode name is equal to the SELECT mode.
 	 * @param {string} modeName - The mode name to be checked.
@@ -5987,7 +5987,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name selectFeature
 	 * @description Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
 	 * @param {string} id - The ID of the feature to be selected.
@@ -6012,7 +6012,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name deselectCurrentFeature
 	 * @description Deselects the current feature by removing its selection.
 	 */
@@ -6022,7 +6022,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name addPopup
 	 * @description This function creates a popup element with the specified features and adds it to the map at the click coordinates.
 	 * @param {Object} features - The features to be displayed in the popup.
@@ -6045,7 +6045,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name removePopup
 	 * @description Removes the popup element from the DOM if it exists.
 	 * @return {boolean} Returns true if the popup element was successfully removed, otherwise false.
@@ -6056,7 +6056,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleMove
 	 * @description Handles the mouse move event.
 	 * @param {Event} event - The event object representing the mouse move event.
@@ -6067,7 +6067,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleClick
 	 * @description Handles the click event on the map and selects features based on the event.
 	 * @param {Object} event - The event object containing information about the click event.
@@ -6095,7 +6095,7 @@ function Select (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Select
+     * @memberof module:geoflo.Select
 	 * @name handleDrag
 	 * @description Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
 	 * @param {Event} event - The event object representing the drag event.
@@ -7537,7 +7537,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Utilities
  * @description This module provides utility functions for processing and manipulating GeoJSON features and geometries.
  * @param {Object} ctx - The GeoFlo context object
@@ -7545,7 +7545,7 @@ __webpack_require__.r(__webpack_exports__);
 const Utilities = function (ctx) {
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name pointInCoordinates
 	 * @description This function takes a line string and a point's coordinates as input and returns an array of indices where the point is found in the line string's coordinates.
 	 * @param {Object} lineString - The line string object containing geometry coordinates.
@@ -7568,7 +7568,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name sameBorders
 	 * @description This function compares two sets of borders to determine if they are the same.
 	 * @param {Object} fromBorders - The first set of borders to compare.
@@ -7585,7 +7585,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name getRandomColor
 	 * @description This function generates a random color by randomly selecting hexadecimal values for each digit of the color code.
 	 * @returns {string} A random color in hexadecimal format.
@@ -7601,7 +7601,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createRandomStroke
 	 * @description Generates a random stroke color for a shape.
 	 * @returns {Object} An object containing the randomly generated stroke color.
@@ -7614,7 +7614,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createLineAndSaveLength
 	 * @description This function takes an array of line coordinates and properties, creates a line string with random stroke properties, calculates the length of the line, and saves it in the properties.
 	 * @param {Array} lineCoords - Array of coordinates for the line string.
@@ -7630,7 +7630,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name lineSplit
 	 * @description Splits a line string based on the provided point indexes and returns an array of split line strings.
 	 * @param {Object} lineString - The line string object to split.
@@ -7667,7 +7667,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name splitLines
 	 * @description This function takes two line strings and splits them at their intersection points.
 	 * @param {Object} lineString1 - The first line string object.
@@ -7698,7 +7698,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createSimpleMesh
 	 * @description Creates a simple mesh by processing a list of features containing line strings.
 	 * @param {Array} features - An array of line string features to be processed.
@@ -7725,7 +7725,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createMesh
 	 * @description This function takes an array of line string features and splits them at intersection points to create a mesh.
 	 * @param {Array} features - An array of line string features to create the mesh from.
@@ -7782,7 +7782,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name setProperty
 	 * @description This function sets a property value for a given feature. If the feature does not have properties, it creates a new properties object. If the property name includes a dot (.), it creates nested objects to set the value.
 	 * @param {Object} feature - The feature object to set the property for.
@@ -7810,7 +7810,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name setProperties
 	 * @description Updates the properties of a given feature object with new properties.
 	 * @param {Object} feature - The feature object whose properties will be updated.
@@ -7822,7 +7822,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name findClosestFeatures
 	 * @description This function takes an indexData object, a point object, and a radius value as parameters. It then retrieves the feature IDs within the specified radius from the point index in the indexData object. It ensures unique features are included in the result and returns an array of closest features.
 	 * @param {Object} indexData - The index data object containing pointIndex, pointFeatureMap, and featureById.
@@ -7848,7 +7848,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointEqual
 	 * @description Checks if two points are equal based on their coordinates.
 	 * @param {Array} coords1 - The coordinates of the first point [x, y].
@@ -7861,7 +7861,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPoint
 	 * @description This function takes a feature object and determines if it represents a Point geometry.
 	 * @param {Object} f - The feature object to be checked.
@@ -7873,7 +7873,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPolygon
 	 * @description This function determines if a feature represents a polygon by comparing its first and last coordinates.
 	 * @param {Object} feature - The feature object to be checked.
@@ -7888,7 +7888,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isLineString
 	 * @description This function takes a GeoJSON feature object and determines if it represents a LineString geometry.
 	 * @param {Object} f - The GeoJSON feature object to be checked.
@@ -7900,7 +7900,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isValidLineString
 	 * @description Checks if the input feature is a valid LineString by verifying its geometry coordinates.
 	 * @param {Object} f - The input feature to be validated.
@@ -7915,7 +7915,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isLastIndex
 	 * @description This function determines if the provided index is the last index in the coordinates array of a feature.
 	 * @param {number} i - The index to check.
@@ -7932,7 +7932,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name getLastIndexCoords
 	 * @description This function returns the last coordinates of a given geometry object.
 	 * @param {Object} f - The geometry object to extract the last coordinates from.
@@ -7946,7 +7946,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isEmptyLineString
 	 * @description This function determines if the provided feature is a LineString with only two identical points, making it an empty LineString.
 	 * @param {Object} feature - The feature object to be checked.
@@ -7968,7 +7968,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointAtVertex
 	 * @description This function determines if a point is at the first or last vertex of a geometry by comparing it with the first and last coordinates.
 	 * @param {Array} geometryCoords - The array of coordinates representing the geometry.
@@ -7983,7 +7983,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isPointNotTooClose
 	 * @description This function calculates the distance between two points and checks if it exceeds a minimum distance threshold.
 	 * @param {Array<number>} coords1 - The coordinates of the first point [x, y].
@@ -8003,7 +8003,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name isOverlapping
 	 * @description This function takes two features and determines if they overlap by comparing their bounding boxes.
 	 * @param {Object} feature1 - The first feature object with geometry.coordinates.
@@ -8030,7 +8030,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createLineWithLength
 	 * @description This function takes an array of coordinates and creates a line string using Turf.js. It then calculates the length of the line and sets it as a property of the line.
 	 * @param {Array} coords - An array of coordinates [ [x1, y1], [x2, y2], ... ].
@@ -8045,7 +8045,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name reducePrecision
 	 * @description This function reduces the precision of the coordinates to 7 decimal places.
 	 * @param {Array} coords - An array containing the coordinates to be processed.
@@ -8059,7 +8059,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name createBbox
 	 * @description This function takes an array of two coordinates and constructs a bounding box object with west, east, south, and north properties.
 	 * @param {Array} coords - An array of two coordinates in the format [[lon1, lat1], [lon2, lat2]].
@@ -8086,7 +8086,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name stringToDOM
 	 * @description Converts a string to a DOM object using DOMParser.
 	 * @param {string} str - The input string to be converted to a DOM object.
@@ -8099,7 +8099,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name processFiles
 	 * @description This function reads each file in the input array, extracts the file name and extension, and then reads the file content using FileReader. The content is passed to the handler function along with the file name and extension.
 	 * @param {File[]} files - An array of File objects to be processed.
@@ -8128,7 +8128,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name combineSameTypeFeatures
 	 * @description This function takes an array of line features and combines them by connecting them based on their coordinates. It checks the endpoints of each line feature and connects them accordingly to form a continuous line.
 	 * @param {Array} features - An array of line features to be combined.
@@ -8172,7 +8172,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name degrees2meters
 	 * @description This function takes an array of latitude and longitude in degrees and converts it to meters using the Mercator projection formula.
 	 * @param {Array<number>} px - An array containing latitude and longitude in degrees [longitude, latitude].
@@ -8187,7 +8187,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name meters2degrees
 	 * @description This function takes a pixel value and converts it to longitude and latitude in degrees.
 	 * @param {Array} px - The pixel value to be converted, in the format [x, y].
@@ -8201,7 +8201,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name extend
 	 * @description Extends the properties of the first object with the properties of the subsequent objects.
 	 * @param {Object} target - The object to be extended.
@@ -8218,7 +8218,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name clone
 	 * @description This function recursively clones the input object or array, preserving the structure and types of the elements.
 	 * @param {Object|Array|Date|RegExp|Function|Symbol} thing - The object or array to be cloned.
@@ -8254,7 +8254,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name cloneDeep
 	 * @description Recursively clones a value, including objects and arrays, preserving the original structure deeply.
 	 * @param {any} value - The value to be cloned.
@@ -8527,7 +8527,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name assignDeep
 	 * @description Recursively assigns properties of source object to target object deeply.
 	 * @param {Object} target - The target object to which properties will be assigned.
@@ -8554,7 +8554,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name compareDeep
 	 * @description Recursively compares two objects deeply to check if they are equal.
 	 * @param {Object} x - The first object to compare.
@@ -8673,7 +8673,7 @@ const Utilities = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Utilities
+     * @memberof module:geoflo.Utilities
 	 * @name consumableArray
 	 * @description Creates a consumable copy of an array or array-like object.
 	 * @param {Array|Array-like} arr - The input array or array-like object to be copied.
@@ -10475,7 +10475,7 @@ const Options = {
 
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Gamepad
  * @description Gamepad class for handling gamepad events. Initiate class by calling geoflo.addGamepad(gamepad). This will automatically call when connecting a new gamepad.
  * @param {Object} ctx - The GeoFlo context object
@@ -10686,7 +10686,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name init
 	 * @description This function initializes the gamepad with the specified options. It fires an event to notify the gamepad initialization, sets the gamepad, adds event listeners, and requests animation frame.
 	 * @param {Object} gamepad - The gamepad object to be initialized.
@@ -10705,7 +10705,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name refresh
 	 * @description Refreshes the gamepad state by checking button presses, axes values, and triggers.
 	 * @params {void}
@@ -10769,7 +10769,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name trigger
 	 * @description This function handles triggering actions based on gamepad input. It checks if a specific button or axis is triggered and performs corresponding actions.
 	 * @param {string} id - The identifier of the gamepad input.
@@ -10805,7 +10805,7 @@ const Gamepad = function (ctx, gamepad) {
 
     /**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name remove
 	 * @description Disconnects and removes the gamepad object.
 	 * @param {Object} gamepad - The gamepad object to be disconnected and removed.
@@ -10822,7 +10822,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setMap
 	 * @description This function updates the map properties using the handleMove function and sets the center, zoom, pitch, and bearing accordingly.
 	 * @param {Function} handleMove - The function used to handle map movement.
@@ -10856,7 +10856,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setContainer
 	 * @description Creates a new HTML element with the specified tag name and class name, appends it to a container if provided, and sets it as the container property of the current object.
 	 * @param {string} tagName - The tag name of the HTML element to create.
@@ -10875,7 +10875,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad 
+     * @memberof module:geoflo.Gamepad 
 	 * @name setLocation
 	 * @description This function updates the visibility, left, and top properties of the container element based on the provided value.
 	 * @param {Array<number>} value - An array containing the x and y coordinates for the new location.
@@ -10890,7 +10890,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setMarker
 	 * @description Sets a marker on the map using the center coordinates provided by the context.
 	 * @return {Object} Returns the marker object created on the map.
@@ -10901,7 +10901,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setGamepad
 	 * @description Initializes a gamepad object with specific properties based on the provided gamepad input.
 	 * @param {Object} gamepad - The gamepad object to be processed.
@@ -10967,7 +10967,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setCenter
 	 * @description This function calculates the new center of the map based on the input values and gamepad controls. It handles both joystick and D-pad inputs to adjust the map center accordingly.
 	 * @param {Object} value - The value used to calculate the new center of the map.
@@ -11025,7 +11025,7 @@ const Gamepad = function (ctx, gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setBearing
 	 * @description This function updates the bearing of the map by adjusting it with the specified value and direction.
 	 * @param {number | Array<number>} value - The value to adjust the bearing by. If dpad is false, it should be an array of numbers, otherwise a single number.
@@ -11049,7 +11049,7 @@ const Gamepad = function (ctx, gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setPitch
 	 * @description This function adjusts the pitch of the map by a specified amount in the given direction.
 	 * @param {number|Array<number>} value - The value or array of values to adjust the pitch by.
@@ -11076,7 +11076,7 @@ const Gamepad = function (ctx, gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setZoom
 	 * @description This function adjusts the zoom level of a map based on the provided value and direction.
 	 * @param {number} value - The amount by which to change the zoom level.
@@ -11099,7 +11099,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad
+     * @memberof module:geoflo.Gamepad
 	 * @name setSpeed
 	 * @description This function calculates the speed of panning based on the provided value and direction. It ensures that the speed falls within the specified minimum and maximum values.
 	 * @param {number} value - The value that influences the speed of panning.
@@ -11125,7 +11125,7 @@ const Gamepad = function (ctx, gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Gamepad associateEvent
+     * @memberof module:geoflo.Gamepad associateEvent
 	 * @name associateEvent
 	 * @description This function allows the user to associate an event with a callback function for a specific button or axis on the gamepad.
 	 * @param {string} eventName - The name of the event to associate with the callback function.
@@ -11286,7 +11286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Locate
  * @description The Locate module provides a user interface for locating the user's current position on the map.
  * @param {Object} ctx - The GeoFlo context object
@@ -11296,7 +11296,7 @@ const Locate = function (ctx, options={}) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name init
 	 * @description This function initializes the geolocation control on the map with the specified options.
 	 * @param {Object} options - The options for configuring the geolocation control.
@@ -11325,7 +11325,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name ready
 	 * @description This function checks if the geolocate button is available in the control and then calls the build function.
 	 * @params {Object} control - The control object containing the geolocate button.
@@ -11344,7 +11344,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name build
 	 * @description This function hides the user location dot marker and the associated button.
 	 * @params {void} None
@@ -11357,7 +11357,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name update
 	 * @description This function updates the map bearing and center based on the provided options.
 	 * @param {Object} options - The options object.
@@ -11376,7 +11376,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name heading
 	 * @description Retrieves the heading value from the control object.
 	 * @returns {string} The heading value from the control object.
@@ -11387,7 +11387,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name bearing
 	 * @description This function retrieves the current bearing of the map.
 	 * @returns {number} The bearing of the map.
@@ -11398,7 +11398,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name locate
 	 * @description Initiates the process of locating the user's current position on the map.
 	 * @returns {void}
@@ -11413,7 +11413,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name relocate
 	 * @description Relocates the geolocation control to the user's current location. If the control is set to follow the user's location, it changes the state to 'ACTIVE_LOCK'. Adds the 'mapboxgl-ctrl-geolocate-active' class to the button element. Triggers the control
 	 * @params {void}
@@ -11427,7 +11427,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name unlocate
 	 * @description Sets the state to 'ACTIVE_LOCK', disables following, enables drag pan on the map, and triggers the control.
 	 * @returns {Object} The result of triggering the control.
@@ -11442,7 +11442,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name follow
 	 * @description Enables the follow functionality for the geolocate control. When activated, adds a specific class to the button, disables drag panning on the map, and sets the follow state to true.
 	 * @params {Object} ctx - The context object containing the map and control references.
@@ -11456,7 +11456,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name state
 	 * @description This function is used to get or set the state of the control. If a state parameter is provided, it sets the control's watch state to that value. If no state parameter is provided, it returns the current watch state of the control.
 	 * @param {boolean} state - The state to set for the control.
@@ -11470,7 +11470,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name getButton
 	 * @description Returns the geolocate button element from the control.
 	 * @returns {Element} The geolocate button element.
@@ -11484,7 +11484,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name removeClasses
 	 * @description This function removes classes related to geolocation control from a button element.
 	 * @params {Element} button - The button element from which classes will be removed.
@@ -11502,7 +11502,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onAdd
 	 * @description Logs the event passed as a parameter.
 	 * @param {Event} event - The event object to be logged.
@@ -11514,7 +11514,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onControlEvent
 	 * @description Handles events related to user location functionality initiated by the locate control button.
 	 * @param {Object} event - The event object containing information about the event.
@@ -11541,7 +11541,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onLocate
 	 * @description Handles the event when the geolocation is triggered.
 	 * @param {Event} event - The event object containing the coordinates.
@@ -11560,7 +11560,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onMapMove
 	 * @description This function is triggered when a map movement event occurs. It updates the button classes based on the state of the geolocate control.
 	 * @param {Event} event - The event object triggered by the map movement.
@@ -11602,7 +11602,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Styles
  * @description The Styles module provides a control to change the map style.
  * @param {Object} ctx - The GeoFlo context object
@@ -11950,7 +11950,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name initialize
 	 * @description Initializes the object and optionally assigns it to the global window object.
 	 * @returns {Object} The initialized object.
@@ -11965,7 +11965,7 @@ const GeoFlo = function () {
     
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name init
 	 * @description Initializes the map component with the provided options and a callback function when ready.
 	 * @param {Object} [options={}] - The options object for configuring the map component.
@@ -12003,7 +12003,7 @@ const GeoFlo = function () {
 
     /**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name load
 	 * @description This function loads the MapboxGL SDK with the given MapboxGL map object and sets up necessary components for interaction. Loads the User, Layers, and Features components, and initializes event listeners. Calls the onReady callback if provided.
 	 * @param {Object} map - The MapboxGL map object to be used by the SDK.
@@ -12045,7 +12045,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name enable
 	 * @description This function enables the map interaction mode based on the provided type and options. It sets the mode to 'select' or 'draw' depending on the type parameter, initializes options, controls, modes, and triggers events.
 	 * @param {string} type - The type of interaction mode to enable ('select' or 'draw').
@@ -12076,7 +12076,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name disable
 	 * @description This function disables the map by clearing modes, setting enabled to false, resetting mode to null, resetting options to default, firing a 'map.disable' event, enabling double click zoom, removing event listeners, layers, and controls.
 	 * @returns {Object} Returns the current instance of the map object.
@@ -12099,7 +12099,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name redraw
 	 * @description Redraws the map by refreshing layers, updating event listeners, and disabling double click zoom.
 	 * @returns {Promise<boolean>} Returns a promise that resolves to true if the map is successfully redrawn, false otherwise.
@@ -12118,7 +12118,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name refresh
 	 * @description Refreshes the content by redrawing it asynchronously.
 	 * @returns {Promise<boolean>} Returns a Promise that resolves to a boolean value.
@@ -12133,7 +12133,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name once
 	 * @description Registers a callback function to be executed only once for a specific GeoFlo event type.
 	 * @param {string} type - The type of event to listen for.
@@ -12146,7 +12146,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name on
 	 * @description Registers a callback function to be executed for a specific GeoFlo event type.
 	 * @param {string} type - The type of event to listen for.
@@ -12160,7 +12160,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name off
 	 * @description Removes an event listener from the map based on the provided GeoFlo event type and callback. Callback function must have a name.
 	 * @param {string} type - The type of event to remove the listener from.
@@ -12174,7 +12174,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name fire
 	 * @description Fires an event with the specified GeoFlo type and detail. Detail is an Object type.
 	 * @param {string} type - The type of the event to fire.
@@ -12190,7 +12190,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setOptions
 	 * @description Sets the options for the object by merging the provided options with the existing ones.
 	 * @param {Object} options - The options to be merged with the existing options.
@@ -12203,7 +12203,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setMode
 	 * @description This function allows the user to set the mode of the map editor with various options.
 	 * @param {Object} options - The options object for setting the mode.
@@ -12278,7 +12278,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setControls
 	 * @description Initializes and sets the controls for the map. Adds the fullscreen and navigation controls, and initializes the custom controls.
 	 * @params {none} - No parameters needed for this function.
@@ -12295,7 +12295,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setIcon
 	 * @description This function determines the appropriate icon to display based on the user's following status and navigation compass icon.
      * @deprecated
@@ -12315,7 +12315,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setCenterMarker
 	 * @description This function sets a marker at the center of the map. It allows customization of the marker icon and behavior.
 	 * @param {Object} options - Options object for customizing the center marker.
@@ -12368,7 +12368,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setButtons
 	 * @description This function resets the active buttons and activates the Select button.
 	 * @return {boolean} Returns true if the Select button is successfully set, false otherwise.
@@ -12379,7 +12379,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setActiveButton
 	 * @description Sets the active button with the specified id in the controls array.
 	 * @param {string} id - The id of the button to set as active.
@@ -12392,7 +12392,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setTheme
 	 * @description Sets the theme colors for the control.
 	 * @param {Object} colors - An object containing the theme colors.
@@ -12404,7 +12404,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setCustomLayers
 	 * @description Sets custom layers on the map.
 	 * @param {Array} layers - An array of custom layers to be added to the map.
@@ -12418,7 +12418,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setSelectedFeatures
 	 * @description This function updates the selected features on the map with the provided array of features.
 	 * @param {Array} features - An array of features to set as selected.
@@ -12440,7 +12440,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setMeshFeatures
 	 * @description Updates the mesh data with the provided features and returns the updated mesh. Adds a mesh index if it does not exist.
 	 * @param {Array} features - An array of features to update the mesh with.
@@ -12454,7 +12454,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name setMapClass
 	 * @description Sets a specific mouse class on the map container element based on the provided name. Removes any existing classes starting with "mouse-" before adding the new class.
 	 * @param {string} name - The name of the class to be added (without the "mouse-" prefix).
@@ -12474,7 +12474,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name hasControls
 	 * @description This function checks if the object has controls by verifying the existence and length of the controls array.
 	 * @returns {boolean} Returns true if the object has controls, false otherwise.
@@ -12485,7 +12485,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name hasSelection
 	 * @description This function determines whether there is a selection of features.
 	 * @returns {boolean} Returns true if there is a selection of features, otherwise false.
@@ -12496,7 +12496,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name hasSingleSelection
 	 * @description This function checks if there is only one selected feature.
 	 * @returns {boolean} Returns true if there is a single selection, false otherwise.
@@ -12510,7 +12510,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name activateSnapping
 	 * @description This function activates snapping by getting the snapping buttons, activating them, and triggering the snapping activation event. Fires a custom event 'snapping.activate' with the enabled status and the snapping object.
 	 * @returns {Object} The activated Snapping object.
@@ -12526,7 +12526,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name activatePinning
 	 * @description This function activates pinning by getting the pinning buttons, activating them, enabling snapping, activating pinning, and firing an event. Fires a custom event 'pinning.activate' with the enabled status and the pinning object.
 	 * @returns {Object} The activated pinning object.
@@ -12544,7 +12544,7 @@ const GeoFlo = function () {
 
 	/**
      * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @description This function activates the routing feature by getting the routing buttons, activating them, enabling snapping, deactivating painting, and activating the routing itself. Fires a custom event 'routing.activate' with the enabled status and the routing object.
 	 * @name activateRouting
 	 * @returns {Object} The activated Routing object.
@@ -12562,7 +12562,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name activateExploring
 	 * @description This function activates the exploring mode by activating the exploring buttons, functionalities, and events. Fires a custom event 'exploring.activate' with the enabled status and the exploring object.
 	 * @returns {Object} The activated exploring object.
@@ -12579,7 +12579,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name activatePainting
 	 * @description Activates the painting functionality by setting the draw mode, activating the painting buttons, deactivating routing and exploring, and firing an event. Fires a custom event 'painting.activate' with the enabled status and the painting object.
 	 * @returns {Object} The activated Painting object.
@@ -12600,7 +12600,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deactivateSnapping
 	 * @description This function deactivates the snapping feature by performing various actions. Deletes mesh data, deactivates the snapping buttons, deactivates the Snapping object, and fires a 'snapping.deactivate' event.
 	 * @returns {boolean} Returns false after deactivating the snapping feature.
@@ -12617,7 +12617,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deactivatePinning
 	 * @description This function deactivates the pinning feature by deactivating the pinning buttons, the Pinning object, and firing a 'pinning.deactivate' event.
 	 * @returns {boolean} Returns false after deactivating pinning.
@@ -12634,7 +12634,7 @@ const GeoFlo = function () {
 	/**
 	 * @description Deactivates the routing functionality by deactivating the routing buttons and the Routing module. Triggers a custom event 'routing.deactivate' with enable set to false.
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deactivateRouting
 	 * @returns {boolean} Returns false after deactivating the routing functionality.
 	 */
@@ -12649,7 +12649,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deactivateExploring
 	 * @description This function deactivates the exploring mode by deactivating buttons, deleting mesh data, deactivating the exploring mode, and firing an event. Fires a custom event 'exploring.deactivate' with the enable status set to false.
 	 * @returns {boolean} Returns false after deactivating the exploring mode.
@@ -12666,7 +12666,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deactivatePainting
 	 * @description This function deactivates the painting mode by deactivating the buttons, the painting tool, and firing an event. Fires a custom event 'painting.deactivate' with the enable status set to false.
 	 * @returns {boolean} Returns false.
@@ -12686,7 +12686,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getMap
 	 * @description Retrieves the map property from the Map object.
 	 * @returns {Object} The map property of the Map object.
@@ -12697,7 +12697,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getModes
 	 * @description Retrieves the modes based on the provided mode parameter. If a mode is specified, it returns the mode that can handle the input mode. If no mode is specified, it returns all available modes.
 	 * @param {string} mode - The mode to be checked against available modes.
@@ -12709,7 +12709,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getMode
 	 * @description Retrieves the current mode of the object. Either 'GeoFlo.Select' or 'GeoFlo.Draw'.
 	 * @return {object} The current mode of the object.
@@ -12720,7 +12720,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getColors
 	 * @description This function retrieves the colors from the options object.
 	 * @returns {Array} The colors array from the options object.
@@ -12732,7 +12732,7 @@ const GeoFlo = function () {
 	/**
 	 * @description Retrieves the buttons associated with a specific control or all buttons from the controls.
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getButtons
 	 * @param {string} id - The ID of the button to retrieve. If not provided, retrieves all buttons.
 	 * @returns {object|boolean} - Returns an object containing the buttons if found, or false if controls are not available.
@@ -12767,7 +12767,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getFeatures
 	 * @description This function retrieves both the drawn and selected features and returns them as a single array.
 	 * @return {Array} An array containing both the drawn and selected features.
@@ -12778,7 +12778,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getDrawnFeatures
 	 * @description Retrieves the drawn features from the Features object.
 	 * @returns {Array} An array of drawn features.
@@ -12789,7 +12789,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getRenderedFeatures
 	 * @description Retrieves rendered features within a specified radius around a given longitude and latitude, based on a filter.
 	 * @param {Array<number>} lngLat - An array containing the longitude and latitude coordinates.
@@ -12804,7 +12804,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getRenderedDrawnFeatures
 	 * @description This function queries the map for rendered drawn features based on the provided parameters.
 	 * @param {Object} lngLat - The longitude and latitude coordinates.
@@ -12852,7 +12852,7 @@ const GeoFlo = function () {
     
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getRenderedSnapFeatures
 	 * @description Retrieves rendered mesh index features within a specified radius around a given point on the map.
 	 * @param {Object} lngLat - The longitude and latitude coordinates of the center point.
@@ -12873,7 +12873,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID from the Features object.
 	 * @param {string} id - The ID of the feature to retrieve.
@@ -12886,7 +12886,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getFeaturesByLayer
 	 * @description This function queries the map for features within a specified radius around a given location from a specific source layer.
 	 * @param {string} source - The source layer to query features from.
@@ -12927,7 +12927,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getSelectedFeatures
 	 * @description Retrieves the selected features stored in the selectedFeatures array.
 	 * @returns {Array} An array containing the selected features.
@@ -12938,7 +12938,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getSelectedFeatureIds
 	 * @description Retrieves the IDs of selected features.
 	 * @returns {Array} An array of feature IDs.
@@ -12949,7 +12949,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getSelectedFeaturesBbox
 	 * @description Retrieves the bounding box of the selected features.
 	 * @returns {Array<number>} The bounding box coordinates [minX, minY, maxX, maxY].
@@ -12961,7 +12961,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getSelectedPropertyNames
 	 * @description Retrieves the unique property names of selected features excluding the ID property.
 	 * @returns {Array} An array of unique property names.
@@ -12983,7 +12983,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getSelectedPropertyValues
 	 * @description Retrieves the properties of selected features excluding the property with the specified ID.
 	 * @returns {Object} An object containing the properties of selected features.
@@ -13000,7 +13000,7 @@ const GeoFlo = function () {
 	/**
 	 * @description This function returns the common geometry type of the selected features. If all selected features have the same geometry type, it returns that type. If the selected features have different geometry types, it returns "illegal".
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name getCommonGeometryType
 	 * @returns {string|null} The common geometry type or null if different types are present.
 	 */
@@ -13027,7 +13027,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name editFeature
 	 * @description This function allows editing a feature by providing its ID or using the currently selected feature. It triggers a 'feature.edit' event and sets the mode to 'edit'.
 	 * @param {string} id - The ID of the feature to edit.
@@ -13054,7 +13054,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name cancelEdit
 	 * @description This function cancels the current edit mode if it is in 'draw' mode and deactivates the editing feature.
 	 * @param {boolean} standby - Indicates whether the cancel operation is standby.
@@ -13068,7 +13068,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name saveEdit
 	 * @description Saves the edited feature using the currentModes saveEdit method.
 	 * @return {any} The result of the saveEdit method of the current mode.
@@ -13083,7 +13083,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addFeatures
 	 * @description Adds features to the map and optionally zooms to them.
 	 * @param {Array} features - Array of features to be added to the map.
@@ -13101,7 +13101,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addFeaturesToSelected
 	 * @description This function adds the provided features to the selected features list, updates the map sources, sets buttons, updates the text, and triggers a 'feature.select' event.
 	 * @param {Array} features - The features to be added to the selected features list.
@@ -13117,7 +13117,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addFeaturesToMesh
 	 * @description Adds features to the mesh index and updates its data.
 	 * @param {Array} features - An array of features to be added to the mesh.
@@ -13131,7 +13131,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addGamepad
 	 * @description Adds a gamepad to the list of available gamepads and fires an event. Fires a custom event 'gamepad.add' with the gamepad object.
 	 * @param {Object} gamepad - The gamepad object to be added.
@@ -13144,7 +13144,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addTooltip
 	 * @description Attaches a tooltip by calling setTooltip to a specified element within a parent element.
 	 * @param {Element} parent - The parent element to which the tooltip will be attached.
@@ -13164,7 +13164,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name addPlugin
 	 * @description Adds a plugin to the plugins object of the current instance.
 	 * @param {Object} plugin - The plugin object to be added.
@@ -13184,7 +13184,7 @@ const GeoFlo = function () {
 	/**
 	 * @description Removes the selection of features based on the provided feature ID. If no ID is provided, all selected features are deselected.
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removeSelection
 	 * @param {string} id - The ID of the feature to be deselected.
 	 * @returns {number} The number of features that were deselected.
@@ -13212,7 +13212,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removeControls
 	 * @description This function is responsible for removing controls.
 	 * @params {none} No parameters needed.
@@ -13223,7 +13223,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removeGamepad
 	 * @description Removes a gamepad from the list of connected gamepads and triggers the onDisconnect event. Fires a custom event 'gamepad.remove' with the gamepad object.
 	 * @param {Object} gamepad - The gamepad object to be removed.
@@ -13238,7 +13238,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removeFeatures
 	 * @description Removes specified features from the map. If no layers are provided, all features are removed. If the layers parameter is not an array, the function returns false.
 	 * @param {Array} layers - An array of layers to remove features from.
@@ -13252,7 +13252,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removeFeature
 	 * @description Removes a feature from the Features collection and fires an event if edit mode is not enabled. Fires a custom event 'feature.delete' with the ID and feature object.
 	 * @param {string} id - The ID of the feature to be removed.
@@ -13267,7 +13267,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name removePopup
 	 * @description Removes the popup element from the DOM.
 	 * @return {boolean} Returns true if the popup was successfully removed, false otherwise.
@@ -13283,7 +13283,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name updateMeshData
 	 * @description This function updates the mesh data on the map by adding new features to the mesh index and updating the map source with the new data. If the mesh index is not available or the reset flag is set to true, the mesh index is reset before adding new features.
 	 * @param {Array} features - An array of features to be added to the mesh index.
@@ -13304,7 +13304,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name updateSelectedProperties
 	 * @description This function updates the selected properties of features based on the new properties provided while keeping specified properties.
 	 * @param {Object} newProperties - The new properties to update the features with.
@@ -13325,7 +13325,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name updateOrientation
 	 * @description Updates the orientation of the user based on the provided options.
 	 * @param {Object} options - An object containing the options for updating the orientation.
@@ -13340,7 +13340,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name saveFeatures
 	 * @description This function prepares the features of a layer for export in different formats such as KMZ, GPX, and GeoJSON. It styles the features, creates necessary metadata, and generates the export files.
 	 * @param {Object} layer - The layer object containing the features to be exported.
@@ -13471,7 +13471,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name loadFeatures
 	 * @description This function creates an input element of type file, allows multiple file selection, and triggers a file selection event. It then processes the selected files by calling the Utilities.processFiles function.
 	 * @params {Event} event - The event object triggered by file selection.
@@ -13521,7 +13521,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name moveMapAlongLine
 	 * @description This function animates the movement of the map along a specified line. The camera follows the route, ensuring synchronized movement.
 	 * @param {Array} line - The line representing the route on the map.
@@ -13580,7 +13580,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name refreshMeshData
 	 * @description This function refreshes the mesh data by triggering a 'snapping.refresh' event with the current mesh features.
 	 * @params {void} - No parameters needed for this function.
@@ -13595,7 +13595,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deleteMeshData
 	 * @description Deletes the mesh data by updating it with an empty array and triggering a 'snapping.delete' event with the features from the mesh index.
 	 * @params {Array} features - The features to update the mesh data with.
@@ -13608,7 +13608,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name deleteUserData
 	 * @description This function allows the user to delete selected features or all features based on confirmation prompts. It updates the map data and resets various properties.
 	 * @params {void} - No parameters required.
@@ -13674,7 +13674,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name hideSelectedFeatures
 	 * @description This function hides the selected features on the map by moving them to a hidden features array and updating the map sources.
 	 * @params {Array} hiddenFeatures - Array to store the hidden features.
@@ -13695,7 +13695,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name combineSelectedFeatures
 	 * @description Combines selected features based on their geometry type.
 	 * @params {void}
@@ -13735,7 +13735,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name moveSelectedFeatures
 	 * @description This function checks if moving is enabled and if there are selected features of LineString type. If so, it offsets the selected LineString features by the specified distance in the provided direction.
 	 * @param {number} direction - The direction in which to move the selected features (1 for forward, -1 for backward).
@@ -13760,7 +13760,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name moveFeature
 	 * @description This function calculates the new coordinates of a feature based on the direction and distance provided. NOT WORKING YET.
 	 * @param {Object} feature - The feature object to be moved.
@@ -13837,7 +13837,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name forEachSelectedFeature
 	 * @description Iterates over each selected feature and applies a handler function to it.
 	 * @param {Function} handler - The function to be applied to each selected feature.
@@ -13849,7 +13849,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name zoomToFeatures
 	 * @description This function zooms to the provided features on the map. If no features are provided, it zooms to the selected features, cold features, or the map extent if no other features are available.
 	 * @param {Array} features - The features to zoom to on the map.
@@ -13866,7 +13866,7 @@ const GeoFlo = function () {
 
 	/**
 	 * @function
-     * @memberOf module:GeoFlo
+     * @memberOf module:geoflo
 	 * @name createPolygon
 	 * @description Creates a polygon from selected LineString features and adds it to the map.
 	 * @params {Array} selectedFeatures - An array of selected features to be combined into a polygon.

@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Exploring
  * @description A class that handles exploring functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -11,7 +11,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name activate
 	 * @description Activates by setting the 'enabled' property to true and enabling the 'exploring' option.
 	 * @params {void} None
@@ -24,7 +24,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name deactivate
 	 * @description This function sets the 'enabled' and 'currentMatch' properties to false, and disables the 'exploring' option in the context.
 	 */
@@ -37,7 +37,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name setFeatures
 	 * @description This function sets features on the map based on the provided coordinates and options. It calculates the buffer based on the map zoom level and retrieves features within the buffer area. If routing is enabled, it calculates the route between two points.
 	 * @param {Array<number>} coords - The coordinates to set features around.
@@ -71,7 +71,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name setFeature
 	 * @description This function creates a line feature using the given coordinates and updates the current match based on the options. It also triggers an event and updates the source data on the map.
 	 * @param {Array} coords - The coordinates to create the line feature. Default is an empty array.
@@ -95,7 +95,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getFeatures
 	 * @description Retrieves features based on the provided bounds using Overpass API.
 	 * @param {Array} bounds - An array containing the bounding box coordinates [minLon, minLat, maxLon, maxLat].
@@ -123,7 +123,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getMatch
 	 * @description This function takes an array of coordinates and optional options to fetch a matched route from the OSRM API.
 	 * @param {Array} coords - An array of coordinates to match the route against.
@@ -172,7 +172,7 @@ const Exploring = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Exploring
+     * @memberof module:geoflo.Exploring
 	 * @name getRoute
 	 * @description Retrieves a route based on the provided coordinates using the OSRM routing service.
 	 * @param {Array} coords - Array of coordinates representing the route.

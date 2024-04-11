@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Locate
  * @description The Locate module provides a user interface for locating the user's current position on the map.
  * @param {Object} ctx - The GeoFlo context object
@@ -10,7 +10,7 @@ const Locate = function (ctx, options={}) {
     
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name init
 	 * @description This function initializes the geolocation control on the map with the specified options.
 	 * @param {Object} options - The options for configuring the geolocation control.
@@ -39,7 +39,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name ready
 	 * @description This function checks if the geolocate button is available in the control and then calls the build function.
 	 * @params {Object} control - The control object containing the geolocate button.
@@ -58,7 +58,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name build
 	 * @description This function hides the user location dot marker and the associated button.
 	 * @params {void} None
@@ -71,7 +71,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name update
 	 * @description This function updates the map bearing and center based on the provided options.
 	 * @param {Object} options - The options object.
@@ -90,7 +90,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name heading
 	 * @description Retrieves the heading value from the control object.
 	 * @returns {string} The heading value from the control object.
@@ -101,7 +101,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name bearing
 	 * @description This function retrieves the current bearing of the map.
 	 * @returns {number} The bearing of the map.
@@ -112,7 +112,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name locate
 	 * @description Initiates the process of locating the user's current position on the map.
 	 * @returns {void}
@@ -127,7 +127,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name relocate
 	 * @description Relocates the geolocation control to the user's current location. If the control is set to follow the user's location, it changes the state to 'ACTIVE_LOCK'. Adds the 'mapboxgl-ctrl-geolocate-active' class to the button element. Triggers the control
 	 * @params {void}
@@ -141,7 +141,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name unlocate
 	 * @description Sets the state to 'ACTIVE_LOCK', disables following, enables drag pan on the map, and triggers the control.
 	 * @returns {Object} The result of triggering the control.
@@ -156,7 +156,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name follow
 	 * @description Enables the follow functionality for the geolocate control. When activated, adds a specific class to the button, disables drag panning on the map, and sets the follow state to true.
 	 * @params {Object} ctx - The context object containing the map and control references.
@@ -170,7 +170,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name state
 	 * @description This function is used to get or set the state of the control. If a state parameter is provided, it sets the control's watch state to that value. If no state parameter is provided, it returns the current watch state of the control.
 	 * @param {boolean} state - The state to set for the control.
@@ -184,7 +184,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name getButton
 	 * @description Returns the geolocate button element from the control.
 	 * @returns {Element} The geolocate button element.
@@ -198,7 +198,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name removeClasses
 	 * @description This function removes classes related to geolocation control from a button element.
 	 * @params {Element} button - The button element from which classes will be removed.
@@ -216,7 +216,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onAdd
 	 * @description Logs the event passed as a parameter.
 	 * @param {Event} event - The event object to be logged.
@@ -228,7 +228,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onControlEvent
 	 * @description Handles events related to user location functionality initiated by the locate control button.
 	 * @param {Object} event - The event object containing information about the event.
@@ -255,7 +255,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onLocate
 	 * @description Handles the event when the geolocation is triggered.
 	 * @param {Event} event - The event object containing the coordinates.
@@ -274,7 +274,7 @@ const Locate = function (ctx, options={}) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Locate
+     * @memberof module:geoflo.Locate
 	 * @name onMapMove
 	 * @description This function is triggered when a map movement event occurs. It updates the button classes based on the state of the geolocate control.
 	 * @param {Event} event - The event object triggered by the map movement.

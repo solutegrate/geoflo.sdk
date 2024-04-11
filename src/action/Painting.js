@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Painting
  * @description A class that handles painting functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -13,7 +13,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name activate
 	 * @description Activates the painting functionality by enabling painting mode and clearing the source data.
 	 * @returns {void}
@@ -27,7 +27,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name deactivate
 	 * @description This function deactivates the current feature by setting the 'enabled' property to false, disabling the painting tool, enabling drag pan on the map, and deleting the feature.
 	 * @returns {void}
@@ -41,7 +41,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting getFeature
+     * @memberof module:geoflo.Painting getFeature
 	 * @name getFeature
 	 * @description This function retrieves the current painted feature.
 	 * @returns {any} The painted feature.
@@ -52,7 +52,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name setFeature
 	 * @description This function creates a feature based on the given type and coordinates. It updates the currentCoords array, sets the feature, and triggers a 'painting.start' event.
 	 * @param {Array} coords - The coordinates to set the feature at.
@@ -79,7 +79,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name updateFeature
 	 * @description This function updates the feature based on the provided coordinates. It handles different types of features like Rectangle, Circle, and others.
 	 * @param {Array} coords - The coordinates to update the feature with.
@@ -119,7 +119,7 @@ const Painting = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Painting
+     * @memberof module:geoflo.Painting
 	 * @name handleUp
 	 * @description This function updates the feature based on the 'mouse up' event. It retrieves the current feature, updates the hot source, clones the updated feature, and sets the last click coordinates.
 	 * @param {Event} event - The event triggering the function.

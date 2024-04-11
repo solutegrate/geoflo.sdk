@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Routing
  * @description A class that handles routing functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
  * @param {Object} ctx - The GeoFlo context object
@@ -13,7 +13,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name activate
 	 * @description Activates the functionality by setting the 'enabled' property to true and enabling routing in the options.
 	 * @params {void} None
@@ -26,7 +26,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name deactivate
 	 * @description This function deactivates the routing feature by setting the enabled flag to false, disabling routing in the options, and clearing the route data on the map.
 	 * @returns {void}
@@ -39,7 +39,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getRoute
 	 * @description This function calculates a route between two points on a map using a PathFinder object. It checks if the routing feature is enabled and if the map is not currently moving. It then creates a feature collection from the existing features, initializes a PathFinder object, and finds a path between the two points. The path is validated and then added to the map with a 'routing.add' event.
 	 * @param {Object} fromPoint - The starting point for the route.
@@ -58,7 +58,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getMatch
 	 * @description Retrieves a match for the given coordinates using the Exploring service. Sets the match as a starting point for routing.
 	 * @param {Object} coords - The coordinates for which to find a match.
@@ -72,7 +72,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getClosest
 	 * @description Calculates the closest point on a route based on the last click and the closest point to it.
 	 * @returns {Object|boolean} Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
@@ -88,7 +88,7 @@ const Routing = function (ctx, mode) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Routing
+     * @memberof module:geoflo.Routing
 	 * @name getFeatures
 	 * @description Retrieves features of type 'LineString' from the mesh index.
 	 * @returns {Array} An array of features of type 'LineString'.

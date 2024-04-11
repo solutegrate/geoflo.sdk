@@ -1,6 +1,6 @@
 /**
  * @mixin
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Draw
  * @description A class that handles drawing functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -10,7 +10,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name canHandle
 	 * @description Checks if the given modeName is equal to the constant mode DRAW.
 	 * @param {string} modeName - The name of the mode to be checked.
@@ -22,7 +22,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name activate
 	 * @description This function activates the drawing mode with the provided options. It sets up the necessary properties and event listeners for drawing features on the map.
 	 * @param {Object} options - The options for activating the drawing mode.
@@ -82,7 +82,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name deactivate
 	 * @description Deactivates the draw feature by canceling the current edit, cleaning up the draw, setting buttons, and handling events.
 	 * @param {boolean} cancel - Flag to determine if the edit should be canceled.
@@ -103,7 +103,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name updateHotSource
 	 * @description This function updates the hot source feature with new properties and assigns it to the ctx.hotFeature. It then updates the data of the VERTEX and HOT sources on the map with the updated feature.
 	 * @param {Object} feature - The feature object to be updated.
@@ -122,7 +122,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name deleteVertex
 	 * @description Deletes a vertex from the current feature being edited on the map.
 	 * @param {number} index - The index of the vertex to be deleted.
@@ -165,7 +165,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name getFeature
 	 * @description Retrieves the hot feature from the context.
 	 * @returns {any} The hot feature stored in the context.
@@ -176,7 +176,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name selectFeature
 	 * @description Selects a feature based on the provided ID.
 	 * @param {string} id - The ID of the feature to be selected.
@@ -190,7 +190,7 @@ function Draw (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name saveEdit
 	 * @description This function saves the edited feature in the map.
 	 * @param {Object} feature - The feature to be saved.
@@ -209,7 +209,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name cancelEdit
 	 * @description This function cancels the current editing operation by setting the 'cancelled' flag to true. If the 'feature' parameter is not provided or does not have a 'type' property, it sets 'ctx.hotFeature' to null and finishes the draw process. It then sets the 'standby' property, updates 'ctx.hotFeature', fires a 'draw.cancel' event with the feature, and returns the result of 'finishDraw()'.
 	 * @param {boolean} standby - The standby value to set.
@@ -229,7 +229,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleDown
 	 * @description Handles the mouse or touch down event on the map. Updates the mouse/touch position, adds a vertex if allowed, and sets features for pinning.
 	 * @param {Object} event - The event object containing information about the mouse or touch event.
@@ -257,7 +257,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleUp
 	 * @description This function is responsible for handling the mouse up event during drawing and editing operations on the map. It checks various conditions and triggers corresponding actions based on the context and user interactions.
 	 * @param {Event} event - The mouse up event object.
@@ -294,7 +294,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleClick
 	 * @description This function processes the click event for drawing features on the map. It determines the action based on the event type and context state, such as editing mode, touch input, vertex addition, and gamepad interaction.
 	 * @param {Object} event - The event object containing information about the click event.
@@ -368,7 +368,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleMove
 	 * @description This function determines the behavior based on the event type and context state. It handles various actions such as dragging, painting, snapping, routing, and snapping to points.
 	 * @param {Object} event - The event object containing information about the mouse or touch event.
@@ -423,7 +423,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleDrag
 	 * @description This function is responsible for handling the drag event of a vertex on the map. It updates the position of the vertex based on the user's interaction and triggers various actions accordingly.
 	 * @param {Object} event - The event object containing information about the drag event.
@@ -475,7 +475,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleTouch
 	 * @description This function is responsible for handling touch events and triggering corresponding actions.
 	 * @param {Event} event - The touch event object.
@@ -496,7 +496,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleOffMap
 	 * @description This function is triggered when an off-map event occurs and clears the data of a specific source on the map.
 	 * @param {Event} event - The event object triggering the function.
@@ -507,7 +507,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleOnMap
 	 * @description This function updates the data of the SNAP source on the map with the snapFeature.
 	 * @param {Event} event - The event triggering the function.
@@ -518,7 +518,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handlePainting
 	 * @description This function is triggered when painting on the map. It disables drag pan, sets the map class to 'painting', and updates the feature coordinates.
 	 * @param {Object} event - The event object triggering the function.
@@ -539,7 +539,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleRectangle
 	 * @description Handles the creation and manipulation of a rectangle feature on a map.
 	 * @param {Object} event - The event object triggering the function.
@@ -576,7 +576,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleText
 	 * @description Handles text input events and logs relevant properties.
 	 * @param {Event} event - The event object triggering the function.
@@ -588,7 +588,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleIcon
 	 * @description Handles the icon based on the event and feature provided.
 	 * @param {Event} event - The event triggering the function.
@@ -600,7 +600,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleContext
 	 * @description Handles the context of dragging and moving a feature vertex.
 	 * @param {Event} event - The event triggering the context handling.
@@ -621,7 +621,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleHistory
 	 * @description Handles the history of features in the current mode.
 	 * @param {Object} event - The event triggering the history update.
@@ -645,7 +645,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleUndo
 	 * @description This function is responsible for undoing the last action performed in the application. It retrieves the history and undo arrays from the current mode, pops the last feature from the history, sets the undo flag to true for the feature, updates the hotFeature, pushes the feature to the undo array, and updates the map source data with the hotFeature.
 	 * @returns {void}
@@ -666,7 +666,7 @@ function Draw (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Draw
+     * @memberof module:geoflo.Draw
 	 * @name handleRedo
 	 * @description Handles the redo functionality (currently under development).
 	 * @returns {void}

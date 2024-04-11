@@ -1,6 +1,6 @@
 /**
  * @namespace
- * @memberof module:GeoFlo
+ * @memberof module:geoflo
  * @name Layers
  * @description A class that handles layers functionality in a mapping context.
  * @param {Object} ctx - The GeoFlo context object
@@ -430,7 +430,7 @@ const Layers = function (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name init
 	 * @description Initializes the object with the provided options and refreshes it.
 	 * @param {Object} options - The options object to configure the object.
@@ -443,7 +443,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name refresh
 	 * @description This function refreshes the map by removing existing layers and sources, adding default layers and sources, and rebuilding the layers.
 	 * @param {Object} options - Optional parameter for additional options.
@@ -477,7 +477,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name setCustomLayers
 	 * @description This function takes an array of custom layers and options, builds the layers using the buildLayers function, and returns the resulting layers.
 	 * @param {Array} layers - An array of custom layers to be processed.
@@ -492,7 +492,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getCustomLayers
 	 * @description Retrieves the custom layers stored in the object.
 	 * @returns {Array} An array containing the custom layers.
@@ -503,7 +503,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name hasCustomLayers
 	 * @description This function determines if there are any custom layers present in the application.
 	 * @returns {number} The number of custom layers available.
@@ -517,7 +517,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getFeatures
 	 * @description Retrieves the features from a source based on the provided ID.
 	 * @param {string} id - The ID of the source to retrieve features from.
@@ -531,7 +531,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSelection
 	 * @description This function determines the selected feature based on the provided features array and coordinates.
 	 * @param {Array} features - An array of features to select from.
@@ -547,7 +547,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getType
 	 * @description This function takes a geometry type as input and returns the corresponding general type (Polygon, Polyline, or Point).
 	 * @param {string} type - The type of geometry to be evaluated.
@@ -562,7 +562,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSources
 	 * @description Retrieves the sources stored in the object.
 	 * @returns {Array} An array containing the sources.
@@ -573,7 +573,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSource
 	 * @description Retrieves a specific source object by its ID from the list of sources.
 	 * @param {string} id - The ID of the source to retrieve.
@@ -587,7 +587,7 @@ const Layers = function (ctx) {
 
 	/** 
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getSourceIds
 	 * @description Retrieves the IDs of all sources.
 	 * @returns {Array} An array of source IDs.
@@ -598,7 +598,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayers
 	 * @description Retrieves the layers array from the object.
 	 * @returns {Array} The layers array.
@@ -609,7 +609,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayer
 	 * @description Retrieves a layer based on the provided ID or source ID.
 	 * @param {string} id - The ID of the layer to retrieve.
@@ -625,7 +625,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name getLayerIds
 	 * @description Retrieves the IDs of the layers provided or the default layers if none are provided.
 	 * @param {Array} layers - An array of layer objects.
@@ -642,7 +642,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addSources
 	 * @description Adds multiple sources to the context with the given options.
 	 * @param {Array} sources - An array of sources to be added.
@@ -657,7 +657,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addSource
 	 * @description This function adds a new source to the map using the provided ID and type. It also accepts optional configuration options for the source.
 	 * @param {string} id - The unique identifier for the source.
@@ -679,7 +679,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addLayers
 	 * @description Adds multiple layers to the map.
 	 * @param {Array} layers - An array of layers to be added to the map.
@@ -695,7 +695,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addLayer
 	 * @description This function adds a layer to the map with the provided options. It also updates the layer's metadata, adds the layer to the map, and pushes the layer to the layers array. It triggers a 'layer.add' event and returns the added layer.
 	 * @param {Object} layer - The layer object to be added to the map.
@@ -722,7 +722,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeSources
 	 * @description Removes sources from the map.
 	 * @param {Array} sources - An array of source IDs to be removed. If not provided, it defaults to all source IDs.
@@ -736,7 +736,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeSource
 	 * @description This function removes a source from the map and the internal sources array based on the provided id.
 	 * @param {string} id - The id of the source to be removed.
@@ -756,7 +756,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeLayers
 	 * @description Removes multiple layers from the context.
 	 * @param {Array} layers - An array of layer objects to be removed.
@@ -771,7 +771,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeLayer
 	 * @description This function removes a layer from the map and the layers array based on the provided id.
 	 * @param {string} id - The id of the layer to be removed.
@@ -793,7 +793,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name moveLayers
 	 * @description Moves the specified layers on the map.
 	 * @param {Array} layers - An array of layer objects to be moved on the map.
@@ -808,7 +808,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name addEventListeners
 	 * @description Attaches event listeners based on the provided options.
 	 * @param {Object} options - An object containing configuration options for event listeners.
@@ -820,7 +820,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name removeEventListeners
 	 * @description Removes event listeners from the element.
 	 * @param {Object} options - An object containing options for removing event listeners.
@@ -833,7 +833,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onClusterClick
 	 * @description Handles the click event on a cluster feature to expand the cluster on the map.
 	 * @param {Object} feature - The cluster feature that was clicked.
@@ -852,7 +852,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onLayerMouseover
 	 * @description This function is triggered when a mouseover event occurs on a layer. It checks if the map is in editing, drawing, or viewing mode, and if the layer is in the importing state. If there are no features in the event, it returns false. Otherwise, it sets the highlight on the map with the event features.
 	 * @param {Object} event - The mouseover event object.
@@ -872,7 +872,7 @@ const Layers = function (ctx) {
 
 	/**
 	 * @function
-     * @memberof module:GeoFlo.Layers
+     * @memberof module:geoflo.Layers
 	 * @name onLayerMouseout
 	 * @description Handles the mouseout event on a layer in the map.
 	 * @param {Event} event - The mouseout event object.
