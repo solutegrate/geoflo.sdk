@@ -11976,6 +11976,7 @@ const GeoFlo = function () {
         if (!options.accessToken) throw new Error('No Mapbox Access Token Provided!');
 
         const id = options.container || this.options.map.container;
+        if (!id) throw new Error('Element id is required in the DOM for the map!');
 
         this.options.map.accessToken = options.accessToken;
         this.options.map.container = id;
@@ -11988,7 +11989,7 @@ const GeoFlo = function () {
         if (this.isReady) return this.build(this._container);
         this.onReady = onReady && typeof onReady === 'function' ? onReady : false;
         
-        ready(id).then(function (res, rej) {
+        ready(this.options.map.container).then(function (res, rej) {
             if (!res || rej) throw new Error(`Element with id "${id}" is required in the DOM for the map!`)
 
             ctx.isReady = true;
@@ -13918,17 +13919,17 @@ async function ready (id) {
 
     return new Promise(async function (resolve, reject) {
         var ready = setInterval(function() {
-            var map = document.getElementById(id);
+            var element = document.getElementById(id);
             
             if (count === 10000) {
                 clearInterval(ready);
                 return reject(false);
             }
 
-            if (!map) return count++;
+            if (!element) return count++;
 
             clearInterval(ready);
-            return resolve(map);
+            return resolve(element);
         }, 1);
     })
 }
