@@ -19,7 +19,7 @@ body {
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: #303030;
+    background-color: var(--geoflo-secondary-background);
 }
 
 #map {

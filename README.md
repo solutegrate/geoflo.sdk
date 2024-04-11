@@ -8,11 +8,7 @@
   Professional Geospatial Management Library for Mapbox GL JS
 </h3>
 
-<div style="justify-content: center;align-items: center; display: flex;">
-  <a style="margin:2px;color:transparent;" href="https://www.linkedin.com/company/geoflopro/about" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&color=242424" alt="GeoFlo LinkedIn" />
-  </a>
-
+<div>
   <p style="display:flex;margin:5px;">
     <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
@@ -37,9 +33,14 @@
     </a>
   </p>
 
-  <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/github-0A66C2?style=for-the-badge&logo=github&logoColor=white&color=242424" alt="GeoFlo Github" />
-  </a>
+  <p style="display:flex;margin:5px;">
+    <a style="margin:2px;color:transparent;" href="https://www.linkedin.com/company/geoflopro/about" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&color=5a5a5a" alt="GeoFlo LinkedIn" />
+    </a>
+    <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/github-0A66C2?style=for-the-badge&logo=github&logoColor=white&color=5a5a5a" alt="GeoFlo Github" />
+    </a>
+  </p>
 </div>
 
 ## 🌟 Features
