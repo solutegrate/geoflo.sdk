@@ -3,3 +3,4 @@ node_modules/
 .npmrc
 /index.html
 /bundle.js
+/jsdoc.config.json
