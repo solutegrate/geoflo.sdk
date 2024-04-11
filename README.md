@@ -3,29 +3,29 @@
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
 
 # MapboxGL-GeoFlo
-
 ### _Professional Geospatial Management Library for Mapbox GL JS_
+
 <div style="display:block;">
   <p style="display:flex;margin:5px;">
-    <a style="margin:2px;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;text-decoration:none;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
     </a>
-    <a style="margin:2px;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Stars&color=333333" alt="GitHub Stars" />
-    </a>
-    <a style="margin:2px;">
+    <a style="margin:2px;text-decoration:none;">
       <img src="https://img.shields.io/github/size/solutegrate/mapboxgl-geoflo/dist%2Fmapboxgl-geoflo.min.js?style=flat&logo=github&label=Size&color=333333" alt="GitHub Size" />
     </a>
-    <a style="margin:2px;" href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;text-decoration:none;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/github/stars/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Stars&color=333333" alt="GitHub Stars" />
+    </a>
+    <a style="margin:2px;text-decoration:none;" href="https://raw.githubusercontent.com/solutegrate/mapboxgl-geoflo/main/LICENSE" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat&logo=github&label=License&color=333333" alt="MIT License" />
     </a>
   </p>
 
   <p style="display:flex;margin:5px;">
-    <a style="margin:2px;" href="https://demo.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;text-decoration:none;" href="https://demo.geoflo.pro/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Demo-CLICK_HERE_TO_DEMO-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo Demo" />
     </a>
-    <a style="margin:2px;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
+    <a style="margin:2px;text-decoration:none;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=6fafdb&logo=github" alt="GeoFlo Docs" />
     </a>
   </p>
@@ -53,11 +53,12 @@ For more information on creating and using Mapbox access tokens:
 
 ## 🛠️ Usage/Examples
 
+
+### Module Import
+
 ```bash
   npm install @solutegrate/mapboxgl-geoflo
 ```
-
-### Module Import
 
 ```javascript
 import geoflo from "@solutegrate/mapboxgl-geoflo";
@@ -92,23 +93,13 @@ geoflo.init(options, onReady);
 ## 🗺️ Roadmap
 
 - MongoDB Atlas/Realm Pro Version
-
 - AWS Integration
-
 - Project Management/Tracking
-
 - Data Grid, Kanban, Gantt, Calendar, Pivot
-
 - FontAwesome Pro Icons
-
 - Advanced Network Node Optimization
-
 - Real-Time GPS Tracking
-
 - Actual/Forecast Analysis
-
 - Budget/Cost Reporting
-
 - Integrated Material Procurement
-
 - More and more to come.......
