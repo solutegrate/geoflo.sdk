@@ -1,8 +1,13 @@
-[<img width="500" alt="GeoFlo logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png">](https://www.geoflo.pro/)
+<p align="center">
+  <a href="https://www.geoflo.pro/">  
+    <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />  
+  </a>
+</p>
 
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/geoflopro/about)
+<h1 align="center">
+  MapboxGL-GeoFlo
+</h1>  
 
-# MapboxGL-GeoFlo
 ### _Professional Geospatial Management Library for Mapbox GL JS_
 
 <div style="display:block;">
@@ -27,6 +32,15 @@
     </a>
     <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/" target="_blank" rel="noopener noreferrer">
       <img src="https://img.shields.io/badge/Docs-CLICK_HERE_FOR_DOCS-blue.svg?color=6fafdb&logo=github" alt="GeoFlo Docs" />
+    </a>
+  </p>
+
+  <p style="display:flex;margin:5px;">
+    <a style="margin:2px;color:transparent;" href="https://www.linkedin.com/company/geoflopro/about" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&color=242424" alt="GeoFlo LinkedIn" />
+    </a>
+    <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/github-0A66C2?style=for-the-badge&logo=github&logoColor=white&color=242424" alt="GeoFlo Github" />
     </a>
   </p>
 </div>
@@ -103,3 +117,29 @@ geoflo.init(options, onReady);
 - Budget/Cost Reporting
 - Integrated Material Procurement
 - More and more to come.......
+
+## 🏁 Credits
+
+This is my first Github Project and first MapboxGL Plugin. While I have looked deeply into the MapboxGL code/docs, please understand that bugs will creep their way in.
+
+This project utilizes the following libraries:
+
+- **Mapbox GL JS**: A powerful mapping platform that provides geospatial services and tools.
+- **Turf.js**: A modular geospatial engine written in JavaScript and TypeScript. Turf.js offers traditional spatial operations, helper functions for creating GeoJSON data, and data classification and statistics tools.
+
+### About Mapbox GL JS
+
+Mapbox GL JS is a client-side JavaScript library for building web maps and web applications with Mapbox's modern mapping technology. You can use Mapbox GL JS to:
+
+- Display Mapbox maps in a web browser or client.
+- Add user interactivity to your maps.
+- Customize the map experience in your application.
+
+The "GL" in Mapbox GL JS refers to Mapbox GL, a graphics library that renders 2D and 3D Mapbox maps as dynamic visual graphics with OpenGL in any compatible web browser, without using additional plugins.
+
+### About Turf.js
+
+Turf.js is a JavaScript library for spatial analysis. It includes:
+- Traditional spatial operations
+- Helper functions for creating GeoJSON data
+- Data classification and statistics tools
