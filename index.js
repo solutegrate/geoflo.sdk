@@ -107,10 +107,12 @@ const GeoFlo = function () {
         if (!id) throw new Error('Element id is required in the DOM for the map!');
 
         this.options.map.accessToken = options.accessToken;
+        this.options.map.styles = options.styles;
         this.options.map.container = id;
 
         delete options.accessToken;
         delete options.container;
+        delete options.styles;
 
         this.setOptions(options);
 
