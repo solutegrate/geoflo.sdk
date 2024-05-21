@@ -152,7 +152,7 @@ const GeoFlo = function () {
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
-        this.styles = this.map.addControl(new Styles(this, this.options.map));
+        this.styles = this.map.addControl(new Styles(this, this.options.map.styles));
 
         this.Locate = new Locate(this, { init: true });
         this.Layers = new Layers(this, { init: true });
