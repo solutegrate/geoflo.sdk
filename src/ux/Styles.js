@@ -11,7 +11,7 @@ const Styles = function (ctx, options={}) {
     this.init = function (options={}) {
         ctx.Utilities.extend(this.options, options);
 
-        this.styles = [
+        this.styles = this.options.styles || [
             { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
             { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
             { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" },
@@ -19,9 +19,10 @@ const Styles = function (ctx, options={}) {
             { title: "Streets", uri: "mapbox://styles/mapbox/streets-v11" }
         ];
     
-        this.defaultStyle = 'Dark';
+        this.defaultStyle = this.options.style || 'Dark';
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
+
         return this;
     }
 

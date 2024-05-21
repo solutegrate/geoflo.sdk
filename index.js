@@ -107,12 +107,10 @@ const GeoFlo = function () {
         if (!id) throw new Error('Element id is required in the DOM for the map!');
 
         this.options.map.accessToken = options.accessToken;
-        this.options.map.styles = options.styles;
         this.options.map.container = id;
 
         delete options.accessToken;
         delete options.container;
-        delete options.styles;
 
         this.setOptions(options);
 
@@ -153,7 +151,7 @@ const GeoFlo = function () {
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
         this.styles = this.map.addControl(new Styles(this));
-
+    
         this.Locate = new Locate(this, { init: true });
         this.Layers = new Layers(this, { init: true });
         this.Features = new Features(this, { init: true });
