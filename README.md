@@ -7,9 +7,7 @@
 <h3 align="center">
   Professional Geospatial Management Library for Mapbox GL JS
 </h3>
-
 </br>
-
 <p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
   <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/mapboxgl-geoflo/pkgs/npm/mapboxgl-geoflo" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/github/v/release/solutegrate/mapboxgl-geoflo?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
