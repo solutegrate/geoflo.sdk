@@ -5,13 +5,19 @@
  * @description The Styles module provides a control to change the map style.
  * @param {Object} ctx - The GeoFlo context object
  */
-const Styles = function (ctx, styles, options={}) {
+const Styles = function (ctx, options={}) {
     this.options = options;
     
     this.init = function (options={}) {
         ctx.Utilities.extend(this.options, options);
 
-        this.styles = styles || [
+        this.styles = [
+            { title: "Dark", uri: "mapbox://styles/solutegrate/clq8l159v003q01qu274z8e8p" },
+            { title: "Light", uri: "mapbox://styles/solutegrate/clq8l4ylp003m01qbapvf6yqn" },
+            { title: "Outdoors", uri: "mapbox://styles/solutegrate/clqb11yad005801nv6p2ke412" },
+            { title: "Satellite", uri: "mapbox://styles/solutegrate/clqb11d15005901pdbyb13b5i" },
+            { title: "Streets", uri: "mapbox://styles/solutegrate/clqb0vd2b004u01p5aiiz8u3w" }
+        ] || [
             { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
             { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
             { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" },
