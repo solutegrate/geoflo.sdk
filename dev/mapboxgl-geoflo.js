@@ -1,15 +1,6 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./index.css":
-/*!*******************!*\
-  !*** ./index.css ***!
-  \*******************/
-/***/ (() => {
-
-throw new Error("Module parse failed: Unexpected token (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n> :root {\n|     --geoflo-primary-color: #d7ef7e;\n|     --geoflo-primary-background: #5a5a5a;");
-
-/***/ }),
 
 /***/ "./src/action/Exploring.js":
 /*!*********************************!*\
@@ -17,7 +8,6 @@ throw new Error("Module parse failed: Unexpected token (1:0)\nYou may need an ap
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Exploring)
@@ -311,7 +301,6 @@ const Exploring = function (ctx, mode) {
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Painting)
@@ -513,7 +502,6 @@ const Painting = function (ctx, mode) {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Pinning)
@@ -706,7 +694,6 @@ const Pinning = function (ctx, mode) {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Routing)
@@ -1416,7 +1403,6 @@ const Routing = function (ctx, mode) {
   \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Snapping)
@@ -2127,7 +2113,6 @@ const Snapping = function (ctx, mode) {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Features)
@@ -2774,7 +2759,6 @@ const Features = function (ctx) {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Layers)
@@ -3840,7 +3824,7 @@ const Layers = function (ctx) {
                         'circle-stroke-width': 1,
                         'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
                         'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.5],
+                        'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
                         'circle-stroke-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
                     }
                 }
@@ -3982,7 +3966,6 @@ const Layers = function (ctx) {
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Map)
@@ -4239,7 +4222,6 @@ const Map = function (ctx, options) {
   \*************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Mesh)
@@ -4691,7 +4673,6 @@ const Mesh = function (originalFeatures, linesOnly) {
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Draw)
@@ -5890,7 +5871,6 @@ function Draw (ctx) {
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Edit)
@@ -5911,7 +5891,6 @@ function Edit (ctx) {
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Select)
@@ -6223,7 +6202,6 @@ function Select (ctx) {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Mapbox)
@@ -6290,7 +6268,6 @@ const Mapbox = (function (mapboxgl) {
   \*********************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Omnivore)
@@ -7134,7 +7111,6 @@ const Omnivore = (function (omnivore) {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Turf)
@@ -7154,7 +7130,6 @@ const Turf = (function (turf) {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Options)
@@ -7299,7 +7274,6 @@ const Options = {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Statics)
@@ -7530,7 +7504,6 @@ const Statics = {
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Utilities)
@@ -8712,7 +8685,6 @@ function _toConsumableArray(arr) {
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Control)
@@ -9747,7 +9719,6 @@ const Control = function (ctx, controls, options={}) {
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Events)
@@ -10152,7 +10123,6 @@ const Events = function (ctx) {
   \***************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Gamepad)
@@ -11279,7 +11249,6 @@ const Gamepad = function (ctx, gamepad) {
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Locate)
@@ -11595,7 +11564,6 @@ const Locate = function (ctx, options={}) {
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Styles)
@@ -11766,18 +11734,6 @@ const Styles = function (ctx, options={}) {
 /******/ 		__webpack_require__.amdO = {};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -11835,9 +11791,8 @@ const Styles = function (ctx, options={}) {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
@@ -11845,33 +11800,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ geoflo)
 /* harmony export */ });
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ "./index.css");
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/require/Mapbox.js */ "./src/require/Mapbox.js");
-/* harmony import */ var _src_require_Turf_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/require/Turf.js */ "./src/require/Turf.js");
-/* harmony import */ var _src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/require/Omnivore.js */ "./src/require/Omnivore.js");
-/* harmony import */ var _src_system_Statics_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/system/Statics.js */ "./src/system/Statics.js");
-/* harmony import */ var _src_system_Options_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/system/Options.js */ "./src/system/Options.js");
-/* harmony import */ var _src_system_Utilities_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/system/Utilities.js */ "./src/system/Utilities.js");
-/* harmony import */ var _src_map_Map_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./src/map/Map.js */ "./src/map/Map.js");
-/* harmony import */ var _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/map/Layers.js */ "./src/map/Layers.js");
-/* harmony import */ var _src_map_Features_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/map/Features.js */ "./src/map/Features.js");
-/* harmony import */ var _src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/map/Mesh.js */ "./src/map/Mesh.js");
-/* harmony import */ var _src_ux_Events_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/ux/Events.js */ "./src/ux/Events.js");
-/* harmony import */ var _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./src/ux/Controls.js */ "./src/ux/Controls.js");
-/* harmony import */ var _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./src/ux/Styles.js */ "./src/ux/Styles.js");
-/* harmony import */ var _src_ux_Gamepad_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./src/ux/Gamepad.js */ "./src/ux/Gamepad.js");
-/* harmony import */ var _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./src/ux/Locate.js */ "./src/ux/Locate.js");
-/* harmony import */ var _src_mode_Select_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./src/mode/Select.js */ "./src/mode/Select.js");
-/* harmony import */ var _src_mode_Draw_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./src/mode/Draw.js */ "./src/mode/Draw.js");
-/* harmony import */ var _src_mode_Edit_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./src/mode/Edit.js */ "./src/mode/Edit.js");
-/* harmony import */ var _src_action_Snapping_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./src/action/Snapping.js */ "./src/action/Snapping.js");
-/* harmony import */ var _src_action_Pinning_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./src/action/Pinning.js */ "./src/action/Pinning.js");
-/* harmony import */ var _src_action_Routing_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./src/action/Routing.js */ "./src/action/Routing.js");
-/* harmony import */ var _src_action_Painting_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./src/action/Painting.js */ "./src/action/Painting.js");
-/* harmony import */ var _src_action_Exploring_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./src/action/Exploring.js */ "./src/action/Exploring.js");
-// CSS //
-
+/* harmony import */ var _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/require/Mapbox.js */ "./src/require/Mapbox.js");
+/* harmony import */ var _src_require_Turf_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/require/Turf.js */ "./src/require/Turf.js");
+/* harmony import */ var _src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/require/Omnivore.js */ "./src/require/Omnivore.js");
+/* harmony import */ var _src_system_Statics_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/system/Statics.js */ "./src/system/Statics.js");
+/* harmony import */ var _src_system_Options_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/system/Options.js */ "./src/system/Options.js");
+/* harmony import */ var _src_system_Utilities_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/system/Utilities.js */ "./src/system/Utilities.js");
+/* harmony import */ var _src_map_Map_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/map/Map.js */ "./src/map/Map.js");
+/* harmony import */ var _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./src/map/Layers.js */ "./src/map/Layers.js");
+/* harmony import */ var _src_map_Features_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./src/map/Features.js */ "./src/map/Features.js");
+/* harmony import */ var _src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./src/map/Mesh.js */ "./src/map/Mesh.js");
+/* harmony import */ var _src_ux_Events_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./src/ux/Events.js */ "./src/ux/Events.js");
+/* harmony import */ var _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./src/ux/Controls.js */ "./src/ux/Controls.js");
+/* harmony import */ var _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./src/ux/Styles.js */ "./src/ux/Styles.js");
+/* harmony import */ var _src_ux_Gamepad_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./src/ux/Gamepad.js */ "./src/ux/Gamepad.js");
+/* harmony import */ var _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./src/ux/Locate.js */ "./src/ux/Locate.js");
+/* harmony import */ var _src_mode_Select_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./src/mode/Select.js */ "./src/mode/Select.js");
+/* harmony import */ var _src_mode_Draw_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./src/mode/Draw.js */ "./src/mode/Draw.js");
+/* harmony import */ var _src_mode_Edit_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./src/mode/Edit.js */ "./src/mode/Edit.js");
+/* harmony import */ var _src_action_Snapping_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./src/action/Snapping.js */ "./src/action/Snapping.js");
+/* harmony import */ var _src_action_Pinning_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./src/action/Pinning.js */ "./src/action/Pinning.js");
+/* harmony import */ var _src_action_Routing_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./src/action/Routing.js */ "./src/action/Routing.js");
+/* harmony import */ var _src_action_Painting_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./src/action/Painting.js */ "./src/action/Painting.js");
+/* harmony import */ var _src_action_Exploring_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./src/action/Exploring.js */ "./src/action/Exploring.js");
+/* // CSS //
+import css from './index.css' with { type: 'css' }; */
 
 // REQUIRE //
 
@@ -11913,32 +11866,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const version = '1.0.0';
+const version = '1.0.3';
 
 var selectedFeatures = [];
 var hiddenFeatures = [];
 
 /**
- * @module GeoFlo
- * @name GeoFlo
+ * @module geoflo
+ * @name geoflo
  * @description Represents the GeoFlo object that manages all modules.
  * @returns {Object} The GeoFlo object with various methods for managing the entire app.
  */
 const GeoFlo = function () {
-    document.adoptedStyleSheets = [(_index_css__WEBPACK_IMPORTED_MODULE_0___default())];
+    //document.adoptedStyleSheets = [css];
     
-    if (!_src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_1__["default"]) throw new Error('MapboxGL script is required!')
-    if (!_src_require_Turf_js__WEBPACK_IMPORTED_MODULE_2__["default"]) throw new Error('TurfJS script is required!');
-    if (!_src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_3__["default"]) throw new Error('Omnivore script is required!');
+    if (!_src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_0__["default"]) throw new Error('MapboxGL script is required!')
+    if (!_src_require_Turf_js__WEBPACK_IMPORTED_MODULE_1__["default"]) throw new Error('TurfJS script is required!');
+    if (!_src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_2__["default"]) throw new Error('Omnivore script is required!');
     
     const ctx = this;
-    const turf = this.turf = _src_require_Turf_js__WEBPACK_IMPORTED_MODULE_2__["default"];
-    const omnivore = this.omnivore = _src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_3__["default"];
+    const turf = this.turf = _src_require_Turf_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+    const omnivore = this.omnivore = _src_require_Omnivore_js__WEBPACK_IMPORTED_MODULE_2__["default"];
 
     this.version = version;
-    this.Mapbox = _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_1__["default"];
+    this.Mapbox = _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_0__["default"];
 
-    this.options = _src_system_Options_js__WEBPACK_IMPORTED_MODULE_5__["default"];
+    this.options = _src_system_Options_js__WEBPACK_IMPORTED_MODULE_4__["default"];
     this.dev = this.statics.dev;
     this.id = this.statics.id;
 
@@ -11958,7 +11911,7 @@ const GeoFlo = function () {
     this.initialize = function () {
         if (this.initialized) return this;
         window[this.id] = this;
-        this.Utilities = new _src_system_Utilities_js__WEBPACK_IMPORTED_MODULE_6__["default"](this);
+        this.Utilities = new _src_system_Utilities_js__WEBPACK_IMPORTED_MODULE_5__["default"](this);
         this.initialized = true;
         return this;
     }
@@ -11995,7 +11948,7 @@ const GeoFlo = function () {
             ctx.isReady = true;
             ctx._container = res;
             ctx._container.classList.add(ctx.statics.id);
-            ctx.Map = new _src_map_Map_js__WEBPACK_IMPORTED_MODULE_7__["default"](ctx, ctx.options.map);
+            ctx.Map = new _src_map_Map_js__WEBPACK_IMPORTED_MODULE_6__["default"](ctx, ctx.options.map);
         })
 
         return this;
@@ -12015,20 +11968,20 @@ const GeoFlo = function () {
         this.map = this.Map.getMap();
         this.container = this.Map.getContainer();
 
-        this.fullscreen = new _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_1__["default"].FullscreenControl({ container: document.querySelector('body') });
-        this.navigation = new _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_1__["default"].NavigationControl({ visualizePitch: true, showZoom: !this.mobile, showCompass: true });
-        this.attribution = new _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_12__["default"](this, { type: 'attribute', position: 'bottom-right', enable: true, show: true, attribution: this.statics.logo.full });
+        this.fullscreen = new _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_0__["default"].FullscreenControl({ container: document.querySelector('body') });
+        this.navigation = new _src_require_Mapbox_js__WEBPACK_IMPORTED_MODULE_0__["default"].NavigationControl({ visualizePitch: true, showZoom: !this.mobile, showCompass: true });
+        this.attribution = new _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_11__["default"](this, { type: 'attribute', position: 'bottom-right', enable: true, show: true, attribution: this.statics.logo.full });
         this.map.addControl(this.navigation, this.mobile ? 'bottom-right' : 'top-right');
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
-        this.styles = this.map.addControl(new _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_13__["default"](this));
-    
-        this.Locate = new _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_15__["default"](this, { init: true });
-        this.Layers = new _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_8__["default"](this, { init: true });
-        this.Features = new _src_map_Features_js__WEBPACK_IMPORTED_MODULE_9__["default"](this, { init: true });
+        this.styles = this.map.addControl(new _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_12__["default"](this, this.options.map));
+
+        this.Locate = new _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_14__["default"](this, { init: true });
+        this.Layers = new _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_7__["default"](this, { init: true });
+        this.Features = new _src_map_Features_js__WEBPACK_IMPORTED_MODULE_8__["default"](this, { init: true });
         
-        this.Events = (0,_src_ux_Events_js__WEBPACK_IMPORTED_MODULE_11__["default"])(this);
+        this.Events = (0,_src_ux_Events_js__WEBPACK_IMPORTED_MODULE_10__["default"])(this);
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
     
@@ -12061,9 +12014,9 @@ const GeoFlo = function () {
         this.setOptions(options);
         this.setControls();
 
-        this.Select = new _src_mode_Select_js__WEBPACK_IMPORTED_MODULE_16__["default"](this);
-        this.Draw = new _src_mode_Draw_js__WEBPACK_IMPORTED_MODULE_17__["default"](this);
-        this.Edit = new _src_mode_Edit_js__WEBPACK_IMPORTED_MODULE_18__["default"](this);
+        this.Select = new _src_mode_Select_js__WEBPACK_IMPORTED_MODULE_15__["default"](this);
+        this.Draw = new _src_mode_Draw_js__WEBPACK_IMPORTED_MODULE_16__["default"](this);
+        this.Edit = new _src_mode_Edit_js__WEBPACK_IMPORTED_MODULE_17__["default"](this);
 
         this.modes = [ this.Select, this.Draw, this.Edit ];
         this.enabled = true;
@@ -12087,7 +12040,7 @@ const GeoFlo = function () {
         this.modes = [];
         this.enabled = false;
         this.mode = null;
-        this.options = _src_system_Options_js__WEBPACK_IMPORTED_MODULE_5__["default"];
+        this.options = _src_system_Options_js__WEBPACK_IMPORTED_MODULE_4__["default"];
         this.fire('map.disable', { enabled: this.enabled, mode: this.mode });
         this.doubleClickZoom.enable(this.map);
         this.Layers.removeEventListeners();
@@ -12267,11 +12220,11 @@ const GeoFlo = function () {
             selectedMode.activate(options);
         }
 
-        this.Snapping = new _src_action_Snapping_js__WEBPACK_IMPORTED_MODULE_19__["default"](this, this.currentMode);
-        this.Pinning = new _src_action_Pinning_js__WEBPACK_IMPORTED_MODULE_20__["default"](this, this.currentMode);
-        this.Routing = new _src_action_Routing_js__WEBPACK_IMPORTED_MODULE_21__["default"](this, this.currentMode);
-        this.Exploring = new _src_action_Exploring_js__WEBPACK_IMPORTED_MODULE_23__["default"](this, this.currentMode);
-        this.Painting = new _src_action_Painting_js__WEBPACK_IMPORTED_MODULE_22__["default"](this, this.currentMode);
+        this.Snapping = new _src_action_Snapping_js__WEBPACK_IMPORTED_MODULE_18__["default"](this, this.currentMode);
+        this.Pinning = new _src_action_Pinning_js__WEBPACK_IMPORTED_MODULE_19__["default"](this, this.currentMode);
+        this.Routing = new _src_action_Routing_js__WEBPACK_IMPORTED_MODULE_20__["default"](this, this.currentMode);
+        this.Exploring = new _src_action_Exploring_js__WEBPACK_IMPORTED_MODULE_22__["default"](this, this.currentMode);
+        this.Painting = new _src_action_Painting_js__WEBPACK_IMPORTED_MODULE_21__["default"](this, this.currentMode);
         this.Layers.moveLayers();
         return this.currentMode;
     }
@@ -12289,7 +12242,7 @@ const GeoFlo = function () {
         if (!this.options.controls) return false;
         this.controls = [];
         controls = controls.length ? controls : this.statics.controls;
-        controls.forEach(function(control) { this.controls.push(new _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_12__["default"](this, control)) }, this);
+        controls.forEach(function(control) { this.controls.push(new _src_ux_Controls_js__WEBPACK_IMPORTED_MODULE_11__["default"](this, control)) }, this);
         return this.controls;
     }
 
@@ -13901,13 +13854,13 @@ const GeoFlo = function () {
     this.initialize();
 };
 
-GeoFlo.prototype.statics = _src_system_Statics_js__WEBPACK_IMPORTED_MODULE_4__["default"];
-GeoFlo.prototype.Gamepad = _src_ux_Gamepad_js__WEBPACK_IMPORTED_MODULE_14__["default"];
-GeoFlo.prototype.Mesh = _src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_10__["default"];
+GeoFlo.prototype.statics = _src_system_Statics_js__WEBPACK_IMPORTED_MODULE_3__["default"];
+GeoFlo.prototype.Gamepad = _src_ux_Gamepad_js__WEBPACK_IMPORTED_MODULE_13__["default"];
+GeoFlo.prototype.Mesh = _src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_9__["default"];
 
 const geoflo = new GeoFlo();
 
-_src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_10__["default"].prototype[geoflo.id] = geoflo;
+_src_map_Mesh_js__WEBPACK_IMPORTED_MODULE_9__["default"].prototype[geoflo.id] = geoflo;
 
 function isMobile() {
     const e = /(iphone|ipod|ipad|android|iemobile|blackberry|bada)/.test(window.navigator.userAgent.toLowerCase());

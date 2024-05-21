@@ -1059,7 +1059,7 @@ const Layers = function (ctx) {
                         'circle-stroke-width': 1,
                         'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
                         'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.5],
+                        'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
                         'circle-stroke-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
                     }
                 }

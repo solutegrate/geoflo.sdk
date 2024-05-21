@@ -150,8 +150,8 @@ const GeoFlo = function () {
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
-        this.styles = this.map.addControl(new Styles(this));
-    
+        this.styles = this.map.addControl(new Styles(this, this.options.map));
+
         this.Locate = new Locate(this, { init: true });
         this.Layers = new Layers(this, { init: true });
         this.Features = new Features(this, { init: true });
