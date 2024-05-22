@@ -79,21 +79,27 @@ const Map = function (ctx, options) {
             features = ctx.getRenderedDrawnFeatures();
         }
 
-        if (!features) return this.map.jumpTo({
-            bearing: this.options.bearing || this.map.getBearing(),
+        var jumpTo = {
+            bearing: options.bearing ||this.options.bearing || this.map.getBearing(),
             center: this.options.center || this.map.getCenter(),
-            zoom: this.options.zoom || this.map.getZoom(),
-            pitch: this.options.pitch || this.map.getPitch()
-        });
+            zoom: options.zoom || this.options.zoom || this.map.getZoom(),
+            pitch: options.pitch || this.options.pitch || this.map.getPitch()
+        }
 
-        var bbox = turf.bbox(turf.featureCollection(features));
+        if (!features) return this.map.jumpTo(jumpTo);
+
+        var bbox = ctx.Utilities.clone(turf.bbox(turf.featureCollection(features)));
         var polygon = turf.bboxPolygon(bbox);
         var centroid = turf.centroid(polygon);
-        var jumpTo = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] }
 
         this.setViewport();
 
-        !center ? this.map.fitBounds(bbox) : jumpTo && jumpTo.lng ? this.map.jumpTo({ center: jumpTo }) : false;
+        jumpTo.center = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] };
+        jumpTo.zoom = options.zoom || this.map.getZoom();
+        jumpTo.pitch = options.pitch || this.map.getPitch();
+        jumpTo.bearing = options.bearing || this.map.getBearing();
+
+        !center && bbox ? this.map.fitBounds(bbox) : this.map.jumpTo(jumpTo);
         ctx.fire('features.zoom', { features: features, center: this.map.getCenter(), bbox: bbox });
         return this.map;
     }
@@ -119,8 +125,6 @@ const Map = function (ctx, options) {
             left: this.viewportLeft,
             bottom: this.viewportBottom
         };
-
-        this.map.resize();
 
         var height = this.container.getBoundingClientRect().height;
         var width = this.container.getBoundingClientRect().width;
@@ -206,6 +210,7 @@ const Map = function (ctx, options) {
         this.container = this.map._container;
         this.container.insertBefore(this.viewport, this.container.firstChild);
         this.setOptions();
+        this.setViewport();
         this.map.off('style.load', this.onStyleLoad.bind(this));
         this.map.on('style.load', this.onStyleLoad.bind(this));
         return ctx.load();

@@ -465,10 +465,8 @@ const Layers = function (ctx) {
 
         await buildLayers.call(this, layers);
 
-        setTimeout(function() {
-            ctx.Layers.moveLayers();
-            ctx.zoomToFeatures(ctx.getRenderedDrawnFeatures());
-        }, 250);
+        setTimeout(function() { ctx.Layers.moveLayers(); }, 250);
+        setTimeout(function() { ctx.zoomToFeatures(ctx.getRenderedDrawnFeatures()); }, 350);
         return this.getLayers();
     }
 
@@ -486,8 +484,7 @@ const Layers = function (ctx) {
 	 */
     this.setCustomLayers = async function (layers, options) {
         if (!layers) return [];
-        const _layers = await buildLayers.call(this, layers, options);
-        return _layers;
+        return await buildLayers.call(this, layers, options);
     }
 
 	/**
@@ -669,7 +666,7 @@ const Layers = function (ctx) {
         if (!id) throw new Error('No source was provided!');
         
         var opts = { type: options.type || "geojson", data: turf.featureCollection(options.features || []), promoteId: options.promoteId || 'id' };
-        if (type && type === 'Point') { opts = Object.assign(opts, { cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 }) }
+        if (type && type === 'Point' && !options.noCluster) { opts = Object.assign(opts, { cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 }) }
 
         map.addSource(id, opts);
         this.sources.push(map.getSource(id));
@@ -903,6 +900,7 @@ const Layers = function (ctx) {
     async function buildLayer (layer, opts) {
         var details = layer.details || {};
         var options = layer.options || {};
+        var layers = layer.layers || [];
         var features = layer.features || [];
         var hasFeatures = features && features.length;
         var error;
@@ -919,7 +917,8 @@ const Layers = function (ctx) {
         var source = details.source || details.id;
         metadata.source = source;
         
-        var layers = type === 'Polygon' ? buildPolygon.call(this, source, details, layerTypes[type], options) :
+        layers = layers.length ? layers :
+        type === 'Polygon' ? buildPolygon.call(this, source, details, layerTypes[type], options) :
         type === 'Polyline' ? buildPolyline.call(this, source, details, layerTypes[type], options) :
         type === 'Point' ? buildPoint.call(this, source, details, layerTypes[type], options) : [];
 
@@ -930,7 +929,7 @@ const Layers = function (ctx) {
 
         removeLayer.call(this, { layer: details.id, source: source });
 
-        this._layers.push({ id: details.id, details: details, options: options });
+        this._layers.push({ id: details.id, details: details, layers: layers, options: options });
         this._sources.push({ id: source, type: type, options: options });
 
         if (hasFeatures) ctx.Features.addFeatures(features);
@@ -1052,11 +1051,8 @@ const Layers = function (ctx) {
                         'visibility': options.visibility
                     },
                     paint: {
-                        'circle-radius': {
-                            'base': 12,
-                            'stops': [[10, 12], [14, 10]]
-                        },
-                        'circle-stroke-width': 1,
+                        'circle-radius': 10,
+                        'circle-stroke-width': 2,
                         'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
                         'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
                         'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
@@ -1064,7 +1060,7 @@ const Layers = function (ctx) {
                     }
                 }
 
-                if (type.includes('cluster')) {
+                if (type.includes('cluster') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
                     style.paint['circle-color'] = options.secondaryColor || ctx.options.colors.secondaryColor;
                     style.paint['circle-stroke-color'] = options.primaryColor || ctx.options.colors.primaryColor;
@@ -1079,10 +1075,9 @@ const Layers = function (ctx) {
                         visibility: options.visibility,
                         'icon-optional': true,
                         'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
-                        'text-size': {
-                            'base': 16,
-                            'stops': [[10, 16], [14, 12]]
-                        },
+                        'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
+                        'text-rotation-alignment': 'map',
+                        'text-size': 20,
                         'text-line-height': 1,
                         'text-padding': 0,
                         'text-offset': [0, 0.2],
@@ -1101,12 +1096,12 @@ const Layers = function (ctx) {
                     }
                 }
 
-                if (type.includes('cluster')) {
+                if (type.includes('cluster') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
                     style.layout['text-field'] = options.primaryIcon || '';
                     style.paint['text-halo-color'] = options.secondaryColor || ctx.options.colors.secondaryCold;
                     style.paint['text-color'] = options.primaryColor || ctx.options.colors.secondaryText;
-                } else if (type.includes('count')) {
+                } else if (type.includes('count') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
 
                     style.layout = {
@@ -1134,7 +1129,7 @@ const Layers = function (ctx) {
                     }
                 }
             } else if (!dontRender && type.includes('text')) {
-                if (type.includes('count')) {
+                if (type.includes('count') && !options.noCluster) {
                     style = {
                         id: id,
                         type: 'symbol',
@@ -1186,9 +1181,6 @@ const Layers = function (ctx) {
         if (layer !== -1) this._layers.splice(layer, 1);
         if (source !== -1) this._sources.splice(source, 1);
     }
-
-
-    this.init();
 };
 
 export { Layers as default }

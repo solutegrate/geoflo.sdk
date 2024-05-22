@@ -13,6 +13,7 @@ const Options = {
         zoom: 3.5,
         maxPitch: 50,
         projection: 'mercator',
+        style: 'mapbox://styles/mapbox/dark-v11',
         hash: true,
         extent: [[[-127.3638459,49.6212752],[-73.7295136,49.6212752],[-73.7295136,24.7473201],[-127.3638459,24.7473201],[-127.3638459,49.6212752]]],
     },

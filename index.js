@@ -101,6 +101,8 @@ const GeoFlo = function () {
 	 * @returns {Object} Returns the map component instance.
 	 */
     this.init = function (options={}, onReady) {
+        if (this.isReady) return this.setOptions(options);
+        
         if (!options.accessToken) throw new Error('No Mapbox Access Token Provided!');
 
         const id = options.container || this.options.map.container;
@@ -108,13 +110,14 @@ const GeoFlo = function () {
 
         this.options.map.accessToken = options.accessToken;
         this.options.map.container = id;
+        this.styles = options.styles;
 
         delete options.accessToken;
         delete options.container;
+        delete options.styles;
 
         this.setOptions(options);
 
-        if (this.isReady) return this.build(this._container);
         this.onReady = onReady && typeof onReady === 'function' ? onReady : false;
         
         ready(this.options.map.container).then(function (res, rej) {
@@ -150,24 +153,21 @@ const GeoFlo = function () {
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
-        this.styles = this.map.addControl(new Styles(this));
+        this.styles = new Styles(this, { styles: this.styles });
+        this.Styles = this.map.addControl(this.styles);
     
-        this.Locate = new Locate(this, { init: true });
-        this.Layers = new Layers(this, { init: true });
-        this.Features = new Features(this, { init: true });
+        this.Locate = new Locate(this);
+        this.Layers = new Layers(this);
+        this.Features = new Features(this);
         
         this.Events = Events(this);
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
-    
-        this.onReady ? this.onReady(this) : false;
-    
-        this.Map.setExtent(false, true);
-        this.options.enable ? this.enable() : false;
-    
+
         this.isLoaded = true;
+        this.Map.setExtent(false, true);
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
-    
+        this.enable();
         return this;
     }
 
@@ -234,14 +234,15 @@ const GeoFlo = function () {
 	 */
     this.redraw = async function () {
         if (!this.Events) return false;
-
         await this.Layers.refresh();
-
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
         this.Features.updateSource();
         this.doubleClickZoom.disable(this.map);
+        this.Map.setViewport();
+        this.map.resize();
         this.fire('map.redraw', { enabled: this.enabled, mode: this.mode })
+        if (this.onReady) await this.onReady(this), delete this.onReady;
     }
 
 	/**
@@ -1985,7 +1986,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false if no features are available to zoom to.
 	 */
     this.zoomToFeatures = function (features, options={}) {
-        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.Features ? this.Features.getColdFeatures() : []);
+        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.getRenderedDrawnFeatures());
         if (features.properties) features = [features];
         if (!features || !features.length) features = !this.Map.options.extent ? [] : [turf.polygon(this.Map.options.extent)];
         if (features.length < 1) return false;

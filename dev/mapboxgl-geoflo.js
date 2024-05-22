@@ -2361,8 +2361,9 @@ const Features = function (ctx) {
 
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            feature.source = feature.source || feature.properties.source || ctx.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
-            feature.properties.type = feature.properties.type || this.getType(feature);
+            feature.properties.type = this.getType(feature);
 
             var index = coldFeatures.findIndex(function(f) { if (f.id === feature.id || f.properties.id === feature.id) return f; });
 
@@ -2413,8 +2414,6 @@ const Features = function (ctx) {
 	 * @param {Array} coords - The new coordinates to set for the features.
 	 */
     this.updateFeatures = function(features, coords) {
-        if (!coords) return false;
-
         var sources = [];
 
         features.forEach(function(feature) {
@@ -2422,12 +2421,12 @@ const Features = function (ctx) {
             if (!id) return false;
 
             var originalFeature = this.getFeatureById(id);
-            if (!originalFeature || originalFeature === undefined) return false;
+            if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
             if (!sources.includes(originalFeature.source)) sources.push(originalFeature.source);
 
-            originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords :
-            originalFeature.geometry.type === 'Polygon' ? originalFeature.geometry.coordinates[0][feature.index] = coords :
-            originalFeature.geometry.type === 'LineString' ? originalFeature.geometry.coordinates[feature.index] = coords :
+            originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords || feature.geometry.coordinates :
+            originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
+            originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
             false;
 
             this.addUnits(originalFeature);
@@ -2435,6 +2434,8 @@ const Features = function (ctx) {
 
         this.updateSource(sources);
     };
+
+    
 
 	/**
 	 * @function
@@ -2581,6 +2582,8 @@ const Features = function (ctx) {
         var sourceFeatures = {};
         var unsourceFeatures = [];
 
+        ctx.updatingSource = true;
+
         ctx.map.getSource(ctx.statics.constants.sources.COLDTEXT).setData(turf.featureCollection([]));
         ctx.map.getSource(ctx.statics.constants.sources.COLD).setData(turf.featureCollection([]));
 
@@ -2608,6 +2611,7 @@ const Features = function (ctx) {
         ctx.fire('features.update', { features: coldFeatures });
         sourceFeatures = null;
         unsourceFeatures = null;
+        ctx.updatingSource = false;
         return coldFeatures;
     };
 
@@ -2733,7 +2737,7 @@ const Features = function (ctx) {
 
     function isIcon (feature) {
         if (!feature) return false;
-        return turf.getType(feature) === 'Point' && feature.properties.type === 'Text';
+        return turf.getType(feature) === 'Point' && feature.properties.type === 'Icon';
     };
 
     function getType (feature) {
@@ -3230,10 +3234,8 @@ const Layers = function (ctx) {
 
         await buildLayers.call(this, layers);
 
-        setTimeout(function() {
-            ctx.Layers.moveLayers();
-            ctx.zoomToFeatures(ctx.getRenderedDrawnFeatures());
-        }, 250);
+        setTimeout(function() { ctx.Layers.moveLayers(); }, 250);
+        setTimeout(function() { ctx.zoomToFeatures(ctx.getRenderedDrawnFeatures()); }, 350);
         return this.getLayers();
     }
 
@@ -3251,8 +3253,7 @@ const Layers = function (ctx) {
 	 */
     this.setCustomLayers = async function (layers, options) {
         if (!layers) return [];
-        const _layers = await buildLayers.call(this, layers, options);
-        return _layers;
+        return await buildLayers.call(this, layers, options);
     }
 
 	/**
@@ -3434,7 +3435,7 @@ const Layers = function (ctx) {
         if (!id) throw new Error('No source was provided!');
         
         var opts = { type: options.type || "geojson", data: turf.featureCollection(options.features || []), promoteId: options.promoteId || 'id' };
-        if (type && type === 'Point') { opts = Object.assign(opts, { cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 }) }
+        if (type && type === 'Point' && !options.noCluster) { opts = Object.assign(opts, { cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 }) }
 
         map.addSource(id, opts);
         this.sources.push(map.getSource(id));
@@ -3668,6 +3669,7 @@ const Layers = function (ctx) {
     async function buildLayer (layer, opts) {
         var details = layer.details || {};
         var options = layer.options || {};
+        var layers = layer.layers || [];
         var features = layer.features || [];
         var hasFeatures = features && features.length;
         var error;
@@ -3684,7 +3686,8 @@ const Layers = function (ctx) {
         var source = details.source || details.id;
         metadata.source = source;
         
-        var layers = type === 'Polygon' ? buildPolygon.call(this, source, details, layerTypes[type], options) :
+        layers = layers.length ? layers :
+        type === 'Polygon' ? buildPolygon.call(this, source, details, layerTypes[type], options) :
         type === 'Polyline' ? buildPolyline.call(this, source, details, layerTypes[type], options) :
         type === 'Point' ? buildPoint.call(this, source, details, layerTypes[type], options) : [];
 
@@ -3695,7 +3698,7 @@ const Layers = function (ctx) {
 
         removeLayer.call(this, { layer: details.id, source: source });
 
-        this._layers.push({ id: details.id, details: details, options: options });
+        this._layers.push({ id: details.id, details: details, layers: layers, options: options });
         this._sources.push({ id: source, type: type, options: options });
 
         if (hasFeatures) ctx.Features.addFeatures(features);
@@ -3817,11 +3820,8 @@ const Layers = function (ctx) {
                         'visibility': options.visibility
                     },
                     paint: {
-                        'circle-radius': {
-                            'base': 12,
-                            'stops': [[10, 12], [14, 10]]
-                        },
-                        'circle-stroke-width': 1,
+                        'circle-radius': 10,
+                        'circle-stroke-width': 2,
                         'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
                         'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
                         'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
@@ -3829,7 +3829,7 @@ const Layers = function (ctx) {
                     }
                 }
 
-                if (type.includes('cluster')) {
+                if (type.includes('cluster') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
                     style.paint['circle-color'] = options.secondaryColor || ctx.options.colors.secondaryColor;
                     style.paint['circle-stroke-color'] = options.primaryColor || ctx.options.colors.primaryColor;
@@ -3844,10 +3844,9 @@ const Layers = function (ctx) {
                         visibility: options.visibility,
                         'icon-optional': true,
                         'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
-                        'text-size': {
-                            'base': 16,
-                            'stops': [[10, 16], [14, 12]]
-                        },
+                        'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
+                        'text-rotation-alignment': 'map',
+                        'text-size': 20,
                         'text-line-height': 1,
                         'text-padding': 0,
                         'text-offset': [0, 0.2],
@@ -3866,12 +3865,12 @@ const Layers = function (ctx) {
                     }
                 }
 
-                if (type.includes('cluster')) {
+                if (type.includes('cluster') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
                     style.layout['text-field'] = options.primaryIcon || '';
                     style.paint['text-halo-color'] = options.secondaryColor || ctx.options.colors.secondaryCold;
                     style.paint['text-color'] = options.primaryColor || ctx.options.colors.secondaryText;
-                } else if (type.includes('count')) {
+                } else if (type.includes('count') && !options.noCluster) {
                     style.filter = ['has', 'point_count'];
 
                     style.layout = {
@@ -3899,7 +3898,7 @@ const Layers = function (ctx) {
                     }
                 }
             } else if (!dontRender && type.includes('text')) {
-                if (type.includes('count')) {
+                if (type.includes('count') && !options.noCluster) {
                     style = {
                         id: id,
                         type: 'symbol',
@@ -3951,9 +3950,6 @@ const Layers = function (ctx) {
         if (layer !== -1) this._layers.splice(layer, 1);
         if (source !== -1) this._sources.splice(source, 1);
     }
-
-
-    this.init();
 };
 
 
@@ -4051,21 +4047,27 @@ const Map = function (ctx, options) {
             features = ctx.getRenderedDrawnFeatures();
         }
 
-        if (!features) return this.map.jumpTo({
-            bearing: this.options.bearing || this.map.getBearing(),
+        var jumpTo = {
+            bearing: options.bearing ||this.options.bearing || this.map.getBearing(),
             center: this.options.center || this.map.getCenter(),
-            zoom: this.options.zoom || this.map.getZoom(),
-            pitch: this.options.pitch || this.map.getPitch()
-        });
+            zoom: options.zoom || this.options.zoom || this.map.getZoom(),
+            pitch: options.pitch || this.options.pitch || this.map.getPitch()
+        }
 
-        var bbox = turf.bbox(turf.featureCollection(features));
+        if (!features) return this.map.jumpTo(jumpTo);
+
+        var bbox = ctx.Utilities.clone(turf.bbox(turf.featureCollection(features)));
         var polygon = turf.bboxPolygon(bbox);
         var centroid = turf.centroid(polygon);
-        var jumpTo = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] }
 
         this.setViewport();
 
-        !center ? this.map.fitBounds(bbox) : jumpTo && jumpTo.lng ? this.map.jumpTo({ center: jumpTo }) : false;
+        jumpTo.center = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] };
+        jumpTo.zoom = options.zoom || this.map.getZoom();
+        jumpTo.pitch = options.pitch || this.map.getPitch();
+        jumpTo.bearing = options.bearing || this.map.getBearing();
+
+        !center && bbox ? this.map.fitBounds(bbox) : this.map.jumpTo(jumpTo);
         ctx.fire('features.zoom', { features: features, center: this.map.getCenter(), bbox: bbox });
         return this.map;
     }
@@ -4091,8 +4093,6 @@ const Map = function (ctx, options) {
             left: this.viewportLeft,
             bottom: this.viewportBottom
         };
-
-        this.map.resize();
 
         var height = this.container.getBoundingClientRect().height;
         var width = this.container.getBoundingClientRect().width;
@@ -4178,6 +4178,7 @@ const Map = function (ctx, options) {
         this.container = this.map._container;
         this.container.insertBefore(this.viewport, this.container.firstChild);
         this.setOptions();
+        this.setViewport();
         this.map.off('style.load', this.onStyleLoad.bind(this));
         this.map.on('style.load', this.onStyleLoad.bind(this));
         return ctx.load();
@@ -11260,9 +11261,7 @@ __webpack_require__.r(__webpack_exports__);
  * @description The Locate module provides a user interface for locating the user's current position on the map.
  * @param {Object} ctx - The GeoFlo context object
  */
-const Locate = function (ctx, options={}) {
-    this.options = options;
-    
+const Locate = function (ctx) {    
 	/**
 	 * @function
      * @memberof module:geoflo.Locate
@@ -11276,7 +11275,7 @@ const Locate = function (ctx, options={}) {
 	 * @returns {Object} The current instance of the map with the geolocation control added.
 	 */
     this.init = function (options={}) {
-        ctx.Utilities.extend(this.options, options);
+        this.options = ctx.Utilities.extend({}, options);
 
         this.control = new mapboxgl.GeolocateControl({
             positionOptions: {
@@ -11542,12 +11541,8 @@ const Locate = function (ctx, options={}) {
         addClasses(this.button, ['mapboxgl-ctrl-geolocate-background']);
     }
 
+    this.init();
 
-
-    this.options.init ? this.init(this.options) : this;
-
-
-    
     function addClasses (button, classes=[]) {
         if (!button) return;
         classes.forEach(function(c) { c ? button.classList.add(c) : false })
@@ -11589,11 +11584,16 @@ const Styles = function (ctx, options={}) {
             { title: "Streets", uri: "mapbox://styles/mapbox/streets-v11" }
         ];
     
-        this.defaultStyle = this.options.style || 'Dark';
+        this.defaultStyle = 'Dark';
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
-
         return this;
+    }
+
+    this.select = function (name) {
+        if (!this.mapStyleContainer) return;
+        const elms = this.mapStyleContainer.getElementsByClassName(name);
+        if (elms.length > 0) elms[0].click();
     }
 
     this.getDefaultPosition = function () {
@@ -11613,33 +11613,28 @@ const Styles = function (ctx, options={}) {
 
         for (const style of this.styles) {
             const styleElement = document.createElement("button");
+
             styleElement.type = "button";
-            //styleElement.innerText = style.title;
             styleElement.classList.add(style.title.replace(/[^a-z0-9-]/gi, '_'));
             styleElement.dataset.uri = JSON.stringify(style.uri);
+
             styleElement.addEventListener("click", event => {
-                const srcElement = event.srcElement;
+                const srcElement = event.target || event.srcElement;
                 this.closeModal();
-                if (srcElement.classList.contains("active")) {
-                    return;
-                }
-                if (this.events && this.events.onOpen && this.events.onOpen(event)) {
-                    return;
-                }
+                if (srcElement.classList.contains("active")) return;
+                if (this.events && this.events.onOpen && this.events.onOpen(event)) return;
                 const style = JSON.parse(srcElement.dataset.uri);
                 this.map.setStyle(style);
                 const elms = this.mapStyleContainer.getElementsByClassName("active");
-                while (elms[0]) {
-                    elms[0].classList.remove("active");
-                }
+                while (elms[0]) elms[0].classList.remove("active");
                 srcElement.classList.add("active");
-                if (this.events && this.events.onChange && this.events.onChange(event, style)) {
-                    return;
-                }
+                if (this.events && this.events.onChange && this.events.onChange(event, style)) return;
             });
+
             if (style.title === this.defaultStyle) {
                 styleElement.classList.add("active");
             }
+
             this.mapStyleContainer.appendChild(styleElement);
         }
 
@@ -11647,9 +11642,7 @@ const Styles = function (ctx, options={}) {
         this.styleButton.classList.add("mapboxgl-style-switcher");
 
         this.styleButton.addEventListener("click", event => {
-            if (this.events && this.events.onSelect && this.events.onSelect(event)) {
-                return;
-            }
+            if (this.events && this.events.onSelect && this.events.onSelect(event)) return;
             this.openModal();
         });
 
@@ -11687,9 +11680,7 @@ const Styles = function (ctx, options={}) {
     }
 
     this.onDocumentClick = function (event) {
-        if (this.controlContainer && !this.controlContainer.contains(event.target)) {
-            this.closeModal();
-        }
+        if (this.controlContainer && !this.controlContainer.contains(event.target)) this.closeModal();
     }
 
     this.init();
@@ -11926,6 +11917,8 @@ const GeoFlo = function () {
 	 * @returns {Object} Returns the map component instance.
 	 */
     this.init = function (options={}, onReady) {
+        if (this.isReady) return this.setOptions(options);
+        
         if (!options.accessToken) throw new Error('No Mapbox Access Token Provided!');
 
         const id = options.container || this.options.map.container;
@@ -11933,13 +11926,14 @@ const GeoFlo = function () {
 
         this.options.map.accessToken = options.accessToken;
         this.options.map.container = id;
+        this.styles = options.styles;
 
         delete options.accessToken;
         delete options.container;
+        delete options.styles;
 
         this.setOptions(options);
 
-        if (this.isReady) return this.build(this._container);
         this.onReady = onReady && typeof onReady === 'function' ? onReady : false;
         
         ready(this.options.map.container).then(function (res, rej) {
@@ -11975,24 +11969,21 @@ const GeoFlo = function () {
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
     
-        this.styles = this.map.addControl(new _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_12__["default"](this, this.options.map));
-
-        this.Locate = new _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_14__["default"](this, { init: true });
-        this.Layers = new _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_7__["default"](this, { init: true });
-        this.Features = new _src_map_Features_js__WEBPACK_IMPORTED_MODULE_8__["default"](this, { init: true });
+        this.styles = new _src_ux_Styles_js__WEBPACK_IMPORTED_MODULE_12__["default"](this, { styles: this.styles });
+        this.Styles = this.map.addControl(this.styles);
+    
+        this.Locate = new _src_ux_Locate_js__WEBPACK_IMPORTED_MODULE_14__["default"](this);
+        this.Layers = new _src_map_Layers_js__WEBPACK_IMPORTED_MODULE_7__["default"](this);
+        this.Features = new _src_map_Features_js__WEBPACK_IMPORTED_MODULE_8__["default"](this);
         
         this.Events = (0,_src_ux_Events_js__WEBPACK_IMPORTED_MODULE_10__["default"])(this);
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
-    
-        this.onReady ? this.onReady(this) : false;
-    
-        this.Map.setExtent(false, true);
-        this.options.enable ? this.enable() : false;
-    
+
         this.isLoaded = true;
+        this.Map.setExtent(false, true);
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
-    
+        this.enable();
         return this;
     }
 
@@ -12059,14 +12050,15 @@ const GeoFlo = function () {
 	 */
     this.redraw = async function () {
         if (!this.Events) return false;
-
         await this.Layers.refresh();
-
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
         this.Features.updateSource();
         this.doubleClickZoom.disable(this.map);
+        this.Map.setViewport();
+        this.map.resize();
         this.fire('map.redraw', { enabled: this.enabled, mode: this.mode })
+        if (this.onReady) await this.onReady(this), delete this.onReady;
     }
 
 	/**
@@ -13810,7 +13802,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false if no features are available to zoom to.
 	 */
     this.zoomToFeatures = function (features, options={}) {
-        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.Features ? this.Features.getColdFeatures() : []);
+        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.getRenderedDrawnFeatures());
         if (features.properties) features = [features];
         if (!features || !features.length) features = !this.Map.options.extent ? [] : [turf.polygon(this.Map.options.extent)];
         if (features.length < 1) return false;

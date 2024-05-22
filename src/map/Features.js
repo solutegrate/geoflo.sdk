@@ -242,8 +242,9 @@ const Features = function (ctx) {
 
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            feature.source = feature.source || feature.properties.source || ctx.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
-            feature.properties.type = feature.properties.type || this.getType(feature);
+            feature.properties.type = this.getType(feature);
 
             var index = coldFeatures.findIndex(function(f) { if (f.id === feature.id || f.properties.id === feature.id) return f; });
 
@@ -294,8 +295,6 @@ const Features = function (ctx) {
 	 * @param {Array} coords - The new coordinates to set for the features.
 	 */
     this.updateFeatures = function(features, coords) {
-        if (!coords) return false;
-
         var sources = [];
 
         features.forEach(function(feature) {
@@ -303,12 +302,12 @@ const Features = function (ctx) {
             if (!id) return false;
 
             var originalFeature = this.getFeatureById(id);
-            if (!originalFeature || originalFeature === undefined) return false;
+            if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
             if (!sources.includes(originalFeature.source)) sources.push(originalFeature.source);
 
-            originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords :
-            originalFeature.geometry.type === 'Polygon' ? originalFeature.geometry.coordinates[0][feature.index] = coords :
-            originalFeature.geometry.type === 'LineString' ? originalFeature.geometry.coordinates[feature.index] = coords :
+            originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords || feature.geometry.coordinates :
+            originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
+            originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
             false;
 
             this.addUnits(originalFeature);
@@ -316,6 +315,8 @@ const Features = function (ctx) {
 
         this.updateSource(sources);
     };
+
+    
 
 	/**
 	 * @function
@@ -462,6 +463,8 @@ const Features = function (ctx) {
         var sourceFeatures = {};
         var unsourceFeatures = [];
 
+        ctx.updatingSource = true;
+
         ctx.map.getSource(ctx.statics.constants.sources.COLDTEXT).setData(turf.featureCollection([]));
         ctx.map.getSource(ctx.statics.constants.sources.COLD).setData(turf.featureCollection([]));
 
@@ -489,6 +492,7 @@ const Features = function (ctx) {
         ctx.fire('features.update', { features: coldFeatures });
         sourceFeatures = null;
         unsourceFeatures = null;
+        ctx.updatingSource = false;
         return coldFeatures;
     };
 
@@ -614,7 +618,7 @@ const Features = function (ctx) {
 
     function isIcon (feature) {
         if (!feature) return false;
-        return turf.getType(feature) === 'Point' && feature.properties.type === 'Text';
+        return turf.getType(feature) === 'Point' && feature.properties.type === 'Icon';
     };
 
     function getType (feature) {

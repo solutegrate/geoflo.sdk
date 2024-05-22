@@ -19,11 +19,16 @@ const Styles = function (ctx, options={}) {
             { title: "Streets", uri: "mapbox://styles/mapbox/streets-v11" }
         ];
     
-        this.defaultStyle = this.options.style || 'Dark';
+        this.defaultStyle = 'Dark';
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
-
         return this;
+    }
+
+    this.select = function (name) {
+        if (!this.mapStyleContainer) return;
+        const elms = this.mapStyleContainer.getElementsByClassName(name);
+        if (elms.length > 0) elms[0].click();
     }
 
     this.getDefaultPosition = function () {
@@ -43,33 +48,28 @@ const Styles = function (ctx, options={}) {
 
         for (const style of this.styles) {
             const styleElement = document.createElement("button");
+
             styleElement.type = "button";
-            //styleElement.innerText = style.title;
             styleElement.classList.add(style.title.replace(/[^a-z0-9-]/gi, '_'));
             styleElement.dataset.uri = JSON.stringify(style.uri);
+
             styleElement.addEventListener("click", event => {
-                const srcElement = event.srcElement;
+                const srcElement = event.target || event.srcElement;
                 this.closeModal();
-                if (srcElement.classList.contains("active")) {
-                    return;
-                }
-                if (this.events && this.events.onOpen && this.events.onOpen(event)) {
-                    return;
-                }
+                if (srcElement.classList.contains("active")) return;
+                if (this.events && this.events.onOpen && this.events.onOpen(event)) return;
                 const style = JSON.parse(srcElement.dataset.uri);
                 this.map.setStyle(style);
                 const elms = this.mapStyleContainer.getElementsByClassName("active");
-                while (elms[0]) {
-                    elms[0].classList.remove("active");
-                }
+                while (elms[0]) elms[0].classList.remove("active");
                 srcElement.classList.add("active");
-                if (this.events && this.events.onChange && this.events.onChange(event, style)) {
-                    return;
-                }
+                if (this.events && this.events.onChange && this.events.onChange(event, style)) return;
             });
+
             if (style.title === this.defaultStyle) {
                 styleElement.classList.add("active");
             }
+
             this.mapStyleContainer.appendChild(styleElement);
         }
 
@@ -77,9 +77,7 @@ const Styles = function (ctx, options={}) {
         this.styleButton.classList.add("mapboxgl-style-switcher");
 
         this.styleButton.addEventListener("click", event => {
-            if (this.events && this.events.onSelect && this.events.onSelect(event)) {
-                return;
-            }
+            if (this.events && this.events.onSelect && this.events.onSelect(event)) return;
             this.openModal();
         });
 
@@ -117,9 +115,7 @@ const Styles = function (ctx, options={}) {
     }
 
     this.onDocumentClick = function (event) {
-        if (this.controlContainer && !this.controlContainer.contains(event.target)) {
-            this.closeModal();
-        }
+        if (this.controlContainer && !this.controlContainer.contains(event.target)) this.closeModal();
     }
 
     this.init();

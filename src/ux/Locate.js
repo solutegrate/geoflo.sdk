@@ -5,9 +5,7 @@
  * @description The Locate module provides a user interface for locating the user's current position on the map.
  * @param {Object} ctx - The GeoFlo context object
  */
-const Locate = function (ctx, options={}) {
-    this.options = options;
-    
+const Locate = function (ctx) {    
 	/**
 	 * @function
      * @memberof module:geoflo.Locate
@@ -21,7 +19,7 @@ const Locate = function (ctx, options={}) {
 	 * @returns {Object} The current instance of the map with the geolocation control added.
 	 */
     this.init = function (options={}) {
-        ctx.Utilities.extend(this.options, options);
+        this.options = ctx.Utilities.extend({}, options);
 
         this.control = new mapboxgl.GeolocateControl({
             positionOptions: {
@@ -287,12 +285,8 @@ const Locate = function (ctx, options={}) {
         addClasses(this.button, ['mapboxgl-ctrl-geolocate-background']);
     }
 
+    this.init();
 
-
-    this.options.init ? this.init(this.options) : this;
-
-
-    
     function addClasses (button, classes=[]) {
         if (!button) return;
         classes.forEach(function(c) { c ? button.classList.add(c) : false })
