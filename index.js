@@ -945,7 +945,7 @@ const GeoFlo = function () {
         var bbox;
         var id = this.id;
 
-        var layers = [
+        var prelayers = [
             id + "-line-cold",
             id + "-fill-cold",
             id + "-circle-cold",
@@ -956,10 +956,16 @@ const GeoFlo = function () {
             id + '-symbol-select'
         ];
 
+        var layers = [];
+
+        prelayers.forEach(function(layer) {
+            if (this.map.getLayer(layer)) layers.push(layer);
+        }, this)
+
         this.Layers.getLayers().forEach(function(layer) {
             if (layer.id.includes(id)) return;
             layers.push(layer.id);
-        })
+        }, this)
 
         var options = { layers: layers };
 

@@ -462,11 +462,13 @@ const Features = function (ctx) {
     function updateSource (sources=[]) {
         var sourceFeatures = {};
         var unsourceFeatures = [];
+        var textSource = ctx.map.getSource(ctx.statics.constants.sources.COLDTEXT);
+        var coldSource = ctx.map.getSource(ctx.statics.constants.sources.COLD);
 
         ctx.updatingSource = true;
 
-        ctx.map.getSource(ctx.statics.constants.sources.COLDTEXT).setData(turf.featureCollection([]));
-        ctx.map.getSource(ctx.statics.constants.sources.COLD).setData(turf.featureCollection([]));
+        textSource ? textSource.setData(turf.featureCollection([])) : false;
+        coldSource ? coldSource.setData(turf.featureCollection([])) : false;
 
         coldFeatures.forEach((feature) => {
             delete feature.properties.new;
@@ -517,7 +519,7 @@ const Features = function (ctx) {
     }
 
     function setLineOffset (features, source) {
-        if (!features || !features.length || !source) return false;
+        if (!features || !features.length || !source || !ctx.map.getSource(source)) return false;
         if (!ctx.options.offsetOverlappingLines) return ctx.map.getSource(source).setData(turf.featureCollection(features));
 
         var mesh = new ctx.Mesh(features, true);

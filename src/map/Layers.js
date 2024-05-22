@@ -798,7 +798,7 @@ const Layers = function (ctx) {
 	 */
     this.moveLayers = function (layers) {
         layers = !layers ? this.defaultLayers : layers;
-        layers.forEach(function (layer) { ctx.map.moveLayer(layer.id) })
+        layers.forEach(function (layer) { if (ctx.map.getLayer(layer.id)) ctx.map.moveLayer(layer.id) })
     }
 
 
