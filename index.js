@@ -964,7 +964,7 @@ const GeoFlo = function () {
 
         this.Layers.getLayers().forEach(function(layer) {
             if (layer.id.includes(id)) return;
-            layers.push(layer.id);
+            if (this.map.getLayer(layer.id)) layers.push(layer.id);
         }, this)
 
         var options = { layers: layers };
