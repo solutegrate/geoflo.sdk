@@ -456,6 +456,7 @@ const GeoFlo = function () {
 	 * @return {Object|boolean} Returns the center marker object if successfully added or updated, or false if not applicable.
 	 */
     this.setCenterMarker = function (options={}) {
+        return;
         if (!this.mobile || this.noCenterMarker) return false;
         
         var following = this.Locate && this.Locate.following;
