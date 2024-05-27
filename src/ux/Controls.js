@@ -724,7 +724,7 @@ const Buttons = function (ctx, element, controls) {
                 }
             });
 
-            createActionButton("locate", {
+            /* createActionButton("locate", {
                 container: buttons,
                 className: ctx.statics.constants.classes.CONTROL_BUTTON_LOCATE,
                 key: "u",
@@ -733,7 +733,7 @@ const Buttons = function (ctx, element, controls) {
                 onActivate: function onActivate() {
                     ctx.Locate.onControlEvent(this);
                 }
-            });
+            }); */
     
             createActionButton("refresh", {
                 container: buttons,
