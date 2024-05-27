@@ -22,9 +22,7 @@ const Locate = function (ctx) {
         this.options = ctx.Utilities.extend({}, options);
 
         this.control = new mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
+            positionOptions: { enableHighAccuracy: true },
             trackUserLocation: true,
             showUserHeading: true,
             showAccuracyCircle: false

@@ -147,16 +147,25 @@ const GeoFlo = function () {
         this.container = this.Map.getContainer();
 
         this.fullscreen = new Mapbox.FullscreenControl({ container: document.querySelector('body') });
-        this.navigation = new Mapbox.NavigationControl({ visualizePitch: true, showZoom: !this.mobile, showCompass: true });
-        this.attribution = new Controls(this, { type: 'attribute', position: 'bottom-right', enable: true, show: true, attribution: this.statics.logo.full });
-        this.map.addControl(this.navigation, this.mobile ? 'bottom-right' : 'top-right');
+        this.navigation = new Mapbox.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
+        //this.attribution = new Controls(this, { type: 'attribute', position: 'bottom-right', enable: true, show: true, attribution: this.statics.logo.full });
+        this.map.addControl(this.navigation, 'top-right');
         
         if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
+
+        this.locate = new mapboxgl.GeolocateControl({
+            positionOptions: { enableHighAccuracy: true },
+            trackUserLocation: true,
+            showUserHeading: true,
+            showAccuracyCircle: false
+        });
+
+        this.map.addControl(this.locate, 'top-right');
     
         this.styles = new Styles(this, { styles: this.styles });
         this.Styles = this.map.addControl(this.styles);
     
-        this.Locate = new Locate(this);
+        //this.Locate = new Locate(this);
         this.Layers = new Layers(this);
         this.Features = new Features(this);
         
@@ -1468,6 +1477,7 @@ const GeoFlo = function () {
 	 * @returns {string} The location of the user after updating the orientation.
 	 */
     this.updateOrientation = function (options) {
+        if (!this.Locate) return false;
         this.Locate.update(options);
         return this.Locate.locate;
     }
