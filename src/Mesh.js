@@ -1,17 +1,9 @@
-/**
- * @class
- * @memberof module:geoflo
- * @name Mesh
- * @description A class that handles the snapping mesh index functionality in a mapping context.
- * @param {Object} originalFeatures - The original features to be meshed
- * @param {Boolean} linesOnly - A boolean value to determine if only lines are to be considered
- */
 const Mesh = function (originalFeatures, linesOnly) {
     var segmentId = 1;
     var allSegments = [];
     var featureIndex = {};
 
-    const ctx = this.geoflo;
+    const geoflo = this.geoflo;
 
 	/**
 	 * @function
@@ -25,7 +17,7 @@ const Mesh = function (originalFeatures, linesOnly) {
         var allNewFeatures = splitAndCheckForIntersections(features);
         var newSegments = splitIntoTwoPointSegmentsAndAddIds(allNewFeatures);
         var segmentsWithCutPoints = checkForIntersections(newSegments, allSegments);
-        allSegments = [].concat(ctx.Utilities.consumableArray(cutSegments(allSegments, segmentsWithCutPoints)), ctx.Utilities.consumableArray(cutSegments(newSegments, segmentsWithCutPoints)));
+        allSegments = [].concat(geoflo.Utilities.consumableArray(cutSegments(allSegments, segmentsWithCutPoints)), geoflo.Utilities.consumableArray(cutSegments(newSegments, segmentsWithCutPoints)));
         return this.getFeatures();
     };
 
@@ -53,8 +45,8 @@ const Mesh = function (originalFeatures, linesOnly) {
         if (feature !== undefined) {
             var pos = allSegments.indexOf(feature);
             allSegments.splice(pos, 1);
-            var line1 = ctx.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[0]]);
-            var line2 = ctx.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[1]]);
+            var line1 = geoflo.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[0]]);
+            var line2 = geoflo.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[1]]);
             addFeatureToIndex(line1);
             addFeatureToIndex(line2);
             allSegments.push(line1, line2);
@@ -130,36 +122,36 @@ const Mesh = function (originalFeatures, linesOnly) {
         feature.id = segmentId;
         feature.parent = parent;
 
-        ctx.Utilities.setProperty(feature, 'id', segmentId);
-        ctx.Utilities.setProperty(feature, 'parent', parent);
+        geoflo.Utilities.setProperty(feature, 'id', segmentId);
+        geoflo.Utilities.setProperty(feature, 'parent', parent);
 
         segmentId++;
         return true;
     }
 
     function addClickSegementsToMesh() {
-        if (!ctx.options.snapping.enable) return false;
+        if (!geoflo.options.snapping.enable) return false;
     
         var meshFeatures = [];
     
-        if (ctx.closestPoint && ctx.closestPoint.borders && ctx.closestPoint.id !== undefined) {
-            ctx.meshIndex.splitSegmentAtPoint(ctx.closestPoint.id, ctx.closestPoint.coords);
-            ctx.updateMeshData();
+        if (geoflo.closestPoint && geoflo.closestPoint.borders && geoflo.closestPoint.id !== undefined) {
+            geoflo.meshIndex.splitSegmentAtPoint(geoflo.closestPoint.id, geoflo.closestPoint.coords);
+            geoflo.updateMeshData();
         }
     
-        if (ctx.snapFeature) {
-            if (ctx.snapFeature.geometry.type === "LineString") {
-                if (!ctx.Utilities.isEmptyLineString(ctx.snapFeature)) {
-                    meshFeatures.push(ctx.snapFeature);
+        if (geoflo.snapFeature) {
+            if (geoflo.snapFeature.geometry.type === "LineString") {
+                if (!geoflo.Utilities.isEmptyLineString(geoflo.snapFeature)) {
+                    meshFeatures.push(geoflo.snapFeature);
                 }
-            } else if (ctx.snapFeature.geometry.type === "Point") {
-                ctx.Utilities.setProperty(ctx.snapFeature, 'startPoint', true);
-                ctx.startPoint = ctx.Utilities.cloneDeep(ctx.snapFeature);
-                meshFeatures.push(ctx.snapFeature);
+            } else if (geoflo.snapFeature.geometry.type === "Point") {
+                geoflo.Utilities.setProperty(geoflo.snapFeature, 'startPoint', true);
+                geoflo.startPoint = geoflo.Utilities.cloneDeep(geoflo.snapFeature);
+                meshFeatures.push(geoflo.snapFeature);
             }
         }
     
-        if (meshFeatures.length > 0) ctx.addFeaturesToMesh(meshFeatures);
+        if (meshFeatures.length > 0) geoflo.addFeaturesToMesh(meshFeatures);
     }
 
     function coordinatesToLineStrings(coords, result, parent) {
@@ -169,7 +161,7 @@ const Mesh = function (originalFeatures, linesOnly) {
         for (var index = 1; index < coords.length; index++) {
             secondPoint = turf.truncate(turf.point(coords[index]), { precision: 7, coordinates: 2, mutate: true });
             
-            if (!ctx.Utilities.isPointEqual(firstPoint.geometry.coordinates, secondPoint.geometry.coordinates)) {
+            if (!geoflo.Utilities.isPointEqual(firstPoint.geometry.coordinates, secondPoint.geometry.coordinates)) {
                 var line = turf.lineString([firstPoint.geometry.coordinates, secondPoint.geometry.coordinates]);
                 var added = addFeatureToIndex(line, parent);
                 added ? result.push(line) : false;
@@ -189,7 +181,7 @@ const Mesh = function (originalFeatures, linesOnly) {
             var added;
 
             if (linesOnly && type !== "LineString" && !feature.properties.unfill) {
-                feature = ctx.Utilities.cloneDeep(feature);
+                feature = geoflo.Utilities.cloneDeep(feature);
                 added = addFeatureToIndex(feature, id);
                 return added ? result.push(feature) : false;
             }
@@ -211,7 +203,7 @@ const Mesh = function (originalFeatures, linesOnly) {
             } else if (type === "LineString") {
                 coordinatesToLineStrings(feature.geometry.coordinates, result, id);
             } else if (type === "Point") {
-                feature = ctx.Utilities.cloneDeep(feature);
+                feature = geoflo.Utilities.cloneDeep(feature);
                 added = addFeatureToIndex(feature, id);
                 added ? result.push(feature) : false;
             }
@@ -230,7 +222,7 @@ const Mesh = function (originalFeatures, linesOnly) {
         }
     
         cutPointFeatures.forEach(function(feature) {
-            var newCutPoint = ctx.Utilities.reducePrecision(feature.geometry.coordinates);
+            var newCutPoint = geoflo.Utilities.reducePrecision(feature.geometry.coordinates);
             var cutPoint = segCutPoints.findIndex(function(element) { return element[0] === newCutPoint[0] && element[1] === newCutPoint[1]; });
             if (cutPoint === -1) { segCutPoints.push(newCutPoint); }
         });
@@ -247,7 +239,7 @@ const Mesh = function (originalFeatures, linesOnly) {
             var addFeature2Point = false;
             var closestPointAdded = false;
 
-            if (!ctx.Utilities.isPointEqual(pointCoords, seg1Coords[0]) && !ctx.Utilities.isPointEqual(pointCoords, seg1Coords[1])) {
+            if (!geoflo.Utilities.isPointEqual(pointCoords, seg1Coords[0]) && !geoflo.Utilities.isPointEqual(pointCoords, seg1Coords[1])) {
                 var endpoint1 = turf.point(seg1Coords[0]);
                 var endpoint2 = turf.point(seg1Coords[1]);
                 var distanceEndpoint1 = turf.distance(point, endpoint1);
@@ -256,14 +248,14 @@ const Mesh = function (originalFeatures, linesOnly) {
                 var closestEndpoint = distanceEndpoint1 < distanceEndpoint2 ? endpoint1 : endpoint2;
 
                 var pointOnLine = turf.pointOnLine(feature2, closestEndpoint);
-                if (pointOnLine.properties.dist < ctx.statics.constants.MIN_DISTANCE) {
+                if (pointOnLine.properties.dist < geoflo.statics.constants.MIN_DISTANCE) {
                     appendCutFeatures(segmentsWithCutPoints, feature2, [closestEndpoint]);
                     closestPointAdded = true;
                 } else {
                     addFeature1Point = true;
                 }
             }
-            if (!ctx.Utilities.isPointEqual(pointCoords, seg2Coords[0]) && !ctx.Utilities.isPointEqual(pointCoords, seg2Coords[1])) {
+            if (!geoflo.Utilities.isPointEqual(pointCoords, seg2Coords[0]) && !geoflo.Utilities.isPointEqual(pointCoords, seg2Coords[1])) {
                 var _endpoint = turf.point(seg2Coords[0]);
                 var _endpoint2 = turf.point(seg2Coords[1]);
                 var _distanceEndpoint = turf.distance(point, _endpoint);
@@ -272,7 +264,7 @@ const Mesh = function (originalFeatures, linesOnly) {
                 var _closestEndpoint = _distanceEndpoint < _distanceEndpoint2 ? _endpoint : _endpoint2;
 
                 var _pointOnLine = turf.pointOnLine(feature1, _closestEndpoint);
-                if (_pointOnLine.properties.dist < ctx.statics.constants.MIN_DISTANCE) {
+                if (_pointOnLine.properties.dist < geoflo.statics.constants.MIN_DISTANCE) {
                     appendCutFeatures(segmentsWithCutPoints, feature1, [_closestEndpoint]);
                     closestPointAdded = true;
                 } else {
@@ -292,8 +284,8 @@ const Mesh = function (originalFeatures, linesOnly) {
 
         var checkIfPointInCloseRange = function checkIfPointInCloseRange(feature, coords) {
             var pointOnline = turf.pointOnLine(feature, turf.point(coords));
-            if (pointOnline.properties.dist < ctx.statics.constants.MIN_DISTANCE) {
-                if (!ctx.Utilities.isPointAtVertex(feature.geometry.coordinates, coords)) {
+            if (pointOnline.properties.dist < geoflo.statics.constants.MIN_DISTANCE) {
+                if (!geoflo.Utilities.isPointAtVertex(feature.geometry.coordinates, coords)) {
                     appendCutFeatures(segmentsWithCutPoints, feature, [pointOnline]);
                     return true;
                 }
@@ -313,7 +305,7 @@ const Mesh = function (originalFeatures, linesOnly) {
                 var id = segmentFeature2.id || segmentFeature2.properties.id;
 
                 if (feature1Type === "LineString" && feature2Type === "LineString") {
-                    if (ctx.Utilities.isOverlapping(segmentFeature1, segmentFeature2)) {
+                    if (geoflo.Utilities.isOverlapping(segmentFeature1, segmentFeature2)) {
                         var intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
 
                         if (intersectionPoints.length > 0) {
@@ -375,8 +367,8 @@ const Mesh = function (originalFeatures, linesOnly) {
                     var fc = turf.lineSplit(segment, turf.multiPoint(cutPoints));
                     turf.featureEach(fc, function(feature) {
                         var length = turf.lineDistance(feature);
-                        if (length > ctx.statics.constants.MIN_SEGMENT_LENGTH) {
-                            ctx.Utilities.setProperties(feature, { length: length });
+                        if (length > geoflo.statics.constants.MIN_SEGMENT_LENGTH) {
+                            geoflo.Utilities.setProperties(feature, { length: length });
                             addFeatureToIndex(feature);
                             result.push(feature);
                         } else {
@@ -385,8 +377,8 @@ const Mesh = function (originalFeatures, linesOnly) {
                     });
                 } else {
                     var length = turf.lineDistance(segment);
-                    if (length > ctx.statics.constants.MIN_SEGMENT_LENGTH) {
-                        ctx.Utilities.setProperties(segment, { length: length });
+                    if (length > geoflo.statics.constants.MIN_SEGMENT_LENGTH) {
+                        geoflo.Utilities.setProperties(segment, { length: length });
                         result.push(segment);
                     } else {
                         console.error("0 length feature (", length, ") existing segment: ", JSON.stringify(segment));
@@ -428,11 +420,11 @@ const Mesh = function (originalFeatures, linesOnly) {
                 allSegments.splice(pos, 1);
             })
             
-            ctx.updateMeshData();
+            geoflo.updateMeshData();
         }
 
         return allSegments;
     }
 };
 
-export { Mesh as default }
+export default Mesh;

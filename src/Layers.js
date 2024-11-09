@@ -1,21 +1,17 @@
-/**
- * @namespace
- * @memberof module:geoflo
- * @name Layers
- * @description A class that handles layers functionality in a mapping context.
- * @param {Object} ctx - The GeoFlo context object
- */
-const Layers = function (ctx) {
-    if (!ctx.map) throw new Error('No map object provided!');
+const Layers = function () {
+    const geoflo = this.geoflo;
+    if (!geoflo.map) throw new Error('No map object provided!');
 
     const Layers = this;
-    const map = ctx.map;
-    const id = ctx.id;
-    const statics = ctx.statics;
+    const map = geoflo.map;
+    const id = geoflo.id;
+    const statics = geoflo.statics;
+
     const layerTypes = {
         Polygon: ['-fill', '-border'],
         Polyline: ['-line', '-dash', '-buffer'],
-        Point: ['-circle', '-icon', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text']
+        Point: ['-circle', '-icon', '-image', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text'],
+        Image: ['-image']
     }
 
     this.sources = [];
@@ -31,7 +27,7 @@ const Layers = function (ctx) {
             'layout': {},
             'filter': ["==", "$type", "Polygon"],
             'paint': {
-                'fill-color': ctx.options.colors.secondaryCold,
+                'fill-color': geoflo.options.colors.secondaryCold,
                 'fill-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.3]
             }
         },
@@ -44,7 +40,7 @@ const Layers = function (ctx) {
                 'line-join': 'miter'
             },
             'paint': {
-                'line-color': ctx.options.colors.primaryCold,
+                'line-color': geoflo.options.colors.primaryCold,
                 'line-width': 4,
                 'line-gap-width': ["match", ["get", "type"], "Polygon", 0, 0],
                 'line-offset': ['case', ["boolean", ["has", "offset"], true], ["get", "offset"], 0],
@@ -62,8 +58,8 @@ const Layers = function (ctx) {
                     'stops': [[10, 6], [14, 10]]
                 },
                 'circle-stroke-width': 1,
-                'circle-color': ctx.options.colors.primaryCold,
-                'circle-stroke-color': ctx.options.colors.secondaryCold,
+                'circle-color': geoflo.options.colors.primaryCold,
+                'circle-stroke-color': geoflo.options.colors.secondaryCold,
                 'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
                 'circle-stroke-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
             }
@@ -93,8 +89,8 @@ const Layers = function (ctx) {
             paint: {
                 'text-translate-anchor': 'viewport',
                 'text-halo-width': 0,
-                'text-halo-color': ctx.options.colors.primaryCold,
-                'text-color': ctx.options.colors.secondaryBackground,
+                'text-halo-color': geoflo.options.colors.primaryCold,
+                'text-color': geoflo.options.colors.secondaryBackground,
                 'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
             }
         },
@@ -119,8 +115,8 @@ const Layers = function (ctx) {
                 'text-transform': ['get', 'transform']
             },
             'paint': {
-                'text-color': ctx.options.colors.primaryCold,
-                'text-halo-color': ctx.options.colors.primaryText,
+                'text-color': geoflo.options.colors.primaryCold,
+                'text-halo-color': geoflo.options.colors.primaryText,
                 'text-halo-width': 0.5,
                 'text-opacity': 1,
                 'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
@@ -131,7 +127,7 @@ const Layers = function (ctx) {
             source: statics.constants.sources.MESH,
             type: "line",
             paint: {
-                "line-color": ctx.options.colors.primaryBase,
+                "line-color": geoflo.options.colors.primaryBase,
                 "line-width": 2,
                 "line-opacity": 0.3
             }
@@ -142,7 +138,7 @@ const Layers = function (ctx) {
             'type': 'circle',
             'paint': {
                 'circle-radius': 2,
-                'circle-color': ctx.options.colors.primaryBase,
+                'circle-color': geoflo.options.colors.primaryBase,
                 'circle-opacity': 0.3
             }
         },
@@ -153,7 +149,7 @@ const Layers = function (ctx) {
             'layout': {},
             'filter': ["==", "$type", "Polygon"],
             'paint': {
-                'fill-color': ctx.options.colors.secondaryHot,
+                'fill-color': geoflo.options.colors.secondaryHot,
                 'fill-opacity': ['case', ["boolean", ["has", "new"], true], 0.5, 0.1],
             }
         },
@@ -166,7 +162,7 @@ const Layers = function (ctx) {
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': ctx.options.colors.primaryHot,
+                'line-color': geoflo.options.colors.primaryHot,
                 'line-width': 4,
                 'line-dasharray': [1,2],
             }
@@ -180,8 +176,8 @@ const Layers = function (ctx) {
             'paint': {
                 'circle-radius': ["match", ["get", "type"], "Circle", 8, 4],
                 'circle-stroke-width': 1,
-                'circle-color': ctx.options.colors.primaryHot,
-                'circle-stroke-color': ctx.options.colors.secondaryHot
+                'circle-color': geoflo.options.colors.primaryHot,
+                'circle-stroke-color': geoflo.options.colors.secondaryHot
             }
         },
         {
@@ -208,9 +204,22 @@ const Layers = function (ctx) {
             },
             paint: {
                 'text-translate-anchor': 'viewport',
-                'text-halo-color': ctx.options.colors.primaryHot,
+                'text-halo-color': geoflo.options.colors.primaryHot,
                 'text-halo-width': 0, //[ 'case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0 ],
-                'text-color': ctx.options.colors.secondaryHot
+                'text-color': geoflo.options.colors.secondaryHot
+            }
+        },
+        {
+            source: statics.constants.sources.HOT,
+            id: id + '-image-hot',
+            filter: ['==', ['get', 'type'], 'Image'],
+            type: 'symbol',
+            layout: {
+                'visibility': 'visible',
+                'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-allow-overlap': true,
+                'icon-anchor': 'bottom'
             }
         },
         {
@@ -220,23 +229,23 @@ const Layers = function (ctx) {
             'layout': {
                 'symbol-placement': 'point',
                 'text-field': ['get', 'text'],
-                'text-font': ['DIN Pro Regular', 'DIN Pro Italic', 'Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-font': ['Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
                 'text-keep-upright': true,
-                'text-anchor': ['get', 'anchor'],
-                'text-size': 14,
-                'text-justify': ['get', 'justify'],
-                'text-letter-spacing': 0,
+                'text-anchor': ['get','anchor'],
+                'text-size': 18,
+                'text-justify': ['get','justify'],
+                'text-letter-spacing': 0.1,
                 'text-line-height': 1.2,
                 'text-max-angle': 10,
-                'text-offset': [0,0],
+                'text-offset': [0, 1.5],
                 'text-padding': 2,
                 'text-rotate': 0,
                 'text-transform': ['get', 'transform']
             },
             'paint': {
-                'text-color': ctx.options.colors.primaryText,
-                'text-halo-color': ctx.options.colors.primaryBackground,
-                'text-halo-width': 0,
+                'text-color': geoflo.options.colors.primaryText,
+                'text-halo-color': geoflo.options.colors.primaryBackground,
+                'text-halo-width': 1,
                 'text-opacity': 1,
             }
         },
@@ -248,8 +257,8 @@ const Layers = function (ctx) {
             'paint': {
                 'circle-radius': ["match", ["get", "type"], "Circle", 6, "Icon", 0, 6],
                 'circle-stroke-width': 2,
-                'circle-color': ctx.options.colors.primarySnap,
-                'circle-stroke-color': ctx.options.colors.secondarySnap
+                'circle-color': geoflo.options.colors.primarySnap,
+                'circle-stroke-color': geoflo.options.colors.secondarySnap
             }
         },
         {
@@ -276,9 +285,22 @@ const Layers = function (ctx) {
             },
             paint: {
                 'text-translate-anchor': 'viewport',
-                'text-halo-color': ctx.options.colors.primarySnap,
+                'text-halo-color': geoflo.options.colors.primarySnap,
                 'text-halo-width': 0, //[ 'case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0 ],
-                'text-color': ctx.options.colors.secondarySnap
+                'text-color': geoflo.options.colors.secondarySnap
+            }
+        },
+        {
+            source: statics.constants.sources.SNAP,
+            id: id + '-image-snap',
+            filter: ['==', ['get', 'type'], 'Image'],
+            type: 'symbol',
+            layout: {
+                'visibility': 'visible',
+                'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-allow-overlap': true,
+                'icon-anchor': 'bottom'
             }
         },
         {
@@ -291,7 +313,7 @@ const Layers = function (ctx) {
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': ctx.options.colors.secondarySnap,
+                'line-color': geoflo.options.colors.secondarySnap,
                 'line-width': 4,
                 'line-dasharray':[1,2]
             }
@@ -306,7 +328,7 @@ const Layers = function (ctx) {
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': ctx.options.colors.error,
+                'line-color': geoflo.options.colors.error,
                 'line-width': 4,
                 'line-dasharray':[]
             }
@@ -320,7 +342,7 @@ const Layers = function (ctx) {
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': ctx.options.colors.secondarySelect,
+                'line-color': geoflo.options.colors.secondarySelect,
                 'line-width': 4,
             }
         },
@@ -331,23 +353,20 @@ const Layers = function (ctx) {
             'layout': {},
             'filter': ["==", "$type", "Polygon"],
             'paint': {
-                'fill-color': ctx.options.colors.primarySelect,
+                'fill-color': geoflo.options.colors.primarySelect,
                 'fill-opacity': 0.4
             }
         },
         {
             'source': statics.constants.sources.SELECT,
             'id': id + '-point-select',
-            'filter': ['all', ['!=', ['get', 'type'], 'Text'], ['!=', ['get', 'type'], 'Icon'], ["==", ["geometry-type"], "Point"] ],
+            'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"] ],
             'type': 'circle',
             'paint': {
-                'circle-radius': {
-                    'base': 6,
-                    'stops': [[10, 6], [14, 10]]
-                },
+                'circle-radius': 12,
                 'circle-stroke-width': 2,
-                'circle-color': ctx.options.colors.secondarySelect,
-                'circle-stroke-color': ctx.options.colors.primarySelect,
+                'circle-color': geoflo.options.colors.primarySelect,
+                'circle-stroke-color': geoflo.options.colors.secondarySelect,
             }
         },
         {
@@ -357,11 +376,11 @@ const Layers = function (ctx) {
             'type': 'symbol',
             'layout': {
                 'icon-optional': true,
-                'text-field': ['get', 'secondaryIcon', ['get','style', ['properties']]],
-                'text-size': {
-                    'base': 16,
-                    'stops': [[10, 16], [14, 12]]
-                },
+                'symbol-placement': 'point',
+                'text-rotation-alignment': 'viewport',
+                'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
+                'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
+                'text-size': 14,
                 'text-line-height': 1,
                 'text-padding': 0,
                 'text-offset': [0, 0.2],
@@ -373,9 +392,9 @@ const Layers = function (ctx) {
             },
             'paint': {
                 'text-translate-anchor': 'viewport',
-                'text-halo-color': ctx.options.colors.primaryBackground,
-                'text-halo-width': 0,
-                'text-color': ctx.options.colors.secondarySelect,
+                'text-halo-color': geoflo.options.colors.secondarySelect,
+                'text-halo-width': 2,
+                'text-color': geoflo.options.colors.primaryBackground,
             }
         },
         {
@@ -385,23 +404,25 @@ const Layers = function (ctx) {
             'type': 'symbol',
             'layout': {
                 "symbol-placement": "point",
+                'text-rotation-alignment': 'viewport',
                 'text-field': ['get', 'text'],
                 'text-font': ['DIN Pro Regular', 'DIN Pro Italic', 'Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
                 'text-keep-upright': true,
+                'text-allow-overlap': true,
                 'text-size': 18,
                 'text-justify': ['get', 'justify'],
-                'text-letter-spacing': 0.05,
+                'text-letter-spacing': 0.12,
                 'text-line-height': 1.2,
                 'text-max-angle': 10,
-                'text-offset': [0,0],
+                'text-offset': [0,1.5],
                 'text-padding': 2,
                 'text-rotate': 0,
                 'text-transform': ['get', 'transform']
             },
             'paint': {
-                'text-color': ctx.options.colors.secondarySelect,
-                'text-halo-color': ctx.options.colors.secondaryText,
-                'text-halo-width': 0.5,
+                'text-color': geoflo.options.colors.primaryBackground,
+                'text-halo-color': geoflo.options.colors.primaryColor,
+                'text-halo-width': 2,
                 'text-opacity': 1,
             }
         },
@@ -413,8 +434,8 @@ const Layers = function (ctx) {
             'paint': {
                 'circle-radius': 4,
                 'circle-stroke-width': 3,
-                'circle-color': ctx.options.colors.primaryVertex,
-                'circle-stroke-color': ctx.options.colors.secondaryVertex
+                'circle-color': geoflo.options.colors.primaryVertex,
+                'circle-stroke-color': geoflo.options.colors.secondaryVertex
             }
         },
         {
@@ -450,23 +471,23 @@ const Layers = function (ctx) {
 	 * @returns {Array} - An array of layers after the refresh operation.
 	 */
     this.refresh = async function (options={}) {
-        var layers = ctx.Utilities.cloneDeep(this._layers);
+        var layers = geoflo.Utilities.cloneDeep(this._layers);
 
         this._layers = [];
         this._sources = [];
 
         this.removeEventListeners();
         this.removeLayers(this.defaultLayers);
-        this.removeSources(Object.values(ctx.statics.constants.sources));
+        this.removeSources(Object.values(geoflo.statics.constants.sources));
 
         this.addEventListeners();
-        this.addSources(Object.values(ctx.statics.constants.sources));
+        this.addSources(Object.values(geoflo.statics.constants.sources));
         this.addLayers(this.defaultLayers, this.options);
 
         await buildLayers.call(this, layers);
 
-        setTimeout(function() { ctx.Layers.moveLayers(); }, 250);
-        setTimeout(function() { ctx.zoomToFeatures(ctx.getRenderedDrawnFeatures()); }, 350);
+        setTimeout(function() { geoflo.Layers.moveLayers(); }, 250);
+        //setTimeout(function() { geoflo.zoomToFeatures(geoflo.getRenderedDrawnFeatures()); }, 350);
         return this.getLayers();
     }
 
@@ -486,6 +507,7 @@ const Layers = function (ctx) {
         if (!layers) return [];
         return await buildLayers.call(this, layers, options);
     }
+
 
 	/**
 	 * @function
@@ -554,6 +576,7 @@ const Layers = function (ctx) {
         return type === 'Polygon' || type === 'Rectangle' ? 'Polygon' :
         type === 'Polyline' || type === 'LineString' || type === 'Line' ? 'Polyline' :
         type === 'Point' || type === 'Circle' || type === 'Marker' || type === 'Icon' || type === 'Text' ? 'Point' :
+        type === 'Image' ? 'Image' :
         false;
     }
 
@@ -612,12 +635,12 @@ const Layers = function (ctx) {
 	 * @param {string} id - The ID of the layer to retrieve.
 	 * @returns {object|boolean} The layer object if found, or false if not found.
 	 */
-    this.getLayer = function (id) {
+    this.getLayer = function (id, custom) {
         if (!id) return false;
-        var layers = this.getLayers();
+        var layers = custom ? this._layers : this.getLayers();
         var layer = layers.find(function(layer) { return layer.id === id });
         if (!layer) layer = layers.filter(function(layer) { return layer.source === id });
-        return layer;
+        return custom ? layer.layers : layer;
     }
 
 	/**
@@ -629,7 +652,7 @@ const Layers = function (ctx) {
 	 * @returns {Array} An array of layer IDs.
 	 */
     this.getLayerIds = function (layers) {
-        var _layers = layers || this.getLayers();
+        var _layers = layers || this.getCustomLayers();
         return _layers.map(function (l) { return l.id });
     }
 
@@ -648,7 +671,7 @@ const Layers = function (ctx) {
 	 */
     this.addSources = function (sources=[], options={}) {
         sources.forEach(function(source) { this.addSource(source, false, options) }, this);
-        ctx.fire('sources.add', { sources: this.getSources() });
+        geoflo.fire('sources.add', { sources: this.getSources() });
         return this.getSources();
     }
 
@@ -670,7 +693,7 @@ const Layers = function (ctx) {
 
         map.addSource(id, opts);
         this.sources.push(map.getSource(id));
-        ctx.fire('source.add', { id: id, source: this.getSource(id) })
+        geoflo.fire('source.add', { id: id, source: this.getSource(id) })
         return this.getSource(id);
     }
 
@@ -685,7 +708,7 @@ const Layers = function (ctx) {
 	 */
     this.addLayers = function (layers=[], options={}) {
         layers.forEach(function(layer) { this.addLayer(layer, options) }, this);
-        ctx.fire('layers.add', { layers: this.getLayers() });
+        geoflo.fire('layers.add', { layers: this.getLayers() });
         buildEvents.call(this);
         return this.getLayers();
     }
@@ -701,7 +724,7 @@ const Layers = function (ctx) {
 	 */
     this.addLayer = function (layer, options={}) {
         if (!layer || !layer.id) return false;
-    
+        console.log('Adding Layer:', id);
         layer.metadata = options;
         map.addLayer(layer);
 
@@ -709,8 +732,68 @@ const Layers = function (ctx) {
         if (!layer) return console.error(id, 'Layer Not Added!');
 
         this.layers.push(layer);
-        ctx.fire('layer.add', { id: layer.id, layer: this.getLayer(layer.id) });
+        geoflo.fire('layer.add', { id: layer.id, layer: this.getLayer(layer.id) });
         return this.getLayer(layer.id);
+    }
+
+    this.addTextLayer = function (options={}) {
+        var layers = this.getCustomLayers();
+        var field = options.field || 'text';
+
+        this.removeTextLayer();
+
+        layers.forEach(function(layer) {
+            var id = layer.id + '-Text';
+
+            var filter = ['all', ['==', ["geometry-type"], 'Point'], ["has", field] ];
+            if (options.filter) filter = options.filter;
+            if (options.ids) filter = ['in', 'id', ...options.ids];
+
+            var layout = Object.assign({}, {
+                'visibility': 'visible',
+                'symbol-placement': 'point',
+                'text-rotation-alignment': 'viewport',
+                'text-field': ['get', field],
+                'text-keep-upright': true,
+                'text-allow-overlap': true,
+                'text-anchor': 'top',
+                'text-size': 12,
+                'text-justify': 'center',
+                'text-letter-spacing': 0.25,
+                'text-line-height': 1.2,
+                'text-max-angle': 10,
+                'text-offset': [0, 0.5],
+                'text-padding': 2,
+                'text-rotate': 0,
+                'text-transform': 'none',
+                'text-font': ['Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-ignore-placement': false,
+                'text-max-width': 15
+            }, layer.text ? layer.text.layout || {} : {}, options.layout);
+
+            var paint = Object.assign({}, {
+                'text-translate-anchor': 'viewport',
+                'text-halo-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                'text-halo-width': 1.2,
+                'text-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
+                'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]
+            }, layer.text ? layer.text.paint || {} : {}, options.paint);
+
+            var style = {
+                id: id,
+                type: 'symbol',
+                source: layer.details.source || id,
+                slot: 'top',
+                filter: filter,
+                layout: layout,
+                paint: paint
+            }
+
+            layer.text = style;
+            this.addLayer(style, { text: true, name: id });
+        }, this);
+
+        this.showTextLayers = true;
     }
 
 
@@ -728,7 +811,7 @@ const Layers = function (ctx) {
     this.removeSources = function (sources) {
         sources = sources || this.getSourceIds();
         sources.forEach(function(id) { this.removeSource(id) }, this);
-        ctx.fire('sources.remove', { removed: true })
+        geoflo.fire('sources.remove', { removed: true })
     }
 
 	/**
@@ -747,7 +830,7 @@ const Layers = function (ctx) {
         index = this.sources.findIndex(function(l) { return l.id === id });
         if (index > -1) this.sources.splice(index, 1);
         
-        ctx.fire('source.remove', { removed: id });
+        geoflo.fire('source.remove', { removed: id });
         return id;
     }
 
@@ -762,7 +845,7 @@ const Layers = function (ctx) {
     this.removeLayers = function (layers) {
         var ids = this.getLayerIds(layers);
         ids.forEach(function(id) { this.removeLayer(id) }, this);
-        ctx.fire('layers.remove', { removed: ids });
+        geoflo.fire('layers.remove', { removed: ids });
         return ids;
     }
 
@@ -776,14 +859,21 @@ const Layers = function (ctx) {
 	 */
     this.removeLayer = function (id) {
         if (!id) return false;
+        console.log('Removing Layer:', id);
         if (map.getLayer(id)) map.removeLayer(id);
 
         var index = -1;
         index = this.layers.findIndex(function(l) { return l.id === id });
         if (index > -1) this.layers.splice(index, 1);
 
-        ctx.fire('layer.remove', { removed: id });
+        geoflo.fire('layer.remove', { removed: id });
         return id;
+    }
+
+    this.removeTextLayer = function (id) {
+        var layers = this.getCustomLayers();
+        layers.forEach(function(layer) { this.removeLayer(layer.id + '-Text') }, this);
+        this.showTextLayers = false;
     }
 
 
@@ -798,7 +888,7 @@ const Layers = function (ctx) {
 	 */
     this.moveLayers = function (layers) {
         layers = !layers ? this.defaultLayers : layers;
-        layers.forEach(function (layer) { if (ctx.map.getLayer(layer.id)) ctx.map.moveLayer(layer.id) })
+        layers.forEach(function (layer) { if (geoflo.map.getLayer(layer.id)) geoflo.map.moveLayer(layer.id) })
     }
 
 
@@ -891,9 +981,11 @@ const Layers = function (ctx) {
 
 
     async function buildLayers (layers=[], options={}) {
+        await buildText.call(this);
         if (!layers.length) return false;
         for (const layer of layers) await buildLayer.call(this, layer, options);
         this.moveLayers();
+        if (this.showTextLayers) this.addTextLayer();
         return this.getLayers();
     }
 
@@ -916,11 +1008,24 @@ const Layers = function (ctx) {
 
         var source = details.source || details.id;
         metadata.source = source;
+
+        var settings = {
+            type: type,
+            source: source,
+            id: details.id,
+            types: layerTypes[type],
+            style: layer.style || {},
+            filter: layer.filter,
+            images: layer.images,
+            details: details,
+            options: options,
+            layers: layers
+        }
         
-        layers = layers.length ? layers :
-        type === 'Polygon' ? buildPolygon.call(this, source, details, layerTypes[type], options) :
-        type === 'Polyline' ? buildPolyline.call(this, source, details, layerTypes[type], options) :
-        type === 'Point' ? buildPoint.call(this, source, details, layerTypes[type], options) : [];
+        layers = type === 'Image' ? await buildImage.call(this, settings, options) :
+        type === 'Polygon' ? await buildPolygon.call(this, settings, options) :
+        type === 'Polyline' ? await buildPolyline.call(this, settings, options) :
+        type === 'Point' ? await buildPoint.call(this, settings, options) : [];
 
         this.removeLayers(layers);
         this.removeSource(source);
@@ -929,16 +1034,16 @@ const Layers = function (ctx) {
 
         removeLayer.call(this, { layer: details.id, source: source });
 
-        this._layers.push({ id: details.id, details: details, layers: layers, options: options });
+        this._layers.push(settings);
         this._sources.push({ id: source, type: type, options: options });
 
-        if (hasFeatures) ctx.Features.addFeatures(features);
+        if (hasFeatures) geoflo.Features.addFeatures(features);
         
         return new Promise(async function (resolve, reject) {
             if (error) return resolve(error);
 
             var ready = setInterval(function() {
-                var feats = ctx.Layers.getFeatures(source);
+                var feats = geoflo.Layers.getFeatures(source);
                 if (hasFeatures && !feats.length) return; 
                 clearInterval(ready);
                 return resolve({ layer: layer, features: feats });
@@ -946,162 +1051,323 @@ const Layers = function (ctx) {
         })
     }
 
-    function buildPolygon (source, layer, types, options={}) {
-        if (!source) return [];
+    async function buildText () {
+        const map = geoflo.map;
 
-        var _layers = [];
+        return new Promise(async function (resolve, reject) {
+            const url = 'https://docs.mapbox.com/mapbox-gl-js/assets/popup.png';
 
-        types.forEach(function (type) {
-            var style;
-            var id = layer.id + type;
+            if (map.hasImage('text-marker')) return resolve(true);
+
+            map.loadImage(url, async function(error, image) {
+                if (error) return reject(error);
+                if (map.hasImage('text-marker')) return resolve(image);
+                
+                map.addImage('text-marker', image, {
+                    content: [25, 25, 115, 100],
+                    stretchX: [[25, 115]],
+                    stretchY: [[25, 100]],
+                    pixelRatio: 2,
+                    sdf: false
+                });
+                
+                return resolve(image);
+            });
+        });
+    }
+
+    async function buildImage (settings={}, options={}) {
+        if (!settings.source) return [];
+
+        var layers = [];
+        var source = settings.source;
+
+        for (var i = 0; i < settings.types.length; i++) {
+            var type = settings.types[i];
+            var style = settings.style;
+            var id = settings.id + type;
+            var layout, paint;
+
+            if (!settings.images || !settings.images.length) continue;
+
+            for (var j = 0; j < settings.images.length; j++) {
+                var image = settings.images[j];
+                if (!image) continue;
+
+                var img = await loadImage(image);
+                if (!img) continue;
+                
+                map.hasImage(image.id) ?
+                map.updateImage(image.id, img, {pixelRatio: 2}) :
+                map.addImage(image.id, img, {pixelRatio: 2});
+            }
+
+            layout = Object.assign({}, {
+                'visibility': options.visibility || 'visible',
+                'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-allow-overlap': true,
+                'icon-anchor': 'bottom'
+            }, style.image ? style.image.layout || {} : {});
+
+            paint = Object.assign({}, {
+                'icon-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0,
+                    ['case', ["boolean", ["feature-state", "hidden"], true], 0,
+                    ['get', 'opacity', ['get','style', ['properties']]]]]
+            }, style.image ? style.image.paint || {} : {});
+
+            style = {
+                id: id,
+                type: 'symbol',
+                source: source,
+                slot: style.slot || 'top',
+                filter: settings.filter || ['==', "$type", "Point"],
+                layout: layout,
+                paint: paint
+            }
+
+            if (!style) continue;
+            layers.push(style)
+        }
+
+        return layers;
+    }
+
+    async function buildPolygon (settings={}, options={}) {
+        if (!settings.source) return [];
+
+        var layers = [];
+        var source = settings.source;
+
+        for (var i = 0; i < settings.types.length; i++) {
+            var type = settings.types[i];
+            var style = settings.style;
+            var id = settings.id + type;
+            var layout, paint;
 
             if (type.includes('border')) {
+                layout = Object.assign({}, {
+                    'visibility': options.visibility || 'visible',
+                }, style.border ? style.border.layout || {} : {});
+
+                paint = Object.assign({}, {
+                    'line-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                    'line-width': ['case', ["boolean", ['has', 'width', ['get','style', ['properties']]], true], ['get', 'width', ['get','style', ['properties']]], 2],
+                    'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.8]
+                }, style.border ? style.border.paint || {} : {});
+
                 style = {
                     id: id,
                     type: 'line',
-                    slot: options.slot || 'middle',
                     source: source,
-                    filter: ['==', '$type', 'Polygon'],
-                    layout: {
-                        'visibility': options.visibility || 'visible'
-                    },
-                    paint: {
-                        'line-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'line-width': ['case', ["boolean", ['has', 'width', ['get','style', ['properties']]], true], ['get', 'width', ['get','style', ['properties']]], 2],
-                        'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.8]
-                    }
+                    slot: style.slot || 'bottom',
+                    filter: style.border ? style.border.filter || ['==', "$type", "Polygon"] : ['==', '$type', 'Polygon'],
+                    layout: layout,
+                    paint: paint
                 }
             } else if (type.includes('fill')) {
+                layout = Object.assign({}, {
+                    'visibility': options.visibility || 'visible',
+                }, style.fill ? style.fill.layout || {} : {});
+
+                paint = Object.assign({}, {
+                    'fill-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
+                    'fill-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.5]
+                }, style.fill ? style.fill.paint || {} : {});
+
                 style = {
                     id: id,
                     type: 'fill',
                     source: source,
-                    filter: ['==', '$type', 'Polygon'],
-                    layout: {
-                        'visibility': options.visibility || 'visible'
-                    },
-                    paint: {
-                        'fill-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
-                        'fill-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.5]
-                    }
+                    slot: style.slot || 'bottom',
+                    filter: style.fill ? style.fill.filter || ['==', "$type", "Polygon"] : ['==', '$type', 'Polygon'],
+                    layout: layout,
+                    paint: paint
                 }
             }
 
-            style ? _layers.push(style) : false;
-        }, this)
+            if (!style) continue;
+            layers.push(style)
+        }
 
-        return _layers;
+        return layers;
     }
 
-    function buildPolyline (source, layer, types, options={}) {
-        if (!source) return [];
+    async function buildPolyline (settings={}, options={}) {
+        if (!settings.source) return [];
 
-        var _layers = [];
+        var layers = [];
+        var source = settings.source;
 
-        types.forEach(function (type) {
-            var style;
-            var id = layer.id + type;
+        for (var i = 0; i < settings.types.length; i++) {
+            var type = settings.types[i];
+            var style = settings.style;
+            var id = settings.id + type;
+            var layout, paint;
 
             if (type.includes('line')) {
+                layout = Object.assign({}, {
+                    'visibility': options.visibility || 'visible',
+                    'line-miter-limit': 2,
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                }, style.border ? style.border.layout || {} : {});
+
+                paint = Object.assign({}, {
+                    'line-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                    'line-width': ['case', ["boolean", ['has', 'width', ['get','style', ['properties']]], true], ['get', 'width', ['get','style', ['properties']]], 4],
+                    'line-offset': ['case', ["boolean", ["has", "offset"], true], ["get", "offset"], 0],
+                    'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
+                }, style.border ? style.border.paint || {} : {});
+
                 style = {
                     id: id,
                     type: 'line',
-                    slot: options.slot || 'middle',
                     source: source,
-                    filter: ['==', '$type', 'LineString'],
-                    layout: {
-                        'visibility': options.visibility || 'visible',
-                        'line-miter-limit': 2,
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    paint: {
-                        'line-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'line-width': ['case', ["boolean", ['has', 'width', ['get','style', ['properties']]], true], ['get', 'width', ['get','style', ['properties']]], 4],
-                        'line-offset': ['case', ["boolean", ["has", "offset"], true], ["get", "offset"], 0],
-                        'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
-                    }
+                    slot: style.slot || 'middle',
+                    filter: style.line ? style.line.filter || ['==', "$type", "LineString"] : ['==', '$type', 'LineString'],
+                    layout: layout,
+                    paint: paint
                 }
             }
 
-            style ? _layers.push(style) : false;
-        }, this)
+            if (!style) continue;
+            layers.push(style)
+        }
 
-        return _layers;
+        return layers;
     }
 
-    function buildPoint (source, layer, types, options={}) {
-        if (!source) return [];
+    async function buildPoint (settings={}, options={}) {
+        if (!settings.source) return [];
 
-        var _layers = [];
-        var style = map.getStyle();
-        var dontRender = style.imports && style.imports.length;
+        var layers = [];
+        var source = settings.source;
+        var dontRender = map.getStyle().imports && map.getStyle().imports.length;
 
-        types.forEach(function (type) {
-            var style;
-            var id = layer.id + type;
+        for (var i = 0; i < settings.types.length; i++) {
+            var type = settings.types[i];
+            var style = settings.style;
+            var id = settings.id + type;
+            var layout, paint;
 
             if (type.includes('circle')) {
+                if (options.noCircle) continue;
+
+                layout = Object.assign({}, {
+                    'visibility': options.visibility,
+                }, style.circle ? style.circle.layout || {} : {});
+
+                paint = Object.assign({}, {
+                    'circle-radius': 10,
+                    'circle-stroke-width': 2,
+                    'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
+                    'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                    'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]],
+                    'circle-stroke-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]]
+                }, style.circle ? style.circle.paint || {} : {});
+
                 style = {
                     id: id,
                     type: 'circle',
                     source: source,
-                    filter: ['==', '$type', 'Point'],
-                    layout: {
-                        'visibility': options.visibility
-                    },
-                    paint: {
-                        'circle-radius': 10,
-                        'circle-stroke-width': 2,
-                        'circle-color': ['get', 'secondaryColor', ['get','style', ['properties']]],
-                        'circle-stroke-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
-                        'circle-stroke-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
-                    }
+                    slot: style.slot || 'top',
+                    filter: style.circle ? style.circle.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
+                    layout: layout,
+                    paint: paint
                 }
 
-                if (type.includes('cluster') && !options.noCluster) {
+                if (type.includes('cluster')) {
+                    if (options.noCluster) continue;
                     style.filter = ['has', 'point_count'];
-                    style.paint['circle-color'] = options.secondaryColor || ctx.options.colors.secondaryColor;
-                    style.paint['circle-stroke-color'] = options.primaryColor || ctx.options.colors.primaryColor;
+                    style.paint['circle-color'] = options.secondaryColor || geoflo.options.colors.secondaryColor;
+                    style.paint['circle-stroke-color'] = options.primaryColor || geoflo.options.colors.primaryColor;
                 }
-            } else if (!dontRender && type.includes('icon')) {
+            } else if (type.includes('image')) {
+                if (options.noImage) continue;
+                if (!settings.images || !settings.images.length) continue;
+
+                for (var j = 0; j < settings.images.length; j++) {
+                    var image = settings.images[j];
+                    if (!image) continue;
+    
+                    var img = await loadImage(image);
+                    if (!img) continue;
+                    
+                    map.hasImage(image.id) ?
+                    map.updateImage(image.id, img, {pixelRatio: 2}) :
+                    map.addImage(image.id, img, {pixelRatio: 2});
+                }
+    
+                layout = Object.assign({}, {
+                    'visibility': options.visibility || 'visible',
+                    'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
+                    'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                    'icon-allow-overlap': true,
+                    'icon-anchor': 'bottom'
+                }, style.image ? style.image.layout || {} : {});
+    
+                paint = Object.assign({}, {
+                    'icon-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0,
+                        ['case', ["boolean", ["feature-state", "hidden"], true], 0,
+                        ['get', 'opacity', ['get','style', ['properties']]]]]
+                }, style.image ? style.image.paint || {} : {});
+    
                 style = {
                     id: id,
                     type: 'symbol',
                     source: source,
-                    filter: ['==', '$type', 'Point'],
-                    layout: {
-                        visibility: options.visibility,
-                        'icon-optional': true,
-                        'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
-                        'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
-                        'text-rotation-alignment': 'map',
-                        'text-size': 20,
-                        'text-line-height': 1,
-                        'text-padding': 0,
-                        'text-offset': [0, 0.2],
-                        'text-justify': 'auto',
-                        'text-anchor': 'center',
-                        'text-allow-overlap': true,
-                        'text-font': ['Font Awesome 6 Pro Solid'],
-                        'text-ignore-placement': true
-                    },
-                    paint: {
-                        'text-translate-anchor': 'viewport',
-                        'text-halo-color': ['get', 'primaryColor', ['get','style', ['properties']]],
-                        'text-halo-width': 0,
-                        'text-color': ctx.options.colors.secondaryText, //['get', 'primaryColor', ['get','style', ['properties']]],
-                        'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
-                    }
+                    slot: style.slot || 'top',
+                    filter: style.image ? style.image.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
+                    layout: layout,
+                    paint: paint
+                }
+            } else if (type.includes('icon')) {
+                if (dontRender) continue;
+
+                layout = Object.assign({}, {
+                    'visibility': options.visibility,
+                    'icon-optional': true,
+                    'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
+                    'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
+                    'text-rotation-alignment': 'viewport',
+                    'text-size': 14,
+                    'text-line-height': 1,
+                    'text-padding': 0,
+                    'text-offset': [0, 0.2],
+                    'text-justify': 'auto',
+                    'text-anchor': 'center',
+                    'text-allow-overlap': true,
+                    'text-font': ['Font Awesome 6 Pro Solid'],
+                    'text-ignore-placement': true
+                }, style.icon ? style.icon.layout || {} : {});
+
+                paint = Object.assign({}, {
+                    'text-translate-anchor': 'viewport',
+                    'text-halo-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                    'text-halo-width': 0,
+                    'text-color': ['get', 'primaryColor', ['get','style', ['properties']]],
+                    'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]]
+                }, style.icon ? style.icon.paint || {} : {});
+
+                style = {
+                    id: id,
+                    type: 'symbol',
+                    source: source,
+                    slot: style.slot || 'top',
+                    filter: style.icon ? style.icon.filter || ['==', "$type", "Point"] : style.circle ? style.circle.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
+                    layout: layout,
+                    paint: paint
                 }
 
-                if (type.includes('cluster') && !options.noCluster) {
+                if (type.includes('cluster')) {
+                    if (options.noCluster) continue;
                     style.filter = ['has', 'point_count'];
                     style.layout['text-field'] = options.primaryIcon || '';
-                    style.paint['text-halo-color'] = options.secondaryColor || ctx.options.colors.secondaryCold;
-                    style.paint['text-color'] = options.primaryColor || ctx.options.colors.secondaryText;
-                } else if (type.includes('count') && !options.noCluster) {
+                    style.paint['text-halo-color'] = options.secondaryColor || geoflo.options.colors.secondaryCold;
+                    style.paint['text-color'] = options.primaryColor || geoflo.options.colors.secondaryText;
+                } else if (type.includes('count')) {
+                    if (options.noCluster) continue;
                     style.filter = ['has', 'point_count'];
 
                     style.layout = {
@@ -1124,38 +1390,48 @@ const Layers = function (ctx) {
 
                     style.paint = {
                         'text-translate-anchor': 'viewport',
-                        'text-color': options.countIconColor || ctx.options.colors.primaryText,
-                        'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
+                        'text-color': options.countIconColor || geoflo.options.colors.primaryText,
+                        'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]
                     }
                 }
-            } else if (!dontRender && type.includes('text')) {
-                if (type.includes('count') && !options.noCluster) {
+            } else if (type.includes('text')) {
+                if (dontRender) continue;
+
+                if (type.includes('count')) {
+                    if (options.noCluster) continue;
+
+                    layout = Object.assign({}, {
+                        'text-field': ['get', 'point_count_abbreviated'],
+                        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                        'text-size': {
+                            'base': 14,
+                            'stops': [[10, 14], [14, 12]]
+                        },
+                        'text-offset': [0.55, -0.9],
+                    }, style.text ? style.text.layout || {} : {});
+    
+                    paint = Object.assign({}, {
+                        'text-color': options.countTextColor || geoflo.options.colors.secondaryText,
+                        'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get','style', ['properties']]]]
+                    }, style.text ? style.text.paint || {} : {});
+    
                     style = {
                         id: id,
                         type: 'symbol',
                         source: source,
+                        slot: style.slot || 'top',
                         filter: ['has', 'point_count'],
-                        layout: {
-                            'text-field': ['get', 'point_count_abbreviated'],
-                            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                            'text-size': {
-                                'base': 14,
-                                'stops': [[10, 14], [14, 12]]
-                            },
-                            'text-offset': [0.55, -0.9],
-                        },
-                        paint: {
-                            'text-color': options.countTextColor || ctx.options.colors.secondaryText,
-                            'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
-                        }
+                        layout: layout,
+                        paint: paint
                     }
                 }
             }
 
-            style ? _layers.push(style) : false;
-        }, this)
+            if (!style) continue;
+            layers.push(style)
+        }
 
-        return _layers;
+        return layers;
     }
 
     function buildEvents (options={}) {
@@ -1181,6 +1457,82 @@ const Layers = function (ctx) {
         if (layer !== -1) this._layers.splice(layer, 1);
         if (source !== -1) this._sources.splice(source, 1);
     }
+
+    async function loadImage (options={}) {
+        if (!options.url || !options.id) return false;
+        return new Promise(async function (resolve, reject) {
+            const url = options.url + '?' + new Date().getTime();
+            map.loadImage(url, function(error, image) { return error ? reject(error) : resolve(image); });
+        });
+    }
+
+    function loadImageAsDataURL(imageUrl, callback) {
+        /* loadImageAsDataURL(options.url, (data) => {
+            options.data = data;
+            const svgMarker = createSVGMarker(options);
+            svgToImage(svgMarker, (img) => resolve(img) );
+        }); */
+        
+        const img = new Image();
+        img.setAttribute('crossOrigin', 'anonymous');
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL("image/png");
+            callback(dataURL);
+        };
+        img.src = imageUrl + '?' + new Date().getTime();
+    }
+
+    function createSVGMarker(options={}) {
+        const svgNS = "http://www.w3.org/2000/svg";
+
+        const data = options.data;
+        const width = options.width;
+        const height = options.height;
+        const borderWidth = options["stroke-width"] || 5;
+
+        const svg = document.createElementNS(svgNS, "svg");
+        svg.setAttribute("width", width);
+        svg.setAttribute("height", height);
+        svg.setAttribute("viewBox", `0 0 ${width + 2 * borderWidth} ${height + 2 * borderWidth}`);
+    
+        const marker = document.createElementNS(svgNS, "ellipse");
+        marker.setAttribute("cx", (width + 2 * borderWidth) / 2);
+        marker.setAttribute("cy", (height + 2 * borderWidth) / 2);
+        marker.setAttribute("rx", width / 2);
+        marker.setAttribute("ry", height / 2);
+        marker.setAttribute("fill", 'transparent');
+        marker.setAttribute("stroke", options.stroke || geoflo.getColors().secondaryBackground);
+        marker.setAttribute("stroke-width", borderWidth);
+    
+        const image = document.createElementNS(svgNS, "image");
+        image.setAttributeNS("http://www.w3.org/1999/xlink", "href", data);
+        image.setAttribute("x", borderWidth);
+        image.setAttribute("y", borderWidth);
+        image.setAttribute("width", width);
+        image.setAttribute("height", height);
+        image.setAttribute("preserveAspectRatio", "xMidYMid slice");
+        image.setAttribute("clip-path", "ellipse()");
+    
+        svg.appendChild(marker);
+        svg.appendChild(image);
+    
+        return svg;
+    }
+    
+    function svgToImage(svgElement, callback) {
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(svgBlob);
+        const img = new Image();
+
+        img.onload = () => { URL.revokeObjectURL(url), callback(img); };
+        img.src = url;
+    }
 };
 
-export { Layers as default }
+export default Layers;

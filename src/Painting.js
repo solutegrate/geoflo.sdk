@@ -1,12 +1,6 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Painting
- * @description A class that handles painting functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
- * @param {Object} ctx - The GeoFlo context object
- * @param {Object} mode - The currentMode
- */
-const Painting = function (ctx, mode) {
+const Painting = function (mode) {
+    const geoflo = this.geoflo;
+
     this.type = mode.type;
     this.feature = false;
     this.currentCoords = [];
@@ -21,8 +15,8 @@ const Painting = function (ctx, mode) {
     this.activate = function () {
         this.deactivate();
         this.enabled = true;
-        ctx.options['painting'].enable = true;
-        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        geoflo.options['painting'].enable = true;
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
     }
 
 	/**
@@ -34,8 +28,8 @@ const Painting = function (ctx, mode) {
 	 */
     this.deactivate = function () {
         this.enabled = false;
-        ctx.options['painting'].enable = false;
-        ctx.map.dragPan.enable();
+        geoflo.options['painting'].enable = false;
+        geoflo.map.dragPan.enable();
         delete this.feature;
     }
 
@@ -60,16 +54,16 @@ const Painting = function (ctx, mode) {
 	 */
     this.setFeature = function (coords) {
         if (!this.type || !coords) return false;
-        if (!ctx.mouseIsDown) return ctx.hotFeature;
+        if (!geoflo.mouseIsDown) return geoflo.hotFeature;
         
         var type = this.type;
         var feature = setFeature(type, coords);
 
         if (!this.feature) {
             this.currentCoords = [];
-            ctx.startPoint = coords;
-            ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([feature]));
-            ctx.fire('painting.start', { type: type, coords: coords, feature: feature });
+            geoflo.startPoint = coords;
+            geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([feature]));
+            geoflo.fire('painting.start', { type: type, coords: coords, feature: feature });
         }
 
         this.currentCoords.push(coords);
@@ -86,7 +80,7 @@ const Painting = function (ctx, mode) {
 	 * @returns {Object} The updated feature object.
 	 */
     this.updateFeature = function (coords) {
-        if (!this.enabled) return ctx.hotFeature;
+        if (!this.enabled) return geoflo.hotFeature;
         if (!this.feature) return this.setFeature(coords);
 
         var feature = this.feature;
@@ -95,10 +89,10 @@ const Painting = function (ctx, mode) {
         this.currentCoords.push(coords);
 
         if (type === 'Rectangle') {
-            updateCoordinate(feature, "0.1", coords[0], ctx.mouseIsDown[1]);
+            updateCoordinate(feature, "0.1", coords[0], geoflo.mouseIsDown[1]);
             updateCoordinate(feature, "0.2", coords[0], coords[1]);
-            updateCoordinate(feature, "0.3", ctx.mouseIsDown[0], coords[1]);
-            updateCoordinate(feature, "0.4", ctx.mouseIsDown[0], ctx.mouseIsDown[1] );
+            updateCoordinate(feature, "0.3", geoflo.mouseIsDown[0], coords[1]);
+            updateCoordinate(feature, "0.4", geoflo.mouseIsDown[0], geoflo.mouseIsDown[1] );
         } else if (type === 'Circle') {
             var center = feature.properties.center;
             if (!center || !center.length) return feature;
@@ -107,13 +101,13 @@ const Painting = function (ctx, mode) {
             const circleFeature = turf.circle(center, distanceInKm);
 
             feature.geometry.coordinates = circleFeature.geometry.coordinates;
-            ctx.Utilities.setProperty(feature, 'radiusInKm', distanceInKm);
+            geoflo.Utilities.setProperty(feature, 'radiusInKm', distanceInKm);
         } else {
             feature.geometry.coordinates.push(coords);
         }
 
-        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([this.feature]));
-        ctx.fire('painting.update', { type: type, coords: coords, feature: feature });
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([this.feature]));
+        geoflo.fire('painting.update', { type: type, coords: coords, feature: feature });
         return feature;
     }
 
@@ -131,12 +125,12 @@ const Painting = function (ctx, mode) {
 
         var feature;
 
-        if (ctx.Exploring.enabled) this.feature = await ctx.Exploring.getMatch(this.currentCoords, { set: true, start: ctx.startPoint });
+        if (geoflo.Exploring.enabled) this.feature = await geoflo.Exploring.getMatch(this.currentCoords, { set: true, start: geoflo.startPoint });
 
         feature = mode.updateHotSource(this.feature);
-        feature = ctx.Utilities.cloneDeep(feature);
+        feature = geoflo.Utilities.cloneDeep(feature);
 
-        ctx.lastClick = { coords: feature.geometry.coordinates[feature.geometry.coordinates.length - 1] };
+        geoflo.lastClick = { coords: feature.geometry.coordinates[feature.geometry.coordinates.length - 1] };
         this.currentCoords = [];
         this.feature = feature;
         return feature;
@@ -144,7 +138,7 @@ const Painting = function (ctx, mode) {
 
 
 
-    if (ctx.options['painting'].enable) this.activate();
+    if (geoflo.options['painting'].enable) this.activate();
 
 
 
@@ -153,26 +147,26 @@ const Painting = function (ctx, mode) {
 
         if (type === 'Rectangle') {
             feature = turf.polygon([[
-                ctx.mouseIsDown,
+                geoflo.mouseIsDown,
                 coords,
                 coords,
-                ctx.mouseIsDown
+                geoflo.mouseIsDown
             ]]);
         } else if (type === 'Circle') {
             feature = turf.polygon([[
-                ctx.mouseIsDown,
+                geoflo.mouseIsDown,
                 coords,
                 coords,
-                ctx.mouseIsDown
+                geoflo.mouseIsDown
             ]]);
 
-            ctx.Utilities.setProperty(feature, 'center', ctx.mouseIsDown);
+            geoflo.Utilities.setProperty(feature, 'center', geoflo.mouseIsDown);
         } else {
-            feature = turf.lineString([ctx.mouseIsDown, coords]);
+            feature = turf.lineString([geoflo.mouseIsDown, coords]);
         }
 
-        ctx.Utilities.setProperty(feature, 'type', type);
-        ctx.Utilities.setProperty(feature, 'painting', 1);
+        geoflo.Utilities.setProperty(feature, 'type', type);
+        geoflo.Utilities.setProperty(feature, 'painting', 1);
         return feature;
     }
 
@@ -183,6 +177,6 @@ const Painting = function (ctx, mode) {
         void 0 === f.geometry.coordinates[r] && (f.geometry.coordinates[r] = []),
         f.geometry.coordinates[r][i] = [e, n]
     }
-}
+};
 
-export { Painting as default }
+export default Painting;

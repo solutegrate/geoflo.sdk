@@ -1,15 +1,9 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Routing
- * @description A class that handles routing functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
- * @param {Object} ctx - The GeoFlo context object
- * @param {Object} mode - The currentMode
- */
-const Routing = function (ctx, mode) {
+const Routing = function (mode) {
+    const geoflo = this.geoflo;
+
     this.type = mode.type;
     this.graphData = {};
-    this.features = ctx.Features.getColdFeatures();
+    this.features = geoflo.Features.getColdFeatures();
 
 	/**
 	 * @function
@@ -21,7 +15,7 @@ const Routing = function (ctx, mode) {
 	 */
     this.activate = function () {
         this.enabled = true;
-        ctx.options['routing'].enable = true;
+        geoflo.options['routing'].enable = true;
     };
 
 	/**
@@ -33,8 +27,8 @@ const Routing = function (ctx, mode) {
 	 */
     this.deactivate = function () {
         this.enabled = false;
-        ctx.options['routing'].enable = false;
-        ctx.map.getSource(ctx.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+        geoflo.options['routing'].enable = false;
+        geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
     };
 
 	/**
@@ -47,12 +41,12 @@ const Routing = function (ctx, mode) {
 	 * @returns {Array|boolean} The calculated route path as an array of points, or false if the route could not be calculated.
 	 */
     this.getRoute = function (fromPoint, toPoint) {
-        if (!this.enabled || ctx.mapMoving) return false;
+        if (!this.enabled || geoflo.mapMoving) return false;
         var features = turf.featureCollection(this.getFeatures());
-        var pathfinder = new PathFinder(features, ctx.options.routing);
+        var pathfinder = new PathFinder(features, geoflo.options.routing);
         var path = pathfinder.findPath ? pathfinder.findPath(fromPoint, toPoint) : false;
         path = validatePath(fromPoint, toPoint, path);
-        ctx.fire('routing.add', { from: fromPoint, to: toPoint, path: path });
+        geoflo.fire('routing.add', { from: fromPoint, to: toPoint, path: path });
         return path;
     };
 
@@ -65,7 +59,7 @@ const Routing = function (ctx, mode) {
 	 * @returns {Promise<Object>} The matched feature with routing property set to true.
 	 */
     this.getMatch = async function (coords) {
-        var feature = await ctx.Exploring.getMatch(coords, { set: true, start: ctx.startPoint });
+        var feature = await geoflo.Exploring.getMatch(coords, { set: true, start: geoflo.startPoint });
         feature.properties.routing = true;
         return feature;
     }
@@ -78,8 +72,8 @@ const Routing = function (ctx, mode) {
 	 * @returns {Object|boolean} Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
 	 */
     this.getClosest = function () {
-        if (!ctx.closestPoint || !ctx.lastClick) return false;
-        var route = this.getRoute(ctx.lastClick, ctx.closestPoint);
+        if (!geoflo.closestPoint || !geoflo.lastClick) return false;
+        var route = this.getRoute(geoflo.lastClick, geoflo.closestPoint);
         if (!route || !route.path) return false;
         var feature = turf.lineString(route.path);
         feature.properties.routing = true;
@@ -94,13 +88,13 @@ const Routing = function (ctx, mode) {
 	 * @returns {Array} An array of features of type 'LineString'.
 	 */
     this.getFeatures = function () {
-        var mesh = ctx.meshIndex.getFeatures();
+        var mesh = geoflo.meshIndex.getFeatures();
         var features = [mesh, this.features].flat();
         return features.filter(function(feature) { return feature.geometry.type === 'LineString' });
     };
 
     
-    if (ctx.options['routing'].enable) this.activate();
+    if (geoflo.options['routing'].enable) this.activate();
 
 
     function PathFinder(features, options) {
@@ -693,4 +687,4 @@ const Routing = function (ctx, mode) {
     };
 };
 
-export { Routing as default }
+export default Routing;

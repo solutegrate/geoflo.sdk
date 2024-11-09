@@ -1,12 +1,6 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Pinning
- * @description A class that handles pinning functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
- * @param {Object} ctx - The GeoFlo context object
- * @param {Object} mode - The currentMode
- */
-const Pinning = function (ctx, mode) {
+const Pinning = function (mode) {
+    const geoflo = this.geoflo;
+
     this.type = mode.type;
     this.updatedFeatures = [];
 
@@ -21,7 +15,7 @@ const Pinning = function (ctx, mode) {
     this.activate = function () {
         this.updatedFeatures = [];
         this.enabled = true;
-        ctx.options['pinning'].enable = true;
+        geoflo.options['pinning'].enable = true;
     }
 
 	/**
@@ -32,11 +26,11 @@ const Pinning = function (ctx, mode) {
 	 */
     this.deactivate = function () {
         this.enabled = false;
-        ctx.options['pinning'].enable = false;
+        geoflo.options['pinning'].enable = false;
         this.resetFeatures();
         delete this.buffer;
-        delete ctx.pinableFeatures;
-        delete ctx.pinningFeatures;
+        delete geoflo.pinableFeatures;
+        delete geoflo.pinningFeatures;
         this.updatedFeatures = [];
     }
 
@@ -48,7 +42,7 @@ const Pinning = function (ctx, mode) {
 	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
 	 */
     this.getFeatures = function () {
-        var features = ctx.pinnedFeatures && ctx.pinnedFeatures.length ? ctx.pinnedFeatures.map(function (feature) { return feature.feature }) : [];
+        var features = geoflo.pinnedFeatures && geoflo.pinnedFeatures.length ? geoflo.pinnedFeatures.map(function (feature) { return feature.feature }) : [];
         return features;
     }
 
@@ -64,9 +58,9 @@ const Pinning = function (ctx, mode) {
         delete this.buffer;
 
         if (!this.enabled) return false;
-        if (!coords || !ctx.options.pinning.buffer) return false;
+        if (!coords || !geoflo.options.pinning.buffer) return false;
 
-        var buffer = turf.buffer(turf.point(coords), ctx.options.pinning.buffer);
+        var buffer = turf.buffer(turf.point(coords), geoflo.options.pinning.buffer);
         var radius = turf.polygon(buffer.geometry.coordinates);
 
         this.buffer = {
@@ -87,11 +81,11 @@ const Pinning = function (ctx, mode) {
 	 * @returns {Array} - An array of pinable features.
 	 */
     this.setFeatures = function (coords) {
-        ctx.pinableFeatures = [];
+        geoflo.pinableFeatures = [];
         if (!this.enabled || !coords) return false;
-        ctx.pinableFeatures = this.getNearByFeatures(coords);
-        ctx.fire('pinning.add', { features: ctx.pinableFeatures, buffer: this.buffer });
-        return ctx.pinableFeatures;
+        geoflo.pinableFeatures = this.getNearByFeatures(coords);
+        geoflo.fire('pinning.add', { features: geoflo.pinableFeatures, buffer: this.buffer });
+        return geoflo.pinableFeatures;
     }
 
 	/**
@@ -103,7 +97,7 @@ const Pinning = function (ctx, mode) {
 	 */
     this.resetFeatures = function () {
         if (!this.updatedFeatures.length) return false;
-        ctx.addFeatures(this.updatedFeatures, true);
+        geoflo.addFeatures(this.updatedFeatures, true);
     }
 
 	/**
@@ -115,12 +109,12 @@ const Pinning = function (ctx, mode) {
 	 */
     this.updateFeatures = function () {
         if (!this.enabled) return false;
-        if (!ctx.pinableFeatures || !ctx.pinableFeatures.length) return delete ctx.pinningFeatures, false;
-        updateFeatures.call(this, ctx.pinableFeatures);
-        ctx.Features.updateFeatures(ctx.pinableFeatures, ctx.snappedVertex);
-        ctx.pinnedFeatures = ctx.Utilities.cloneDeep(ctx.pinableFeatures);
-        ctx.fire('pinning.update', { feature: ctx.hotFeature, vertex: turf.point(ctx.snappedVertex), features: ctx.pinnedFeatures });
-        return ctx.pinningFeatures;
+        if (!geoflo.pinableFeatures || !geoflo.pinableFeatures.length) return delete geoflo.pinningFeatures, false;
+        updateFeatures.call(this, geoflo.pinableFeatures);
+        geoflo.Features.updateFeatures(geoflo.pinableFeatures, { type: 'pinning', coords: geoflo.snappedVertex, addUnits: true });
+        geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(geoflo.pinableFeatures);
+        geoflo.fire('pinning.update', { feature: geoflo.hotFeature, vertex: turf.point(geoflo.snappedVertex), features: geoflo.pinnedFeatures });
+        return geoflo.pinningFeatures;
     }
 
 	/**
@@ -134,11 +128,11 @@ const Pinning = function (ctx, mode) {
     this.getNearByFeatures = function (coords) {
         if (!this.enabled || !coords) return false;
 
-        var hotFeature = ctx.hotFeature;
-        var calculatedRadius = ctx.options.snapping.distance * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()));
+        var hotFeature = geoflo.hotFeature;
+        var calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
         var radiusInKm = calculatedRadius / 100000;
         var buffer = this.setBuffer(coords);
-        var features = ctx.getRenderedDrawnFeatures({lng: coords[0], lat: coords[1]}, radiusInKm);
+        var features = geoflo.getRenderedDrawnFeatures({lng: coords[0], lat: coords[1]}, radiusInKm);
         var nearby = [];
 
         features.forEach(function (feature) {
@@ -146,7 +140,7 @@ const Pinning = function (ctx, mode) {
                 var isNearby = false;
     
                 if (buffer.radius && turf.booleanWithin(turf.point(coord), buffer.radius)) isNearby = true;
-                if (!isNearby && buffer.coords && ctx.Utilities.isPointEqual(coord, buffer.coords)) isNearby = true;
+                if (!isNearby && buffer.coords && geoflo.Utilities.isPointEqual(coord, buffer.coords)) isNearby = true;
                 if (!isNearby) return;
                 if (hotFeature && hotFeature.id === feature.id) return;
                     
@@ -162,7 +156,7 @@ const Pinning = function (ctx, mode) {
         return nearby;
     }
     
-    if (ctx.options['pinning'].enable) this.activate();
+    if (geoflo.options['pinning'].enable) this.activate();
 
 
     function updateFeatures(features) {
@@ -171,9 +165,9 @@ const Pinning = function (ctx, mode) {
         features.forEach(function (feature) {
             var pinned = this.updatedFeatures.find(function (f) { return f.id === feature.id });
             if (pinned) return;
-            this.updatedFeatures.push(ctx.Utilities.cloneDeep(feature.feature));
+            this.updatedFeatures.push(geoflo.Utilities.cloneDeep(feature.feature));
         }, this);
     }
-}
+};
 
-export { Pinning as default }
+export default Pinning;

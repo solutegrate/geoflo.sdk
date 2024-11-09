@@ -1,15 +1,9 @@
-/**
- * @namespace
- * @memberof module:geoflo
- * @name Features
- * @description A class that handles features functionality in a mapping context.
- * @param {Object} ctx - The GeoFlo context object
- */
-const Features = function (ctx) {
-    if (!ctx.map) { throw new Error('No map object provided!') }
+const Features = function () {
+    const geoflo = this.geoflo;
+    if (!geoflo.map) { throw new Error('No map object provided!') }
 
     const coldFeatures = [];
-    this.offsetLines = //;
+    this.offsetLines = false;
 
     
 	/**
@@ -83,9 +77,9 @@ const Features = function (ctx) {
         var type = feature.properties.type;
         if (!type) return false;
 
-        if (!ctx.options.units || !ctx.options.units[type]) return false;
+        if (!geoflo.options.units || !geoflo.options.units[type]) return false;
 
-        return ctx.options.units[type];
+        return geoflo.options.units[type];
     };
 
 	/**
@@ -129,7 +123,7 @@ const Features = function (ctx) {
         
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
-            if (ctx.hotFeature && ctx.hotFeature.id === id) return;
+            if (geoflo.hotFeature && geoflo.hotFeature.id === id) return;
             this.setFeatureState(id, state);
         }, this)
 
@@ -152,7 +146,7 @@ const Features = function (ctx) {
         
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
-            ctx.map.setFeatureState({ source: feature.source, id: id }, state);
+            geoflo.map.setFeatureState({ source: feature.source, id: id }, state);
         })
 
         return features;
@@ -166,27 +160,37 @@ const Features = function (ctx) {
 	 * @param {Object} features - The features to set text on.
 	 * @returns {boolean} Returns false if no features are provided or if the features array is empty.
 	 */
-    this.setText = function (features) {
-        var source = ctx.statics.constants.sources.HOTTEXT;
+    this.setText = function (features=[]) {
+        var source = geoflo.statics.constants.sources.HOTTEXT;
 
         this.textFeatures = [];
 
-        ctx.map.getSource(source).setData(turf.featureCollection(this.textFeatures));
-
-        if (!features) return false;
         if (features.features) features = features.features;
         if (!Array.isArray(features)) features = [features];
-        if (!features.length) return false;
 
         features.forEach(function (feature) {
             var type = feature.properties.type;
             if (!type) return;
 
             this.currentType = type;
-            if (type === 'Polyline' && ctx.Utilities.isValidLineString(feature)) turf.segmentEach(feature, setLineText.bind(this));
+
+            if (type === 'Polyline' && geoflo.Utilities.isValidLineString(feature)) {
+                turf.segmentEach(feature, setLineText.bind(this));
+            } else if (geoflo.showFeatureText) {
+                source = geoflo.statics.constants.sources.SELECT;
+                var feat = geoflo.Utilities.cloneDeep(feature);
+                
+                feat.properties = {
+                    type: 'Text',
+                    text: feature.properties.text,
+                    style: feature.properties.style
+                }
+                
+                this.textFeatures.push(feat);
+            }
         }, this)
         
-        ctx.map.getSource(source).setData(turf.featureCollection(this.textFeatures));
+        geoflo.map.getSource(source).setData(turf.featureCollection(this.textFeatures));
 
         delete this.textFeatures;
         delete this.currentType;
@@ -203,14 +207,14 @@ const Features = function (ctx) {
 	 * @param {Object} [properties={}] - Additional properties to be assigned to the feature.
 	 * @returns {Object} The feature object that was added to the map.
 	 */
-    this.addFeature = function (feature, properties={}) {
+    this.addFeature = function (feature, source, properties={}) {
         if (!feature || !feature.properties) return false;
         
         feature = turf.cleanCoords(feature);
         feature = turf.truncate(feature, { precision: 6, coordinates: 3, mutate: true });
 
-        feature.properties = ctx.Utilities.assignDeep(properties, feature.properties);
-        feature.source = feature.source || feature.properties.source || ctx.statics.constants.sources.COLD;
+        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties);
+        feature.source = source || feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
         
         delete feature.properties.source;
         delete feature.properties.painting;
@@ -242,7 +246,7 @@ const Features = function (ctx) {
 
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
-            feature.source = feature.source || feature.properties.source || ctx.statics.constants.sources.COLD;
+            feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
             feature.properties.type = this.getType(feature);
 
@@ -253,7 +257,7 @@ const Features = function (ctx) {
                 coldFeatures[index] = feature;
                 update = !unselect;
             } else {
-                update = true;
+                update = !this.updatingFeatures;
                 coldFeatures.push(feature);
             }
 
@@ -294,26 +298,55 @@ const Features = function (ctx) {
 	 * @param {Array} features - An array of features to update.
 	 * @param {Array} coords - The new coordinates to set for the features.
 	 */
-    this.updateFeatures = function(features, coords) {
+    this.updateFeatures = function(features, options={}) {
+        features = features || geoflo.getFeatures();
+
         var sources = [];
+
+        this.updatingFeatures = true;
 
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
             if (!id) return false;
 
             var originalFeature = this.getFeatureById(id);
-            if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
-            if (!sources.includes(originalFeature.source)) sources.push(originalFeature.source);
+            
+            if (!originalFeature || originalFeature === undefined) {
+                sources.push(feature.source);
+                return this.addFeature(feature, feature.source);
+            }
 
-            originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords || feature.geometry.coordinates :
-            originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
-            originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
-            false;
+            var selected = geoflo.getSelectedFeatures().find((feature) => { return feature.id === id || feature.properties.id === id });
 
-            this.addUnits(originalFeature);
+            if (selected) {
+                selected.geometry.coordinates = feature.geometry.coordinates;
+                selected.properties = feature.properties;
+                selected.properties._selected = true;
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(geoflo.getSelectedFeatures()));
+                return this.setText([selected]);
+            } else if (!sources.includes(originalFeature.source)) {
+                sources.push(originalFeature.source);
+            }
+            
+            if (options.type === 'pinning') {
+                if (!options.coords) return false;
+
+                originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords :
+                originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
+                originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
+                false;
+            } else {                
+                originalFeature.geometry.coordinates = feature.geometry.coordinates;
+                originalFeature.properties = feature.properties;
+            }
+
+            options.addUnits ? this.addUnits(originalFeature) : false;
         }, this);
 
-        this.updateSource(sources);
+        this.updatingFeatures = false;
+
+        if (!sources.length) return false;
+        return this.updateSource(sources);
     };
 
     
@@ -425,25 +458,25 @@ const Features = function (ctx) {
 
     function getFeatureById(id) {
         var feature = coldFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
-        feature = feature || ctx.getSelectedFeatures().find((feature) => { return feature.id === id || feature.properties.id === id });
+        feature = feature || geoflo.getSelectedFeatures().find((feature) => { return feature.id === id || feature.properties.id === id });
         return feature;
     };
 
     function getFeaturesByParent (id) {
         var feature = typeof id === 'object' && id.id ? id : getFeatureById(id);
-        if (!feature || !feature.source) return [];
-        var field = ctx.options.offsetOverlappingLines ? 'parent' : 'id';
-        var features = ctx.map.getSource(feature.source)._data.features.filter(function(f) { return f[field] === id || f.properties[field] === id });
+        if (!feature || !feature.source || !geoflo.map.getSource(feature.source) || !geoflo.map.getSource(feature.source)._data) return [];
+        var field = geoflo.options.offsetOverlappingLines ? 'parent' : 'id';
+        var features = geoflo.map.getSource(feature.source)._data.features.filter(function(f) { return f[field] === id || f.properties[field] === id });
         return features;
     };
 
     function createTextFeatures (feature) {
-        var isLine = ctx.Utilities.isValidLineString(feature);
+        var isLine = geoflo.Utilities.isValidLineString(feature);
         var segments = [];
 
         if (isLine) {
             turf.segmentEach(feature, function (currentSegment) {
-                var segment = ctx.Utilities.cloneDeep(currentSegment);
+                var segment = geoflo.Utilities.cloneDeep(currentSegment);
                 var footage = Math.round(turf.length(segment, { units: 'miles' }) * 5280);
                 var mileage = Number(turf.length(segment, { units: 'miles' }).toFixed(3));
                 footage = Number(footage.toFixed(2));
@@ -462,13 +495,15 @@ const Features = function (ctx) {
     function updateSource (sources=[]) {
         var sourceFeatures = {};
         var unsourceFeatures = [];
-        var textSource = ctx.map.getSource(ctx.statics.constants.sources.COLDTEXT);
-        var coldSource = ctx.map.getSource(ctx.statics.constants.sources.COLD);
+        var textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
+        var coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
 
-        ctx.updatingSource = true;
+        geoflo.updatingSource = true;
 
         textSource ? textSource.setData(turf.featureCollection([])) : false;
         coldSource ? coldSource.setData(turf.featureCollection([])) : false;
+
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
 
         coldFeatures.forEach((feature) => {
             delete feature.properties.new;
@@ -481,25 +516,33 @@ const Features = function (ctx) {
             sourceFeatures[source].push(feature);
         })
 
+        if (!coldFeatures.length) {
+            geoflo.Layers.getCustomLayers().forEach((layer) => {
+                if (!layer.details || !layer.details.source) return;
+                var source = layer.details.source;
+                if (!geoflo.map.getSource(source)) return false;
+                geoflo.map.getSource(source).setData(turf.featureCollection([]));
+            })
+        }
 
         Object.entries(sourceFeatures).forEach((entry) => {
             var source = entry[0];
             var features = entry[1];
-            if (!ctx.map.getSource(source)) return unsourceFeatures.push(features);
+            if (!geoflo.map.getSource(source)) return unsourceFeatures.push(features);
             setLineOffset(features, source);
         })
 
-        setLineOffset(unsourceFeatures.flat(), ctx.statics.constants.sources.COLD);
-        setTimeout(() => { this.setFeaturesState(coldFeatures, { hidden: false }); }, 100);
-        ctx.fire('features.update', { features: coldFeatures });
+        setLineOffset(unsourceFeatures.flat(), geoflo.statics.constants.sources.COLD);
+        setTimeout(() => {this.setFeaturesState(coldFeatures, { hidden: false }); }, 100);
+        geoflo.fire('features.update', { features: coldFeatures });
         sourceFeatures = null;
         unsourceFeatures = null;
-        ctx.updatingSource = false;
+        geoflo.updatingSource = false;
         return coldFeatures;
     };
 
     function setLineText (segment) {
-        segment = ctx.Utilities.cloneDeep(segment);
+        segment = geoflo.Utilities.cloneDeep(segment);
         segment.properties.type = this.currentType;
         
         var text = turf.point(segment.geometry.coordinates[1]);
@@ -519,10 +562,10 @@ const Features = function (ctx) {
     }
 
     function setLineOffset (features, source) {
-        if (!features || !features.length || !source || !ctx.map.getSource(source)) return false;
-        if (!ctx.options.offsetOverlappingLines) return ctx.map.getSource(source).setData(turf.featureCollection(features));
+        if (!features || !features.length || !source || !geoflo.map.getSource(source)) return false;
+        if (!geoflo.options.offsetOverlappingLines) return geoflo.map.getSource(source).setData(turf.featureCollection(features));
 
-        var mesh = new ctx.Mesh(features, true);
+        var mesh = new geoflo.Mesh(features, true);
         var offset = mesh.getFeatures();
 
         offset.forEach(function (feature) {
@@ -533,15 +576,15 @@ const Features = function (ctx) {
             setOverlapOffset(offset, feature)
         });
 
-        ctx.map.getSource(source).setData(turf.featureCollection(offset));
-        ctx.fire('features.offset', { features: features, offset: offset, source: source });
+        geoflo.map.getSource(source).setData(turf.featureCollection(offset));
+        geoflo.fire('features.offset', { features: features, offset: offset, source: source });
 
         mesh = null;
         offset = null;
     };
 
     function setOverlapOffset (features, feature) {
-        if (!ctx.options.offsetOverlappingLines) return false;
+        if (!geoflo.options.offsetOverlappingLines) return false;
         if (!isPolyline(feature)) return false;
         if (feature.properties.offset) return false;
 
@@ -566,7 +609,7 @@ const Features = function (ctx) {
     };
 
     function setWithinOffset (features) {
-        if (!ctx.options.offsetOverlappingLines) return false;
+        if (!geoflo.options.offsetOverlappingLines) return false;
 
         const adder = 4;
         const miles = 0.00189394; // 10 Feet
@@ -610,7 +653,7 @@ const Features = function (ctx) {
     function isPoint (feature) {
         if (!feature) return false;
         if (turf.getType(feature) === 'Point' && (!feature.properties.type || feature.properties.type === 'Circle')) return true;
-        return turf.getType(feature) === 'Point' && (feature.properties.type !== 'Text' && feature.properties.type !== 'Icon');
+        return turf.getType(feature) === 'Point' && (feature.properties.type !== 'Text' && feature.properties.type !== 'Icon' && feature.properties.type !== 'Image');
     };
 
     function isText (feature) {
@@ -623,6 +666,11 @@ const Features = function (ctx) {
         return turf.getType(feature) === 'Point' && feature.properties.type === 'Icon';
     };
 
+    function isImage (feature) {
+        if (!feature) return false;
+        return turf.getType(feature) === 'Point' && feature.properties.type === 'Image';
+    };
+
     function getType (feature) {
         if (!feature) return null;
         
@@ -631,9 +679,10 @@ const Features = function (ctx) {
         isPolyline(feature) ? 'Polyline' :
         isText(feature) ? 'Text' :
         isIcon(feature) ? 'Icon' :
+        isImage(feature) ? 'Image' :
         isPoint(feature) ? 'Circle' :
         null;
     };
 };
 
-export { Features as default }
+export default Features;

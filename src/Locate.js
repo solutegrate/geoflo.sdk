@@ -1,11 +1,6 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Locate
- * @description The Locate module provides a user interface for locating the user's current position on the map.
- * @param {Object} ctx - The GeoFlo context object
- */
-const Locate = function (ctx) {    
+const Locate = function () {
+    const geoflo = this.geoflo;
+
 	/**
 	 * @function
      * @memberof module:geoflo.Locate
@@ -19,7 +14,7 @@ const Locate = function (ctx) {
 	 * @returns {Object} The current instance of the map with the geolocation control added.
 	 */
     this.init = function (options={}) {
-        this.options = ctx.Utilities.extend({}, options);
+        this.options = geoflo.Utilities.extend({}, options);
 
         this.control = new mapboxgl.GeolocateControl({
             positionOptions: { enableHighAccuracy: true },
@@ -29,8 +24,17 @@ const Locate = function (ctx) {
         });
 
         this.control.on('geolocate', this.onControlEvent.bind(this))
-        ctx.map.addControl(this.control);
+        geoflo.map.addControl(this.control, 'top-right');
+        //this.ready();
         return this;
+    }
+
+    this.hide = function () {
+        this.control._container.style.display = 'none';
+    }
+
+    this.show = function () {
+        this.control._container.style.display = 'block';
     }
 
 	/**
@@ -61,8 +65,10 @@ const Locate = function (ctx) {
 	 * @returns {void}
 	 */
     this.build = function () {
+        this.button = this.control._geolocateButton;
         this.marker = this.control._userLocationDotMarker;
-        this.getButton().style.display = 'none';
+        this.button.addEventListener('click', this.onControlEvent.bind(this));
+        //this.getButton().style.display = 'none';
     }
 
 	/**
@@ -79,9 +85,9 @@ const Locate = function (ctx) {
         const heading = this.heading();
         const bearing = this.bearing();
         const following = this.following;
-        if (!heading || !following || ctx.mapMoving) return;
-        ctx.map.setBearing(heading - 1);
-        ctx.map.setCenter(this.marker._lngLat);
+        if (!heading || !following || geoflo.mapMoving) return;
+        geoflo.map.setBearing(heading - 1);
+        geoflo.map.setCenter(this.marker._lngLat);
     }
 
 	/**
@@ -103,7 +109,7 @@ const Locate = function (ctx) {
 	 * @returns {number} The bearing of the map.
 	 */
     this.bearing = function () {
-        return ctx.map.getBearing();
+        return geoflo.map.getBearing();
     }
 
 	/**
@@ -118,6 +124,7 @@ const Locate = function (ctx) {
         this.unlocated = false;
         this.control._follow = this.following = false;
         addClasses(this.button, ['mapboxgl-ctrl-geolocate-waiting']);
+        geoflo.fire('locate.on', { state: this.state() });
         return this.control.trigger();
     }
 
@@ -145,8 +152,9 @@ const Locate = function (ctx) {
     this.unlocate = function () {
         this.state('ACTIVE_LOCK');
         this.control._follow = this.following = false;
-        ctx.map.dragPan.enable();
+        geoflo.map.dragPan.enable();
         this.unlocated = true;
+        geoflo.fire('locate.off', { state: this.state() });
         return this.control.trigger();
     }
 
@@ -155,12 +163,12 @@ const Locate = function (ctx) {
      * @memberof module:geoflo.Locate
 	 * @name follow
 	 * @description Enables the follow functionality for the geolocate control. When activated, adds a specific class to the button, disables drag panning on the map, and sets the follow state to true.
-	 * @params {Object} ctx - The context object containing the map and control references.
+	 * @params {Object} geoflo - The context object containing the map and control references.
 	 * @returns {boolean} - Returns true to indicate that the follow functionality has been enabled.
 	 */
     this.follow = function () {
         addClasses(this.button, ['mapboxgl-ctrl-geolocate-follow']);
-        ctx.map.dragPan.disable();
+        geoflo.map.dragPan.disable();
         return this.control._follow = this.following = true;
     }
 
@@ -232,16 +240,16 @@ const Locate = function (ctx) {
      * @event
 	 */
     this.onControlEvent = function (event) {
-        this.button = this.button || event.button;
+        //this.button = this.button || event.button;
         this.marker = this.control._userLocationDotMarker;
 
         this.removeClasses();
-        console.log('Locate: ', this.state());
 
         if (event.coords) {
             this.onLocate(event)
-        } else if (event.button) {
-            ctx.map.dragPan.enable();
+        } else if (event.target === this.button) {
+            console.error('Locate: ', this.state(), event, this.button);
+            geoflo.map.dragPan.enable();
             if (this.state() === 'OFF') return this.locate();
             if (this.state() === 'BACKGROUND' && !this.following) return this.relocate();
             if (this.state() === 'ACTIVE_LOCK' && !this.following) return this.follow();
@@ -259,13 +267,13 @@ const Locate = function (ctx) {
      * @event
 	 */
     this.onLocate = function (event) {
-        console.log(event);
-
         if (this.state() === 'ACTIVE_LOCK' && this.locating) {
             this.locating = false;
             this.currentLocation = event.coords;
             addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
-        } 
+        }
+
+        geoflo.fire('locate.update', { locating: this.locating, coords: event.coords, state: this.state() });
     }
 
 	/**
@@ -291,4 +299,4 @@ const Locate = function (ctx) {
     }
 }
 
-export { Locate as default }
+export default Locate;

@@ -1,34 +1,43 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Styles
- * @description The Styles module provides a control to change the map style.
- * @param {Object} ctx - The GeoFlo context object
- */
-const Styles = function (ctx, options={}) {
+const Styles = function (options={}) {
+    const geoflo = this.geoflo;
     this.options = options;
     
     this.init = function (options={}) {
-        ctx.Utilities.extend(this.options, options);
+        geoflo.Utilities.extend(this.options, options);
 
         this.styles = this.options.styles || [
+            { title: "Standard", uri: "mapbox://styles/solutegrate/clxdoec8x006901qj7wjf8uxo" },
+            { title: "Satellite", uri: "mapbox://styles/mapbox/satellite-streets-v11" },
+            { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
             { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
             { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
-            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" },
-            { title: "Satellite", uri: "mapbox://styles/mapbox/satellite-streets-v11" },
-            { title: "Streets", uri: "mapbox://styles/mapbox/streets-v11" }
+            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" }
         ];
     
-        this.defaultStyle = 'Dark';
+        this.defaultStyle = this.options.selected || "Standard";
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
         return this;
     }
 
     this.select = function (name) {
-        if (!this.mapStyleContainer) return;
+        if (!this.mapStyleContainer || !this.mapStyleContainer.checkVisibility()) {
+            var style = this.styles.find(style => style.title === name);
+            if (style) this.map.setStyle(style.uri);
+            if (this.events && this.events.onChange && this.events.onChange({ style: style }, style))
+            return;
+        }
+
         const elms = this.mapStyleContainer.getElementsByClassName(name);
         if (elms.length > 0) elms[0].click();
+    }
+
+    this.hide = function () {
+        if (this.controlContainer) this.controlContainer.style.display = "none";
+    }
+
+    this.show = function () {
+        if (this.controlContainer) this.controlContainer.style.display = "block";
     }
 
     this.getDefaultPosition = function () {
@@ -119,6 +128,6 @@ const Styles = function (ctx, options={}) {
     }
 
     this.init();
-}
+};
 
-export { Styles as default }
+export default Styles;

@@ -1,333 +1,11 @@
-const Options = {
-    enable: true,
-    debug: false,
-    crosshairs: true,
-    joystick: {
-        min: 0.2,
-        max: 0.7
-    },
-    camera: {
-        free: true
-    },
-    pan: {
-        speed: 0.001,
-        min: 0.001,
-        max: 0.05
-    },
-    bearing: {
-        speed: 0.8
-    },
-    pitch: {
-        speed: 1.5,
-        max: 70
-    },
-    zoom: {
-        speed: 0.008
-    },
-    rumble: {
-        startDelay: 0,
-        duration: 200,
-        weakMagnitude: 1.0,
-        strongMagnitude: 1.0
-    },
-    mapping: {
-        'Select': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                event.ctx.getButtons('clear').button.click();
-            }
-        },
-        'Start': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    var button = event.mode.id === 'select' ? 'edit' : 'select';
-                    event.ctx.getButtons(button).button.click();
-                }
-            }
-        },
-        'Power': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                event.ctx.getButtons('save').button.click();
-            }
-        },
-        'Menu': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'Misc': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('zoom').button.click();
+const Gamepad = function (gamepad) {
+    const geoflo = this.geoflo;
 
-                    var ready = setInterval(function() {
-                        if (!ctx.mapMoving) {
-                            clearInterval(ready);
-                            event.gamepad.map.center = event.ctx.map.getCenter();
-                            event.gamepad.map.zoom = event.ctx.map.getZoom();
-                        }
-                    }, 1);
-                }
-            }
-        },
-        'A': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (!event.gamepad.pressed['BumpLeft'] && !event.gamepad.pressed['BumpRight']) {
-                        return this['JoyLeftClick'](event);
-                    }
-                } else {
-                    event.ctx.getButtons('routing').button.click();
-                }
-            }
-        },
-        'B': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (!event.gamepad.pressed['BumpLeft'] && !event.gamepad.pressed['BumpRight']) {
-                        return this['JoyRightClick'](event);
-                    }
-                } else {
-                    event.ctx.getButtons('painting').button.click();
-                }
-            }
-        },
-        'Y': function (event) {
-            if (event.type === 'press') {
-                if (!event.gamepad.hasJoysticks) {
-                    if ((event.gamepad.pressed['BumpLeft'] || event.gamepad.pressed['BumpRight'])) event.gamepad.setSpeed(event.value, false);
-                }
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('snapping').button.click();
-                }
-            }
-        },
-        'X': function (event) {
-            if (event.type === 'press') {
-                if (!event.gamepad.hasJoysticks) {
-                    if ((event.gamepad.pressed['BumpLeft'] || event.gamepad.pressed['BumpRight'])) event.gamepad.setSpeed(event.value, true);
-                }
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('pinning').button.click();
-                }
-            }
-        },
-        'JoyLeftMove': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                event.gamepad.setCenter(event.value, event.gamepad.options.camera.free) // Pan map
-            } else if (event.type === 'release') {
-                event.gamepad.setCenter(false, event.gamepad.options.camera.free) // Reset map center
-            }
-        },
-        'JoyRightMove': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                if (event.name.includes('Up') || event.name.includes('Down')) {
-                    event.gamepad.setPitch(event.value, event.name.includes('Up')); // Pitch map
-                } else if (event.name.includes('Left') || event.name.includes('Right')) {
-                    event.gamepad.setBearing(event.value, event.name.includes('Left')); // Rotate map
-                }
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'JoyLeftClick': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (event.mode.id === 'draw') {
-                    event.mode.deleteVertex();
-                }
-            }
-        },
-        'JoyRightClick': function (event) {
-            if (event.type === 'press') {
-                if (event.mode.id === 'draw') {
-                    if (!event.lngLat) return false;
-                    return event.mode.handleDown(event);
-                }
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                if (!event.lngLat) return false;
-
-                if (event.mode.id === 'draw') {
-                    event.mode.handleUp(event); 
-                    event.mode.handleClick(event);
-                } else {
-                    event.mode.handleClick(event);
-                }
-            }
-        },
-        'BumpLeft': function (event) {
-            if (event.type === 'press') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpRight']) return false
-                } else {
-                    return event.gamepad.setSpeed(event.value, true); // Pan speed down
-                }
-            } else if (event.type === 'hold') {
-                if (!event.gamepad.hasJoysticks) {
-
-                }
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'BumpRight': function (event) {
-            if (event.type === 'press') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpLeft']) return false
-                } else {
-                    return event.gamepad.setSpeed(event.value, false); // Pan speed down
-                }
-            } else if (event.type === 'hold') {
-                
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'TrigLeft': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                event.gamepad.setZoom(event.value, true);
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'TrigRight': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                event.gamepad.setZoom(event.value, false);
-            } else if (event.type === 'release') {
-                
-            }
-        },
-        'DpadUp': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpLeft'] && event.gamepad.pressed['BumpRight']) {
-                        event.gamepad.setPitch(event.value, true); // Pitch map
-                    } else {
-                        event.gamepad.setCenter(event.value, event.gamepad.options.camera.free) // Pan map
-                    }
-                }
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('Polygon').button.click();
-                }
-            }
-        },
-        'DpadDown': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpLeft'] && event.gamepad.pressed['BumpRight']) {
-                        event.gamepad.setPitch(event.value, false); // Pitch map
-                    } else {
-                        event.gamepad.setCenter(event.value, event.gamepad.options.camera.free) // Pan map
-                    }
-                }
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('Circle').button.click();
-                }
-            }
-        },
-        'DpadLeft': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpLeft'] && event.gamepad.pressed['BumpRight']) {
-                        event.gamepad.setBearing(event.value, true); // Rotate map
-                    } else {
-                        event.gamepad.setCenter(event.value, event.gamepad.options.camera.free) // Pan map
-                    }
-                }
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('Polyline').button.click();
-                }
-            }
-        },
-        'DpadRight': function (event) {
-            if (event.type === 'press') {
-                
-            } else if (event.type === 'hold') {
-                if (!event.gamepad.hasJoysticks) {
-                    if (event.gamepad.pressed['BumpLeft'] && event.gamepad.pressed['BumpRight']) {
-                        event.gamepad.setBearing(event.value, false); // Rotate map
-                    } else {
-                        event.gamepad.setCenter(event.value, event.gamepad.options.camera.free) // Pan map
-                    }
-                }
-            } else if (event.type === 'release') {
-                if (event.gamepad.hasJoysticks) {
-                    event.ctx.getButtons('Rectangle').button.click();
-                }
-            }
-        }
-    }
-}
-
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Gamepad
- * @description Gamepad class for handling gamepad events. Initiate class by calling geoflo.addGamepad(gamepad). This will automatically call when connecting a new gamepad.
- * @param {Object} ctx - The GeoFlo context object
- * @param {Object} gamepad - The gamepad object
- */
-const Gamepad = function (ctx, gamepad) {
     if (!supported()) throw new Error('Gamepads are not supported on your browser!');
     
     const control = this;
 
-    this.options = Options;
+    this.options = geoflo.options.gamepad;
 
     const layout = {
         "select": 'Select',
@@ -536,8 +214,8 @@ const Gamepad = function (ctx, gamepad) {
 	 */
     this.init = function (gamepad, options) {
         if (!gamepad) return false;
-        if (!Options.enable) return console.error('Gamepad option is not enabled!')
-        ctx.map.fire(ctx.id + ':gamepad.init', { detail: { gamepad: gamepad } });
+        if (!this.options.enable) return console.error('Gamepad option is not enabled!')
+        geoflo.map.fire(geoflo.id + ':gamepad.init', { detail: { gamepad: gamepad } });
         this.setGamepad(gamepad);
         addEventListeners(this, this.gamepad);
         requestAnimationFrame(request);
@@ -595,10 +273,10 @@ const Gamepad = function (ctx, gamepad) {
                 const axe = Math.floor(j / 2);
                 this.gamepad.axeValues[axe][j % 2] = val;
 
-                var rightTrigger = value[0] >= Options.joystick.min;
-                var leftTrigger = value[0] <= -Options.joystick.min;
-                var upTrigger = value[1] <= -Options.joystick.min;
-                var downTrigger = value[1] >= Options.joystick.min;
+                var rightTrigger = value[0] >= this.options.joystick.min;
+                var leftTrigger = value[0] <= -this.options.joystick.min;
+                var upTrigger = value[1] <= -this.options.joystick.min;
+                var downTrigger = value[1] >= this.options.joystick.min;
 
                 this.trigger('right', rightTrigger, j, value);
                 this.trigger('left', leftTrigger, j, value);
@@ -629,7 +307,7 @@ const Gamepad = function (ctx, gamepad) {
                 actions[index][id].before ? actions[index][id].before(value) : false
             }
 
-            value = [Options.joystick.max * value[0], Options.joystick.max * value[1]]
+            value = [this.options.joystick.max * value[0], this.options.joystick.max * value[1]]
             actions[index][id].action ? actions[index][id].action(value) : false;
         } else if (pressed[name]) {
             delete pressed[name];
@@ -670,7 +348,7 @@ const Gamepad = function (ctx, gamepad) {
 	 * @returns {Object} The updated map object with new properties.
 	 */
     this.setMap = function (handleMove) {
-        const map = ctx.map;
+        const map = geoflo.map;
         const transform = map.transform;
         
         this.map = this.map || {
@@ -690,8 +368,8 @@ const Gamepad = function (ctx, gamepad) {
 
         map._update();
 
-        if (Options.crosshairs && ctx.centerMarker) this.setMarker();
-        if (handleMove) ctx.currentMode.handleMove({ lngLat: !Options.camera.free ? this.map.center : map.getCenter(), gamepad: this })
+        if (this.options.crosshairs && geoflo.centerMarker) this.setMarker();
+        if (handleMove) geoflo.currentMode.handleMove({ lngLat: !this.options.camera.free ? this.map.center : map.getCenter(), gamepad: this })
         return this.map;
     }
 
@@ -723,7 +401,7 @@ const Gamepad = function (ctx, gamepad) {
 	 * @returns {DOMRect} The bounding rectangle of the container element after the location is set.
 	 */
     this.setLocation = function (value) {
-        this.container.style.visibility = Options.debug ? 'visible' : 'hidden';
+        this.container.style.visibility = this.options.debug ? 'visible' : 'hidden';
         this.container.style.left = (value[0] + 1) / 2 * 100 + '%';
         this.container.style.top = (value[1] + 1) / 2 * 100 + '%';
         return this.container.getBoundingClientRect();
@@ -737,7 +415,7 @@ const Gamepad = function (ctx, gamepad) {
 	 * @return {Object} Returns the marker object created on the map.
 	 */
     this.setMarker = function () {
-        return ctx.setCenterMarker({ gamepad: true });
+        return geoflo.setCenterMarker({ gamepad: true });
     }
 
 	/**
@@ -818,13 +496,13 @@ const Gamepad = function (ctx, gamepad) {
 	 */
 	
     this.setCenter = function (value, free, dpad) {
-        var center = ctx.map.getCenter();
+        var center = geoflo.map.getCenter();
         var pressed = this.gamepad.pressed;
         var type = this.hasJoysticks ? 'Joy' : 'Dpad';
         var diag = Object.keys(pressed).filter(function(p) { return p.includes(type) }).length > 1;
         
         var start = free || dpad ? center : false;
-        start = ctx.hotFeature && !start ? ctx.lastMove || center : false;
+        start = geoflo.hotFeature && !start ? geoflo.lastMove || center : false;
         start = !start ? center : start;
 
         var end;
@@ -844,19 +522,19 @@ const Gamepad = function (ctx, gamepad) {
             var location = this.setLocation(value);
             var coords = location && location.x ? [location.x, location.y] : false;
             
-            end = ctx.map.unproject(coords);
+            end = geoflo.map.unproject(coords);
             
-            var percent = diag ? Options.pan.speed / 2 : Options.pan.speed;
+            var percent = diag ? this.options.pan.speed / 2 : this.options.pan.speed;
             var mid = calculateIntermediatePoint([start.lng, start.lat], [end.lng, end.lat], percent)
-            mid = ctx.map.getPitch() > 60 ? calculateIntermediatePoint([start.lng, start.lat], [mid[0], mid[1]], 0.4) : mid;
+            mid = geoflo.map.getPitch() > 60 ? calculateIntermediatePoint([start.lng, start.lat], [mid[0], mid[1]], 0.4) : mid;
 
             end = mid;
-            ctx.lastMove = end;
+            geoflo.lastMove = end;
         } else {
-            var coords = ctx.hotFeature ? ctx.hotFeature.geometry.coordinates : false;
-            end = free ? ctx.map.getCenter() :
-            coords ? { lat: coords[coords.length-1][1], lng: coords[coords.length-1][0] } : ctx.map.getCenter();
-            ctx.lastMove = false;
+            var coords = geoflo.hotFeature ? geoflo.hotFeature.geometry.coordinates : false;
+            end = free ? geoflo.map.getCenter() :
+            coords ? { lat: coords[coords.length-1][1], lng: coords[coords.length-1][0] } : geoflo.map.getCenter();
+            geoflo.lastMove = false;
             this.setLocation([0, 0]);
         }
 
@@ -879,9 +557,9 @@ const Gamepad = function (ctx, gamepad) {
         var bearingMulti = !dpad ? Math.abs(value[0]) : value;
     
         if (left) {
-            bearing = bearing - (Options.bearing.speed * bearingMulti)
+            bearing = bearing - (this.options.bearing.speed * bearingMulti)
         } else {
-            bearing = bearing + (Options.bearing.speed * bearingMulti)
+            bearing = bearing + (this.options.bearing.speed * bearingMulti)
         }
 
         this.map.bearing = bearing;
@@ -903,12 +581,12 @@ const Gamepad = function (ctx, gamepad) {
         var pitchMulti = !dpad ? Math.abs(value[1]) : value;
 
         if (pitch < 0) pitch = 0;
-        if (pitch > Options.pitch.max) pitch = Options.pitch.max;
+        if (pitch > this.options.pitch.max) pitch = this.options.pitch.max;
     
         if (up) {
-            pitch = pitch + (Options.pitch.speed * pitchMulti);
+            pitch = pitch + (this.options.pitch.speed * pitchMulti);
         } else {
-            pitch = pitch - (Options.pitch.speed * pitchMulti);
+            pitch = pitch - (this.options.pitch.speed * pitchMulti);
         }
         
         this.map.pitch = pitch;
@@ -929,9 +607,9 @@ const Gamepad = function (ctx, gamepad) {
         var zoom = this.map.zoom;
     
         if (out) {
-            zoom = zoom - ( Options.zoom.speed * Math.abs(value) )
+            zoom = zoom - ( this.options.zoom.speed * Math.abs(value) )
         } else {
-            zoom = zoom + ( Options.zoom.speed * Math.abs(value) )
+            zoom = zoom + ( this.options.zoom.speed * Math.abs(value) )
         }
         
         this.map.zoom = zoom;
@@ -948,19 +626,19 @@ const Gamepad = function (ctx, gamepad) {
 	 * @returns {number} The updated speed of panning after applying the calculations.
 	 */
     this.setSpeed = function (value, down) {
-        var speed = Options.pan.speed > Options.pan.min ?
-            Options.pan.speed :
-            Options.pan.max && Options.pan.speed > Options.pan.max ?
-            Options.pan.min :
-            Options.pan.min;
+        var speed = this.options.pan.speed > this.options.pan.min ?
+            this.options.pan.speed :
+            this.options.pan.max && this.options.pan.speed > this.options.pan.max ?
+            this.options.pan.min :
+            this.options.pan.min;
 
-        speed = down ? speed - Options.pan.min : speed + Options.pan.min;
+        speed = down ? speed - this.options.pan.min : speed + this.options.pan.min;
 
-        speed = speed < Options.pan.min ? Options.pan.min :
-        Options.pan.max && speed > Options.pan.max ? Options.pan.max :
+        speed = speed < this.options.pan.min ? this.options.pan.min :
+        this.options.pan.max && speed > this.options.pan.max ? this.options.pan.max :
         speed;
 
-        return Options.pan.speed = speed * Math.abs(value);
+        return this.options.pan.speed = speed * Math.abs(value);
     }
 
 
@@ -1029,8 +707,8 @@ const Gamepad = function (ctx, gamepad) {
 	 */
     this.onInit = function (options) {
         this.initiated = true;
-        this.setContainer('div', 'gamepad', ctx.map.getContainer());
-        this.setCenterMarker();
+        this.setContainer('div', 'gamepad', geoflo.map.getContainer());
+        this.setMarker();
         this.setMap();
     }
 
@@ -1045,51 +723,51 @@ const Gamepad = function (ctx, gamepad) {
 	 */
     this.onEvent = function (type, key, action, value) {
         var pressed = {[action]: true};
-        var lngLat = Options.camera.free ? ctx.map.getCenter() : ctx.lastMove ? ctx.lastMove : ctx.map.getCenter();
+        var lngLat = this.options.camera.free ? geoflo.map.getCenter() : geoflo.lastMove ? geoflo.lastMove : geoflo.map.getCenter();
 
         var options = {
             name: action,
             type: type,
             key: key,
             value: value,
-            mode: ctx.currentMode,
+            mode: geoflo.currentMode,
             gamepad: this,
             lngLat: lngLat,
-            ctx: ctx,
+            geoflo: geoflo,
             originalEvent: {}
         }
 
         if (!this.initiated) this.onInit(options);
 
-        ctx.map.fire(ctx.id + ':gamepad.' + type, { detail: options });
+        geoflo.map.fire(geoflo.id + ':gamepad.' + type, { detail: options });
 
-        if (pressed['JoyLeftUp'] || pressed['JoyLeftDown'] || pressed['JoyLeftLeft'] || pressed['JoyLeftRight']) Options.mapping['JoyLeftMove'](options);
-        if (pressed['JoyRightUp'] || pressed['JoyRightDown'] || pressed['JoyRightLeft'] || pressed['JoyRightRight']) Options.mapping['JoyRightMove'](options);
+        if (pressed['JoyLeftUp'] || pressed['JoyLeftDown'] || pressed['JoyLeftLeft'] || pressed['JoyLeftRight']) this.options.mapping['JoyLeftMove'](options);
+        if (pressed['JoyRightUp'] || pressed['JoyRightDown'] || pressed['JoyRightLeft'] || pressed['JoyRightRight']) this.options.mapping['JoyRightMove'](options);
 
-        if (pressed['JoyLeftClick']) Options.mapping['JoyLeftClick'](options);
-        if (pressed['JoyRightClick']) Options.mapping['JoyRightClick'](options);
+        if (pressed['JoyLeftClick']) this.options.mapping['JoyLeftClick'](options);
+        if (pressed['JoyRightClick']) this.options.mapping['JoyRightClick'](options);
 
-        if (pressed['BumpLeft']) Options.mapping['BumpLeft'](options);
-        if (pressed['BumpRight']) Options.mapping['BumpRight'](options);
+        if (pressed['BumpLeft']) this.options.mapping['BumpLeft'](options);
+        if (pressed['BumpRight']) this.options.mapping['BumpRight'](options);
 
-        if (pressed['TrigLeft']) Options.mapping['TrigLeft'](options);
-        if (pressed['TrigRight']) Options.mapping['TrigRight'](options);
+        if (pressed['TrigLeft']) this.options.mapping['TrigLeft'](options);
+        if (pressed['TrigRight']) this.options.mapping['TrigRight'](options);
 
-        if (pressed['A']) Options.mapping['A'](options);
-        if (pressed['B']) Options.mapping['B'](options);
-        if (pressed['X']) Options.mapping['X'](options);
-        if (pressed['Y']) Options.mapping['Y'](options);
+        if (pressed['A']) this.options.mapping['A'](options);
+        if (pressed['B']) this.options.mapping['B'](options);
+        if (pressed['X']) this.options.mapping['X'](options);
+        if (pressed['Y']) this.options.mapping['Y'](options);
 
-        if (pressed['Start']) Options.mapping['Start'](options);
-        if (pressed['Select']) Options.mapping['Select'](options);
-        if (pressed['Power']) Options.mapping['Power'](options);
-        if (pressed['Home']) Options.mapping['Home'](options);
-        if (pressed['Misc']) Options.mapping['Misc'](options);
+        if (pressed['Start']) this.options.mapping['Start'](options);
+        if (pressed['Select']) this.options.mapping['Select'](options);
+        if (pressed['Power']) this.options.mapping['Power'](options);
+        if (pressed['Home']) this.options.mapping['Home'](options);
+        if (pressed['Misc']) this.options.mapping['Misc'](options);
 
-        if (pressed['DpadUp']) Options.mapping['DpadUp'](options);
-        if (pressed['DpadDown']) Options.mapping['DpadDown'](options);
-        if (pressed['DpadLeft']) Options.mapping['DpadLeft'](options);
-        if (pressed['DpadRight']) Options.mapping['DpadRight'](options);
+        if (pressed['DpadUp']) this.options.mapping['DpadUp'](options);
+        if (pressed['DpadDown']) this.options.mapping['DpadDown'](options);
+        if (pressed['DpadLeft']) this.options.mapping['DpadLeft'](options);
+        if (pressed['DpadRight']) this.options.mapping['DpadRight'](options);
     }
 
 	/**
@@ -1110,4 +788,4 @@ const Gamepad = function (ctx, gamepad) {
     this.init(gamepad);
 };
 
-export { Gamepad as default }
+export default Gamepad;

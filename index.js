@@ -1,73 +1,28 @@
-/* // CSS //
-import css from './index.css' with { type: 'css' }; */
+import Statics from './src/Statics.js';
+import Options from './src/Options.js';
+import Utilities from './src/Utilities.js';
+import Styles from './src/Styles.js';
+import Layers from './src/Layers.js';
+import Features from './src/Features.js';
+import Mesh from './src/Mesh.js';
+import Events from './src/Events.js';
+import Select from './src/Select.js';
+import Draw from './src/Draw.js';
+import Locate from './src/Locate.js';
+import Snapping from './src/Snapping.js';
+import Pinning from './src/Pinning.js';
+import Routing from './src/Routing.js';
+import Exploring from './src/Exploring.js';
+import Painting from './src/Painting.js';
+import Control from './src/Control.js';
+import Gamepad from './src/Gamepad.js';
 
-// REQUIRE //
-import Mapbox from "./src/require/Mapbox.js"
-import Turf from "./src/require/Turf.js"
-import Omnivore from "./src/require/Omnivore.js"
-
-
-// SYSTEM //
-import Statics from "./src/system/Statics.js"
-import Options from "./src/system/Options.js"
-import Utilities from "./src/system/Utilities.js"
-
-
-// MAP //
-import Map from "./src/map/Map.js"
-import Layers from "./src/map/Layers.js"
-import Features from "./src/map/Features.js"
-import Mesh from "./src/map/Mesh.js"
-
-
-// UX //
-import Events from "./src/ux/Events.js"
-import Controls from "./src/ux/Controls.js"
-import Styles from "./src/ux/Styles.js"
-import Gamepad from "./src/ux/Gamepad.js"
-import Locate from "./src/ux/Locate.js"
-
-
-// MODES //
-import Select from "./src/mode/Select.js"
-import Draw from "./src/mode/Draw.js"
-import Edit from "./src/mode/Edit.js"
-
-
-// ACTIONS //
-import Snapping from "./src/action/Snapping.js"
-import Pinning from "./src/action/Pinning.js"
-import Routing from "./src/action/Routing.js"
-import Painting from "./src/action/Painting.js"
-import Exploring from "./src/action/Exploring.js"
-
-const version = '1.0.3';
-
-var selectedFeatures = [];
-var hiddenFeatures = [];
-
-/**
- * @module geoflo
- * @name geoflo
- * @description Represents the GeoFlo object that manages all modules.
- * @returns {Object} The GeoFlo object with various methods for managing the entire app.
- */
 const GeoFlo = function () {
-    //document.adoptedStyleSheets = [css];
+    const geoflo = this;
     
-    if (!Mapbox) throw new Error('MapboxGL script is required!')
-    if (!Turf) throw new Error('TurfJS script is required!');
-    if (!Omnivore) throw new Error('Omnivore script is required!');
-    
-    const ctx = this;
-    const turf = this.turf = Turf;
-    const omnivore = this.omnivore = Omnivore;
-
-    this.version = version;
-    this.Mapbox = Mapbox;
-
+    this.statics = Statics;
     this.options = Options;
-    this.dev = this.statics.dev;
+    this.dev = this.statics.developer;
     this.id = this.statics.id;
 
     this.modes = [];
@@ -75,6 +30,9 @@ const GeoFlo = function () {
     this.gamepads = {};
     this.enabled = false;
     this.mobile = isMobile();
+
+    var selectedFeatures = [];
+    var hiddenFeatures = [];
 
 	/**
 	 * @function
@@ -86,7 +44,6 @@ const GeoFlo = function () {
     this.initialize = function () {
         if (this.initialized) return this;
         window[this.id] = this;
-        this.Utilities = new Utilities(this);
         this.initialized = true;
         return this;
     }
@@ -100,35 +57,64 @@ const GeoFlo = function () {
 	 * @param {Function} onReady - The callback function to be executed when the map is ready.
 	 * @returns {Object} Returns the map component instance.
 	 */
-    this.init = function (options={}, onReady) {
+    this.init = async function (accessToken, options={}, onReady) {
+        this.Utilities = new Utilities();
+
+        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
         if (this.isReady) return this.setOptions(options);
-        
-        if (!options.accessToken) throw new Error('No Mapbox Access Token Provided!');
 
         const id = options.container || this.options.map.container;
         if (!id) throw new Error('Element id is required in the DOM for the map!');
 
-        this.options.map.accessToken = options.accessToken;
-        this.options.map.container = id;
-        this.styles = options.styles;
+        await loadStylesheet("https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css");
+        await loadScript("https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js");
+        await loadScript("https://unpkg.com/@turf/turf@7/turf.min.js");
+        await loadScript("https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js");
+        await loadScript("https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js");
+        await loadScript("https://api.mapbox.com/search-js/v1.0.0-beta.18/core.js");
 
-        delete options.accessToken;
-        delete options.container;
-        delete options.styles;
+        this.styles = [
+            { title: "Standard", uri: "mapbox://styles/solutegrate/clxdoec8x006901qj7wjf8uxo" },
+            { title: "Satellite", uri: "mapbox://styles/solutegrate/clqb11d15005901pdbyb13b5i" },
+            { title: "Dark", uri: "mapbox://styles/solutegrate/clq8l159v003q01qu274z8e8p" },
+            { title: "Light", uri: "mapbox://styles/solutegrate/clq8l4ylp003m01qbapvf6yqn" },
+            { title: "Outdoors", uri: "mapbox://styles/solutegrate/clqb11yad005801nv6p2ke412" },
+            { title: "Streets", uri: "mapbox://styles/solutegrate/clqb0y4iz005901nt0u4h62qd" }         
+        ];
 
+        this.options.map.style = "Dark";
         this.setOptions(options);
-
-        this.onReady = onReady && typeof onReady === 'function' ? onReady : false;
         
-        ready(this.options.map.container).then(function (res, rej) {
-            if (!res || rej) throw new Error(`Element with id "${id}" is required in the DOM for the map!`)
+        var container = await ready(id);
+        var style = this.styles.find(style => style.title === this.options.map.style).uri;
 
-            ctx.isReady = true;
-            ctx._container = res;
-            ctx._container.classList.add(ctx.statics.id);
-            ctx.Map = new Map(ctx, ctx.options.map);
-        })
+        this.isReady = container ? true : false;
+        if (!this.isReady) throw new Error('Element id is required in the DOM for the map!');
 
+        container.classList.add(this.statics.id);
+
+        buildMapbox.call(this);
+
+        this.mapbox = new mapboxgl.Map({
+            accessToken: accessToken,
+            container: container,
+            style: style,
+            center: this.options.map.center,
+            zoom: this.options.map.zoom,
+            hash: true,
+            projection: 'mercator',
+            extent: this.options.map.extent
+        });
+
+        this.viewport = document.createElement('div');
+        this.viewportHeightOffset = 110;
+        this.viewportWidthOffset = 20;
+        this.viewportLeft = '10px';
+        this.viewportBottom = '5%';
+        this.noSelect = options.noSelect || false;
+        this.mapbox.on('load', this.onLoad.bind(this));
+
+        await loaded(this);
         return this;
     }
 
@@ -140,41 +126,39 @@ const GeoFlo = function () {
 	 * @param {Object} map - The MapboxGL map object to be used by the SDK.
 	 * @returns {Object} - Returns the SDK instance after loading and initialization.
 	 */
-    this.load = function () {
-        if (this.isLoaded || !this.isReady || !this.Map.getMap()) return this;
+    this.load = function (map) {
+        if (this.isLoaded || !this.isReady) return this;
 
-        this.map = this.Map.getMap();
-        this.container = this.Map.getContainer();
+        this.map = map;
 
-        this.fullscreen = new Mapbox.FullscreenControl({ container: document.querySelector('body') });
-        this.navigation = new Mapbox.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
-        //this.attribution = new Controls(this, { type: 'attribute', position: 'bottom-right', enable: true, show: true, attribution: this.statics.logo.full });
+        this.locate = new Locate();
+
+        this.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
+        this.navigation.hide = function () { this._container.style.display = 'none' }.bind(this.navigation);
+        this.navigation.show = function () { this._container.style.display = 'block' }.bind(this.navigation);
         this.map.addControl(this.navigation, 'top-right');
-        
-        if (!this.mobile) this.map.addControl(this.fullscreen, 'top-right');
 
-        this.locate = new mapboxgl.GeolocateControl({
-            positionOptions: { enableHighAccuracy: true },
-            trackUserLocation: true,
-            showUserHeading: true,
-            showAccuracyCircle: false
-        });
-
-        this.map.addControl(this.locate, 'top-right');
+        if (!this.mobile) {
+            this.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
+            this.fullscreen.hide = function () { this._controlContainer.style.display = 'none' }.bind(this.fullscreen);
+            this.fullscreen.show = function () { this._controlContainer.style.display = 'block' }.bind(this.fullscreen);
+            this.map.addControl(this.fullscreen, 'top-right');
+        }
     
-        this.styles = new Styles(this, { styles: this.styles });
-        this.Styles = this.map.addControl(this.styles);
-    
-        //this.Locate = new Locate(this);
+        this.styles = new Styles(this, { styles: this.styles, selected: this.options.map.style });
         this.Layers = new Layers(this);
         this.Features = new Features(this);
+
+        this.map.addControl(this.styles);
         
         this.Events = Events(this);
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
 
         this.isLoaded = true;
-        this.Map.setExtent(false, true);
+        
+        this.setViewport();
+        this.setExtent(false, true);
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
         this.enable();
         return this;
@@ -200,9 +184,8 @@ const GeoFlo = function () {
 
         this.Select = new Select(this);
         this.Draw = new Draw(this);
-        this.Edit = new Edit(this);
 
-        this.modes = [ this.Select, this.Draw, this.Edit ];
+        this.modes = [ this.Select, this.Draw ];
         this.enabled = true;
 
         this.fire('map.enable', { enabled: this.enabled, mode: this.mode, type: this.type });
@@ -248,8 +231,8 @@ const GeoFlo = function () {
         this.Events.addEventListeners();
         this.Features.updateSource();
         this.doubleClickZoom.disable(this.map);
-        this.Map.setViewport();
-        this.map.resize();
+        this.setViewport();
+        this.map.style.glyphManager.urls[""] = `mapbox://fonts/${this.dev}/{fontstack}/{range}.pbf`
         this.fire('map.redraw', { enabled: this.enabled, mode: this.mode })
         if (this.onReady) await this.onReady(this), delete this.onReady;
     }
@@ -264,6 +247,7 @@ const GeoFlo = function () {
     this.refresh = async function () {
         if (this.noRefresh) return false;
         await this.redraw();
+        this.fire('map.refresh', { enabled: this.enabled, mode: this.mode })
     }
 
 
@@ -335,7 +319,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated options object after merging.
 	 */
     this.setOptions = function(options={}) {
-        this.options = ctx.Utilities.assignDeep(this.options || {}, options);
+        this.options = this.Utilities.assignDeep(this.options || {}, options);
         return this.options;
     }
 
@@ -362,11 +346,11 @@ const GeoFlo = function () {
         
         if (editMode) {
             if (options.feature) {
-                options.feature = ctx.Utilities.cloneDeep(options.feature);
+                options.feature = geoflo.Utilities.cloneDeep(options.feature);
                 options.mode = this.statics.constants.modes.DRAW;
                 options.type = options.type || options.feature.properties.type;
 
-                this.editing = ctx.Utilities.cloneDeep(options.feature);
+                this.editing = geoflo.Utilities.cloneDeep(options.feature);
                 this.removeSelection();
             } else {
                 //this.wantingToEdit = true;
@@ -384,8 +368,8 @@ const GeoFlo = function () {
         });
 
         if (classesToRemove.length > 0) {
-            var _ctx$container$classL;
-            (_ctx$container$classL = this.container.classList).remove.apply(_ctx$container$classL, classesToRemove);
+            var _map$container$classL;
+            (_map$container$classL = this.container.classList).remove.apply(_map$container$classL, classesToRemove);
         }
 
         this.setMapClass('pointer');
@@ -427,7 +411,7 @@ const GeoFlo = function () {
         if (!this.options.controls) return false;
         this.controls = [];
         controls = controls.length ? controls : this.statics.controls;
-        controls.forEach(function(control) { this.controls.push(new Controls(this, control)) }, this);
+        controls.forEach(function(control) { this.controls.push(new Control(control)) }, this);
         return this.controls;
     }
 
@@ -550,7 +534,7 @@ const GeoFlo = function () {
 	 * @param {Object} options - Additional options for setting custom layers.
 	 * @returns {Promise} A promise that resolves when the custom layers are set on the map.
 	 */
-    this.setCustomLayers = async function (layers=[], options={}) {
+    this.setLayers = async function (layers=[], options={}) {
         this.removeFeatures(layers, options);
         return await this.Layers.setCustomLayers(layers, options);
     }
@@ -606,6 +590,170 @@ const GeoFlo = function () {
 
         if (!name) return false;
         this.container.classList.add("mouse-" + name);
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Map
+	 * @name setViewport
+	 * @description This function sets the style of the viewport based on the options provided. It resizes the map, calculates the height and width of the container, adjusts the height and width of the viewport, extends the viewport style, sets padding, and returns the updated viewport element.
+	 * @param {Object} options - The options object containing style properties for the viewport.
+	 * @param {string} [options.position='absolute'] - The position property for the viewport.
+	 * @param {string} [options.margin='auto'] - The margin property for the viewport.
+	 * @param {string} [options.top=''] - The top property for the viewport.
+	 * @param {string} [options.left=this.viewportLeft] - The left property for the viewport.
+	 * @param {string} [options.bottom=this.viewportBottom] - The bottom property for the viewport.
+	 * @returns {Element} The updated viewport element.
+	 */
+    this.setViewport = function (options) {
+        var style = options || {
+            position: 'absolute',
+            margin: 'auto',
+            top: '',
+            left: this.viewportLeft,
+            bottom: this.viewportBottom
+        };
+
+        var height = this.container.getBoundingClientRect().height;
+        var width = this.container.getBoundingClientRect().width;
+
+        style.height = `${Number.parseInt(height) - this.viewportHeightOffset}px`;
+        style.width = `${Number.parseInt(width) - this.viewportWidthOffset}px`;
+
+        this.Utilities.extend(this.viewport.style, style);
+        this.setPadding();
+        this.map.resize();
+        return this.viewport;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Map
+	 * @name setPadding
+	 * @description Calculates the padding values for the container by comparing its position with the viewport.
+	 * @returns {Object} The padding object containing left, right, top, and bottom padding values.
+	 * @params {void}
+	 */
+    this.setPadding = function () {
+        var left = (this.container.getBoundingClientRect().left) - (this.viewport.getBoundingClientRect().left);
+        var right = (this.container.getBoundingClientRect().right) - (this.viewport.getBoundingClientRect().right);
+        var top = (this.container.getBoundingClientRect().top) - (this.viewport.getBoundingClientRect().top);
+        var bottom = (this.container.getBoundingClientRect().bottom) - (this.viewport.getBoundingClientRect().bottom);
+        var noPadding = this.container.getBoundingClientRect().width < 20;
+
+        this.padding = {
+            left: noPadding ? 0 : Math.abs(left),
+            right: noPadding ? 0 : Math.abs(right),
+            top: noPadding ? 0 : Math.abs(top),
+            bottom: noPadding ? 0 : Math.abs(bottom)
+        };
+
+        this.map.setPadding(this.padding);    
+        return this.padding;
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Map
+	 * @name setStyle
+	 * @description Sets the style of the map and returns the updated style.
+	 * @param {Object} style - The style object to be applied to the map.
+	 * @returns {Object} The updated style object of the map.
+	 */
+    this.setStyle = function (style, options) {
+        if (!style) { return false };
+        this.map.setStyle(style, options);
+        return this.map.getStyle();
+    }
+
+    /**
+	 * @description Sets the extent of the map based on the provided features or a given extent. If no features are provided, it uses the rendered drawn features. If extent is specified, it sets the map extent to the extent polygon. If center is not specified and isPoint is true, it centers the map at the centroid of the extent. If center is false, it fits the map to the bounding box of the features. If center is true, it centers the map at the centroid of the bounding box.
+	 * @function
+     * @memberof module:geoflo.Map
+	 * @name setExtent
+	 * @param {Array} features - Array of features to set the extent based on.
+	 * @param {Array} extent - Extent polygon to set the map extent to.
+	 * @param {Object} options - Additional options for setting the extent (center, isPoint).
+	 * @returns {Object} - The map object after setting the extent.
+	 */
+    this.setExtent = function (features, extent, options={}) {
+        this.settingExtent = true;
+
+        var noFeatures = !features || !features.length;
+        var center = options.center;
+        !center && options.isPoint ? center = true : false;
+
+        this.setViewport();
+        
+        if (extent) {
+            this.preventDefault = true;
+            features = !this.options.map.extent ? [] : [turf.polygon(this.options.map.extent)];
+        } else if (noFeatures) {
+            features = this.getDrawnFeatures();
+        }
+
+        var jumpTo = {
+            bearing: options.bearing || this.options.map.bearing || this.map.getBearing(),
+            center: this.options.map.center || this.map.getCenter(),
+            zoom: options.zoom || this.options.map.zoom || this.map.getZoom(),
+            pitch: options.pitch || this.options.map.pitch || this.map.getPitch()
+        }
+
+        if (!features) return this.map.jumpTo(jumpTo);
+        if (!features.length) return;
+
+        var bbox = turf.bbox(turf.featureCollection(features))
+
+        if (center) {
+            var polygon = turf.bboxPolygon(bbox);
+            var centroid = turf.centroid(polygon);
+            jumpTo.center = { lat: centroid.geometry.coordinates[1], lng: centroid.geometry.coordinates[0] };
+            jumpTo.zoom = options.zoom || this.map.getZoom();
+            jumpTo.pitch = options.pitch || this.map.getPitch();
+            jumpTo.bearing = options.bearing || this.map.getBearing();
+            this.map.jumpTo(jumpTo);
+        } else if (bbox) {
+            var settings = {
+                padding: this.map.getPadding(),
+                linear: true
+            }
+
+            if (options.bearing) settings.bearing = options.bearing;
+            if (options.pitch) settings.pitch = options.pitch;
+            if (options.maxZoom) settings.maxZoom = options.maxZoom;
+            
+            this.map.fitBounds(bbox, settings);
+        }
+
+        this.fire('features.zoom', { features: features, center: this.map.getCenter(), bbox: bbox });
+        this.settingExtent = false;
+        return this.map;
+    }
+
+    /**
+     * @memberof module:geoflo
+	 * @function
+	 * @name setOpacity
+	 * @description This function takes a numeric value and sets the opacity of specified layers on the map to that value.
+	 *
+	 * @param {number} value - The opacity value to set for the layers.
+	 */
+    this.setOpacity = function (value) {
+        var opacity = this.opacity = Number(value);
+        var layers = this.map.getStyle().layers;
+
+        layers.map((layer) => {
+            if (!layer.id.includes('geoflo') || layer.type === 'background') {
+                if (layer.metadata && layer.metadata.custom) return;
+                
+                if (layer.type === 'symbol')  {
+                    this.map.setPaintProperty(layer.id, `icon-opacity`, opacity);
+                    this.map.setPaintProperty(layer.id, `text-opacity`, opacity);
+                } else {
+                    this.map.setPaintProperty(layer.id, `${layer.type}-opacity`, opacity);
+                }
+            }
+        })
     }
 
 
@@ -831,7 +979,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The map property of the Map object.
 	 */
     this.getMap = function () {
-        return this.Map.map;
+        return this.map;
     }
 
 	/**
@@ -1283,7 +1431,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false if the 'Gamepad' plugin is not available.
 	 */
     this.addGamepad = function (gamepad) {
-        this.gamepads[gamepad.index] = new this.Gamepad(this, gamepad);
+        this.gamepads[gamepad.index] = new Gamepad(gamepad);
         this.fire('gamepad.add', { gamepad: gamepad });
     }
 
@@ -1337,10 +1485,13 @@ const GeoFlo = function () {
     this.removeSelection = function (id) {
         this.removePopup();
 
-        if (!this.hasSelection()) return this.Features.setText();
+        if (!this.hasSelection()) {
+            this.Features.setText();
+            return this.fire('feature.deselect', { ids: [], features: [] });
+        }
 
-        var ids = ctx.Utilities.clone(this.getSelectedFeatureIds());
-        var features = ctx.Utilities.clone(this.getSelectedFeatures());
+        var ids = geoflo.Utilities.clone(this.getSelectedFeatureIds());
+        var features = geoflo.Utilities.clone(this.getSelectedFeatures());
 
         if (!id) features.forEach(function (feature) { this.Features.addFeatures([feature], true); }, this);
 
@@ -1436,7 +1587,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated feature collection that was set on the map source.
 	 */
     this.updateMeshData = function (features=[], reset) {
-        if (!this.meshIndex || reset) this.meshIndex = new this.Mesh([]);
+        if (!this.meshIndex || reset) this.meshIndex = new Mesh([]);
         this.meshIndex.addNewFeatures(features);
 
         var source = this.statics.constants.sources.MESH;
@@ -1482,6 +1633,10 @@ const GeoFlo = function () {
         return this.Locate.locate;
     }
 
+    this.updateFeatures = function (features) {
+        return this.Features.updateFeatures(features);
+    }
+
     
 
 	/**
@@ -1512,7 +1667,7 @@ const GeoFlo = function () {
 
         if (!fc.features.length) return window.alert('No Features to Export!');
 
-        var features = ctx.Utilities.cloneDeep(fc.features);
+        var features = geoflo.Utilities.cloneDeep(fc.features);
 
 		features = features.map(function (f) {
             f.style = {};
@@ -1637,7 +1792,7 @@ const GeoFlo = function () {
                 files.push(event.target.files[x]);
             }
 
-            ctx.Utilities.processFiles(files, processFiles);
+            geoflo.Utilities.processFiles(files, processFiles);
         }
 
         function processFiles (file, name, ext) {
@@ -1656,11 +1811,11 @@ const GeoFlo = function () {
 
             features.forEach(function (feature) {
                 feature.properties.import = true;
-                feature.source = feature.source || feature.properties.source || ctx.statics.constants.sources.COLD;
+                feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
             })
             
-            ctx.fire('features.import', { features: features, file: file, ext: ext, name: name })
-            ctx.addFeatures(features);
+            geoflo.fire('features.import', { features: features, file: file, ext: ext, name: name })
+            geoflo.addFeatures(features);
         }
     }
 
@@ -1705,7 +1860,7 @@ const GeoFlo = function () {
             // at roughly equal rates even if they don't contain the same number of points
             const alongRoute = turf.along( turf.lineString(line), routeDistance * phase ).geometry.coordinates;
             const alongCamera = turf.along( turf.lineString(line), cameraRouteDistance * phase ).geometry.coordinates;
-            const camera = ctx.map.getFreeCameraOptions();
+            const camera = geoflo.map.getFreeCameraOptions();
 
             // set the position and altitude of the camera
             camera.position = mapboxgl.MercatorCoordinate.fromLngLat({ lng: alongCamera[0], lat: alongCamera[1] }, cameraAltitude );
@@ -1716,7 +1871,7 @@ const GeoFlo = function () {
                 lat: alongRoute[1]
             });
 
-            ctx.map.setFreeCameraOptions(camera);
+            geoflo.map.setFreeCameraOptions(camera);
 
             window.requestAnimationFrame(frame);
         }
@@ -1864,7 +2019,7 @@ const GeoFlo = function () {
                         this.removeSelection();
                     }
                 } else if (allFeaturesType === "LineString") {
-                    var coords = ctx.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
+                    var coords = geoflo.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
 
                     if (coords.length > 0) {
                         this.Features.addFeatures([turf.lineString(coords, this.getSelectedPropertyValues())]);
@@ -2003,11 +2158,8 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false if no features are available to zoom to.
 	 */
     this.zoomToFeatures = function (features, options={}) {
-        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.getRenderedDrawnFeatures());
-        if (features.properties) features = [features];
-        if (!features || !features.length) features = !this.Map.options.extent ? [] : [turf.polygon(this.Map.options.extent)];
-        if (features.length < 1) return false;
-        this.Map.setExtent(features, false, options);
+        features = features || (this.hasSelection() ? this.getSelectedFeatures() : this.getDrawnFeatures());
+        this.setExtent(features, false, options);
     }
 
 	/**
@@ -2025,10 +2177,10 @@ const GeoFlo = function () {
                 var allFeaturesType = this.getCommonGeometryType();
 
                 if (allFeaturesType === "LineString") {
-                    var coords = ctx.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
+                    var coords = geoflo.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
 
                     if (coords.length > 0) {
-                        if (!ctx.Utilities.isPointEqual(coords[0], coords[coords.length - 1])) {
+                        if (!geoflo.Utilities.isPointEqual(coords[0], coords[coords.length - 1])) {
                             coords.push(coords[0]);
                         }
 
@@ -2044,16 +2196,88 @@ const GeoFlo = function () {
         }
     }
 
+
+    this.onLoad = function (event) {
+        if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
+
+        this.container = event.target._container;
+        this.viewport ? this.container.insertBefore(this.viewport, this.container.firstChild) : false;
+
+        event.target.off('style.load', this.onStyleLoad.bind(this));
+        event.target.on('style.load', this.onStyleLoad.bind(this));
+
+        if (this.options.map.maxPitch) event.target.setMaxPitch(this.options.map.maxPitch);
+        if (this.options.map.maxZoom) event.target.setMaxZoom(this.options.map.maxZoom);
+        if (this.options.map.minPitch) event.target.setMinPitch(this.options.map.minPitch);
+        if (this.options.map.minZoom) event.target.setMinZoom(this.options.map.minZoom);
+
+        return this.load(event.target);
+    }
+
+    this.onStyleLoad = function (event) {
+        setTimeout(function() { geoflo.redraw(); }, 500)
+    }
+
+    this.onMapMove = function (event) {
+
+    }
+
     this.initialize();
 };
 
-GeoFlo.prototype.statics = Statics;
-GeoFlo.prototype.Gamepad = Gamepad;
-GeoFlo.prototype.Mesh = Mesh;
-
 const geoflo = new GeoFlo();
 
-Mesh.prototype[geoflo.id] = geoflo;
+Utilities.prototype.geoflo = geoflo;
+Features.prototype.geoflo = geoflo;
+Layers.prototype.geoflo = geoflo;
+Control.prototype.geoflo = geoflo;
+Locate.prototype.geoflo = geoflo;
+Mesh.prototype.geoflo = geoflo;
+Draw.prototype.geoflo = geoflo;
+Select.prototype.geoflo = geoflo;
+Gamepad.prototype.geoflo = geoflo;
+Styles.prototype.geoflo = geoflo;
+Snapping.prototype.geoflo = geoflo;
+Pinning.prototype.geoflo = geoflo;
+Routing.prototype.geoflo = geoflo;
+Exploring.prototype.geoflo = geoflo;
+Painting.prototype.geoflo = geoflo;
+
+
+async function loadScript(url) {
+    try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+            const scriptText = await response.text();
+            const script = document.createElement('script');
+            script.textContent = scriptText;
+            document.head.appendChild(script);
+        } else {
+            console.error(`Failed to load script from ${url}. Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error(`Error loading script: ${error.message}`);
+    }
+}
+
+async function loadStylesheet(url) {
+    try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+            const scriptText = await response.text();
+            const script = document.createElement('style');
+            script.textContent = scriptText;
+            document.head.prepend(script);
+        } else {
+            console.error(`Failed to load script from ${url}. Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error(`Error loading stylesheet: ${error.message}`);
+    }
+}
+
 
 function isMobile() {
     const e = /(iphone|ipod|ipad|android|iemobile|blackberry|bada)/.test(window.navigator.userAgent.toLowerCase());
@@ -2078,6 +2302,64 @@ async function ready (id) {
             return resolve(element);
         }, 1);
     })
+}
+
+async function loaded (geoflo) {
+    return new Promise(async function (resolve, reject) {
+        var ready = setInterval(function() {
+            if (!geoflo.isLoaded) return false;
+            clearInterval(ready);
+            return resolve(geoflo.isLoaded);
+        }, 1);
+    })
+}
+
+function buildMapbox () {
+    const DOM = {
+        create: function create (tagName, className, container) {
+            const el = window.document.createElement(tagName);
+            if (className !== undefined) el.className = className;
+            if (container) container.appendChild(el);
+            return el;
+        }
+    }
+
+    // Override to add a Top-Center
+    mapboxgl.Map.prototype._setupContainer = function () {
+        const container = this._container;
+        container.classList.add('mapboxgl-map');
+
+        const missingCSSCanary = this._missingCSSCanary = DOM.create('div', 'mapboxgl-canary', container);
+        missingCSSCanary.style.visibility = 'hidden';
+        this._detectMissingCSS();
+
+        const canvasContainer = this._canvasContainer = DOM.create('div', 'mapboxgl-canvas-container', container);
+        if (this._interactive) {
+            canvasContainer.classList.add('mapboxgl-interactive');
+        }
+
+        this._canvas = DOM.create('canvas', 'mapboxgl-canvas', canvasContainer);
+        // $FlowFixMe[method-unbinding]
+        this._canvas.addEventListener('webglcontextlost', this._contextLost, false);
+        // $FlowFixMe[method-unbinding]
+        this._canvas.addEventListener('webglcontextrestored', this._contextRestored, false);
+        this._canvas.setAttribute('tabindex', '0');
+        this._canvas.setAttribute('aria-label', this._getUIString('Map.Title'));
+        this._canvas.setAttribute('role', 'region');
+
+        this._updateContainerDimensions();
+        this._resizeCanvas(this._containerWidth, this._containerHeight);
+
+        const controlContainer = this._controlContainer = DOM.create('div', 'mapboxgl-control-container', container);
+        const positions = this._controlPositions = {};
+
+        ['top-left', 'top-right', 'top-center', 'bottom-left', 'bottom-right'].forEach((positionName) => {
+            positions[positionName] = DOM.create('div', `mapboxgl-ctrl-${positionName}`, controlContainer);
+        });
+
+        // $FlowFixMe[method-unbinding]
+        this._container.addEventListener('scroll', this._onMapScroll, false);
+    }
 }
 
 export { geoflo as default }

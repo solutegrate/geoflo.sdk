@@ -1,11 +1,6 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Utilities
- * @description This module provides utility functions for processing and manipulating GeoJSON features and geometries.
- * @param {Object} ctx - The GeoFlo context object
- */
-const Utilities = function (ctx) {
+const Utilities = function () {
+    const geoflo = this.geoflo;
+
 	/**
 	 * @function
      * @memberof module:geoflo.Utilities
@@ -1165,4 +1160,4 @@ function _toConsumableArray(arr) {
     }
 }
 
-export { Utilities as default }
+export default Utilities;

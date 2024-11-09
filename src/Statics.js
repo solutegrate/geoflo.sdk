@@ -214,4 +214,4 @@ const Statics = {
     }
 };
 
-export { Statics as default }
+export default Statics;

@@ -1,11 +1,6 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Select
- * @description A class that handles selecting functionality in a mapping context.
- * @param {Object} ctx - The GeoFlo context object
- */
-function Select (ctx) {
+const Select = function () {
+    const geoflo = this.geoflo;
+
     var lastKnownSelectIds = [];
     var removedFeatures = [];
     var nearFeatures = [];
@@ -27,14 +22,15 @@ function Select (ctx) {
 	 */
     this.activate = function (options={}) {
         if (this.activated) return false;
-        if (ctx.currentMode.id !== this.id) return options.mode = this.id, ctx.setMode(options);
+        if (geoflo.currentMode.id !== this.id) return options.mode = this.id, geoflo.setMode(options);
 
         this.activated = true;
-        ctx.map.dragPan.enable();
-        ctx.setButtons();
-        ctx.setActiveButton('select');
-        ctx.fire('select.activate', { activated: true, options: options })
+        geoflo.map.dragPan.enable();
+        geoflo.setButtons();
+        geoflo.setActiveButton('select');
+        geoflo.fire('select.activate', { activated: true, options: options })
         if (this.gamepad) {}
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         setTimeout(function(e) { e.selectFeature(options.id ? options.id : options.feature ? options.feature.id : false) }, 5, this)
     };
 
@@ -51,8 +47,8 @@ function Select (ctx) {
         this.activated = false;
         this.deselectCurrentFeature();
         
-        ctx.setButtons();
-        ctx.fire('select.deactivate', { activated: true });
+        geoflo.setButtons();
+        geoflo.fire('select.deactivate', { activated: true });
     };
 
 	/**
@@ -64,7 +60,7 @@ function Select (ctx) {
 	 * @returns {boolean} Returns true if the mode name is SELECT, false otherwise.
 	 */
     this.canHandle = function (modeName) {
-        return ctx.statics.constants.modes.SELECT === modeName;
+        return geoflo.statics.constants.modes.SELECT === modeName;
     };
 
 	/**
@@ -76,18 +72,20 @@ function Select (ctx) {
 	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
 	 */
     this.selectFeature = function (id) {
-        const popup = ctx.options.select.popup;
+        const popup = geoflo.options.select.popup;
 
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+        
         if (!id) return false;
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
-        if (ctx.hasSelection()) ctx.forEachSelectedFeature((feature) => { });
+        if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
-        removedFeatures = ctx.Features.removeFeatures(id);
+        removedFeatures = geoflo.Features.removeFeatures(id);
 
-        ctx.addFeaturesToSelected(removedFeatures);
+        geoflo.addFeaturesToSelected(removedFeatures);
         popup ? this.addPopup(removedFeatures) : false;
         
-        if (!ctx.wantingToEdit) return removedFeatures;
+        if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
         return removedFeatures;
     };
@@ -99,7 +97,8 @@ function Select (ctx) {
 	 * @description Deselects the current feature by removing its selection.
 	 */
     this.deselectCurrentFeature = function () {
-        ctx.removeSelection();
+        if (geoflo.noSelect) return geoflo.fire('feature.deselect', { ids: [selectedId], features: [] });
+        geoflo.removeSelection();
     };
 
 	/**
@@ -119,7 +118,7 @@ function Select (ctx) {
         this.popup = new mapboxgl.Popup({ closeOnClick: false })
             .setLngLat(clickCoords)
             .setDOMContent(this.popupElement)
-            .addTo(ctx.map)
+            .addTo(geoflo.map)
             .setOffset(12);
 
         this.popup._container.style['margin-bottom'] = '10px'
@@ -144,7 +143,7 @@ function Select (ctx) {
 	 * @param {Event} event - The event object representing the mouse move event.
 	 */
     this.handleMove = function (event) {
-        //ctx.setMapClass('pointer');
+        //geoflo.setMapClass('pointer');
     };
 
 	/**
@@ -153,18 +152,18 @@ function Select (ctx) {
 	 * @name handleClick
 	 * @description Handles the click event on the map and selects features based on the event.
 	 * @param {Object} event - The event object containing information about the click event.
-	 * @returns {boolean} Returns false if ctx.noSelect is true, otherwise selects features based on the event.
+	 * @returns {boolean} Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
 	 */
     this.handleClick = function (event) {
-        if (ctx.noSelect) return false;
+        if (geoflo.noSelect) return false;
         
-        var features = ctx.getRenderedDrawnFeatures(event.lngLat);
+        var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
         clickCoords = [event.lngLat.lng, event.lngLat.lat];
-        multipleSelect = event.originalEvent && event.originalEvent.shiftKey && ctx.options.select.multiple;
+        multipleSelect = event.originalEvent && event.originalEvent.shiftKey && geoflo.options.select.multiple;
 
         if (features.length > 0) {
-            if (!ctx.Layers.getSelection(features, clickCoords)) return;
+            if (!geoflo.Layers.getSelection(features, clickCoords)) return;
             selectFeature.call(this, features);
         } else if (!multipleSelect) {
             lastKnownSelectIds = [];
@@ -183,7 +182,7 @@ function Select (ctx) {
 	 * @param {Event} event - The event object representing the drag event.
 	 */
     this.handleDrag = function (event) {
-        //ctx.setMapClass('grabbing');
+        //geoflo.setMapClass('grabbing');
     }
 
 
@@ -232,13 +231,13 @@ function Select (ctx) {
             tableBody.appendChild(buildRow('geometry', feature.geometry.type));
 
             if (feature.geometry.type === 'LineString') {
-                ctx.Features.addUnits(feature, 'feet');
+                geoflo.Features.addUnits(feature, 'feet');
                 tableBody.appendChild(buildRow('unit', feature.geometry.unit));
                 tableBody.appendChild(buildRow('units', feature.geometry.units));
             } else if (type === 'Text') {
                 tableBody.appendChild(buildRow('content', feature.properties.text));
             } else if (feature.geometry.type === 'Polygon') {
-                ctx.Features.addUnits(feature, 'acres');
+                geoflo.Features.addUnits(feature, 'acres');
                 tableBody.appendChild(buildRow('unit', feature.geometry.unit));
                 tableBody.appendChild(buildRow('units', feature.geometry.units));
             }
@@ -269,6 +268,7 @@ function Select (ctx) {
     }
 
     function selectFeature (features) {
+        multipleSelect = geoflo.options.select.multiple;
         nearFeatures = features;
         lastKnownSelectIds = lastKnownSelectIds === undefined ? [] : lastKnownSelectIds;
 
@@ -276,23 +276,28 @@ function Select (ctx) {
             lastKnownSelectIds.splice(0, features.length - lastKnownSelectIds.length + 1);
         }
 
-        selectedId = features[0].id || features[0].properties['id'];
+        var feat = features[0];
+        selectedId = feat.id || feat.properties['id'];
 
         if (features.length > 1) {
             features.forEach((feature) => {
                 const id = feature.id || feature.properties['id'];
-                if (lastKnownSelectIds.indexOf(id) === -1) selectedId = id;
+                if (lastKnownSelectIds.indexOf(id) === -1) {
+                    selectedId = id;
+                    feat = feature;
+                }
             });
         }
 
-        if (!multipleSelect) ctx.currentMode.deselectCurrentFeature();
-        ctx.currentMode.selectFeature(selectedId);
+        if (geoflo.noSelect) return geoflo.fire('feature.select', { ids: [selectedId], features: [feat] });
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
+        geoflo.currentMode.selectFeature(selectedId);
     }
 
     function editFeature (feature) {
-        ctx.wantingToEdit = false;
-        ctx.setMode('edit', feature.properties.type, feature);
+        geoflo.wantingToEdit = false;
+        geoflo.setMode('edit', feature.properties.type, feature);
     }
 };
 
-export { Select as default }
+export default Select;

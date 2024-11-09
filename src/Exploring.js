@@ -1,12 +1,5 @@
-/**
- * @mixin
- * @memberof module:geoflo
- * @name Exploring
- * @description A class that handles exploring functionality in a mapping context. Only enabled when the currentMode is set to 'draw'.
- * @param {Object} ctx - The GeoFlo context object
- * @param {Object} mode - The currentMode
- */
-const Exploring = function (ctx, mode) {
+const Exploring = function (mode) {
+    const geoflo = this.geoflo;
     this.type = mode.type;
 
 	/**
@@ -19,7 +12,7 @@ const Exploring = function (ctx, mode) {
 	 */
     this.activate = function () {
         this.enabled = true;
-        ctx.options['exploring'].enable = true;
+        geoflo.options['exploring'].enable = true;
     }
 
 	/**
@@ -31,7 +24,7 @@ const Exploring = function (ctx, mode) {
     this.deactivate = function () {
         this.enabled = false;
         this.currentMatch = false;
-        ctx.options['exploring'].enable = false;
+        geoflo.options['exploring'].enable = false;
     }
 
 
@@ -45,26 +38,26 @@ const Exploring = function (ctx, mode) {
 	 * @returns {boolean} Returns false if the function is not executed successfully.
 	 */
     this.setFeatures = function (coords, options={}) {
-        if (ctx.mapMoving || !this.enabled || ctx.currentMode.id !== 'draw') return false;
+        if (geoflo.mapMoving || !this.enabled || geoflo.currentMode.id !== 'draw') return false;
         
-        if (!ctx.Routing.enabled) {
-            if (ctx.hotFeature) ctx.hotFeature.geometry.coordinates.pop();
-            var fromPoint = ctx.currentMode.firstClick || !ctx.hotFeature ? ctx.firstClick.coords : ctx.hotFeature.geometry.coordinates[ctx.hotFeature.geometry.coordinates.length - 1];
+        if (!geoflo.Routing.enabled) {
+            if (geoflo.hotFeature) geoflo.hotFeature.geometry.coordinates.pop();
+            var fromPoint = geoflo.currentMode.firstClick || !geoflo.hotFeature ? geoflo.firstClick.coords : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
             var coords = [fromPoint, coords];
-            if (ctx.Utilities.isPointEqual(coords[0], coords[1])) return false;
+            if (geoflo.Utilities.isPointEqual(coords[0], coords[1])) return false;
             return this.getRoute(coords, options);
         }
 
-        if (ctx.map.getZoom() < ctx.options.exploring.minZoom) return alert(`Zoom must be lower than ${ctx.options.exploring.minZoom}`);
+        if (geoflo.map.getZoom() < geoflo.options.exploring.minZoom) return alert(`Zoom must be lower than ${geoflo.options.exploring.minZoom}`);
 
-        var buffer = options.buffer || ((ctx.options.exploring.buffer * Math.pow(2, Math.max(1, 19 - ctx.map.getZoom()))) / 100);
-        var polygon = turf.bboxPolygon([ ctx.map.getBounds().getWest(), ctx.map.getBounds().getSouth(), ctx.map.getBounds().getEast(), ctx.map.getBounds().getNorth() ]);
+        var buffer = options.buffer || ((geoflo.options.exploring.buffer * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()))) / 100);
+        var polygon = turf.bboxPolygon([ geoflo.map.getBounds().getWest(), geoflo.map.getBounds().getSouth(), geoflo.map.getBounds().getEast(), geoflo.map.getBounds().getNorth() ]);
 
         if (coords) polygon = turf.polygon(turf.buffer(turf.point(coords), buffer).geometry.coordinates);
 
-        ctx.map.getSource(ctx.statics.constants.sources['SNAP']).setData(turf.featureCollection([]));
-        ctx.map.getSource(ctx.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
-        ctx.map.getSource(ctx.statics.constants.sources['VERTEX']).setData(turf.featureCollection([polygon]));
+        geoflo.map.getSource(geoflo.statics.constants.sources['SNAP']).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources['VERTEX']).setData(turf.featureCollection([polygon]));
 
         this.getFeatures(turf.bbox(polygon)).then(features => { setFeatures(features, options); });
     }
@@ -79,16 +72,17 @@ const Exploring = function (ctx, mode) {
 	 * @returns {Object} The updated feature based on the provided coordinates and options.
 	 */
     this.setFeature = function (coords=[], options={}) {
-        if (!coords.length) return ctx.hotFeature;
+        if (!geoflo.hotFeature) return false;
+        if (!coords.length) return geoflo.hotFeature;
 
         var feature = turf.lineString(coords);
         feature.geometry.coordinates[0] = options.start || feature.geometry.coordinates[0];
 
-        if (this.currentMatch) feature = turf.lineString(ctx.Utilities.combineSameTypeFeatures([this.currentMatch, feature]));
+        if (this.currentMatch) feature = turf.lineString(geoflo.Utilities.combineSameTypeFeatures([this.currentMatch, feature]));
         this.currentMatch = feature;
 
-        ctx.map.getSource(ctx.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
-        ctx.fire('exploring.match', { route: this.currentMatch });
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        geoflo.fire('exploring.match', { route: this.currentMatch });
         return mode.updateHotSource(this.currentMatch);
     }
 
@@ -106,13 +100,13 @@ const Exploring = function (ctx, mode) {
 
         var tag = `way["highway"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});`;
 
-        if (ctx.map.getZoom() < 12) {
+        if (geoflo.map.getZoom() < 12) {
             tag = `way["highway"="motorway"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});`
             /* way["highway"="primary"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});
             way["highway"="secondary"](${bounds[1]} , ${bounds[0]} , ${bounds[3]} , ${bounds[2]});` */
         }
 
-        ctx.overpassDownloading = true;
+        geoflo.overpassDownloading = true;
 
         const query = '[out:json][timeout:25];(' + tag + ');out body;>;out skel qt;';
         const data = await fetch("//overpass-api.de/api/interpreter?data=" + query, { method: 'GET' } );
@@ -137,14 +131,14 @@ const Exploring = function (ctx, mode) {
     this.getMatch = async function (coords=[], options={}) {
         if (!coords.length) return false;
 
-        var tolerance = ctx.options.exploring.tolerance;
+        var tolerance = geoflo.options.exploring.tolerance;
         var feature = options.feature || turf.cleanCoords(turf.lineString(coords));
-        feature = turf.simplify(feature, { mutate: true, tolerance: typeof tolerance === 'function' ? tolerance(ctx.map) : tolerance, highQuality: true });
+        feature = turf.simplify(feature, { mutate: true, tolerance: typeof tolerance === 'function' ? tolerance(geoflo.map) : tolerance, highQuality: true });
 
         var coordinates = feature.geometry.coordinates;
         if (coordinates.length < 2) return false;
 
-        ctx.overpassDownloading = true;
+        geoflo.overpassDownloading = true;
 
         options.radius = options.radius || 50;
         options.profile = options.profile || 'driving';
@@ -165,7 +159,7 @@ const Exploring = function (ctx, mode) {
         const match = await fetch(query, { method: 'GET' } );
         const response = await match.json();
 
-        ctx.overpassDownloading = false;
+        geoflo.overpassDownloading = false;
         if (response.code !== 'Ok') alert(`${response.code} - ${response.message}.`);
         return !options.set ? response : !response.matchings || !response.matchings.length ? feature : this.setFeature(response.matchings[0].geometry.coordinates, options);
     }
@@ -183,13 +177,13 @@ const Exploring = function (ctx, mode) {
 	 * @returns {Promise<Array|Boolean>} The route response object or false if no coordinates are provided or the route calculation fails.
 	 */
     this.getRoute = async function (coords=[], options={}) {
-        if (!coords.length) return false;
-
-        var feature = options.feature || turf.cleanCoords(turf.lineString(coords));
+        var feature = options.feature ? options.feature : !coords.length ? false : turf.cleanCoords(turf.lineString(coords));
+        if (!feature) return false;
+        
         var coordinates = feature.geometry.coordinates;
         if (coordinates.length < 2) return false;
 
-        ctx.overpassDownloading = true;
+        geoflo.overpassDownloading = true;
         options.profile = options.profile || 'driving';
         coords = coordinates.join(';');
 
@@ -202,14 +196,14 @@ const Exploring = function (ctx, mode) {
         const match = await fetch(query, { method: 'GET' } );
         const response = await match.json();
 
-        ctx.overpassDownloading = false;
+        geoflo.overpassDownloading = false;
         if (response.code !== 'Ok') alert(`${response.code} - ${response.message}.`);
         return !options.set ? response : !response.routes || !response.routes.length ? feature : this.setFeature(response.routes[0].geometry.coordinates, options);
     }
     
 
 
-    if (ctx.options['exploring'].enable) this.activate();
+    if (geoflo.options['exploring'].enable) this.activate();
 
 
 
@@ -258,23 +252,23 @@ const Exploring = function (ctx, mode) {
             }
         });
 
-        return ctx.turf.featureCollection(lineStrings);
+        return geoflo.turf.featureCollection(lineStrings);
     }
 
     function setFeatures(features=[]) {
-        ctx.overpassDownloading = false;
-        if (ctx.mapMoving || !ctx.Exploring.enabled || ctx.currentMode.id !== 'draw') return ctx.updateMeshData([], true);
-        ctx.map.getSource(ctx.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
-        ctx.Snapping.addFeature(ctx.snapFeature);
-        ctx.setMeshFeatures(features);
-        ctx.currentMode.updateHotSource();
-        ctx.fire('overpass.add', { features: features });
-        if (!ctx.currentMode.firstClick) return features;
+        geoflo.overpassDownloading = false;
+        if (geoflo.mapMoving || !geoflo.Exploring.enabled || geoflo.currentMode.id !== 'draw') return geoflo.updateMeshData([], true);
+        geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+        geoflo.Snapping.addFeature(geoflo.snapFeature);
+        geoflo.setMeshFeatures(features);
+        geoflo.currentMode.updateHotSource();
+        geoflo.fire('overpass.add', { features: features });
+        if (!geoflo.currentMode.firstClick) return features;
         var points = turf.explode(turf.featureCollection(features))
-        var closestPoint = turf.nearestPoint(turf.point(ctx.currentMode.firstClick.coords), points);
-        ctx.lastClick = { coords: closestPoint.geometry.coordinates };
+        var closestPoint = turf.nearestPoint(turf.point(geoflo.currentMode.firstClick.coords), points);
+        geoflo.lastClick = { coords: closestPoint.geometry.coordinates };
         return features;
     }
-}
+};
 
-export { Exploring as default }
+export default Exploring;
