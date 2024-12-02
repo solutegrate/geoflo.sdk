@@ -1317,6 +1317,13 @@ const GeoFlo = function () {
 
 
 
+    this.selectFeature = function (id) {
+        var feature = this.getFeatureById(id);
+        if (!feature) return false;
+        var selected = this.Features.selectFeatures([feature]);
+        
+        return selected;
+    }
 
 	/**
 	 * @function
@@ -1399,13 +1406,31 @@ const GeoFlo = function () {
 	 * @description This function adds the provided features to the selected features list, updates the map sources, sets buttons, updates the text, and triggers a 'feature.select' event.
 	 * @param {Array} features - The features to be added to the selected features list.
 	 */
-    this.addFeaturesToSelected = function (features) {
+    this.addFeaturesToSelected = function (features, options={}) {
+        if (!features || !features.length) return false;
+
         this.getSelectedFeatures().push(...features);
+        this.setViewport();
         this.setButtons();
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.Features.setText(features);
-        this.fire('feature.select', { ids: this.getSelectedFeatureIds(), features: this.getSelectedFeatures() });
+        this.updateFeatures(features);
+
+        if (options.zoom) this.zoomToFeatures(features, { center: options.center });
+
+        if (options.text) {
+            this.Layers.addTextLayer({
+                select: true,
+                ids: options.text.ids,
+                field: options.text.field || 'text',
+                layout: options.text.layout || {
+                    'text-transform': 'uppercase',
+                    'text-size': 10,
+                    'text-offset': [0, 0.5]
+                }
+            });
+        }
     }
 
 	/**
@@ -1482,27 +1507,19 @@ const GeoFlo = function () {
 	 * @param {string} id - The ID of the feature to be deselected.
 	 * @returns {number} The number of features that were deselected.
 	 */
-    this.removeSelection = function (id) {
+    this.removeSelection = function (id, options={}) {
         this.removePopup();
-
-        if (!this.hasSelection()) {
-            this.Features.setText();
-            return this.fire('feature.deselect', { ids: [], features: [] });
-        }
-
-        var ids = geoflo.Utilities.clone(this.getSelectedFeatureIds());
-        var features = geoflo.Utilities.clone(this.getSelectedFeatures());
-
-        if (!id) features.forEach(function (feature) { this.Features.addFeatures([feature], true); }, this);
-
+        if (!this.hasSelection()) return this.Features.setText(), this.updateFeatures();
+        var features = this.Utilities.clone(this.getSelectedFeatures());
+        this.Features.addFeatures(features, true, id);
         this.getSelectedFeatures().splice(0, features.length);
-        this.setButtons();
-
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
-        
         this.Features.setText();
-        this.fire('feature.deselect', { ids: ids, features: features });
+        this.updateFeatures(features);
+        this.setButtons();
+        if (options.extent) this.setViewport(), this.setExtent();
+        if (options.removeText) this.Layers.removeTextLayer();
         return features.length;
     }
 

@@ -337,6 +337,7 @@ const Layers = function () {
             'source': statics.constants.sources.SELECT,
             'id': id + '-line-select',
             'type': 'line',
+            'slot': 'top',
             'layout': {
                 'line-cap': 'round',
                 'line-join': 'round'
@@ -351,6 +352,7 @@ const Layers = function () {
             'id': id + '-fill-select',
             'type': 'fill',
             'layout': {},
+            'slot': 'top',
             'filter': ["==", "$type", "Polygon"],
             'paint': {
                 'fill-color': geoflo.options.colors.primarySelect,
@@ -362,6 +364,7 @@ const Layers = function () {
             'id': id + '-point-select',
             'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"] ],
             'type': 'circle',
+            'slot': 'top',
             'paint': {
                 'circle-radius': 12,
                 'circle-stroke-width': 2,
@@ -374,6 +377,7 @@ const Layers = function () {
             'id': id + '-symbol-select',
             'filter': ['==', ['get', 'type'], 'Icon'],
             'type': 'symbol',
+            'slot': 'top',
             'layout': {
                 'icon-optional': true,
                 'symbol-placement': 'point',
@@ -402,6 +406,7 @@ const Layers = function () {
             'id': id + '-text-select',
             'filter': ['==', ['get', 'type'], 'Text'],
             'type': 'symbol',
+            'slot': 'top',
             'layout': {
                 "symbol-placement": "point",
                 'text-rotation-alignment': 'viewport',
@@ -424,6 +429,19 @@ const Layers = function () {
                 'text-halo-color': geoflo.options.colors.primaryColor,
                 'text-halo-width': 2,
                 'text-opacity': 1,
+            }
+        },
+        {
+            'source': statics.constants.sources.SELECT,
+            'id': id + '-image-select',
+            'filter': ['==', ['get', 'type'], 'Image'],
+            'type': 'symbol',
+            'slot': 'top',
+            'layout': {
+                'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-allow-overlap': true,
+                'icon-anchor': 'bottom'
             }
         },
         {
@@ -637,10 +655,10 @@ const Layers = function () {
 	 */
     this.getLayer = function (id, custom) {
         if (!id) return false;
-        var layers = custom ? this._layers : this.getLayers();
+        var layers = custom ? this.getCustomLayers() : this.getLayers();
         var layer = layers.find(function(layer) { return layer.id === id });
         if (!layer) layer = layers.filter(function(layer) { return layer.source === id });
-        return custom ? layer.layers : layer;
+        return layer;
     }
 
 	/**
@@ -707,7 +725,7 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers that have been added to the map.
 	 */
     this.addLayers = function (layers=[], options={}) {
-        layers.forEach(function(layer) { this.addLayer(layer, options) }, this);
+        layers.forEach(function(layer, index) { this.addLayer(layer, options, index) }, this);
         geoflo.fire('layers.add', { layers: this.getLayers() });
         buildEvents.call(this);
         return this.getLayers();
@@ -722,11 +740,11 @@ const Layers = function () {
 	 * @param {Object} [options={}] - Additional options for the layer.
 	 * @returns {Object} The added layer.
 	 */
-    this.addLayer = function (layer, options={}) {
+    this.addLayer = function (layer, options={}, index) {
         if (!layer || !layer.id) return false;
         console.log('Adding Layer:', id);
         layer.metadata = options;
-        map.addLayer(layer);
+        map.addLayer(layer, options.custom ? index : false);
 
         layer = map.getLayer(layer.id);
         if (!layer) return console.error(id, 'Layer Not Added!');
@@ -737,17 +755,17 @@ const Layers = function () {
     }
 
     this.addTextLayer = function (options={}) {
-        var layers = this.getCustomLayers();
+        var layers = options.select ? geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT) : this.getCustomLayers();
         var field = options.field || 'text';
 
-        this.removeTextLayer();
+        this.removeTextLayer(options);
 
         layers.forEach(function(layer) {
             var id = layer.id + '-Text';
 
             var filter = ['all', ['==', ["geometry-type"], 'Point'], ["has", field] ];
             if (options.filter) filter = options.filter;
-            if (options.ids) filter = ['in', 'id', ...options.ids];
+            if (!options.select && options.ids) filter = ['in', 'id', ...options.ids];
 
             var layout = Object.assign({}, {
                 'visibility': 'visible',
@@ -782,15 +800,15 @@ const Layers = function () {
             var style = {
                 id: id,
                 type: 'symbol',
-                source: layer.details.source || id,
+                source: layer.source || layer.details.source || id,
                 slot: 'top',
                 filter: filter,
                 layout: layout,
-                paint: paint
+                paint: paint,
+                metadata: { text: true, name: id }
             }
-
-            layer.text = style;
-            this.addLayer(style, { text: true, name: id });
+            
+            if (!map.getLayer(id)) map.addLayer(style);
         }, this);
 
         this.showTextLayers = true;
@@ -870,9 +888,9 @@ const Layers = function () {
         return id;
     }
 
-    this.removeTextLayer = function (id) {
-        var layers = this.getCustomLayers();
-        layers.forEach(function(layer) { this.removeLayer(layer.id + '-Text') }, this);
+    this.removeTextLayer = function (options={}) {
+        var layers = this.getLayers();
+        layers.forEach(function(layer) { if (layer.metadata.text && map.getLayer(layer.id)) map.removeLayer(layer.id) }, this);
         this.showTextLayers = false;
     }
 
@@ -1002,7 +1020,7 @@ const Layers = function () {
         const type = this.getType(details.type);
         if (!type) error = true;
 
-        var metadata = {};
+        var metadata = { type: type} ;
         details.default ? metadata.default = true : metadata.custom = true;
         details.name ? metadata.name = details.name : false;
 
@@ -1034,6 +1052,7 @@ const Layers = function () {
 
         removeLayer.call(this, { layer: details.id, source: source });
 
+        settings.metadata = metadata;
         this._layers.push(settings);
         this._sources.push({ id: source, type: type, options: options });
 

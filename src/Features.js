@@ -161,6 +161,8 @@ const Features = function () {
 	 * @returns {boolean} Returns false if no features are provided or if the features array is empty.
 	 */
     this.setText = function (features=[]) {
+        if (!geoflo.options.showFeatureText) return false;
+
         var source = geoflo.statics.constants.sources.HOTTEXT;
 
         this.textFeatures = [];
@@ -174,9 +176,9 @@ const Features = function () {
 
             this.currentType = type;
 
-            if (type === 'Polyline' && geoflo.Utilities.isValidLineString(feature)) {
+            if (type === 'Polyline' && geoflo.Utilities.isValidLineString(feature) && geoflo.options.showLineUnits) {
                 turf.segmentEach(feature, setLineText.bind(this));
-            } else if (geoflo.showFeatureText) {
+            } else {
                 source = geoflo.statics.constants.sources.SELECT;
                 var feat = geoflo.Utilities.cloneDeep(feature);
                 
@@ -240,12 +242,14 @@ const Features = function () {
 	 * @param {boolean} unselect - A flag indicating whether to unselect the features.
 	 * @returns {Array} The array of features that were added to the map.
 	 */
-    this.addFeatures = function (features, unselect) {
+    this.addFeatures = function (features, unselect, id) {
         var update;
         var sources = [];
 
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            if (id && feature.id !== id) return false;
+
             feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
             feature.properties.type = this.getType(feature);
@@ -261,6 +265,7 @@ const Features = function () {
                 coldFeatures.push(feature);
             }
 
+            if (unselect) delete feature.properties._selected;
             if (update && !sources.includes(feature.source)) sources.push(feature.source);
         }, this);
 
@@ -289,6 +294,25 @@ const Features = function () {
     };
 
 
+    this.selectFeatures = function (features) {
+        if (!features || !features.length) return false;
+
+        var selected = geoflo.getSelectedFeatures();
+
+        features.forEach(function (feature) {
+            var id = feature.id || feature.properties.id;
+            var index = selected.findIndex((f) => { return f.id === id || f.properties.id === id });
+
+            if (index > -1) return false;
+
+            feature.properties._selected = true;
+            selected.push(feature);
+        })
+
+        return selected;
+    }
+
+
 
 	/**
 	 * @function
@@ -302,6 +326,7 @@ const Features = function () {
         features = features || geoflo.getFeatures();
 
         var sources = [];
+        var selectedFeatures = geoflo.getSelectedFeatures();
 
         this.updatingFeatures = true;
 
@@ -316,14 +341,13 @@ const Features = function () {
                 return this.addFeature(feature, feature.source);
             }
 
-            var selected = geoflo.getSelectedFeatures().find((feature) => { return feature.id === id || feature.properties.id === id });
+            var selected = selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
 
-            if (selected) {
+            if (selected && !geoflo.noSelect) {
                 selected.geometry.coordinates = feature.geometry.coordinates;
                 selected.properties = feature.properties;
                 selected.properties._selected = true;
-                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(geoflo.getSelectedFeatures()));
-                return this.setText([selected]);
+                return geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
             } else if (!sources.includes(originalFeature.source)) {
                 sources.push(originalFeature.source);
             }
@@ -335,7 +359,7 @@ const Features = function () {
                 originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
                 originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
                 false;
-            } else {                
+            } else {
                 originalFeature.geometry.coordinates = feature.geometry.coordinates;
                 originalFeature.properties = feature.properties;
             }

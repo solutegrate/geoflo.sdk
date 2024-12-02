@@ -1,5 +1,7 @@
 const Options = {
     theme: 'dark',
+    showLineUnits: false,
+    showFeatureText: true,
     controls: {
         options: false,
         modes: false,

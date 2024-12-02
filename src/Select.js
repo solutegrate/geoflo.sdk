@@ -71,20 +71,71 @@ const Select = function () {
 	 * @param {string} id - The ID of the feature to be selected.
 	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
 	 */
-    this.selectFeature = function (id) {
+    this.selectFeature = function (id, options={}) {
         const popup = geoflo.options.select.popup;
-
+        const selectLayer = geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT);
         geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         
         if (!id) return false;
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
-        if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
+        //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
-        removedFeatures = geoflo.Features.removeFeatures(id);
-
-        geoflo.addFeaturesToSelected(removedFeatures);
+        removedFeatures = geoflo.Features.removeFeatures(id, true);
+        geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
         
+        geoflo.getSelectedFeatures().forEach(function (feature) {
+            const source = feature.source;
+            const layer = geoflo.Layers.getLayer(source, true);
+            const style = !layer ? false : layer.style;
+
+            if (!style) {
+                return selectLayer.forEach(function (l) {
+                    let layer = geoflo.map.getLayer(l.id);
+                    if (!layer) return;
+
+                    if (l.paint) {
+                        Object.entries(l.paint).forEach(function (entry) {
+                            const key = entry[0];
+                            const value = entry[1];
+                            layer.setPaintProperty(key, value);
+                        });
+                    } else if (l.layout) {
+                        Object.entries(l.layout).forEach(function (entry) {
+                            const key = entry[0];
+                            const value = entry[1];
+                            layer.setLayoutProperty(key, value);
+                        });
+                    }
+                })
+            }
+
+            selectLayer.forEach(function (l) {
+                let type = layer.type;
+                if (!type) return;
+
+                type = type.toLowerCase();
+                if (!l.id.includes(type)) return;
+
+                if (style[type]) {
+                    if (style[type].paint) {
+                        Object.entries(style[type].paint).forEach(function (entry) {
+                            const key = entry[0];
+                            const value = entry[1];
+                            l.setPaintProperty(key, value);
+                        });
+                    } else if (style[type].layout) {
+                        Object.entries(style[type].layout).forEach(function (entry) {
+                            const key = entry[0];
+                            const value = entry[1];
+                            l.setLayoutProperty(key, value);
+                        });
+                    }
+                }
+            });
+        });
+
+        geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
         return removedFeatures;
@@ -97,7 +148,7 @@ const Select = function () {
 	 * @description Deselects the current feature by removing its selection.
 	 */
     this.deselectCurrentFeature = function () {
-        if (geoflo.noSelect) return geoflo.fire('feature.deselect', { ids: [selectedId], features: [] });
+        geoflo.fire('feature.deselect', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         geoflo.removeSelection();
     };
 
@@ -155,8 +206,6 @@ const Select = function () {
 	 * @returns {boolean} Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
 	 */
     this.handleClick = function (event) {
-        if (geoflo.noSelect) return false;
-        
         var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
         clickCoords = [event.lngLat.lng, event.lngLat.lat];
@@ -289,7 +338,6 @@ const Select = function () {
             });
         }
 
-        if (geoflo.noSelect) return geoflo.fire('feature.select', { ids: [selectedId], features: [feat] });
         if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
         geoflo.currentMode.selectFeature(selectedId);
     }
