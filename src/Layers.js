@@ -1302,45 +1302,6 @@ const Layers = function () {
                     style.paint['circle-color'] = options.secondaryColor || geoflo.options.colors.secondaryColor;
                     style.paint['circle-stroke-color'] = options.primaryColor || geoflo.options.colors.primaryColor;
                 }
-            } else if (type.includes('image')) {
-                if (options.noImage) continue;
-                if (!settings.images || !settings.images.length) continue;
-
-                for (var j = 0; j < settings.images.length; j++) {
-                    var image = settings.images[j];
-                    if (!image) continue;
-    
-                    var img = await loadImage(image);
-                    if (!img) continue;
-                    
-                    map.hasImage(image.id) ?
-                    map.updateImage(image.id, img, {pixelRatio: 2}) :
-                    map.addImage(image.id, img, {pixelRatio: 2});
-                }
-    
-                layout = Object.assign({}, {
-                    'visibility': options.visibility || 'visible',
-                    'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
-                    'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
-                    'icon-allow-overlap': true,
-                    'icon-anchor': 'bottom'
-                }, style.image ? style.image.layout || {} : {});
-    
-                paint = Object.assign({}, {
-                    'icon-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0,
-                        ['case', ["boolean", ["feature-state", "hidden"], true], 0,
-                        ['get', 'opacity', ['get','style', ['properties']]]]]
-                }, style.image ? style.image.paint || {} : {});
-    
-                style = {
-                    id: id,
-                    type: 'symbol',
-                    source: source,
-                    slot: style.slot || 'top',
-                    filter: style.image ? style.image.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
-                    layout: layout,
-                    paint: paint
-                }
             } else if (type.includes('icon')) {
                 if (dontRender) continue;
 
@@ -1374,7 +1335,7 @@ const Layers = function () {
                     type: 'symbol',
                     source: source,
                     slot: style.slot || 'top',
-                    filter: style.icon ? style.icon.filter || ['==', "$type", "Point"] : style.circle ? style.circle.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
+                    filter: style.icon ? style.icon.filter || ['==', "$type", "Point"] : ['==', "$type", "Point"],
                     layout: layout,
                     paint: paint
                 }

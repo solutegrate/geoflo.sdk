@@ -2,7 +2,7 @@
   "name": "@solutegrate/mapboxgl-geoflo",
   "version": "1.0.4",
   "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
-  "main": "dist/mapboxgl-geoflo.min.js",
+  "main": "dist/geoflo-sdk.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
   },
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/solutegrate/mapboxgl-geoflo.git"
+    "url": "https://github.com/solutegrate/geoflo.sdk.git"
   },
   "keywords": [
     "solutegrate",
@@ -39,7 +39,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/solutegrate/mapboxgl-geoflo/issues"
+    "url": "https://github.com/solutegrate/geoflo-sdk/issues"
   },
   "homepage": "https://demo.geoflo.pro",
   "dependencies": {

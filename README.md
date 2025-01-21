@@ -53,7 +53,7 @@
 ## ⚡ Deployment
 
 Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `mapboxgl-geoflo` npm package.
+you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `geoflo-sdk` npm package.
 
 For more information on creating and using Mapbox access tokens:
 [<img width="100" alt="Mapbox logo" src="./assets/images/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
@@ -64,18 +64,18 @@ For more information on creating and using Mapbox access tokens:
 ### Module Import
 
 ```bash
-  npm install @solutegrate/mapboxgl-geoflo
+  npm install @solutegrate/geoflo-sdk
 ```
 
 ```javascript
-import geoflo from "@solutegrate/mapboxgl-geoflo";
+import geoflo from "@solutegrate/geoflo-sdk";
 ```
 
 ### CDN Import
 
 ```javascript
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css">
-  <link rel="stylesheet" href="https://sdk.geoflo.pro/mapboxgl-geoflo.css">
+  <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo-sdk.css">
 
   <div id="map"></div>
 
@@ -83,18 +83,45 @@ import geoflo from "@solutegrate/mapboxgl-geoflo";
   <script type="text/javascript" src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js"></script>
-  <script type="text/javascript" src="https://sdk.geoflo.pro/mapboxgl-geoflo.min.js"></script>
+  <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo-sdk.min.js"></script>
 ```
 
 ### Initialization
 
 ```javascript
-const options = { enable: true, container: "map", accessToken: "MAPBOX_TOKEN" };
-const onReady = function (ctx) {
-  console.log("onReady", ctx);
+const options = {
+    container: 'geoflo-map',
+    noSelect: false,
+    showFeatureText: true,
+    map: {
+        maxPitch: 75,
+        style: "Satellite",
+        extent: [[
+            [-126.9060439709589, 51.1952997950618],
+            [-65.18429019477269, 51.1952997950618],
+            [-65.18429019477269, 23.808093967213807],
+            [-126.9060439709589, 23.808093967213807],
+            [-126.9060439709589, 51.1952997950618]
+        ]]
+    }
+}
+
+await geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
+
+function onReady() {
+  this.styles ? this.styles.hide() : false;
+  this.mobile && this.navigation ? this.navigation.hide() : false;
+  this.mobile && this.fullscreen ? this.fullscreen.hide() : false;
+  this.viewportHeightOffset = this.mobile ? 70 : 120;
+  this.viewportLeft = this.mobile ? '10px' : '30px';
+  this.viewportBottom = '8%';
+  this.viewportWidthOffset = this.mobile ? 60 : 100;
+  this.map.on(this.id, onGeoFloEvent.bind(this));
 };
 
-geoflo.init(options, onReady);
+function onGeoFloEvent(event) {
+  console.log(event);
+}
 ```
 
 ## 🗺️ Roadmap

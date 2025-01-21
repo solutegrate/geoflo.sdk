@@ -115,6 +115,15 @@ const GeoFlo = function () {
         this.mapbox.on('load', this.onLoad.bind(this));
 
         await loaded(this);
+
+        if (onReady && typeof onReady === 'function') {
+            if (onReady.constructor.name === 'AsyncFunction') {
+                await onReady.call(this, this);
+            } else {
+                onReady.call(this, this);
+            }
+        }
+        
         return this;
     }
 
