@@ -64,7 +64,7 @@ async function build(err, stats) {
     if (err) return console.error('Error building:', err);
 
 	console.log(stats.toString({ colors: true }));
-	onsole.log('Assets by Chunk Name:', stats.toJson().assetsByChunkName);
+	console.log('Assets by Chunk Name:', stats.toJson().assetsByChunkName);
 	
 	const outputFiles = stats.toJson().assetsByChunkName;
 	const hashedJsFile = Object.values(outputFiles).flat().find(file => file.endsWith('.js'));
