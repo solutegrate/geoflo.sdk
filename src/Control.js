@@ -56,18 +56,41 @@ const Control = function (controls, options={}) {
 
 
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name enable
+     * @description Enables the control buttons.
+     * @param {Object} control - The control object to enable.
+     * @returns {Object} Returns the control object.
+     */
     this.enable = function (control) {
         if (!control) return null;
         this.position = control.position;
         geoflo.map.addControl(this, control.position);
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name disable
+     * @description Disables the control buttons.
+     * @returns {Object} Returns the control object.
+     */
     this.disable = function () {
         geoflo.map.removeControl(this);
     }
 
 
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name onAdd
+     * @description Adds the control buttons to the map.
+     * @param {Object} map - The map object to add the control buttons to.
+     * @returns {Object} Returns the control object.
+     */
     this.onAdd = function(map) {
         if (!this.options) return false;
         if (this.options.attribution) return this.setAttribution(map);
@@ -76,6 +99,13 @@ const Control = function (controls, options={}) {
         return this.element;
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name onRemove
+     * @description Removes the control buttons from the map.
+     * @returns {Object} Returns the control object.
+     */
     this.onRemove = function() {
         geoflo.buttons.removeButtons();
         geoflo.fire('control.remove', { element: this.element });
@@ -84,6 +114,13 @@ const Control = function (controls, options={}) {
 
 
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name setAttribution
+     * @description Sets the attribution for the control buttons.
+     * @returns {Object} Returns the control object.
+     */
     this.setAttribution = function () {
         var attr = Attr(geoflo, this.control, options);
         Object.assign(this, attr)
@@ -93,10 +130,26 @@ const Control = function (controls, options={}) {
         return this.element;
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name setMode
+     * @description Sets the mode for the control buttons.
+     * @param {String} mode - The mode to set the control buttons to.
+     * @returns {Object} Returns the control object.
+     */
     this.setMode = function (mode) {
         geoflo.setActiveButton(!mode ? 'select' : mode === 'draw' ? mode : mode)
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name setTheme
+     * @description Sets the theme for the control buttons.
+     * @param {Object} colors - The colors to set the theme to.
+     * @returns {Object} Returns the control object.
+     */
     this.setTheme = function(colors) {
         if (!colors) { return console.error('Control colors not provided!') };
 
@@ -114,6 +167,14 @@ const Control = function (controls, options={}) {
         return this.getTheme();
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name setControl
+     * @description Sets the control buttons.
+     * @param {Array} controls - The control buttons to set.
+     * @returns {Object} Returns the control object.
+     */
     this.setControl = function (controls) {
         if (!controls) return false;
 
@@ -136,14 +197,36 @@ const Control = function (controls, options={}) {
     }
 
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name getTheme
+     * @description Gets the theme for the control buttons.
+     * @returns {Object} Returns the theme for the control buttons.
+     */
     this.getTheme = function() {
         return geoflo.options.colors;
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name getButtons
+     * @description Gets the control buttons.
+     * @returns {Object} Returns the control buttons.
+     */
     this.getButtons = function () {
         return this._buttons;
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name getControl
+     * @description Gets the control buttons.
+     * @param {String} id - The id of the control button to get.
+     * @returns {Object} Returns the control button.
+     */
     this.getControl = function (id) {
         var nodes = this.control.childNodes;
         if (!nodes.length) return;
@@ -155,7 +238,14 @@ const Control = function (controls, options={}) {
     }
 
 
-
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name showControl
+     * @description Shows the control buttons.
+     * @param {String} id - The id of the control button to show.
+     * @returns {Object} Returns the control button.
+     */
     this.showControl = function (id) {
         var control = this.getControl(id);
         if (!control) return false;
@@ -164,6 +254,14 @@ const Control = function (controls, options={}) {
         return control;
     }
 
+    /**
+	 * @function
+     * @memberof module:geoflo.Control
+	 * @name hideControl
+     * @description Hides the control buttons.
+     * @param {String} id - The id of the control button to hide.
+     * @returns {Object} Returns the control button.
+     */
     this.hideControl = function (id) {
         var control = this.getControl(id);
         if (!control) return false;

@@ -15,6 +15,7 @@ const name = `${id}.min.js`;
 
 const entry = path.resolve(__dirname, input);
 const output = path.resolve(__dirname, folder);
+const docs = path.resolve(__dirname, './docs');
 
 webpack({
 	mode: mode,
@@ -46,7 +47,9 @@ webpack({
 			})
 		]
 	} : {}
-}, async function (err, stats) {
+}, build);
+
+async function build(err, stats) {
 	if (err) return console.error('Error building:', err);
 
 	const data = await fs.readFile(path.join(output, name), 'utf8');
@@ -60,12 +63,28 @@ webpack({
 	}
 
 	try {
-		const jsdocOutput = await execPromise('npx jsdoc -c ./jsdoc.config.json');
-		console.log(`JSDoc Output: ${jsdocOutput}`);
+		const htmls = await fs.readdir(docs);
+		
+		for (const file of htmls) {
+			if (file.endsWith('.html')) {
+				const filePath = path.join(docs, file);
+				await fs.unlink(filePath); // Delete only .html files
+				console.log(`Deleted file: ${filePath}`);
+			}
+		}
+
+		console.log('Cleared .html files in the docs directory.');
 	} catch (error) {
-		console.error(`Error generating JSDoc: ${error.message}`);
+		console.error(`Error clearing .html files in docs directory: ${error.message}`);
+	}
+
+	try {
+		const jsdocs = await execPromise('npx jsdoc -c ./jsdoc.config.json');
+		console.log(`JSDoc Complete ${jsdocs}`);
+	} catch (error) {
+		console.error(`Error generating JSDoc ${error.message}`);
 	}	
-});
+}
 
 function execPromise(command) {
 	return new Promise((resolve, reject) => {
