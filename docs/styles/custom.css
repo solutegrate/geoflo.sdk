@@ -27,14 +27,13 @@
     box-shadow: 0 0 40px 0 var(--theme-primary-text);
 }
 
-#main-content-wrapper section {
-    height: 580px;
+#map {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    height: 580px !important;
     width: 100%;
-}
-
-#main-content-wrapper article {
-    height: 100%;
-    width: 100%;
+    background-color: var(--geoflo-secondary-background);
 }
 
 .top-nav {
