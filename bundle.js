@@ -64,13 +64,18 @@ async function build(err, stats) {
     if (err) return console.error('Error building:', err);
 
 	console.log(stats.toString({ colors: true }));
+	onsole.log('Assets by Chunk Name:', stats.toJson().assetsByChunkName);
 	
 	const outputFiles = stats.toJson().assetsByChunkName;
-	const hashedJsFile = outputFiles.main.find(file => file.startsWith('index') && file.endsWith('.js'));
+	const hashedJsFile = Object.values(outputFiles).flat().find(file => file.endsWith('.js'));
+
+    if (!hashedJsFile) {
+        console.error('Error: Unable to find the hashed JS file.');
+        console.log('Emitted assets:', stats.toJson().assets);
+        throw new Error('Error handling output files');
+    }
 
 	console.log('Hashed JS File:', hashedJsFile);
-
-    if (!hashedJsFile) throw new Error('Error handling output files');
 
     const bundlePath = path.join(output, hashedJsFile);
 	const data = await fs.readFile(bundlePath, 'utf8');
