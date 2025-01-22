@@ -37,7 +37,9 @@ jobs:
           node bundle.js true
       - name: Generate Documentation
         run: |
-          npx jsdoc -c ./jsdoc.config.json
+          npx jsdoc -X -c ./jsdoc.config.json > jsdoc-output.json
+          cat jsdoc-output.json
+        working-directory: ${{ github.workspace }}
       - name: Commit Changes
         run: |
           git config --global user.name 'github-actions'
@@ -45,15 +47,24 @@ jobs:
           git add ./dist ./docs
           git commit -m "Updated dist and docs at $(date) [skip ci]" || echo "No changes to commit"
           git push
-      - name: Upload Dist to S3
+      - name: Upload JS to S3
         uses: tpaschalis/s3-sync-action@master
         with:
           args: --acl public-read
         env:
-          SOURCE_DIR: ./dist
-          DEST_DIR: sdk/
+          FILE: ./dist/geoflo-sdk.min.js
           AWS_REGION: "us-east-1"
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+      - name: Upload CSS to S3
+        uses: tpaschalis/s3-sync-action@master
+        with:
+          args: --acl public-read
+        env:
+          FILE: ./dist/geoflo-sdk.css
+          AWS_REGION: "us-east-1"
+          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
       - name: Invalidate CloudFront
