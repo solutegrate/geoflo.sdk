@@ -3,11 +3,11 @@ const Options = {
     showLineUnits: false,
     showFeatureText: true,
     controls: {
-        options: false,
-        modes: false,
-        utils: false,
-        types: false,
-        actions: false
+        options: true,
+        modes: true,
+        utils: true,
+        types: true,
+        actions: true
     },
     map: {
         container: 'map',
