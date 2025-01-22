@@ -5,7 +5,7 @@
 		"recurse": true,
 		"lenient": false,
         "sort": true,
-		"readme": "./readme.md",
+		"readme": "./README.md",
 		"encoding": "utf8",
 		"destination": "./docs/",
 		"template": "./node_modules/tui-jsdoc-template",
