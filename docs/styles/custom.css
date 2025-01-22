@@ -10,6 +10,167 @@
     --theme-error: #ff7676;
 }
 
+#main {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background: var(--theme-primary-background);
+    padding-top: 120px;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+#main>.core>.content {
+    background: var(--theme-primary-background);
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0 0 40px 0 var(--theme-primary-text);
+}
+
+#main-content-wrapper section {
+    height: 580px;
+    width: 100%;
+}
+
+#main-content-wrapper article {
+    height: 100%;
+    width: 100%;
+}
+
+.top-nav {
+    background: var(--theme-secondary-background);
+    padding: 8px 24px;
+    box-shadow: 0 0 40px 0 var(--theme-primary-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.navbar-item, .navbar-link {
+    color: var(--theme-primary-color);
+    display: block;
+    line-height: 1.5;
+    padding: .5rem .75rem;
+    position: relative;
+}
+
+.top-nav .menu .navigation .link {
+    border: none;
+    display: inline-block;
+    padding: 4px 8px;
+    color: var(--theme-primary-text);
+    margin-right: 2px;
+    line-height: 48px;
+    height: 48px;
+    vertical-align: middle;
+    height: 46px;
+}
+
+.top-nav .menu .navigation .link:hover:not(.no-hover) {
+    border-bottom: 2px solid var(--theme-primary-color);
+}
+
+.sidebar h3 {
+    margin: 1.6rem 0 .4rem;
+    color: var(--theme-primary-text);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.sidebar a {
+    color: var(--theme-secondary-color);
+    overflow-wrap: break-word;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    color: var(--theme-primary-color);
+}
+
+.side-nav a {
+    color: var(--theme-primary-color);
+    overflow-wrap: break-word;
+}
+
+.side-nav h3 {
+    margin: 1.6rem 0 .4rem;
+    color: var(--theme-primary-text);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.side-nav a:hover, .side-nav a.is-active {
+    color: var(--theme-secondary-color);
+}
+
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    color: var(--theme-primary-color);
+    font-weight: 600;
+    line-height: 1.125;
+}
+
+.content table td, .content table th {
+    border: 1px solid var(--theme-secondary-background);
+    border-width: 0 0 1px;
+    padding: .5em .75em;
+    vertical-align: top;
+}
+
+.member>.name {
+    color: var(--theme-secondary-color);
+    font-size: 20px;
+    line-height: 26px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+body {
+    color: var(--theme-primary-text);
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+a {
+    color: var(--theme-error);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+dl a {
+    color: var(--theme-primary-text);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--theme-secondary-color);
+}
+
+strong {
+    color: var(--theme-error);
+    font-weight: 700;
+}
+
+.tag-source {
+    display: none;
+}
+
+.prettyprint {
+    border-radius: 2px;
+    background-color: var(--theme-secondary-background);
+}
+
+@media screen and (min-width: 769px), print {
+    .column.is-7, .column.is-7-tablet {
+        flex: none;
+        width: 75%;
+    }
+}
+
+
+
 body {
     font-size: 12px;
     font-family: Helvetica Neue, Helvetica, Arial, Malgun gothic, '돋움', AppleSDGothicNeo;
@@ -626,4 +787,16 @@ dd.yes-def {
 
 dd.yes-def ul {
     margin: 0
+}
+
+.top-nav .logo {
+    display: flex;
+    width: 400px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+.content table .description {
+    color: var(--theme-primary-background);
+    font-weight: bold;
 }
