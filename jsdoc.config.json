@@ -8,7 +8,7 @@
 		"readme": "./README.md",
 		"encoding": "utf8",
 		"destination": "./docs/",
-		"template": "./node_modules/tui-jsdoc-template",
+		"template": "./node_modules/better-docs",
 		"tutorials": "./docs/tutorials"
 	},
 	"source": {
@@ -26,7 +26,7 @@
 	},
 	"templates": {
 		"name": "Documentation",
-		"footerText": "Solutegrate/GeoFlo © 2024",
+		"footerText": "Solutegrate/GeoFlo © 2025",
 		"includeSource": false,
 		"systemName": "GeoFlo",
 		"navType": "vertical",

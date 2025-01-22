@@ -30,7 +30,7 @@ jobs:
       - name: Install Node Modules
         run: |
           mkdir -p node_modules
-          npm install webpack webpack-cli terser-webpack-plugin jsdoc tui-jsdoc-template taffydb
+          npm install webpack webpack-cli terser-webpack-plugin jsdoc tui-jsdoc-template better-docs taffydb 
       - name: Run Webpack Production Build
         id: webpack
         run: |
