@@ -109,15 +109,8 @@
     line-height: 1.125;
 }
 
-.content table td, .content table th {
-    border: 1px solid var(--theme-secondary-background);
-    border-width: 0 0 1px;
-    padding: .5em .75em;
-    vertical-align: top;
-}
-
 .member>.name {
-    color: var(--theme-secondary-color);
+    color: #fff;
     font-size: 20px;
     line-height: 26px;
     position: relative;
@@ -159,6 +152,39 @@ strong {
 .prettyprint {
     border-radius: 2px;
     background-color: var(--theme-secondary-background);
+}
+
+.table {
+    background-color: var(--theme-secondary-background);
+    color: var(--theme-primary-text);
+}
+
+table.params, table.props {
+    border: 1px solid var(--theme-secondary-color);
+    line-height: 26px;
+}
+
+.content table thead td, .content table thead th {
+    border-width: 0 0 2px;
+    color: var(--theme-error);
+}
+
+.content table td, .content table th {
+    border: 1px solid var(--theme-primary-background);
+    border-width: 0 0 1px;
+    padding: .5em .75em;
+    vertical-align: top;
+}
+
+table.params td.name code, table.props td.name code {
+    background: transparent;
+    padding: 0;
+    font-size: 15px;
+    color: var(--theme-primary-text);
+}
+
+table.params tr.deep-level-1, table.props tr.deep-level-1 {
+    background: var(--theme-primary-background);
 }
 
 @media screen and (min-width: 769px), print {
@@ -710,6 +736,7 @@ span.arrow {
 .description {
     color: var(--theme-primary-text);
     font-weight: bold;
+    font-size: 14px;
 }
 
 .container-params {
@@ -793,9 +820,4 @@ dd.yes-def ul {
     width: 400px;
     height: 40px;
     vertical-align: middle;
-}
-
-.content table .description {
-    color: var(--theme-primary-background);
-    font-weight: bold;
 }
