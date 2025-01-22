@@ -92,7 +92,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:onDisconnect">onDisconnect</a></li><li><a href="global.html#event:onEvent">onEvent</a></li><li><a href="global.html#event:onInit">onInit</a></li><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
                 
             </nav>
         </div>
@@ -818,13 +818,6 @@ const Gamepad = function (gamepad) {
         return this.gamepad;
     }
 
-	/**
-	 * @event
-	 * @name onInit
-	 * @description This function initializes the gamepad object by setting up the container, center marker, and map.
-	 * @param {Object} options - The options object for initialization.
-	 * @returns {void}
-	 */
     this.onInit = function (options) {
         this.initiated = true;
         this.setContainer('div', 'gamepad', geoflo.map.getContainer());
@@ -832,15 +825,6 @@ const Gamepad = function (gamepad) {
         this.setMap();
     }
 
-	/**
-	 * @event
-	 * @name onEvent
-	 * @description This function takes in the type, key, action, and value parameters to handle gamepad events and trigger corresponding actions.
-	 * @param {string} type - The type of event.
-	 * @param {string} key - The key associated with the event.
-	 * @param {string} action - The action triggered by the event.
-	 * @param {any} value - The value associated with the event.
-	 */
     this.onEvent = function (type, key, action, value) {
         var pressed = {[action]: true};
         var lngLat = this.options.camera.free ? geoflo.map.getCenter() : geoflo.lastMove ? geoflo.lastMove : geoflo.map.getCenter();
@@ -890,13 +874,6 @@ const Gamepad = function (gamepad) {
         if (pressed['DpadRight']) this.options.mapping['DpadRight'](options);
     }
 
-	/**
-	 * @event
-	 * @name onDisconnect
-	 * @description This function disconnects the current gamepad by removing it from the system.
-	 * @param {Object} gamepad - The gamepad object to disconnect.
-	 * @returns {boolean} Returns false if the gamepad parameter is missing or if there is no current gamepad.
-	 */
     this.onDisconnect = function (gamepad) {
         if (!gamepad || !this.gamepad) return false;
         if (this.gamepad.id !== gamepad.id) throw new Error('Gamepad id does not match!');
