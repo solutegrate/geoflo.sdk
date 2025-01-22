@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'Publish to CDN')
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,7 +26,7 @@ jobs:
       - name: Install Node Modules
         run: |
           mkdir -p node_modules
-          npm install aws-sdk firebase web-push webpack webpack-cli clean-webpack-plugin html-webpack-plugin webpack-pwa-manifest workbox-webpack-plugin terser-webpack-plugin   
+          npm install aws-sdk webpack webpack-cli clean-webpack-plugin terser-webpack-plugin   
       - name: Run Webpack Production Build
         id: webpack
         run: |

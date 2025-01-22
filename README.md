@@ -126,17 +126,7 @@ function onGeoFloEvent(event) {
 
 ## 🗺️ Roadmap
 
-- MongoDB Atlas/Realm Pro Version
-- AWS Integration
-- Project Management/Tracking
-- Data Grid, Kanban, Gantt, Calendar, Pivot
-- FontAwesome Pro Icons
-- Advanced Network Node Optimization
-- Real-Time GPS Tracking
-- Actual/Forecast Analysis
-- Budget/Cost Reporting
-- Integrated Material Procurement
-- More and more to come.......
+- In review...
 
 ## 🏁 Credits
 
