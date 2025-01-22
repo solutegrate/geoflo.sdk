@@ -17,6 +17,12 @@ import Painting from './src/Painting.js';
 import Control from './src/Control.js';
 import Gamepad from './src/Gamepad.js';
 
+/**
+ * @module geoflo
+ * @name geoflo
+ * @description Represents the GeoFlo object that manages all modules.
+ * @returns {Object} The GeoFlo object with various methods for managing the entire app.
+ */
 const GeoFlo = function () {
     const geoflo = this;
     

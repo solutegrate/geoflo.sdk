@@ -74,15 +74,10 @@ import geoflo from "@solutegrate/geoflo-sdk";
 ### CDN Import
 
 ```javascript
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css">
   <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo-sdk.css">
 
   <div id="map"></div>
-
-  <script type="text/javascript" src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
-  <script type="text/javascript" src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script type="text/javascript" src="https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js"></script>
+  
   <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo-sdk.min.js"></script>
 ```
 

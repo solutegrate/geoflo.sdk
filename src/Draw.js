@@ -1,3 +1,10 @@
+/**
+ * @module geoflo.Draw
+ * @name Draw
+ * @description This module provides the functionality for drawing features on the map.
+ * @returns {Object} The current instance for method chaining.
+ * 
+ */
 const Draw = function () {
     const geoflo = this.geoflo;
 

@@ -1,3 +1,9 @@
+/**
+ * @module geoflo.Pinning
+ * @description This module provides the pinning functionality for the Geoflo application. It allows users to pin features to the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Pinning object.
+ */
 const Pinning = function (mode) {
     const geoflo = this.geoflo;
 

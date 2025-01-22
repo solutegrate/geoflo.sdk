@@ -1,3 +1,31 @@
+/**
+ * @module Control
+ * @name Control
+ * @description This module is responsible for creating and managing the control buttons in the Geoflo application.
+ * @param {Array} controls - An array of control objects to be added to the map.
+ * @param {Object} options - An object containing options for the control buttons.
+ * @returns {Object} Returns the Control object.
+ * @example
+ * var control = new Control([
+ *  { type: 'modes', position: 'top-right', show: true },
+ *  { type: 'options', position: 'top-right', show: true },
+ *  { type: 'actions', position: 'top-right', show: true },
+ *  { type: 'types', position: 'top-right', show: true },
+ *  { type: 'utils', position: 'top-right', show: true }
+ * ], {
+ *   colors: {
+ *    primaryColor: '#000000',
+ *    primaryBackground: '#ffffff',
+ *    primaryText: '#000000',
+ *    primaryBorder: '#000000',
+ *    secondaryColor: '#000000',
+ *    secondaryBackground: '#ffffff',
+ *    secondaryText: '#000000',
+ *    secondaryBorder: '#000000'
+ *  }
+ * });
+ */
+
 const Control = function (controls, options={}) {
     const geoflo = this.geoflo;
 
