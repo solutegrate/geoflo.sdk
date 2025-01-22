@@ -27,6 +27,11 @@
 	"templates": {
 		"name": "Documentation",
 		"footerText": "Solutegrate/GeoFlo © 2024",
+		"includeSource": false,
+		"systemName": "GeoFlo",
+		"navType": "vertical",
+		"linenums": true,
+		"dateFormat": "MMMM Do YYYY, h:mm:ss a",
 		"useCollapsibles": true,
 		"logo": {
 			"url": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
