@@ -84,39 +84,39 @@ import geoflo from "@solutegrate/geoflo-sdk";
 ### Initialization
 
 ```javascript
-const options = {
-    container: 'map',
-    noSelect: false,
-    showFeatureText: true,
-    map: {
-        maxPitch: 75,
-        style: "Satellite",
-        extent: [[
-            [-126.9060439709589, 51.1952997950618],
-            [-65.18429019477269, 51.1952997950618],
-            [-65.18429019477269, 23.808093967213807],
-            [-126.9060439709589, 23.808093967213807],
-            [-126.9060439709589, 51.1952997950618]
-        ]]
-    }
-}
+  const options = {
+      container: 'map',
+      noSelect: false,
+      showFeatureText: true,
+      map: {
+          maxPitch: 75,
+          style: "Satellite",
+          extent: [[
+              [-126.9060439709589, 51.1952997950618],
+              [-65.18429019477269, 51.1952997950618],
+              [-65.18429019477269, 23.808093967213807],
+              [-126.9060439709589, 23.808093967213807],
+              [-126.9060439709589, 51.1952997950618]
+          ]]
+      }
+  }
 
-await geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
+  await geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
 
-function onReady(geoflo) {
-    geoflo.styles ? geoflo.styles.hide() : false;
-    geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
-    geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
-    geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
-    geoflo.viewportLeft = geoflo.mobile ? '10px' : '30px';
-    geoflo.viewportBottom = '8%';
-    geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
-    geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
-};
+  function onReady(geoflo) {
+      geoflo.styles ? geoflo.styles.hide() : false;
+      geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
+      geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
+      geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
+      geoflo.viewportLeft = geoflo.mobile ? '10px' : '30px';
+      geoflo.viewportBottom = '8%';
+      geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
+      geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
+  };
 
-function onGeoFloEvent(event) {
-    console.log(event);
-}
+  function onGeoFloEvent(event) {
+      console.log(event);
+  }
 ```
 
 ## 🗺️ Roadmap
