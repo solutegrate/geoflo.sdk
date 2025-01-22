@@ -707,13 +707,6 @@ const Gamepad = function (gamepad) {
         return this.gamepad;
     }
 
-	/**
-	 * @event
-	 * @name onInit
-	 * @description This function initializes the gamepad object by setting up the container, center marker, and map.
-	 * @param {Object} options - The options object for initialization.
-	 * @returns {void}
-	 */
     this.onInit = function (options) {
         this.initiated = true;
         this.setContainer('div', 'gamepad', geoflo.map.getContainer());
@@ -721,15 +714,6 @@ const Gamepad = function (gamepad) {
         this.setMap();
     }
 
-	/**
-	 * @event
-	 * @name onEvent
-	 * @description This function takes in the type, key, action, and value parameters to handle gamepad events and trigger corresponding actions.
-	 * @param {string} type - The type of event.
-	 * @param {string} key - The key associated with the event.
-	 * @param {string} action - The action triggered by the event.
-	 * @param {any} value - The value associated with the event.
-	 */
     this.onEvent = function (type, key, action, value) {
         var pressed = {[action]: true};
         var lngLat = this.options.camera.free ? geoflo.map.getCenter() : geoflo.lastMove ? geoflo.lastMove : geoflo.map.getCenter();
@@ -779,13 +763,6 @@ const Gamepad = function (gamepad) {
         if (pressed['DpadRight']) this.options.mapping['DpadRight'](options);
     }
 
-	/**
-	 * @event
-	 * @name onDisconnect
-	 * @description This function disconnects the current gamepad by removing it from the system.
-	 * @param {Object} gamepad - The gamepad object to disconnect.
-	 * @returns {boolean} Returns false if the gamepad parameter is missing or if there is no current gamepad.
-	 */
     this.onDisconnect = function (gamepad) {
         if (!gamepad || !this.gamepad) return false;
         if (this.gamepad.id !== gamepad.id) throw new Error('Gamepad id does not match!');

@@ -944,15 +944,6 @@ const Layers = function () {
         return buildEvents.call(this, { off: true })
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Layers
-	 * @name onClusterClick
-	 * @description Handles the click event on a cluster feature to expand the cluster on the map.
-	 * @param {Object} feature - The cluster feature that was clicked.
-	 * @returns {boolean} Returns false if the feature does not have a source.
-     * @event
-	 */
     this.onClusterClick = function (feature) {
         if (!feature.source) return false;
 
@@ -963,15 +954,6 @@ const Layers = function () {
         });
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Layers
-	 * @name onLayerMouseover
-	 * @description This function is triggered when a mouseover event occurs on a layer. It checks if the map is in editing, drawing, or viewing mode, and if the layer is in the importing state. If there are no features in the event, it returns false. Otherwise, it sets the highlight on the map with the event features.
-	 * @param {Object} event - The mouseover event object.
-	 * @returns {boolean} Returns false if certain conditions are met, otherwise sets the highlight on the map.
-     * @event
-	 */
     this.onLayerMouseover = function(event) {
         return 
 
@@ -983,15 +965,6 @@ const Layers = function () {
         Map.setHighlight({ clear: true, features: event.features});
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Layers
-	 * @name onLayerMouseout
-	 * @description Handles the mouseout event on a layer in the map.
-	 * @param {Event} event - The mouseout event object.
-	 * @returns {void}
-     * @event
-	 */
     this.onLayerMouseout = function(event) {
         return 
 

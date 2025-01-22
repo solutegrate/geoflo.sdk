@@ -1665,6 +1665,14 @@ const GeoFlo = function () {
         return this.Locate.locate;
     }
 
+    /**
+	 * @function
+     * @memberOf module:geoflo
+     * @name updateFeatures
+     * @description Updates the features of a layer based on the provided features.
+     * @param {Array} features - An array of features to update the layer with.
+     * @returns {Array} The updated features of the layer.
+     */
     this.updateFeatures = function (features) {
         return this.Features.updateFeatures(features);
     }

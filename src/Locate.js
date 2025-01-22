@@ -237,15 +237,7 @@ const Locate = function () {
         console.log(event)
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onControlEvent
-	 * @description Handles events related to user location functionality initiated by the locate control button.
-	 * @param {Object} event - The event object containing information about the event.
-	 * @returns {void}
-     * @event
-	 */
+
     this.onControlEvent = function (event) {
         //this.button = this.button || event.button;
         this.marker = this.control._userLocationDotMarker;
@@ -264,15 +256,6 @@ const Locate = function () {
         } 
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onLocate
-	 * @description Handles the event when the geolocation is triggered.
-	 * @param {Event} event - The event object containing the coordinates.
-	 * @returns {void}
-     * @event
-	 */
     this.onLocate = function (event) {
         if (this.state() === 'ACTIVE_LOCK' && this.locating) {
             this.locating = false;
@@ -283,15 +266,6 @@ const Locate = function () {
         geoflo.fire('locate.update', { locating: this.locating, coords: event.coords, state: this.state() });
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onMapMove
-	 * @description This function is triggered when a map movement event occurs. It updates the button classes based on the state of the geolocate control.
-	 * @param {Event} event - The event object triggered by the map movement.
-	 * @returns {void}
-     * @event
-	 */
     this.onMapMove = function (event) {
         if (!this.button || this.following || this.unlocated) return;
         if (this.state() === 'ACTIVE_LOCK') return addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
