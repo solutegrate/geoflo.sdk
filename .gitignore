@@ -2,4 +2,3 @@ node_modules/*/node_modules/
 node_modules/
 .npmrc
 /index.html
-/jsdoc.config.json
