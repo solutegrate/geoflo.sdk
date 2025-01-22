@@ -43,6 +43,25 @@
 		"tabNames": {
 			"api": "API",
 			"tutorials": "Examples"
+		},
+		"better-docs": {
+			"entryPoint": "README.md",
+			"name": "Documentation",
+			"title": "GeoFlo SDK",
+			"logo": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
+			"css": [
+				"./styles/custom.css"
+			],
+			"navigation": [
+				{
+					"label": "Documentation",
+					"href": "index.html"
+				},
+				{
+					"label": "Examples",
+					"href": "tutorials.html"
+				}
+			]
 		}
 	}
 }
