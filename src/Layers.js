@@ -752,7 +752,7 @@ const Layers = function () {
         if (!layer || !layer.id) return false;
         console.log('Adding Layer:', id);
         layer.metadata = options;
-        map.addLayer(layer, options.custom ? index : false);
+        map.addLayer(layer, options.custom ? index + 1 : false);
 
         layer = map.getLayer(layer.id);
         if (!layer) return console.error(id, 'Layer Not Added!');
