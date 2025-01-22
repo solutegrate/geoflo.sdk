@@ -57,4 +57,17 @@ webpack({
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
 	}
+
+	exec('node_modules/.bin/jsdoc -c ./jsdoc.config.json', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error generating JSDoc: ${error.message}`);
+            return;
+        }
+
+        if (stderr) {
+            console.error(`JSDoc STDERR: ${stderr}`);
+        }
+
+        console.log(`JSDoc Complete`);
+    });
 });

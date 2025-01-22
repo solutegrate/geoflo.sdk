@@ -35,10 +35,6 @@ jobs:
         id: webpack
         run: |
           node bundle.js true
-      - name: Generate Documentation
-        run: |
-          npx jsdoc -X -c ./jsdoc.config.json > jsdoc-output.json
-          cat jsdoc-output.json
         working-directory: ${{ github.workspace }}
       - name: Commit Changes
         run: |
