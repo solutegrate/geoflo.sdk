@@ -1,58 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Mixin: Gamepad | Documentation</title>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Gamepad</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    
-        
-            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
-        
-    
+  
 </head>
-<body>
-<nav class="lnb" id="lnb">
-    <div class="logo" style="">
-        
-            <a href="https://demo.geoflo.pro" rel="noopener noreferrer" target="_blank">
-                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
-            </a>
-        
-    </div>
-    <div class="title">
-        <h1><a href="index.html" class="link">Documentation</a></h1>
-        
-    </div>
-    <div class="search-container" id="search-container">
-        <input type="text" placeholder="Search">
-        <ul></ul>
-    </div>
-    
-        <ol class="lnb-tab">
-            <li id="api-tab">
-                <a href="#"><h4>API</h4></a>
-            </li>
-            <li id="examples-tab">
-                <a href="#"><h4>Examples</h4></a>
-            </li>
-        </ol>
-    
-    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-demo.html">GeoFlo Demo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="demo_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.html#.activateExploring">activateExploring</a></li><li><a href="module-geoflo.html#.activatePainting">activatePainting</a></li><li><a href="module-geoflo.html#.activatePinning">activatePinning</a></li><li><a href="module-geoflo.html#.activateRouting">activateRouting</a></li><li><a href="module-geoflo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-geoflo.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-geoflo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-geoflo.html#.addGamepad">addGamepad</a></li><li><a href="module-geoflo.html#.addPlugin">addPlugin</a></li><li><a href="module-geoflo.html#.addTooltip">addTooltip</a></li><li><a href="module-geoflo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-geoflo.html#.createPolygon">createPolygon</a></li><li><a href="module-geoflo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-geoflo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-geoflo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-geoflo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-geoflo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-geoflo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-geoflo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-geoflo.html#.disable">disable</a></li><li><a href="module-geoflo.html#.editFeature">editFeature</a></li><li><a href="module-geoflo.html#.enable">enable</a></li><li><a href="module-geoflo.html#.fire">fire</a></li><li><a href="module-geoflo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-geoflo.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.html#.getColors">getColors</a></li><li><a href="module-geoflo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-geoflo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-geoflo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-geoflo.html#.getMap">getMap</a></li><li><a href="module-geoflo.html#.getMode">getMode</a></li><li><a href="module-geoflo.html#.getModes">getModes</a></li><li><a href="module-geoflo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-geoflo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-geoflo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-geoflo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-geoflo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-geoflo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-geoflo.html#.hasControls">hasControls</a></li><li><a href="module-geoflo.html#.hasSelection">hasSelection</a></li><li><a href="module-geoflo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-geoflo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-geoflo.html#.init">init</a></li><li><a href="module-geoflo.html#.initialize">initialize</a></li><li><a href="module-geoflo.html#.load">load</a></li><li><a href="module-geoflo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-geoflo.html#.moveFeature">moveFeature</a></li><li><a href="module-geoflo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-geoflo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-geoflo.html#.off">off</a></li><li><a href="module-geoflo.html#.on">on</a></li><li><a href="module-geoflo.html#.once">once</a></li><li><a href="module-geoflo.html#.redraw">redraw</a></li><li><a href="module-geoflo.html#.refresh">refresh</a></li><li><a href="module-geoflo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-geoflo.html#.removeControls">removeControls</a></li><li><a href="module-geoflo.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.html#.removeGamepad">removeGamepad</a></li><li><a href="module-geoflo.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.html#.removeSelection">removeSelection</a></li><li><a href="module-geoflo.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-geoflo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-geoflo.html#.setButtons">setButtons</a></li><li><a href="module-geoflo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-geoflo.html#.setControls">setControls</a></li><li><a href="module-geoflo.html#.setCustomLayers">setCustomLayers</a></li><li><a href="module-geoflo.html#.setIcon">setIcon</a></li><li><a href="module-geoflo.html#.setMapClass">setMapClass</a></li><li><a href="module-geoflo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-geoflo.html#.setMode">setMode</a></li><li><a href="module-geoflo.html#.setOpacity">setOpacity</a></li><li><a href="module-geoflo.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-geoflo.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-geoflo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-geoflo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-geoflo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Control_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Control.html#.disable">disable</a></li><li><a href="module-geoflo.Control.html#.enable">enable</a></li><li><a href="module-geoflo.Control.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.Control.html#.getControl">getControl</a></li><li><a href="module-geoflo.Control.html#.getTheme">getTheme</a></li><li><a href="module-geoflo.Control.html#.hideControl">hideControl</a></li><li><a href="module-geoflo.Control.html#.onAdd">onAdd</a></li><li><a href="module-geoflo.Control.html#.onRemove">onRemove</a></li><li><a href="module-geoflo.Control.html#.setAttribution">setAttribution</a></li><li><a href="module-geoflo.Control.html#.setControl">setControl</a></li><li><a href="module-geoflo.Control.html#.setMode">setMode</a></li><li><a href="module-geoflo.Control.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.Control.html#.showControl">showControl</a></li></ul></div></li><li><a href="module-geoflo.Draw.html">Draw</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Draw_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Draw.html#.activate">activate</a></li><li><a href="module-geoflo.Draw.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Draw.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.Draw.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Draw.html#.deleteVertex">deleteVertex</a></li><li><a href="module-geoflo.Draw.html#.getFeature">getFeature</a></li><li><a href="module-geoflo.Draw.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Draw.html#.handleContext">handleContext</a></li><li><a href="module-geoflo.Draw.html#.handleDown">handleDown</a></li><li><a href="module-geoflo.Draw.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Draw.html#.handleHistory">handleHistory</a></li><li><a href="module-geoflo.Draw.html#.handleIcon">handleIcon</a></li><li><a href="module-geoflo.Draw.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Draw.html#.handleOffMap">handleOffMap</a></li><li><a href="module-geoflo.Draw.html#.handleOnMap">handleOnMap</a></li><li><a href="module-geoflo.Draw.html#.handlePainting">handlePainting</a></li><li><a href="module-geoflo.Draw.html#.handleRectangle">handleRectangle</a></li><li><a href="module-geoflo.Draw.html#.handleRedo">handleRedo</a></li><li><a href="module-geoflo.Draw.html#.handleText">handleText</a></li><li><a href="module-geoflo.Draw.html#.handleTouch">handleTouch</a></li><li><a href="module-geoflo.Draw.html#.handleUndo">handleUndo</a></li><li><a href="module-geoflo.Draw.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Draw.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.Draw.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.Draw.html#.updateHotSource">updateHotSource</a></li></ul></div></li><li><a href="module-geoflo.Exploring.html">Exploring</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Exploring_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Exploring.html#.activate">activate</a></li><li><a href="module-geoflo.Exploring.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Exploring.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Exploring.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Exploring.html#.getRoute">getRoute</a></li><li><a href="module-geoflo.Exploring.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Exploring.html#.setFeatures">setFeatures</a></li></ul></div></li><li><a href="module-geoflo.Features.html">Features</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Features_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Features.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Features.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.Features.html#.addUnits">addUnits</a></li><li><a href="module-geoflo.Features.html#.convertUnits">convertUnits</a></li><li><a href="module-geoflo.Features.html#.deleteFeatures">deleteFeatures</a></li><li><a href="module-geoflo.Features.html#.getColdFeatures">getColdFeatures</a></li><li><a href="module-geoflo.Features.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Features.html#.getFeaturesById">getFeaturesById</a></li><li><a href="module-geoflo.Features.html#.getType">getType</a></li><li><a href="module-geoflo.Features.html#.getUnits">getUnits</a></li><li><a href="module-geoflo.Features.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.Features.html#.setFeatureState">setFeatureState</a></li><li><a href="module-geoflo.Features.html#.setFeaturesState">setFeaturesState</a></li><li><a href="module-geoflo.Features.html#.setText">setText</a></li><li><a href="module-geoflo.Features.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.Features.html#.updateSource">updateSource</a></li></ul></div></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Gamepad_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Gamepad.html#.init">init</a></li><li><a href="module-geoflo.Gamepad.html#.refresh">refresh</a></li><li><a href="module-geoflo.Gamepad.html#.remove">remove</a></li><li><a href="module-geoflo.Gamepad.html#.setBearing">setBearing</a></li><li><a href="module-geoflo.Gamepad.html#.setCenter">setCenter</a></li><li><a href="module-geoflo.Gamepad.html#.setContainer">setContainer</a></li><li><a href="module-geoflo.Gamepad.html#.setGamepad">setGamepad</a></li><li><a href="module-geoflo.Gamepad.html#.setLocation">setLocation</a></li><li><a href="module-geoflo.Gamepad.html#.setMap">setMap</a></li><li><a href="module-geoflo.Gamepad.html#.setMarker">setMarker</a></li><li><a href="module-geoflo.Gamepad.html#.setPitch">setPitch</a></li><li><a href="module-geoflo.Gamepad.html#.setSpeed">setSpeed</a></li><li><a href="module-geoflo.Gamepad.html#.setZoom">setZoom</a></li><li><a href="module-geoflo.Gamepad.html#.trigger">trigger</a></li></ul></div></li><li><a href="module-geoflo.Layers.html">Layers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Layers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.addEventListeners">addEventListeners</a></li><li><a href="module-geoflo.Layers.html#.addLayer">addLayer</a></li><li><a href="module-geoflo.Layers.html#.addLayers">addLayers</a></li><li><a href="module-geoflo.Layers.html#.addSource">addSource</a></li><li><a href="module-geoflo.Layers.html#.addSources">addSources</a></li><li><a href="module-geoflo.Layers.html#.getCustomLayers">getCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Layers.html#.getLayer">getLayer</a></li><li><a href="module-geoflo.Layers.html#.getLayerIds">getLayerIds</a></li><li><a href="module-geoflo.Layers.html#.getLayers">getLayers</a></li><li><a href="module-geoflo.Layers.html#.getSelection">getSelection</a></li><li><a href="module-geoflo.Layers.html#.getSource">getSource</a></li><li><a href="module-geoflo.Layers.html#.getSourceIds">getSourceIds</a></li><li><a href="module-geoflo.Layers.html#.getSources">getSources</a></li><li><a href="module-geoflo.Layers.html#.getType">getType</a></li><li><a href="module-geoflo.Layers.html#.hasCustomLayers">hasCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.init">init</a></li><li><a href="module-geoflo.Layers.html#.moveLayers">moveLayers</a></li><li><a href="module-geoflo.Layers.html#.refresh">refresh</a></li><li><a href="module-geoflo.Layers.html#.removeEventListeners">removeEventListeners</a></li><li><a href="module-geoflo.Layers.html#.removeLayer">removeLayer</a></li><li><a href="module-geoflo.Layers.html#.removeLayers">removeLayers</a></li><li><a href="module-geoflo.Layers.html#.removeSource">removeSource</a></li><li><a href="module-geoflo.Layers.html#.removeSources">removeSources</a></li><li><a href="module-geoflo.Layers.html#.setCustomLayers">setCustomLayers</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li></ul></div></li><li><a href="module-geoflo.Locate.html">Locate</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Locate_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.bearing">bearing</a></li><li><a href="module-geoflo.Locate.html#.build">build</a></li><li><a href="module-geoflo.Locate.html#.follow">follow</a></li><li><a href="module-geoflo.Locate.html#.getButton">getButton</a></li><li><a href="module-geoflo.Locate.html#.heading">heading</a></li><li><a href="module-geoflo.Locate.html#.init">init</a></li><li><a href="module-geoflo.Locate.html#.locate">locate</a></li><li><a href="module-geoflo.Locate.html#.ready">ready</a></li><li><a href="module-geoflo.Locate.html#.relocate">relocate</a></li><li><a href="module-geoflo.Locate.html#.removeClasses">removeClasses</a></li><li><a href="module-geoflo.Locate.html#.state">state</a></li><li><a href="module-geoflo.Locate.html#.unlocate">unlocate</a></li><li><a href="module-geoflo.Locate.html#.update">update</a></li></ul><div class="member-type">Events</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul></div></li><li><a href="module-geoflo.Mesh.html">Mesh</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Mesh_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Mesh.html#.addNewFeatures">addNewFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Mesh.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesByParentId">getFeaturesByParentId</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesFromIndex">getFeaturesFromIndex</a></li><li><a href="module-geoflo.Mesh.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.Mesh.html#.splitSegmentAtPoint">splitSegmentAtPoint</a></li></ul></div></li><li><a href="module-geoflo.Painting.html">Painting</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Painting_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Painting.html#.activate">activate</a></li><li><a href="module-geoflo.Painting.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Painting.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Painting.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Painting.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Pinning.html">Pinning</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Pinning_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Pinning.html#.activate">activate</a></li><li><a href="module-geoflo.Pinning.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Pinning.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Pinning.html#.getNearByFeatures">getNearByFeatures</a></li><li><a href="module-geoflo.Pinning.html#.resetFeatures">resetFeatures</a></li><li><a href="module-geoflo.Pinning.html#.setBuffer">setBuffer</a></li><li><a href="module-geoflo.Pinning.html#.setFeatures">setFeatures</a></li><li><a href="module-geoflo.Pinning.html#.updateFeatures">updateFeatures</a></li></ul></div></li><li><a href="module-geoflo.Routing.html">Routing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Routing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Routing.html#.activate">activate</a></li><li><a href="module-geoflo.Routing.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Routing.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Routing.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Routing.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Routing.html#.getRoute">getRoute</a></li></ul></div></li><li><a href="module-geoflo.Select.html">Select</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Select_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Select.html#.activate">activate</a></li><li><a href="module-geoflo.Select.html#.addPopup">addPopup</a></li><li><a href="module-geoflo.Select.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Select.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Select.html#.deselectCurrentFeature">deselectCurrentFeature</a></li><li><a href="module-geoflo.Select.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Select.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Select.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Select.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.Select.html#.selectFeature">selectFeature</a></li></ul></div></li><li><a href="module-geoflo.Snapping.html">Snapping</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Snapping_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Snapping.html#.activate">activate</a></li><li><a href="module-geoflo.Snapping.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Snapping.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Snapping.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Snapping.html#.setClosest">setClosest</a></li><li><a href="module-geoflo.Snapping.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Snapping.html#.setVertex">setVertex</a></li><li><a href="module-geoflo.Snapping.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Styles.html">Styles</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Styles_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Styles.html#.closeModal">closeModal</a></li><li><a href="module-geoflo.Styles.html#.getDefaultPosition">getDefaultPosition</a></li><li><a href="module-geoflo.Styles.html#.hide">hide</a></li><li><a href="module-geoflo.Styles.html#.init">init</a></li><li><a href="module-geoflo.Styles.html#.onAdd">onAdd</a></li><li><a href="module-geoflo.Styles.html#.onRemove">onRemove</a></li><li><a href="module-geoflo.Styles.html#.openModal">openModal</a></li><li><a href="module-geoflo.Styles.html#.select">select</a></li><li><a href="module-geoflo.Styles.html#.show">show</a></li></ul></div></li><li><a href="module-geoflo.Utilities.html">Utilities</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Utilities_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Utilities.html#.assignDeep">assignDeep</a></li><li><a href="module-geoflo.Utilities.html#.clone">clone</a></li><li><a href="module-geoflo.Utilities.html#.cloneDeep">cloneDeep</a></li><li><a href="module-geoflo.Utilities.html#.combineSameTypeFeatures">combineSameTypeFeatures</a></li><li><a href="module-geoflo.Utilities.html#.compareDeep">compareDeep</a></li><li><a href="module-geoflo.Utilities.html#.consumableArray">consumableArray</a></li><li><a href="module-geoflo.Utilities.html#.createBbox">createBbox</a></li><li><a href="module-geoflo.Utilities.html#.createLineAndSaveLength">createLineAndSaveLength</a></li><li><a href="module-geoflo.Utilities.html#.createLineWithLength">createLineWithLength</a></li><li><a href="module-geoflo.Utilities.html#.createMesh">createMesh</a></li><li><a href="module-geoflo.Utilities.html#.createRandomStroke">createRandomStroke</a></li><li><a href="module-geoflo.Utilities.html#.createSimpleMesh">createSimpleMesh</a></li><li><a href="module-geoflo.Utilities.html#.degrees2meters">degrees2meters</a></li><li><a href="module-geoflo.Utilities.html#.extend">extend</a></li><li><a href="module-geoflo.Utilities.html#.findClosestFeatures">findClosestFeatures</a></li><li><a href="module-geoflo.Utilities.html#.getLastIndexCoords">getLastIndexCoords</a></li><li><a href="module-geoflo.Utilities.html#.getRandomColor">getRandomColor</a></li><li><a href="module-geoflo.Utilities.html#.isEmptyLineString">isEmptyLineString</a></li><li><a href="module-geoflo.Utilities.html#.isLastIndex">isLastIndex</a></li><li><a href="module-geoflo.Utilities.html#.isLineString">isLineString</a></li><li><a href="module-geoflo.Utilities.html#.isOverlapping">isOverlapping</a></li><li><a href="module-geoflo.Utilities.html#.isPoint">isPoint</a></li><li><a href="module-geoflo.Utilities.html#.isPointAtVertex">isPointAtVertex</a></li><li><a href="module-geoflo.Utilities.html#.isPointEqual">isPointEqual</a></li><li><a href="module-geoflo.Utilities.html#.isPointNotTooClose">isPointNotTooClose</a></li><li><a href="module-geoflo.Utilities.html#.isPolygon">isPolygon</a></li><li><a href="module-geoflo.Utilities.html#.isValidLineString">isValidLineString</a></li><li><a href="module-geoflo.Utilities.html#.lineSplit">lineSplit</a></li><li><a href="module-geoflo.Utilities.html#.meters2degrees">meters2degrees</a></li><li><a href="module-geoflo.Utilities.html#.pointInCoordinates">pointInCoordinates</a></li><li><a href="module-geoflo.Utilities.html#.processFiles">processFiles</a></li><li><a href="module-geoflo.Utilities.html#.reducePrecision">reducePrecision</a></li><li><a href="module-geoflo.Utilities.html#.sameBorders">sameBorders</a></li><li><a href="module-geoflo.Utilities.html#.setProperties">setProperties</a></li><li><a href="module-geoflo.Utilities.html#.setProperty">setProperty</a></li><li><a href="module-geoflo.Utilities.html#.splitLines">splitLines</a></li><li><a href="module-geoflo.Utilities.html#.stringToDOM">stringToDOM</a></li></ul></div></li></ul></div>
-</nav>
-<div id="resizer"></div>
 
-<div class="main" id="main">
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
     
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-demo.html">
+                                GeoFlo Demo
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:onDisconnect">onDisconnect</a></li><li><a href="global.html#event:onEvent">onEvent</a></li><li><a href="global.html#event:onInit">onInit</a></li><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Mixin</p>
+                    <h1>Gamepad</h1>
+                </header>
+                
 
 
 
@@ -68,14 +108,13 @@
 </header>
 
 <article>
+    <div class="container-overview">
     
-        <div class="container-overview">
         
-            
-                <div class="description">This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.</div>
-            
+            <div class="description">This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.</div>
+        
 
-            
+        
 
 
 <dl class="details">
@@ -103,180 +142,158 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line1">line 1</a>
+            </span>
+        </p>
     
 </dl>
 
 
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id=".init">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>init<span class="signature">(gamepad, options)</span><span class="type-signature"> &rarr; {Object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line215">line 215</a></code>
-            </div>
-            
-        </h4>
-
         
     
-</dt>
-<dd>
+    </div>
+    
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".init">
+        <a class="href-link" href="#.init">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                init<span class="signature">(gamepad, options)</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function initializes the gamepad with the specified options. It fires an event to notify the gamepad initialization, sets the gamepad, adds event listeners, and requests animation frame.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>gamepad</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The gamepad object to be initialized.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The options for gamepad initialization.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">Object</span>
-
-
-
-
-
-- The current object instance.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>gamepad</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The gamepad object to be initialized.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The options for gamepad initialization.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -304,74 +321,95 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line215">line 215</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>The current object instance.</div>
     
-        <h4 class="name" id=".refresh">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>refresh<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line234">line 234</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">Object</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".refresh">
+        <a class="href-link" href="#.refresh">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                refresh<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         Refreshes the gamepad state by checking button presses, axes values, and triggers.
     </div>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">void</span>
 
 
 
@@ -380,11 +418,8 @@
 
 
 
-            
-    </div>
-    
 
-    
+
 
 
 <dl class="details">
@@ -412,137 +447,154 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line234">line 234</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
     
-        <h4 class="name" id=".remove">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>remove<span class="signature">(gamepad)</span><span class="type-signature"> &rarr; {void}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line334">line 334</a></code>
-            </div>
-            
-        </h4>
-
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">void</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".remove">
+        <a class="href-link" href="#.remove">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                remove<span class="signature">(gamepad)</span><span class="type-signature"> &rarr; {void}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         Disconnects and removes the gamepad object.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>gamepad</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The gamepad object to be disconnected and removed.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">void</span>
-
-
-
-
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>gamepad</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The gamepad object to be disconnected and removed.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -570,188 +622,207 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line334">line 334</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
     
-        <h4 class="name" id=".setBearing">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setBearing<span class="signature">(value, left, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line554">line 554</a></code>
-            </div>
-            
-        </h4>
-
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">void</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setBearing">
+        <a class="href-link" href="#.setBearing">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setBearing<span class="signature">(value, left, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function updates the bearing of the map by adjusting it with the specified value and direction.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
-<span class="param-type">number</span>
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
 |
 
-<span class="param-type">Array.&lt;number></span>
+<code class="param-type">Array.&lt;number></code>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">The value to adjust the bearing by. If dpad is false, it should be an array of numbers, otherwise a single number.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>left</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
+  <td class="description last">The value to adjust the bearing by. If dpad is false, it should be an array of numbers, otherwise a single number.</td>
+</tr>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Indicates the direction of adjustment. If true, the bearing is decreased; otherwise, it is increased.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dpad</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Specifies whether the value is coming from a dpad input.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
         
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns the result of calling the setMap function after updating the bearing.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>left</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Indicates the direction of adjustment. If true, the bearing is decreased; otherwise, it is increased.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dpad</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Specifies whether the value is coming from a dpad input.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -779,185 +850,206 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line554">line 554</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>Returns the result of calling the setMap function after updating the bearing.</div>
     
-        <h4 class="name" id=".setCenter">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setCenter<span class="signature">(value, free, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line496">line 496</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">boolean</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setCenter">
+        <a class="href-link" href="#.setCenter">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setCenter<span class="signature">(value, free, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function calculates the new center of the map based on the input values and gamepad controls. It handles both joystick and D-pad inputs to adjust the map center accordingly.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The value used to calculate the new center of the map.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>free</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A boolean flag indicating if the map center should be set freely.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dpad</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A boolean flag indicating if the D-pad controls are used for setting the map center.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true after setting the map center.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The value used to calculate the new center of the map.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>free</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A boolean flag indicating if the map center should be set freely.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dpad</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A boolean flag indicating if the D-pad controls are used for setting the map center.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -985,185 +1077,206 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line496">line 496</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>Returns true after setting the map center.</div>
     
-        <h4 class="name" id=".setContainer">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setContainer<span class="signature">(tagName, className, container)</span><span class="type-signature"> &rarr; {HTMLElement}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line385">line 385</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">boolean</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setContainer">
+        <a class="href-link" href="#.setContainer">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setContainer<span class="signature">(tagName, className, container)</span><span class="type-signature"> &rarr; {HTMLElement}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         Creates a new HTML element with the specified tag name and class name, appends it to a container if provided, and sets it as the container property of the current object.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>tagName</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The tag name of the HTML element to create.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>className</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The class name to assign to the created element (optional).</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>container</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLElement</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The container element to append the created element to (optional).</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">HTMLElement</span>
-
-
-
-
-
-- The created HTML element.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>tagName</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The tag name of the HTML element to create.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>className</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The class name to assign to the created element (optional).</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>container</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">HTMLElement</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The container element to append the created element to (optional).</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -1191,139 +1304,156 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line385">line 385</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>The created HTML element.</div>
     
-        <h4 class="name" id=".setGamepad">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setGamepad<span class="signature">(gamepad)</span><span class="type-signature"> &rarr; {Object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line430">line 430</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">HTMLElement</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setGamepad">
+        <a class="href-link" href="#.setGamepad">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setGamepad<span class="signature">(gamepad)</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         Initializes a gamepad object with specific properties based on the provided gamepad input.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>gamepad</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The gamepad object to be processed.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">Object</span>
-
-
-
-
-
-- - The processed gamepad object with defined properties.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>gamepad</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The gamepad object to be processed.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -1351,139 +1481,156 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line430">line 430</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>- The processed gamepad object with defined properties.</div>
     
-        <h4 class="name" id=".setLocation">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setLocation<span class="signature">(value)</span><span class="type-signature"> &rarr; {DOMRect}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line404">line 404</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">Object</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setLocation">
+        <a class="href-link" href="#.setLocation">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setLocation<span class="signature">(value)</span><span class="type-signature"> &rarr; {DOMRect}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function updates the visibility, left, and top properties of the container element based on the provided value.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;number></span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">An array containing the x and y coordinates for the new location.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">DOMRect</span>
-
-
-
-
-
-- The bounding rectangle of the container element after the location is set.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">Array.&lt;number></code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">An array containing the x and y coordinates for the new location.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -1511,139 +1658,156 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line404">line 404</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>The bounding rectangle of the container element after the location is set.</div>
     
-        <h4 class="name" id=".setMap">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setMap<span class="signature">(handleMove)</span><span class="type-signature"> &rarr; {Object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line351">line 351</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">DOMRect</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setMap">
+        <a class="href-link" href="#.setMap">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setMap<span class="signature">(handleMove)</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function updates the map properties using the handleMove function and sets the center, zoom, pitch, and bearing accordingly.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>handleMove</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The function used to handle map movement.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">Object</span>
-
-
-
-
-
-- The updated map object with new properties.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>handleMove</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">function</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The function used to handle map movement.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -1671,89 +1835,105 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line351">line 351</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>The updated map object with new properties.</div>
     
-        <h4 class="name" id=".setMarker">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setMarker<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line419">line 419</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">Object</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setMarker">
+        <a class="href-link" href="#.setMarker">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setMarker<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         Sets a marker on the map using the center coordinates provided by the context.
     </div>
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Object</span>
 
 
 
 
 
-- Returns the marker object created on the map.
 
 
 
 
-            
-    </div>
-    
 
-    
 
 
 <dl class="details">
@@ -1781,188 +1961,209 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line419">line 419</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>Returns the marker object created on the map.</div>
     
-        <h4 class="name" id=".setPitch">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setPitch<span class="signature">(value, up, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line578">line 578</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">Object</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setPitch">
+        <a class="href-link" href="#.setPitch">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setPitch<span class="signature">(value, up, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function adjusts the pitch of the map by a specified amount in the given direction.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
+            <th>Type</th>
+
             
-                
-<span class="param-type">number</span>
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
 |
 
-<span class="param-type">Array.&lt;number></span>
+<code class="param-type">Array.&lt;number></code>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">The value or array of values to adjust the pitch by.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>up</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
+  <td class="description last">The value or array of values to adjust the pitch by.</td>
+</tr>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A boolean indicating whether the pitch should be increased (true) or decreased (false).</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dpad</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A boolean flag to determine if the value is coming from a D-pad input.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
         
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true if the map is successfully updated with the new pitch.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>up</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A boolean indicating whether the pitch should be increased (true) or decreased (false).</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dpad</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A boolean flag to determine if the value is coming from a D-pad input.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -1990,162 +2191,181 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line578">line 578</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>Returns true if the map is successfully updated with the new pitch.</div>
     
-        <h4 class="name" id=".setSpeed">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setSpeed<span class="signature">(value, down)</span><span class="type-signature"> &rarr; {number}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line628">line 628</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">boolean</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setSpeed">
+        <a class="href-link" href="#.setSpeed">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setSpeed<span class="signature">(value, down)</span><span class="type-signature"> &rarr; {number}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function calculates the speed of panning based on the provided value and direction. It ensures that the speed falls within the specified minimum and maximum values.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The value that influences the speed of panning.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>down</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A boolean flag indicating the direction of panning (true for down, false for up).</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">number</span>
-
-
-
-
-
-- The updated speed of panning after applying the calculations.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The value that influences the speed of panning.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>down</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A boolean flag indicating the direction of panning (true for down, false for up).</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -2173,185 +2393,206 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line628">line 628</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>The updated speed of panning after applying the calculations.</div>
     
-        <h4 class="name" id=".setZoom">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>setZoom<span class="signature">(value, out, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line605">line 605</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">number</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setZoom">
+        <a class="href-link" href="#.setZoom">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setZoom<span class="signature">(value, out, dpad)</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function adjusts the zoom level of a map based on the provided value and direction.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>value</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The amount by which to change the zoom level.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>out</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A flag indicating whether to zoom out (true) or zoom in (false).</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>dpad</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A flag indicating the direction of the zoom change.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        <tbody>
         
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- - Returns the result of setting the map with the new zoom level.
-
-
-
 
             
-    </div>
-    
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-    
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The amount by which to change the zoom level.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>out</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A flag indicating whether to zoom out (true) or zoom in (false).</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dpad</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A flag indicating the direction of the zoom change.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
 
 
 <dl class="details">
@@ -2379,187 +2620,231 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line605">line 605</a>
+            </span>
+        </p>
     
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-</dd>
-
-            
-                
-
-<dt>
+    <div class='param-desc column is-7'>- Returns the result of setting the map with the new zoom level.</div>
     
-        <h4 class="name" id=".trigger">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>trigger<span class="signature">(id, triggered, index, value)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Gamepad.js.html">src/Gamepad.js</a></code>,
-                <code><a href="src_Gamepad.js.html#line298">line 298</a></code>
-            </div>
-            
-        </h4>
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-    
-</dt>
-<dd>
+<code class="param-type">boolean</code>
 
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".trigger">
+        <a class="href-link" href="#.trigger">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                trigger<span class="signature">(id, triggered, index, value)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
     
     <div class="description">
         This function handles triggering actions based on gamepad input. It checks if a specific button or axis is triggered and performs corresponding actions.
     </div>
     
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
+<div class="table-container">
+    <table class="params table">
+        <thead>
         <tr>
             
-                <td class="name"><code>id</code></td>
+            <th>Name</th>
             
 
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
+            <th>Type</th>
 
             
 
             
 
-            <td class="description last">The identifier of the gamepad input.</td>
+            <th class="last">Description</th>
         </tr>
+        </thead>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>triggered</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
+        <tbody>
+        
 
             
-            </td>
+<tr class="deep-level-0">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The identifier of the gamepad input.</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>triggered</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Indicates if the input is triggered.</td>
+</tr>
+
+
+        
 
             
+<tr class="deep-level-0">
+  
+      <td class="name"><code>index</code></td>
+  
 
-            <td class="description last">Indicates if the input is triggered.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>index</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">The index of the input.</td>
-        </tr>
+  <td class="description last">The index of the input.</td>
+</tr>
 
-    
 
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;number></span>
-
+        
 
             
-            </td>
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-            
+  <td class="type">
+  
+      
+<code class="param-type">Array.&lt;number></code>
 
-            
 
-            <td class="description last">The value of the input.</td>
-        </tr>
+  
+  </td>
 
-    
-    </tbody>
-</table>
+  
 
-    </div>
-    
+  
 
-    
+  <td class="description last">The value of the input.</td>
+</tr>
 
-    
 
-    
+        
+        </tbody>
+    </table>
+</div>
 
-    
 
-    
 
-    
-
-    
 
 
 <dl class="details">
@@ -2587,20 +2872,46 @@
     
 
     
-
     
 
     
 
+    
+
+    
+        <p class="tag-source">
+            <a href="src_Gamepad.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_Gamepad.js.html">src/Gamepad.js</a>, <a href="src_Gamepad.js.html#line298">line 298</a>
+            </span>
+        </p>
     
 </dl>
 
 
-    
 
-</dd>
 
-            </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
     
 
     
@@ -2613,26 +2924,26 @@
 
 
 
-</div>
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
 
-<footer>
-    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
-    <div class="footer-text">Solutegrate/GeoFlo © 2024</div>
-</footer>
-<script>prettyPrint();</script>
-<script src="scripts/jquery.min.js"></script>
-<script src="scripts/tui-doc.js"></script>
-<script src="scripts/linenumber.js"></script>
-
-    <script>
-        var id = 'module:geoflo.Gamepad_sub'.replace(/"/g, '_');
-        var selectedApi = document.getElementById(id); // do not use jquery selector
-        var $selectedApi = $(selectedApi);
-
-        $selectedApi.removeClass('hidden');
-        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
-        showLnbApi();
-    </script>
 
 </body>
 </html>
