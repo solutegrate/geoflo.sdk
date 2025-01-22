@@ -1,15 +1,23 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Exploring
+ * @description This mixin provides the exploring functionality for the GeoFlo application. It allows users to explore features on the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} The Exploring object.
+ */
 const Exploring = function (mode) {
     const geoflo = this.geoflo;
     this.type = mode.type;
 
 	/**
-	 * @function
+     * Activates the exploring functionality by enabling the 'exploring' option.
+     * @function
+     * @name activate
      * @memberof module:geoflo.Exploring
-	 * @name activate
-	 * @description Activates by setting the 'enabled' property to true and enabling the 'exploring' option.
-	 * @params {void} None
-	 * @returns {void}
-	 */
+     * @description Activates by setting the 'enabled' property to true and enabling the 'exploring' option.
+     * @returns {void}
+     */
     this.activate = function () {
         this.enabled = true;
         geoflo.options['exploring'].enable = true;

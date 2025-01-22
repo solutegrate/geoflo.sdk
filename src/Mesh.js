@@ -1,3 +1,12 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Mesh
+ * @description This module provides the mesh functionality for the Geoflo application. It allows users to create a mesh of features by splitting them into segments and checking for intersections.
+ * @param {Array} originalFeatures - An array of features to be added to the mesh.
+ * @param {boolean} linesOnly - A flag indicating whether only lines should be added to the mesh.
+ * @returns {Object} Returns the Mesh object.
+ */
 const Mesh = function (originalFeatures, linesOnly) {
     var segmentId = 1;
     var allSegments = [];

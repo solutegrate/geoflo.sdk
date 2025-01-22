@@ -1,3 +1,10 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Locate
+ * @description This module provides the geolocation functionality for the Geoflo application. It allows users to locate their current position on the map and track their location.
+ * @returns {Object} Returns the Locate object.
+ */
 const Locate = function () {
     const geoflo = this.geoflo;
 

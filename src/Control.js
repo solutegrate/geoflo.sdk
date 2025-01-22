@@ -1,5 +1,6 @@
 /**
- * @module Control
+ * @mixin
+ * @memberof module:geoflo
  * @name Control
  * @description This module is responsible for creating and managing the control buttons in the Geoflo application.
  * @param {Array} controls - An array of control objects to be added to the map.

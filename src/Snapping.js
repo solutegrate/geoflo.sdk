@@ -1,3 +1,11 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Snapping
+ * @description This module provides the snapping functionality for the Geoflo application. It allows users to snap features to the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Snapping object.
+ */
 const Snapping = function (mode) {
     const geoflo = this.geoflo;
     this.type = mode.type;

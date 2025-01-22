@@ -56,7 +56,7 @@ Before you get started with GeoFlo,
 you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `geoflo-sdk` npm package.
 
 For more information on creating and using Mapbox access tokens:
-[<img width="100" alt="Mapbox logo" src="./assets/images/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
+[<img width="100" alt="Mapbox logo" src="./img/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
 
 ## 🛠️ Usage/Examples
 

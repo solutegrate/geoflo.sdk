@@ -1,3 +1,11 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Routing
+ * @description This module provides the routing functionality for the Geoflo application. It allows users to calculate routes between two points on the map using a PathFinder object.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Routing object.
+ */
 const Routing = function (mode) {
     const geoflo = this.geoflo;
 

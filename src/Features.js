@@ -1,3 +1,11 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Features
+ * @description This module provides the features functionality for the Geoflo application. It allows users to add, remove, update, and retrieve features from the map.
+ * @returns {Object} Returns the Features object.
+ * @throws {Error} Throws an error if no map object is provided.
+ */
 const Features = function () {
     const geoflo = this.geoflo;
     if (!geoflo.map) { throw new Error('No map object provided!') }

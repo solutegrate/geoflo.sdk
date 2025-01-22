@@ -1,3 +1,11 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Painting
+ * @description This module provides the painting functionality for the Geoflo application. It allows users to paint features on the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Painting object.
+ */
 const Painting = function (mode) {
     const geoflo = this.geoflo;
 

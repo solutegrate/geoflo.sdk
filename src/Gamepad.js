@@ -1,3 +1,12 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Gamepad
+ * @description This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.
+ * @param {Object} gamepad - The gamepad object to be initialized.
+ * @param {Object} options - The options for gamepad initialization. Comes from geoFlo.options.gamepad.
+ * @returns {Object} The current object instance.
+ */
 const Gamepad = function (gamepad) {
     const geoflo = this.geoflo;
 

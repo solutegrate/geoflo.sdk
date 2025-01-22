@@ -1,3 +1,10 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Select
+ * @description This module provides the select functionality for the Geoflo application. It allows users to select features on the map by clicking on them.
+ * @returns {Object} Returns the Select object.
+ */
 const Select = function () {
     const geoflo = this.geoflo;
 

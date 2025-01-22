@@ -1,3 +1,11 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Layers
+ * @description This module provides the layer functionality for the Geoflo application. It allows users to add, remove, and manipulate layers on the map.
+ * @param {Object} options - The options object to configure the object.
+ * @returns {Object} Returns the Layers object.
+ */
 const Layers = function () {
     const geoflo = this.geoflo;
     if (!geoflo.map) throw new Error('No map object provided!');

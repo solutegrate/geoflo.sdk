@@ -1,3 +1,10 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Utilities
+ * @description This module provides utility functions for the Geoflo application.
+ * @returns {Object} Returns the Utilities object.
+ */
 const Utilities = function () {
     const geoflo = this.geoflo;
 
