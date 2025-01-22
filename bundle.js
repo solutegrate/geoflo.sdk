@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs/promises');
+const { exec } = require('child_process');
 const webpack = require('webpack');
 
 const TerserPlugin = require("terser-webpack-plugin");
@@ -58,16 +59,21 @@ webpack({
 		console.error('Error handling CSS file:', error);
 	}
 
-	exec('node_modules/.bin/jsdoc -c ./jsdoc.config.json', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error generating JSDoc: ${error.message}`);
-            return;
-        }
-
-        if (stderr) {
-            console.error(`JSDoc STDERR: ${stderr}`);
-        }
-
-        console.log(`JSDoc Complete`);
-    });
+	try {
+		const jsdocOutput = await execPromise('npx jsdoc -c ./jsdoc.config.json');
+		console.log(`JSDoc Output: ${jsdocOutput}`);
+	} catch (error) {
+		console.error(`Error generating JSDoc: ${error.message}`);
+	}	
 });
+
+function execPromise(command) {
+	return new Promise((resolve, reject) => {
+		exec(command, (error, stdout, stderr) => {
+			if (error) {
+				return reject(new Error(`Error: ${error.message}\n${stderr}`));
+			}
+			resolve(stdout);
+		});
+	});
+}
