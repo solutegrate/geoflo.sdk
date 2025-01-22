@@ -1,0 +1,1 @@
+//!event.gamepad ? event.originalEvent.altKey : false;
