@@ -101,7 +101,8 @@ import geoflo from "@solutegrate/geoflo-sdk";
       }
   }
 
-  await geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
+  // You can either use await or a callback function similar to onReady
+  geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
 
   function onReady(geoflo) {
       geoflo.styles ? geoflo.styles.hide() : false;
