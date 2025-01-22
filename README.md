@@ -85,7 +85,7 @@ import geoflo from "@solutegrate/geoflo-sdk";
 
 ```javascript
 const options = {
-    container: 'geoflo-map',
+    container: 'map',
     noSelect: false,
     showFeatureText: true,
     map: {
@@ -103,19 +103,19 @@ const options = {
 
 await geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
 
-function onReady() {
-  this.styles ? this.styles.hide() : false;
-  this.mobile && this.navigation ? this.navigation.hide() : false;
-  this.mobile && this.fullscreen ? this.fullscreen.hide() : false;
-  this.viewportHeightOffset = this.mobile ? 70 : 120;
-  this.viewportLeft = this.mobile ? '10px' : '30px';
-  this.viewportBottom = '8%';
-  this.viewportWidthOffset = this.mobile ? 60 : 100;
-  this.map.on(this.id, onGeoFloEvent.bind(this));
+function onReady(geoflo) {
+    geoflo.styles ? geoflo.styles.hide() : false;
+    geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
+    geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
+    geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
+    geoflo.viewportLeft = geoflo.mobile ? '10px' : '30px';
+    geoflo.viewportBottom = '8%';
+    geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
+    geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
 };
 
 function onGeoFloEvent(event) {
-  console.log(event);
+    console.log(event);
 }
 ```
 
