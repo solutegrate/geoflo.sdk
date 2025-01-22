@@ -92,7 +92,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:onDisconnect">onDisconnect</a></li><li><a href="global.html#event:onEvent">onEvent</a></li><li><a href="global.html#event:onInit">onInit</a></li><li><a href="module-geoflo.Layers.html#.event:onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.event:onLayerMouseover">onLayerMouseover</a></li><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.event:onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.event:onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.event:onMapMove">onMapMove</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
                 
             </nav>
         </div>
@@ -348,15 +348,7 @@ const Locate = function () {
         console.log(event)
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onControlEvent
-	 * @description Handles events related to user location functionality initiated by the locate control button.
-	 * @param {Object} event - The event object containing information about the event.
-	 * @returns {void}
-     * @event
-	 */
+
     this.onControlEvent = function (event) {
         //this.button = this.button || event.button;
         this.marker = this.control._userLocationDotMarker;
@@ -375,15 +367,6 @@ const Locate = function () {
         } 
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onLocate
-	 * @description Handles the event when the geolocation is triggered.
-	 * @param {Event} event - The event object containing the coordinates.
-	 * @returns {void}
-     * @event
-	 */
     this.onLocate = function (event) {
         if (this.state() === 'ACTIVE_LOCK' &amp;&amp; this.locating) {
             this.locating = false;
@@ -394,15 +377,6 @@ const Locate = function () {
         geoflo.fire('locate.update', { locating: this.locating, coords: event.coords, state: this.state() });
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onMapMove
-	 * @description This function is triggered when a map movement event occurs. It updates the button classes based on the state of the geolocate control.
-	 * @param {Event} event - The event object triggered by the map movement.
-	 * @returns {void}
-     * @event
-	 */
     this.onMapMove = function (event) {
         if (!this.button || this.following || this.unlocated) return;
         if (this.state() === 'ACTIVE_LOCK') return addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);
