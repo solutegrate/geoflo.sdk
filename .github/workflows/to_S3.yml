@@ -30,10 +30,11 @@ jobs:
       - name: Install Node Modules
         run: |
           mkdir -p node_modules
-          npm install aws-sdk webpack webpack-cli clean-webpack-plugin terser-webpack-plugin   
+          npm install webpack webpack-cli terser-webpack-plugin   
       - name: Run Webpack Production Build
         id: webpack
         run: |
+          node bundle.js false
           node bundle.js true
       - name: Commit Changes
         run: |
