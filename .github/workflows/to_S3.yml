@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
-
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,7 +20,7 @@ jobs:
       - name: Fetch commit history
         run: git fetch --all --tags
       - name: Setup Log File
-        run: |          
+        run: |
           START_TIME=$(date -u +"%s")
           echo "START_TIME=$START_TIME" >> $GITHUB_ENV
       - name: Setup Node.js
