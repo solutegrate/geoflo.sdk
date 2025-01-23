@@ -1,7 +1,7 @@
 {
-  "name": "@solutegrate/mapboxgl-geoflo",
+  "name": "@solutegrate/geoflo-sdk",
   "version": "1.0.4",
-  "description": "MapboxGL Plugin for Professional Geospatial Management and Tracking",
+  "description": "MapboxGL Wrapper for Professional Geospatial Management",
   "main": "dist/geoflo-sdk.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
@@ -26,22 +26,18 @@
     "mapbox",
     "geometry editing",
     "map data",
-    "mapbox-gl",
-    "turf",
-    "geospatial",
-    "tracking",
-    "management"
+    "mapbox-gl"
   ],
   "author": {
     "name": "Solutegrate",
     "email": "support@solutegrate.com",
-    "url": "https://www.geoflo.pro"
+    "url": "https://github.com/solutegrate/geoflo-sdk"
   },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/solutegrate/geoflo-sdk/issues"
   },
-  "homepage": "https://demo.geoflo.pro",
+  "homepage": "https://docs.geoflo.pro",
   "dependencies": {
     "mapbox-gl": "^3.3.0",
     "@turf/turf": "^6.5.0",

@@ -8,10 +8,10 @@ const TerserPlugin = require("terser-webpack-plugin");
 const id = 'geoflo-sdk';
 const input = 'index.js';
 const args = process.argv;
-const prod = args[2];
-const folder = prod ? 'dist' : 'dev';
-const mode = prod ? 'production' : 'development';
-const name = `${id}.min.js`;
+const mode = args[2];
+const folder = args[3];
+const prod = mode === 'production';
+const name = prod ? `${id}.min.js` : `${id}.js`;
 
 const entry = path.resolve(__dirname, input);
 const output = path.resolve(__dirname, folder);
@@ -62,6 +62,10 @@ async function build(err, stats) {
 		console.error('Error handling CSS file:', error);
 	}
 
+	console.log(mode + ' complete:', name);
+
+	if (!prod) return;
+
 	try {
 		const htmls = await fs.readdir(docs);
 		
@@ -83,7 +87,7 @@ async function build(err, stats) {
 		console.log(`JSDoc Complete ${jsdocs}`);
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
-	}	
+	}
 }
 
 function execPromise(command) {
