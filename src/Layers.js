@@ -18,7 +18,7 @@ const Layers = function () {
     const layerTypes = {
         Polygon: ['-fill', '-border'],
         Polyline: ['-line', '-dash', '-buffer'],
-        Point: ['-circle', '-icon', '-image', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text'],
+        Point: ['-circle', '-icon', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text'],
         Image: ['-image']
     }
 
@@ -317,6 +317,7 @@ const Layers = function () {
             'type': 'line',
             //'filter': ["==", "$type", "LineString"],
             'layout': {
+                'visibility': 'visible',
                 'line-cap': 'round',
                 'line-join': 'round'
             },
@@ -332,6 +333,7 @@ const Layers = function () {
             'type': 'line',
             'filter': ["==", "$type", "LineString"],
             'layout': {
+                'visibility': 'visible',
                 'line-cap': 'round',
                 'line-join': 'round'
             },
@@ -347,13 +349,15 @@ const Layers = function () {
             'type': 'line',
             'slot': 'top',
             'layout': {
+                'visibility': 'visible',
                 'line-cap': 'round',
                 'line-join': 'round'
             },
             'paint': {
                 'line-color': geoflo.options.colors.secondarySelect,
                 'line-width': 4,
-            }
+            },
+            'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
         },
         {
             'source': statics.constants.sources.SELECT,
@@ -365,7 +369,8 @@ const Layers = function () {
             'paint': {
                 'fill-color': geoflo.options.colors.primarySelect,
                 'fill-opacity': 0.4
-            }
+            },
+            'metadata': { types: ['Polygon', 'Rectangle'] }
         },
         {
             'source': statics.constants.sources.SELECT,
@@ -378,7 +383,8 @@ const Layers = function () {
                 'circle-stroke-width': 2,
                 'circle-color': geoflo.options.colors.primarySelect,
                 'circle-stroke-color': geoflo.options.colors.secondarySelect,
-            }
+            },
+            'metadata': { types: ['Point', 'Circle', 'Marker', 'Icon'] }
         },
         {
             'source': statics.constants.sources.SELECT,
@@ -387,6 +393,7 @@ const Layers = function () {
             'type': 'symbol',
             'slot': 'top',
             'layout': {
+                'visibility': 'visible',
                 'icon-optional': true,
                 'symbol-placement': 'point',
                 'text-rotation-alignment': 'viewport',
@@ -407,7 +414,8 @@ const Layers = function () {
                 'text-halo-color': geoflo.options.colors.secondarySelect,
                 'text-halo-width': 2,
                 'text-color': geoflo.options.colors.primaryBackground,
-            }
+            },
+            'metadata': { types: ['Icon'] }
         },
         {
             'source': statics.constants.sources.SELECT,
@@ -416,6 +424,7 @@ const Layers = function () {
             'type': 'symbol',
             'slot': 'top',
             'layout': {
+                'visibility': 'visible',
                 "symbol-placement": "point",
                 'text-rotation-alignment': 'viewport',
                 'text-field': ['get', 'text'],
@@ -437,7 +446,8 @@ const Layers = function () {
                 'text-halo-color': geoflo.options.colors.primaryColor,
                 'text-halo-width': 2,
                 'text-opacity': 1,
-            }
+            },
+            'metadata': { types: ['Text'] }
         },
         {
             'source': statics.constants.sources.SELECT,
@@ -446,11 +456,13 @@ const Layers = function () {
             'type': 'symbol',
             'slot': 'top',
             'layout': {
+                'visibility': 'visible',
                 'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
                 'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
                 'icon-allow-overlap': true,
                 'icon-anchor': 'bottom'
-            }
+            },
+            'metadata': { types: ['Image'] }
         },
         {
             'source': statics.constants.sources.VERTEX,
@@ -469,6 +481,7 @@ const Layers = function () {
             'id': id + '-gamepad',
             'type': 'symbol',
             'layout': {
+                'visibility': 'visible',
                 'icon-image': 'gamepad',
                 'icon-size': 0.25
             }
@@ -758,7 +771,7 @@ const Layers = function () {
     this.addLayer = function (layer, options={}, index) {
         if (!layer || !layer.id) return false;
         console.log('Adding Layer:', id);
-        layer.metadata = options;
+        layer.metadata = layer.metadata || options;
         map.addLayer(layer);
 
         layer = map.getLayer(layer.id);
@@ -1008,7 +1021,7 @@ const Layers = function () {
         const type = this.getType(details.type);
         if (!type) error = true;
 
-        var metadata = { type: type} ;
+        var metadata = { type: details.type} ;
         details.default ? metadata.default = true : metadata.custom = true;
         details.name ? metadata.name = details.name : false;
 
@@ -1262,7 +1275,7 @@ const Layers = function () {
                 if (options.noCircle) continue;
 
                 layout = Object.assign({}, {
-                    'visibility': options.visibility,
+                    'visibility': options.visibility || 'visible',
                 }, style.circle ? style.circle.layout || {} : {});
 
                 paint = Object.assign({}, {
@@ -1294,7 +1307,7 @@ const Layers = function () {
                 if (dontRender) continue;
 
                 layout = Object.assign({}, {
-                    'visibility': options.visibility,
+                    'visibility': options.visibility || 'visible',
                     'icon-optional': true,
                     'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
                     'text-rotate': ['get', 'rotate', ['get','style', ['properties']]],
@@ -1339,7 +1352,7 @@ const Layers = function () {
                     style.filter = ['has', 'point_count'];
 
                     style.layout = {
-                        'visibility': options.visibility,
+                        'visibility': options.visibility || 'visible',
                         'icon-optional': true,
                         'text-field': options.countIcon || '',
                         'text-size': {
