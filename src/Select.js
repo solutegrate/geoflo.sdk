@@ -91,7 +91,7 @@ const Select = function () {
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
         
-        geoflo.getSelectedFeatures().forEach(function (feature) {
+        /* geoflo.getSelectedFeatures().forEach(function (feature) {
             const source = feature.source;
             const layer = geoflo.Layers.getLayer(source, true);
 
@@ -121,8 +121,9 @@ const Select = function () {
                     });
                 }
             });
-        });
+        }); */
 
+        geoflo.Layers.refresh({ select: true });
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);

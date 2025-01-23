@@ -349,12 +349,13 @@ const Features = function () {
                 return this.addFeature(feature, feature.source);
             }
 
-            var selected = selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+            var selected = feature.properties._selected || selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
 
             if (selected && !geoflo.noSelect) {
                 selected.geometry.coordinates = feature.geometry.coordinates;
                 selected.properties = feature.properties;
                 selected.properties._selected = true;
+                /* geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT).forEachLayer(function (layer) { }) */
                 return geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
             } else if (!sources.includes(originalFeature.source)) {
                 sources.push(originalFeature.source);
