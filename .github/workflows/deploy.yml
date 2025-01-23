@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,8 +46,8 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git fetch origin main
-          git checkout main
-          git pull origin main
+          git checkout -B main origin/main
+          git reset --hard origin/main
           git add ./dev ./dist ./docs
           git commit -m "Updated at $(date) [skip ci]" || echo "No changes to commit"
           git push origin main
