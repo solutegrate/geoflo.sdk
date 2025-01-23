@@ -669,37 +669,48 @@ const Features = function () {
 
     function isPolyline (feature) {
         if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
         return turf.getType(feature) === 'LineString';
     };
 
     function isPolygon (feature) {
         if (!feature) return false;
-        return turf.getType(feature) === 'Polygon' || feature.properties.type === 'Polygon';
+        let type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' || feature.properties.type === 'Polygon' || type === 'Polygon';
     };
 
     function isRectangle (feature) {
         if (!feature) return false;
-        return turf.getType(feature) === 'Polygon' && feature.properties.type === 'Rectangle';
+        let type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' && feature.properties.type === 'Rectangle' || type === '';
     };
 
     function isPoint (feature) {
         if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
         if (turf.getType(feature) === 'Point' && (!feature.properties.type || feature.properties.type === 'Circle')) return true;
+        if (turf.getType(feature) === 'Point' && (type === 'Point' || type === 'Circle')) return true;
         return turf.getType(feature) === 'Point' && (feature.properties.type !== 'Text' && feature.properties.type !== 'Icon' && feature.properties.type !== 'Image');
     };
 
     function isText (feature) {
         if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Text') return true;
         return turf.getType(feature) === 'Point' && feature.properties.type === 'Text';
     };
 
     function isIcon (feature) {
         if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Icon') return true;
         return turf.getType(feature) === 'Point' && feature.properties.type === 'Icon';
     };
 
     function isImage (feature) {
         if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Image') return true;
         return turf.getType(feature) === 'Point' && feature.properties.type === 'Image';
     };
 

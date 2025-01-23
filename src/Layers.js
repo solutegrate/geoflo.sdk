@@ -682,6 +682,13 @@ const Layers = function () {
         return _layers.map(function (l) { return l.id });
     }
 
+    this.getLayerType = function (id) {
+        let type = '';
+        const layer = this.getLayer(id, true);
+        if (layer && layer.details) type = layer.details.type;
+        return type;
+    }
+
 
 
     
