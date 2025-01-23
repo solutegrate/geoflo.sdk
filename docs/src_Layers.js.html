@@ -624,8 +624,6 @@ const Layers = function () {
 
         if (options.select) {
             this.removeLayers(this.selectLayers);
-            this.removeSources([geoflo.statics.constants.sources.SELECT]);
-            this.addSources([geoflo.statics.constants.sources.SELECT]);
             this.addLayers(this.selectLayers, this.options);
             return this.getLayers();
         }
