@@ -1,51 +1,36 @@
-name: Deploy
-
+name: Release
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - created
 permissions:
   contents: write
+  packages: write
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-latest
     concurrency:
-      group: deploy
+      group: release
       cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - name: Install Node Modules
-        run: |
-          mkdir -p node_modules
-          npm install webpack webpack-cli terser-webpack-plugin jsdoc better-docs taffydb 
-      - name: Build Development Bundle
-        working-directory: ${{ github.workspace }}
-        run: |
-          node bundle.js development ./dev
-      - name: Build Production Bundle
-        working-directory: ${{ github.workspace }}
-        run: |
-          node bundle.js production ./dist
-      - name: Commit Changes
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add ./dist ./docs
-          git commit -m "Deployed on $(date) [skip ci]" || echo "No deploy changes to commit"
-          git push
-      - name: Upload Development to S3
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+      - name: Install Dependencies
+        run: npm ci
+      - name: Upload Production to S3
         uses: tpaschalis/s3-sync-action@master
         with:
           args: --acl public-read --cache-control "max-age=31536000"
         env:
-          FILE: ./dev/geoflo-sdk.js
+          FILE: ./dist/geoflo-sdk.min.js
           AWS_REGION: "us-east-1"
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
@@ -68,3 +53,7 @@ jobs:
           AWS_REGION: "us-east-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
