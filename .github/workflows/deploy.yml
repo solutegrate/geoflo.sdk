@@ -37,7 +37,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add ./dist ./docs
+          git add ./dist ./dev ./docs
           git commit -m "Deployed on $(date) [skip ci]" || echo "No deploy changes to commit"
           git push
       - name: Upload Development to S3
