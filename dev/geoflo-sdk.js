@@ -1,3 +1,4 @@
+/*! GeoFlo SDK - Version 1.0.5 - 2025-01-24T15:10:59.074Z */
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
  * This devtool is neither made for production nor for readable output files.
