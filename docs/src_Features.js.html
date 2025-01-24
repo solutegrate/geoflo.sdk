@@ -454,11 +454,7 @@ const Features = function () {
             if (!id) return false;
 
             var originalFeature = this.getFeatureById(id);
-            
-            if (!originalFeature || originalFeature === undefined) {
-                sources.push(feature.source);
-                return this.addFeature(feature, feature.source);
-            }
+            if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
 
             var selected = feature.properties._selected || selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
 
@@ -541,7 +537,7 @@ const Features = function () {
             if (remove) {
                 if (feature > -1) {
                     removedFeatures.push(...coldFeatures.splice(feature, 1));
-                    sources = [removedFeatures[0].source];
+                    sources = removedFeatures.map((feature) => { return feature.source });
                 }
                 
                 this.updateSource(sources);
