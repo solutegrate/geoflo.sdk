@@ -18,6 +18,18 @@ const entry = path.resolve(__dirname, input);
 const output = path.resolve(__dirname, folder);
 const docs = path.resolve(__dirname, './docs');
 
+const banner = `
+/*! 
+ * GeoFlo SDK - Version ${packageJson.version}
+ * Generated on: ${new Date().toISOString()}
+ * 
+ * DISCLAIMER:
+ * This software is the property of Solutegrate/GeoFlo. Unauthorized copying, 
+ * distribution, modification, or any use outside of licensed terms is strictly prohibited.
+ * Violators may be subject to legal actions.
+ */
+`
+
 webpack({
 	mode: mode,
 	watch: false,
@@ -29,9 +41,7 @@ webpack({
 		publicPath: '/'
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [
-		new webpack.BannerPlugin({ banner: `GeoFlo SDK - Version ${packageJson.version} - ${new Date().toISOString()}` })
-	],
+	plugins: [ new webpack.BannerPlugin({ banner: banner.trim() }) ],
 	optimization: prod ? {
 		minimize: true,
 		minimizer: [
