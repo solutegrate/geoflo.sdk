@@ -516,7 +516,8 @@ const Layers = function () {
 
         if (options.select) {
             this.removeLayers(this.selectLayers);
-            this.addLayers(this.selectLayers, { visibility: 'visible' });
+            this.addLayers(this.selectLayers);
+            this.selectLayers.forEach(function(layer) { map.setLayoutProperty(layer.id, 'visibility', 'visible') });
             return this.getLayers();
         }
 
@@ -781,13 +782,8 @@ const Layers = function () {
 	 * @returns {Object} The added layer.
 	 */
     this.addLayer = function (layer, options={}, index) {
-        if (!layer || !layer.id) return false;
-        console.log('Adding Layer:', id);
-        
+        if (!layer || !layer.id) return false;        
         layer.metadata = layer.metadata || options;
-        layer.visibility = layer.visibility || options.visibility || 'visible';
-        layer.layout = layer.layout || options.layout || {};
-        layer.layout.visibility = layer.visibility;
 
         map.addLayer(layer);
 

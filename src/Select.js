@@ -80,7 +80,7 @@ const Select = function () {
 	 */
     this.selectFeature = function (id, options={}) {
         const popup = geoflo.options.select.popup;
-        const selectLayer = geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT);
+        
         geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         
         if (!id) return false;
@@ -90,38 +90,6 @@ const Select = function () {
         removedFeatures = geoflo.Features.removeFeatures(id, true);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
-        
-        /* geoflo.getSelectedFeatures().forEach(function (feature) {
-            const source = feature.source;
-            const layer = geoflo.Layers.getLayer(source, true);
-
-            const type = layer ? layer.details.type : false;
-            if (!type || type !== 'Image') return;
-
-            const style = !layer ? false : layer.style;
-            if (!style) return false;
-
-            selectLayer.forEach(function (l) {
-                if (!l.metadata || !l.metadata.types || !l.metadata.types.includes(type)) return;
-
-                const styleType = style[type.toLowerCase()];
-                if (!styleType) return false;
-
-                if (styleType.paint) {
-                    Object.entries(styleType.paint).forEach(function (entry) {
-                        const key = entry[0];
-                        const value = entry[1];
-                        l.setPaintProperty(key, value);
-                    });
-                } else if (styleType.layout) {
-                    Object.entries(styleType.layout).forEach(function (entry) {
-                        const key = entry[0];
-                        const value = entry[1];
-                        l.setLayoutProperty(key, value);
-                    });
-                }
-            });
-        }); */
 
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
