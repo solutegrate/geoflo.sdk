@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs/promises');
 const { exec } = require('child_process');
 const webpack = require('webpack');
+const packageJson = require('./package.json');
 
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -28,6 +29,9 @@ webpack({
 		publicPath: '/'
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
+	plugins: [
+		new webpack.BannerPlugin({ banner: `GeoFlo SDK - Version ${packageJson.version} - ${new Date().toISOString()}` })
+	],
 	optimization: prod ? {
 		minimize: true,
 		minimizer: [
@@ -54,6 +58,9 @@ async function build(err, stats) {
 
 	const data = await fs.readFile(path.join(output, name), 'utf8');
 	if (!data) return console.error('Error handling JS file');
+
+	// update the version number in the comment at the top of file. Use MAJOR.MINOR.PATCH
+	const version = '1.0.0';
 
 	try {
 		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
