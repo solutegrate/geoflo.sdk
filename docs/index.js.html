@@ -1546,6 +1546,38 @@ const GeoFlo = function () {
         this.Features.updateFeatures(features);
         this.Layers.refresh({ select: true });
 
+        this.getSelectedFeatures().forEach(function (feature) {
+            const source = feature.source;
+            const layer = geoflo.Layers.getLayer(source, true);
+
+            const type = layer ? layer.details.type : false;
+            if (!type || type !== 'Image') return;
+
+            const style = !layer ? false : layer.style;
+            if (!style) return false;
+
+            selectLayer.forEach(function (l) {
+                if (!l.metadata || !l.metadata.types || !l.metadata.types.includes(type)) return;
+
+                const styleType = style[type.toLowerCase()];
+                if (!styleType) return false;
+
+                if (styleType.paint) {
+                    Object.entries(styleType.paint).forEach(function (entry) {
+                        const key = entry[0];
+                        const value = entry[1];
+                        l.setPaintProperty(key, value);
+                    });
+                } else if (styleType.layout) {
+                    Object.entries(styleType.layout).forEach(function (entry) {
+                        const key = entry[0];
+                        const value = entry[1];
+                        l.setLayoutProperty(key, value);
+                    });
+                }
+            });
+        });
+
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
 
         if (options.text) {
