@@ -424,6 +424,9 @@ const Layers = function () {
             'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"] ],
             'type': 'circle',
             'slot': 'top',
+            'layout': {
+                'visibility': 'visible',
+            },
             'paint': {
                 'circle-radius': 12,
                 'circle-stroke-width': 2,
@@ -513,7 +516,7 @@ const Layers = function () {
 
         if (options.select) {
             this.removeLayers(this.selectLayers);
-            this.addLayers(this.selectLayers, this.options);
+            this.addLayers(this.selectLayers, { visibility: 'visible' });
             return this.getLayers();
         }
 
@@ -780,7 +783,12 @@ const Layers = function () {
     this.addLayer = function (layer, options={}, index) {
         if (!layer || !layer.id) return false;
         console.log('Adding Layer:', id);
+        
         layer.metadata = layer.metadata || options;
+        layer.visibility = layer.visibility || options.visibility || 'visible';
+        layer.layout = layer.layout || options.layout || {};
+        layer.layout.visibility = layer.visibility;
+
         map.addLayer(layer);
 
         layer = map.getLayer(layer.id);

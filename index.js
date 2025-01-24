@@ -563,9 +563,11 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false if the features array is empty.
 	 */
     this.setSelectedFeatures = function (features=[]) {
-        if (!features.length) return false;
-
-        selectedFeatures.splice(0, selectedFeatures.length, ...features);
+        if (!features.length) {
+            selectedFeatures = [];
+        } else {
+            selectedFeatures.splice(0, selectedFeatures.length, ...features);
+        }
 
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
@@ -1418,7 +1420,7 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name addFeaturesToSelected
-	 * @description This function adds the provided features to the selected features list, updates the map sources, sets buttons, updates the text, and triggers a 'feature.select' event.
+	 * @description This function adds the provided features to the selected features list, updates the map sources, sets buttons and updates the text.
 	 * @param {Array} features - The features to be added to the selected features list.
 	 */
     this.addFeaturesToSelected = function (features, options={}) {
@@ -1430,7 +1432,8 @@ const GeoFlo = function () {
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.Features.setText(features);
-        this.updateFeatures(features);
+        this.Features.updateFeatures(features);
+        this.Layers.refresh({ select: true });
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
 

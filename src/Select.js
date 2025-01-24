@@ -123,7 +123,6 @@ const Select = function () {
             });
         }); */
 
-        geoflo.Layers.refresh({ select: true });
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
