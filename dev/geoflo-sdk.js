@@ -1,4 +1,14 @@
-/*! GeoFlo SDK - Version 1.0.5 - 2025-01-24T15:10:59.074Z */
+/*!
+ * /*!
+ *  * GeoFlo SDK - Version 1.0.5
+ *  * Generated on: 2025-01-24T15:19:46.360Z
+ *  *
+ *  * DISCLAIMER:
+ *  * This software is the property of Solutegrate/GeoFlo. Unauthorized copying,
+ *  * distribution, modification, or any use outside of licensed terms is strictly prohibited.
+ *  * Violators may be subject to legal actions.
+ *  * /
+ */
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
  * This devtool is neither made for production nor for readable output files.
