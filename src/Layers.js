@@ -49,6 +49,8 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers after the refresh operation.
 	 */
     this.refresh = async function (options={}) {
+        this.options = Object.assign(this.options, options);
+        
         this.defaultLayers = [
             {
                 'source': statics.constants.sources.COLD,
@@ -514,13 +516,6 @@ const Layers = function () {
             'metadata': { types: ['Image'] }
         }]
 
-        if (options.select) {
-            this.removeLayers(this.selectLayers);
-            this.addLayers(this.selectLayers);
-            this.selectLayers.forEach(function(layer) { map.setLayoutProperty(layer.id, 'visibility', 'visible') });
-            return this.getLayers();
-        }
-
         var layers = geoflo.Utilities.cloneDeep(this._layers);
 
         this._layers = [];
@@ -534,9 +529,8 @@ const Layers = function () {
         this.addEventListeners();
         this.addSources(Object.values(geoflo.statics.constants.sources));
         this.addLayers(this.defaultLayers, this.options);
-        this.addLayers(this.selectLayers, this.options);
-
         await buildLayers.call(this, layers);
+        this.addLayers(this.selectLayers, this.options);
 
         setTimeout(function() { geoflo.Layers.moveLayers(); }, 250);
         //setTimeout(function() { geoflo.zoomToFeatures(geoflo.getRenderedDrawnFeatures()); }, 350);

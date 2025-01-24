@@ -203,9 +203,9 @@ const GeoFlo = function () {
         this.modes = [ this.Select, this.Draw ];
         this.enabled = true;
 
-        this.fire('map.enable', { enabled: this.enabled, mode: this.mode, type: this.type });
         this.redraw();
         this.setMode({ mode: this.mode, type: this.type});
+        this.fire('map.enable', { enabled: this.enabled, mode: this.mode, type: this.type });
         return this;
     }
 
@@ -223,12 +223,12 @@ const GeoFlo = function () {
         this.enabled = false;
         this.mode = null;
         this.options = Options;
-        this.fire('map.disable', { enabled: this.enabled, mode: this.mode });
         this.doubleClickZoom.enable(this.map);
         this.Layers.removeEventListeners();
         this.Events.removeEventListeners();
         this.Layers.removeLayers();
         this.removeControls();
+        this.fire('map.disable', { enabled: this.enabled, mode: this.mode });
         return this;
     }
 
@@ -1433,7 +1433,6 @@ const GeoFlo = function () {
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.Features.setText(features);
         this.Features.updateFeatures(features);
-        this.Layers.refresh({ select: true });
 
         this.getSelectedFeatures().forEach(function (feature) {
             const source = feature.source;
