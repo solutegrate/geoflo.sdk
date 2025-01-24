@@ -1,7 +1,7 @@
 /*!
  * /*!
- *  * GeoFlo SDK - Version 1.0.5
- *  * Generated on: 2025-01-24T17:21:45.681Z
+ *  * GeoFlo SDK - Version 1.0.6
+ *  * Generated on: 2025-01-24T17:57:49.433Z
  *  *
  *  * DISCLAIMER:
  *  * This software is the property of Solutegrate/GeoFlo. Unauthorized copying,

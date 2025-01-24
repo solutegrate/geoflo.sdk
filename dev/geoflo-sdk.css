@@ -37,8 +37,9 @@ body {
 }
 
 .header-icon .logo-image {
-    height: 25px;
-    margin-left: 10px;
+	height: 18px;
+	margin-left: 0px;
+	margin-right: 2px;
 }
 
 #geoflo-window.smart-window .smart-content-container > .smart-header-section .top-center {
