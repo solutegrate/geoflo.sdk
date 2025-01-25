@@ -1,5 +1,5 @@
 node_modules/*/node_modules/
 node_modules/
 .npmrc
-.ps1
+release.ps1
 /index.html
