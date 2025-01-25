@@ -543,14 +543,14 @@ const GeoFlo = function () {
 	/**
 	 * @function
      * @memberOf module:geoflo
-	 * @name setCustomLayers
+	 * @name setLayers
 	 * @description Sets custom layers on the map.
 	 * @param {Array} layers - An array of custom layers to be added to the map.
 	 * @param {Object} options - Additional options for setting custom layers.
 	 * @returns {Promise} A promise that resolves when the custom layers are set on the map.
 	 */
     this.setLayers = async function (layers=[], options={}) {
-        this.removeFeatures(layers, options);
+        if (options.reset) this.removeFeatures(layers, options);
         return await this.Layers.setCustomLayers(layers, options);
     }
 

@@ -225,14 +225,7 @@ const Locate = function () {
         button.classList.remove('mapboxgl-ctrl-geolocate-follow');
     }
 
-	/**
-	 * @function
-     * @memberof module:geoflo.Locate
-	 * @name onAdd
-	 * @description Logs the event passed as a parameter.
-	 * @param {Event} event - The event object to be logged.
-     * @event
-	 */
+
     this.onAdd = function (event) {
         console.log(event)
     }

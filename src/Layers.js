@@ -897,6 +897,7 @@ const Layers = function () {
 	 */
     this.removeLayers = function (layers) {
         var ids = this.getLayerIds(layers);
+        this.removeTextLayer();
         ids.forEach(function(id) { this.removeLayer(id) }, this);
         geoflo.fire('layers.remove', { removed: ids });
         return ids;
