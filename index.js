@@ -64,6 +64,8 @@ const GeoFlo = function () {
 	 * @returns {Object} Returns the map component instance.
 	 */
     this.init = async function (accessToken, options={}, onReady) {
+        var onReadyReturn;
+
         this.Utilities = new Utilities();
 
         if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
@@ -121,15 +123,28 @@ const GeoFlo = function () {
         this.mapbox.on('load', this.onLoad.bind(this));
 
         await loaded(this);
+        await this.redraw();
+
+        this.setViewport();
+        this.setExtent(false, true);
+
+        this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
 
         if (onReady && typeof onReady === 'function') {
             if (onReady.constructor.name === 'AsyncFunction') {
-                await onReady.call(this, this);
+                onReadyReturn = await onReady.call(this, this);
             } else {
-                onReady.call(this, this);
+                onReadyReturn = onReady.call(this, this);
             }
         }
-        
+
+        if (onReadyReturn) {
+            if (!onReadyReturn.disable) {
+                this.enable();
+            }
+        } else {
+            this.enable();
+        }
         return this;
     }
 
@@ -171,11 +186,6 @@ const GeoFlo = function () {
         this.Events.addEventListeners();
 
         this.isLoaded = true;
-        
-        this.setViewport();
-        this.setExtent(false, true);
-        this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
-        this.enable();
         return this;
     }
 
@@ -203,7 +213,6 @@ const GeoFlo = function () {
         this.modes = [ this.Select, this.Draw ];
         this.enabled = true;
 
-        this.redraw();
         this.setMode({ mode: this.mode, type: this.type});
         this.fire('map.enable', { enabled: this.enabled, mode: this.mode, type: this.type });
         return this;

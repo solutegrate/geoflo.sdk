@@ -13,7 +13,6 @@ const Layers = function () {
     const Layers = this;
     const map = geoflo.map;
     const id = geoflo.id;
-    const statics = geoflo.statics;
 
     const layerTypes = {
         Polygon: ['-fill', '-border'],
@@ -36,24 +35,11 @@ const Layers = function () {
 	 * @returns {Object} The refreshed object with the updated options.
 	 */
     this.init = function (options={}) {
-        this.options = options;
-        return this.refresh();
-    }
-
-	/**
-	 * @function
-     * @memberof module:geoflo.Layers
-	 * @name refresh
-	 * @description This function refreshes the map by removing existing layers and sources, adding default layers and sources, and rebuilding the layers.
-	 * @param {Object} options - Optional parameter for additional options.
-	 * @returns {Array} - An array of layers after the refresh operation.
-	 */
-    this.refresh = async function (options={}) {
         this.options = Object.assign(this.options, options);
         
         this.defaultLayers = [
             {
-                'source': statics.constants.sources.COLD,
+                'source': geoflo.statics.constants.sources.COLD,
                 'id': id + '-fill-cold',
                 'type': 'fill',
                 'layout': {},
@@ -64,7 +50,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.COLD,
+                'source': geoflo.statics.constants.sources.COLD,
                 'id': id + '-line-cold',
                 'type': 'line',
                 'layout': {
@@ -80,7 +66,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.COLD,
+                'source': geoflo.statics.constants.sources.COLD,
                 'id': id + '-circle-cold',
                 'filter': ['all', ['==', ['get', 'type'], 'Circle'], ["!=", ["geometry-type"], "Polygon"] ],
                 'type': 'circle',
@@ -97,7 +83,7 @@ const Layers = function () {
                 }
             },
             {
-                source: statics.constants.sources.COLD,
+                source: geoflo.statics.constants.sources.COLD,
                 id: id + '-icon-cold',
                 type: 'symbol',
                 filter: ['==', ['get', 'type'], 'Icon'],
@@ -127,7 +113,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.COLD,
+                'source': geoflo.statics.constants.sources.COLD,
                 'id': id + '-text-cold',
                 'type': 'symbol',
                 'filter': ["==", "$type", "Point"],
@@ -155,8 +141,8 @@ const Layers = function () {
                 }
             },
             {
-                id: statics.constants.layers.MESH + '-line',
-                source: statics.constants.sources.MESH,
+                id: geoflo.statics.constants.layers.MESH + '-line',
+                source: geoflo.statics.constants.sources.MESH,
                 type: "line",
                 paint: {
                     "line-color": geoflo.options.colors.primaryBase,
@@ -165,8 +151,8 @@ const Layers = function () {
                 }
             },
             {
-                id: statics.constants.layers.MESH + '-circle',
-                source: statics.constants.sources.MESH,
+                id: geoflo.statics.constants.layers.MESH + '-circle',
+                source: geoflo.statics.constants.sources.MESH,
                 'type': 'circle',
                 'paint': {
                     'circle-radius': 2,
@@ -175,7 +161,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.HOT,
+                'source': geoflo.statics.constants.sources.HOT,
                 'id': id + '-fill-hot',
                 'type': 'fill',
                 'layout': {},
@@ -186,7 +172,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.HOT,
+                'source': geoflo.statics.constants.sources.HOT,
                 'id': id + '-line-hot',
                 'type': 'line',
                 'layout': {
@@ -200,7 +186,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.HOT,
+                'source': geoflo.statics.constants.sources.HOT,
                 'id': id + '-point-hot',
                 'filter': ['==', '$type', 'Point'],
                 'type': 'circle',
@@ -213,7 +199,7 @@ const Layers = function () {
                 }
             },
             {
-                source: statics.constants.sources.HOT,
+                source: geoflo.statics.constants.sources.HOT,
                 id: id + '-icon-hot',
                 filter: ['==', ['get', 'type'], 'Icon'],
                 type: 'symbol',
@@ -242,7 +228,7 @@ const Layers = function () {
                 }
             },
             {
-                source: statics.constants.sources.HOT,
+                source: geoflo.statics.constants.sources.HOT,
                 id: id + '-image-hot',
                 filter: ['==', ['get', 'type'], 'Image'],
                 type: 'symbol',
@@ -255,7 +241,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.HOTTEXT,
+                'source': geoflo.statics.constants.sources.HOTTEXT,
                 'id': id + '-text-hot',
                 'type': 'symbol',
                 'layout': {
@@ -282,7 +268,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.SNAP,
+                'source': geoflo.statics.constants.sources.SNAP,
                 'id': id + '-point-snap',
                 'type': 'circle',
                 'filter': ['==', '$type', 'Point'],
@@ -294,7 +280,7 @@ const Layers = function () {
                 }
             },
             {
-                source: statics.constants.sources.SNAP,
+                source: geoflo.statics.constants.sources.SNAP,
                 id: id + '-icon-snap',
                 type: 'symbol',
                 filter: ['==', ['get', 'type'], 'Icon'],
@@ -323,7 +309,7 @@ const Layers = function () {
                 }
             },
             {
-                source: statics.constants.sources.SNAP,
+                source: geoflo.statics.constants.sources.SNAP,
                 id: id + '-image-snap',
                 filter: ['==', ['get', 'type'], 'Image'],
                 type: 'symbol',
@@ -336,7 +322,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.SNAP,
+                'source': geoflo.statics.constants.sources.SNAP,
                 'id': id + '-line-snap',
                 'type': 'line',
                 //'filter': ["==", "$type", "LineString"],
@@ -352,7 +338,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.ROUTE,
+                'source': geoflo.statics.constants.sources.ROUTE,
                 'id': id + '-line-route',
                 'type': 'line',
                 'filter': ["==", "$type", "LineString"],
@@ -368,7 +354,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.VERTEX,
+                'source': geoflo.statics.constants.sources.VERTEX,
                 'id': id + '-point-vertex',
                 'type': 'circle',
                 'filter': ['==', "$type", 'LineString'],
@@ -380,7 +366,7 @@ const Layers = function () {
                 }
             },
             {
-                'source': statics.constants.sources.GAMEPAD,
+                'source': geoflo.statics.constants.sources.GAMEPAD,
                 'id': id + '-gamepad',
                 'type': 'symbol',
                 'layout': {
@@ -392,7 +378,7 @@ const Layers = function () {
         ]
     
         this.selectLayers = [{
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-line-select',
             'type': 'line',
             'slot': 'top',
@@ -408,7 +394,7 @@ const Layers = function () {
             'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
         },
         {
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-fill-select',
             'type': 'fill',
             'layout': {},
@@ -421,7 +407,7 @@ const Layers = function () {
             'metadata': { types: ['Polygon', 'Rectangle'] }
         },
         {
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-point-select',
             'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"] ],
             'type': 'circle',
@@ -438,7 +424,7 @@ const Layers = function () {
             'metadata': { types: ['Point', 'Circle', 'Marker', 'Icon'] }
         },
         {
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-symbol-select',
             'filter': ['==', ['get', 'type'], 'Icon'],
             'type': 'symbol',
@@ -469,7 +455,7 @@ const Layers = function () {
             'metadata': { types: ['Icon'] }
         },
         {
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-text-select',
             'filter': ['==', ['get', 'type'], 'Text'],
             'type': 'symbol',
@@ -501,7 +487,7 @@ const Layers = function () {
             'metadata': { types: ['Text'] }
         },
         {
-            'source': statics.constants.sources.SELECT,
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-image-select',
             'filter': ['==', ['get', 'type'], 'Image'],
             'type': 'symbol',
@@ -516,6 +502,20 @@ const Layers = function () {
             'metadata': { types: ['Image'] }
         }]
 
+        return this.refresh({ init: true});
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Layers
+	 * @name refresh
+	 * @description This function refreshes the map by removing existing layers and sources, adding default layers and sources, and rebuilding the layers.
+	 * @param {Object} options - Optional parameter for additional options.
+	 * @returns {Array} - An array of layers after the refresh operation.
+	 */
+    this.refresh = async function (options={}) {
+        if (!options.init) return this.init(options);
+        
         var layers = geoflo.Utilities.cloneDeep(this._layers);
 
         this._layers = [];
@@ -1004,7 +1004,7 @@ const Layers = function () {
     }
 
 
-
+    this.init(options);
 
 
     async function buildLayers (layers=[], options={}) {
