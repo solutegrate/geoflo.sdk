@@ -13,6 +13,3 @@ $VERSION = node -p "require('./package.json').version"
 # Create and push the tag
 git tag -a $VERSION -m "Release $VERSION"
 git push origin $VERSION
-
-# Step 4: Create a GitHub release
-gh release create $VERSION --title "Release $VERSION" --notes "New Release"
