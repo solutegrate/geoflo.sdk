@@ -90,7 +90,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Events</h3><ul><li><a href="module-geoflo.Locate.html#.event:onAdd">onAdd</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li></ul><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a></li><li><a href="module-geoflo.Draw.html">Draw</a></li><li><a href="module-geoflo.Exploring.html">Exploring</a></li><li><a href="module-geoflo.Features.html">Features</a></li><li><a href="module-geoflo.Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.Layers.html">Layers</a></li><li><a href="module-geoflo.Locate.html">Locate</a></li><li><a href="module-geoflo.Mesh.html">Mesh</a></li><li><a href="module-geoflo.Painting.html">Painting</a></li><li><a href="module-geoflo.Pinning.html">Pinning</a></li><li><a href="module-geoflo.Routing.html">Routing</a></li><li><a href="module-geoflo.Select.html">Select</a></li><li><a href="module-geoflo.Snapping.html">Snapping</a></li><li><a href="module-geoflo.Styles.html">Styles</a></li><li><a href="module-geoflo.Utilities.html">Utilities</a></li></ul></div>
                 
             </nav>
         </div>
@@ -11866,8 +11866,8 @@
 
 
     
-    <h4 class="name" id=".setCustomLayers">
-        <a class="href-link" href="#.setCustomLayers">#</a>
+    <h4 class="name" id=".setIcon">
+        <a class="href-link" href="#.setIcon">#</a>
         
             
                 <span class='tag'>static</span>
@@ -11875,7 +11875,184 @@
         
         <span class="code-name">
             
-                setCustomLayers<span class="signature">(layers, options)</span><span class="type-signature"> &rarr; {Promise}</span>
+                setIcon<span class="signature">(event)</span><span class="type-signature"> &rarr; {void}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        This function determines the appropriate icon to display based on the user's following status and navigation compass icon.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>event</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Event</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The event for which the icon is being set.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <dt class="important tag-deprecated">Deprecated:</dt><dd class="yes-def tag-deprecated"><ul class="dummy"><li>Yes</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line433">line 433</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">void</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id=".setLayers">
+        <a class="href-link" href="#.setLayers">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                setLayers<span class="signature">(layers, options)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -12049,183 +12226,6 @@
         <label>Type: </label>
         
 <code class="param-type">Promise</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id=".setIcon">
-        <a class="href-link" href="#.setIcon">#</a>
-        
-            
-                <span class='tag'>static</span>
-            
-        
-        <span class="code-name">
-            
-                setIcon<span class="signature">(event)</span><span class="type-signature"> &rarr; {void}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        This function determines the appropriate icon to display based on the user's following status and navigation compass icon.
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>event</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">Event</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The event for which the icon is being set.</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <dt class="important tag-deprecated">Deprecated:</dt><dd class="yes-def tag-deprecated"><ul class="dummy"><li>Yes</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="index.js.html" class="button">View Source</a>
-            <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line433">line 433</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">void</code>
 
 
     </div>
