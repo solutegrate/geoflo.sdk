@@ -37,15 +37,14 @@
 
 ## 🌟 Features
 
-- Draw, Edit, Clone, Move, Cut, Rotate, Split, Snap, Pin, Route, Paint, Explore and more...
-- Circles, Icons, Polylines, Polygons, Rectangles, Text and more to come...
+- Draw, Edit, Snap, Pin, Route, Paint, Explore and more...
+- Circles, Icons, Images, Polylines, Polygons, Rectangles, Text and more to come...
 - Import and Export Features
 - Custom Color Schema
-- Offset Overlapping Lines
 - Embedded Overpass API and OSRM Router
 - Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)
-- User Location Follow Mode
-- Mapbox Style Switcher Control
+- User Location & Follow Mode
+- Base Map Control
 
 ## ⚡ Deployment
 
@@ -125,7 +124,11 @@ import geoflo from "@solutegrate/geoflo-sdk@1.0.5";
 
 ## 🗺️ Roadmap
 
-- In review...
+- Clone
+- Move
+- Cut
+- Rotate
+- Split
 
 ## 🏁 Credits
 
