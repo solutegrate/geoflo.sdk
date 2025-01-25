@@ -1244,7 +1244,7 @@ const Layers = function () {
             layout = Object.assign({}, {
                 'visibility': options.visibility || 'visible',
                 'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
-                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.6, 10, 0.8, 15, 1],
                 'icon-allow-overlap': true,
                 'icon-anchor': 'bottom'
             }, style.image ? style.image.layout || {} : {});
@@ -1350,14 +1350,14 @@ const Layers = function () {
                     'line-miter-limit': 2,
                     'line-join': 'round',
                     'line-cap': 'round'
-                }, style.border ? style.border.layout || {} : {});
+                }, style.line ? style.line.layout || {} : {});
 
                 paint = Object.assign({}, {
                     'line-color': ['get', 'primaryColor', ['get','style', ['properties']]],
                     'line-width': ['case', ["boolean", ['has', 'width', ['get','style', ['properties']]], true], ['get', 'width', ['get','style', ['properties']]], 4],
                     'line-offset': ['case', ["boolean", ["has", "offset"], true], ["get", "offset"], 0],
                     'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
-                }, style.border ? style.border.paint || {} : {});
+                }, style.line ? style.line.paint || {} : {});
 
                 style = {
                     id: id,
