@@ -60,17 +60,11 @@ For more information on creating and using Mapbox access tokens:
 ### Module Import
 
 ```bash
-  npm install @solutegrate/geoflo-sdk@1.0.5
+  npm install @solutegrate/geoflo-sdk@latest
 ```
 
 ```javascript
-import geoflo from "@solutegrate/geoflo-sdk@1.0.5";
-```
-
-```json
-  "dependencies": {
-    "@solutegrate/geoflo-sdk": "^1.0.5"
-  }
+import geoflo from "@solutegrate/geoflo-sdk";
 ```
 
 ### CDN Import
