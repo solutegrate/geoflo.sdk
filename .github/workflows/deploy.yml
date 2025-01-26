@@ -31,9 +31,15 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install and Build
+      - name: Install Node Modules
         run: |
+          mkdir -p node_modules
           npm ci
+          
+      - name: Webpack Build
+        id: webpack
+        run: |
+          node webpack.js
         timeout-minutes: 10
 
       - name: Commit Changes

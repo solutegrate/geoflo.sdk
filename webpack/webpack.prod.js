@@ -13,7 +13,7 @@ module.exports = merge(baseConfig, {
     mode: 'production',
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: `geoflo-sdk-v${packageJson.version}.min.js`,
+        filename: `geoflo-sdk.min.js`,
     },
     optimization: {
         minimize: true,
@@ -35,7 +35,7 @@ module.exports = merge(baseConfig, {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: `geoflo-sdk-v${packageJson.version}.css`,
+            filename: `geoflo-sdk.css`,
         }),
         new WebpackObfuscator({
             target: 'browser',

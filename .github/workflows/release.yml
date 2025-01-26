@@ -37,7 +37,7 @@ jobs:
         with:
           args: --acl public-read
         env:
-          FILE: ./dist/geoflo-sdk-v${{ env.VERSION }}.min.js
+          FILE: ./dist/geoflo-sdk.min.js
           AWS_REGION: "us-east-1"
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
@@ -48,7 +48,7 @@ jobs:
         with:
           args: --acl public-read
         env:
-          FILE: ./dist/geoflo-sdk-v${{ env.VERSION }}.css
+          FILE: ./dist/geoflo-sdk.css
           AWS_REGION: "us-east-1"
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}

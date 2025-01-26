@@ -4,6 +4,7 @@ const prodConfig = require('./webpack/webpack.prod');
 const mode = process.env.NODE_ENV || 'development';
 
 let config;
+
 if (mode === 'production') {
     config = prodConfig;
 } else {

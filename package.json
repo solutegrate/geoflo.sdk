@@ -3,14 +3,7 @@
   "version": "1.0.7",
   "description": "MapboxGL Wrapper for Professional Geospatial Management",
   "main": "dist/geoflo-sdk.min.js",
-  "scripts": {
-    "build:dev": "NODE_ENV=development webpack --config webpack.config.js",
-    "build:prod": "NODE_ENV=production webpack --config webpack.config.js",
-    "clean": "rm -rf dist dev docs",
-    "lint": "eslint .",
-    "test": "jest --coverage",
-    "prepare": "npm run build:dev && npm run build:prod"
-  },
+  "scripts": {},
   "publishConfig": {
     "@solutegrate:registry": "https://npm.pkg.github.com",
     "access": "public"
