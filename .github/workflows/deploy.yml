@@ -21,14 +21,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install Node Modules
+      - name: Install and Build
         run: |
-          mkdir -p node_modules
-          npm install webpack webpack-cli terser-webpack-plugin jsdoc better-docs taffydb 
-      - name: Build Webpack Bundle
-        working-directory: ${{ github.workspace }}
-        run: |
-          node bundle.js
+          npm install
       - name: Commit Changes
         run: |
           git config --global user.name 'github-actions'

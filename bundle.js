@@ -4,7 +4,10 @@ const { exec } = require('child_process');
 const webpack = require('webpack');
 const packageJson = require('./package.json');
 const TerserPlugin = require("terser-webpack-plugin");
+var WebpackObfuscator = require('webpack-obfuscator');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const domain = 'sdk.geoflo.pro';
 const id = 'geoflo-sdk';
 const input = 'index.js';
 const args = process.argv;
@@ -39,49 +42,60 @@ const minimizer = new TerserPlugin({
 	}
 })
 
-let mode;
-let name;
-let folder;
-let output;
+let options = {};
 
-buildDev({
-	mode: 'development',
-	watch: false,
-	stats: { colors: true },
-	entry: entry,
-	output: {},
-	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [banner]
-});
+pack('development');
 
-function buildDev(options={}) {
-	mode = 'development';
-	name = `${id}.js`;
-	folder = './dev';
-	output = path.resolve(__dirname, folder);
+async function pack(mode) {
+	options = {
+        mode,
+        watch: false,
+        stats: { colors: true },
+        entry,
+        output: {
+            path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
+            filename: mode === 'development' ? `${id}.js` : `${id}-v${packageJson.version}.min.js`,
+            publicPath: '/'
+        },
+        resolve: { extensions: ['.json', '.js', '.jsx'] },
+        plugins: [banner],
+        optimization: mode === 'production' ? {
+            minimize: true,
+            minimizer: [minimizer],
+            splitChunks: { chunks: 'all' }
+        } : undefined,
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    enforce: 'post',
+                    use: {
+                        loader: WebpackObfuscator.loader,
+                        options: {
+							target: 'browser',
+							compact: true,
+							selfDefending: true,
+							controlFlowFlattening: true,
+							controlFlowFlatteningThreshold: 0.4,
+							numbersToExpressions: true,
+							simplify: true,
+							stringArrayShuffle: true,
+							splitStrings: true,
+							stringArrayThreshold: 1,
+							rotateStringArray: true,
+							disableConsoleOutput: true
+						}
+                    }
+                },
+				{
+					test: /\.css$/,
+					use: [MiniCssExtractPlugin.loader, 'css-loader']
+				}
+            ]
+        }
+    };
 
-	options.output = {
-		path: output,
-		filename: name,
-		publicPath: '/'
-	};
-	
-	webpack(options, build);
-}
-
-function buildProd(options={}) {
-	mode = 'production';
-	name = `${id}.min.js`;
-	folder = './dist';
-	output = path.resolve(__dirname, folder);
-	
-	options.output = {
-		path: output,
-		filename: name,
-		publicPath: '/'
-	};
-
-	webpack(options, build);
+	webpack(options, build)
 }
 
 async function build(err, stats) {
@@ -90,23 +104,7 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(output, name), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
-	if (mode === 'development') return buildProd({
-		mode: 'production',
-		watch: false,
-		stats: { colors: true },
-		entry: entry,
-		output: {
-			path: path.resolve(__dirname, './dist'),
-			filename: `${id}.min.js`,
-			publicPath: '/'
-		},
-		resolve: { extensions: ['.json', '.js', '.jsx'] },
-		plugins: [ new webpack.BannerPlugin({ banner: banner.trim() }) ],
-		optimization: {
-			minimize: true,
-			minimizer: [minimizer]
-		}
-	});
+	if (mode === 'development') return pack('production');
 
 	try {
 		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
