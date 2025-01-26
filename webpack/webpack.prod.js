@@ -32,6 +32,9 @@ module.exports = merge(baseConfig, {
         })],
     },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: `geoflo-sdk-v${packageJson.version}.css`,
+        }),
         new WebpackObfuscator({
             target: 'browser',
             compact: true,
