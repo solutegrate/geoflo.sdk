@@ -1,11 +1,13 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackObfuscator = require('webpack-obfuscator');
 const { exec } = require('child_process');
 const fs = require('fs/promises');
-const baseConfig = require('./webpack.base.js');
-const packageJson = require('../package.json');
+
+const baseConfig = require(path.resolve(__dirname, './webpack.base'));
+const packageJson = require(path.resolve(__dirname, '../package.json'));
 
 module.exports = merge(baseConfig, {
     mode: 'production',

@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const packageJson = require('../package.json');
+const packageJson = require(path.resolve(__dirname, '../package.json'));
 
 const DISCLAIMER = `
 /*! 
