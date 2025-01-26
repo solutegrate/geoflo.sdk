@@ -26,14 +26,15 @@ const DISCLAIMER = `
  */
 `
 
-let mode = args[2];
+const mode = args[2];
+
 let options = getOptions(mode);
 
 if (mode) webpack(options, build);
 
-async function getOptions(mode) {
+function getOptions(mode) {
 	if (!mode) return console.error('No mode specified.'), process.exit(1);
-	
+
 	let options = {
         mode,
         watch: false,
