@@ -25,14 +25,10 @@ jobs:
         run: |
           mkdir -p node_modules
           npm install webpack webpack-cli terser-webpack-plugin jsdoc better-docs taffydb 
-      - name: Build Development Bundle
+      - name: Build Webpack Bundle
         working-directory: ${{ github.workspace }}
         run: |
-          node bundle.js development ./dev
-      - name: Build Production Bundle
-        working-directory: ${{ github.workspace }}
-        run: |
-          node bundle.js production ./dist
+          node bundle.js
       - name: Commit Changes
         run: |
           git config --global user.name 'github-actions'
@@ -43,7 +39,7 @@ jobs:
       - name: Upload Development to S3
         uses: tpaschalis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control "max-age=31536000"
+          args: --acl public-read
         env:
           FILE: ./dev/geoflo-sdk.js
           AWS_REGION: "us-east-1"
@@ -53,7 +49,7 @@ jobs:
       - name: Upload CSS to S3
         uses: tpaschalis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control "max-age=31536000"
+          args: --acl public-read
         env:
           FILE: ./dist/geoflo-sdk.css
           AWS_REGION: "us-east-1"

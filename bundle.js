@@ -3,22 +3,15 @@ const fs = require('fs/promises');
 const { exec } = require('child_process');
 const webpack = require('webpack');
 const packageJson = require('./package.json');
-
 const TerserPlugin = require("terser-webpack-plugin");
 
 const id = 'geoflo-sdk';
 const input = 'index.js';
 const args = process.argv;
-const mode = args[2];
-const folder = args[3];
-const prod = mode === 'production';
-const name = prod ? `${id}.min.js` : `${id}.js`;
-
 const entry = path.resolve(__dirname, input);
-const output = path.resolve(__dirname, folder);
 const docs = path.resolve(__dirname, './docs');
 
-const banner = `
+const DISCLAIMER = `
 /*! 
  * GeoFlo SDK - Version ${packageJson.version}
  * Generated on: ${new Date().toISOString()}
@@ -29,39 +22,67 @@ const banner = `
  * Violators may be subject to legal actions.
  */
 `
+const banner = new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })
 
-webpack({
-	mode: mode,
+const minimizer = new TerserPlugin({
+	terserOptions: {
+		ecma: undefined,
+		parse: {},
+		compress: { drop_console: true },
+		mangle: true,
+		output: null,
+		format: null,
+		toplevel: false,
+		nameCache: null,
+		keep_classnames: true,
+		keep_fnames: false,
+	}
+})
+
+let mode;
+let name;
+let folder;
+let output;
+
+buildDev({
+	mode: 'development',
 	watch: false,
 	stats: { colors: true },
 	entry: entry,
-	output: {
+	output: {},
+	resolve: { extensions: ['.json', '.js', '.jsx'] },
+	plugins: [banner]
+});
+
+function buildDev(options={}) {
+	mode = 'development';
+	name = `${id}.js`;
+	folder = './dev';
+	output = path.resolve(__dirname, folder);
+
+	options.output = {
 		path: output,
 		filename: name,
 		publicPath: '/'
-	},
-	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [ new webpack.BannerPlugin({ banner: banner.trim() }) ],
-	optimization: prod ? {
-		minimize: true,
-		minimizer: [
-			new TerserPlugin({
-				terserOptions: {
-					ecma: undefined,
-					parse: {},
-					compress: { drop_console: true },
-					mangle: true,
-					output: null,
-					format: null,
-					toplevel: false,
-					nameCache: null,
-					keep_classnames: true,
-					keep_fnames: false,
-				}
-			})
-		]
-	} : {}
-}, build);
+	};
+	
+	webpack(options, build);
+}
+
+function buildProd(options={}) {
+	mode = 'production';
+	name = `${id}.min.js`;
+	folder = './dist';
+	output = path.resolve(__dirname, folder);
+	
+	options.output = {
+		path: output,
+		filename: name,
+		publicPath: '/'
+	};
+
+	webpack(options, build);
+}
 
 async function build(err, stats) {
 	if (err) return console.error('Error building:', err);
@@ -69,8 +90,23 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(output, name), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
-	// update the version number in the comment at the top of file. Use MAJOR.MINOR.PATCH
-	const version = '1.0.0';
+	if (mode === 'development') return buildProd({
+		mode: 'production',
+		watch: false,
+		stats: { colors: true },
+		entry: entry,
+		output: {
+			path: path.resolve(__dirname, './dist'),
+			filename: `${id}.min.js`,
+			publicPath: '/'
+		},
+		resolve: { extensions: ['.json', '.js', '.jsx'] },
+		plugins: [ new webpack.BannerPlugin({ banner: banner.trim() }) ],
+		optimization: {
+			minimize: true,
+			minimizer: [minimizer]
+		}
+	});
 
 	try {
 		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
@@ -78,10 +114,6 @@ async function build(err, stats) {
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
 	}
-
-	console.log(mode + ' complete:', name);
-
-	if (!prod) return;
 
 	try {
 		const htmls = await fs.readdir(docs);

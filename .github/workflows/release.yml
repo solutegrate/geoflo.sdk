@@ -28,7 +28,7 @@ jobs:
       - name: Upload Production to S3
         uses: tpaschalis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control "max-age=31536000"
+          args: --acl public-read
         env:
           FILE: ./dist/geoflo-sdk.min.js
           AWS_REGION: "us-east-1"
@@ -38,7 +38,7 @@ jobs:
       - name: Upload CSS to S3
         uses: tpaschalis/s3-sync-action@master
         with:
-          args: --acl public-read --cache-control "max-age=31536000"
+          args: --acl public-read
         env:
           FILE: ./dist/geoflo-sdk.css
           AWS_REGION: "us-east-1"
