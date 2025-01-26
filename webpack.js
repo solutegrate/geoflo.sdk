@@ -97,7 +97,7 @@ function getOptions(mode) {
 }
 
 async function build(err, stats) {
-	if (err) return console.error('Error building:', err);
+	if (err) return console.error('Error building:', err), process.exit(1);
 
 	const data = await fs.readFile(path.join(options.output.path, options.output.filename), 'utf8');
 	if (!data) return console.error('Error handling JS file');
