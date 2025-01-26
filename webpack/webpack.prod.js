@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WebpackObfuscator = require('webpack-obfuscator');
 const { exec } = require('child_process');
 const fs = require('fs/promises');
-const baseConfig = require('./webpack.base');
+const baseConfig = require('./webpack.base.js');
 const packageJson = require('../package.json');
 
 module.exports = merge(baseConfig, {
