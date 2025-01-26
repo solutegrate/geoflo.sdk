@@ -35,11 +35,17 @@ jobs:
         run: |
           mkdir -p node_modules
           npm ci
-          
-      - name: Webpack Build
-        id: webpack
+      
+      - name: Webpack Dev Build
+        id: webpack-dev
         run: |
-          node webpack.js
+          node webpack.js "development"
+        timeout-minutes: 10
+
+      - name: Webpack Dist Build
+        id: webpack-dist
+        run: |
+          node webpack.js "production"
         timeout-minutes: 10
 
       - name: Commit Changes

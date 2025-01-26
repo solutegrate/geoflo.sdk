@@ -25,15 +25,16 @@ const DISCLAIMER = `
  * Violators may be subject to legal actions.
  */
 `
-let options = {};
-let mode = 'development';
 
-pack(mode);
+let mode = args[2];
+let options = getOptions(mode);
 
-async function pack(m) {
-	mode = m;
+if (mode) webpack(options, build);
 
-	options = {
+async function getOptions(mode) {
+	if (!mode) return console.error('No mode specified.'), process.exit(1);
+	
+	let options = {
         mode,
         watch: false,
         stats: { colors: true },
@@ -91,7 +92,7 @@ async function pack(m) {
 		}));
     }
 
-	webpack(options, build)
+	return options
 }
 
 async function build(err, stats) {
@@ -100,11 +101,11 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(options.output.path, options.output.filename), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
-	if (mode === 'development') return pack('production');
+	if (mode === 'development') return true;
 
 	try {
 		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
-		await fs.writeFile(path.resolve(__dirname, folder + '/' + id + '.css'), css);
+		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
 	}
@@ -131,6 +132,8 @@ async function build(err, stats) {
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
 	}
+
+	return true;
 }
 
 function execPromise(command) {
