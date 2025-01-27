@@ -66,7 +66,7 @@ if (mode === 'production') {
 		})]
 	}
 
-	options.plugins.push(new WebpackObfuscator({
+	/* options.plugins.push(new WebpackObfuscator({
 		target: 'browser',
 		compact: true,
 		selfDefending: true,
@@ -79,7 +79,7 @@ if (mode === 'production') {
 		stringArrayThreshold: 1,
 		rotateStringArray: true,
 		disableConsoleOutput: true,
-	}));
+	})); */
 }
 
 webpack(options, build);
