@@ -26,7 +26,7 @@ jobs:
       - name: Install Node Modules
         run: |
           mkdir -p node_modules
-          npm ci
+          npm install
       
       - name: Webpack Dev Build
         id: webpack-dev

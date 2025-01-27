@@ -43,7 +43,15 @@ let options = {
 		publicPath: '/'
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
+	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })],
+	module: {
+		rules: [
+			{
+				test: /\.css$/i,
+				use: ["style-loader", "css-loader"],
+			},
+		],
+	}
 }
 
 if (mode === 'production') {
@@ -93,7 +101,7 @@ async function build(err, stats) {
 	if (mode === 'development') return true;
 
 	try {
-		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
+		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
 		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
@@ -101,7 +109,7 @@ async function build(err, stats) {
 
 	try {
 		const htmls = await fs.readdir(docs);
-		
+
 		for (const file of htmls) {
 			if (file.endsWith('.html')) {
 				const filePath = path.join(docs, file);

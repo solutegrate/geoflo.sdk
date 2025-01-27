@@ -37,12 +37,7 @@
     "url": "https://github.com/solutegrate/geoflo-sdk/issues"
   },
   "homepage": "https://docs.geoflo.pro",
-  "dependencies": {
-    "mapbox-gl": "^3.9.3",
-    "@turf/turf": "^7.2.0",
-    "jszip": "^3.10.1",
-    "@mapbox/leaflet-omnivore": "0.3.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1",
@@ -50,11 +45,10 @@
     "better-docs": "^2.7.3",
     "jsdoc": "^4.0.4",
     "javascript-obfuscator": "^4.1.1",
-    "webpack-obfuscator": "^3.5.1"
+    "webpack-obfuscator": "^3.5.1",
+    "css-loader": "7.1.2"
   },
-  "peerDependencies": {
-    "mapbox-gl": "^3.9.3"
-  },
+  "peerDependencies": {},
   "files": [
     "dist",
     "dev",

@@ -213,7 +213,7 @@ table.params tr.deep-level-1, table.props tr.deep-level-1 {
 }
 
 h3.subsection-title {
-    color: var(--theme-error);
+    color: var(--theme-primary-color);
 }
 
 body {
@@ -817,6 +817,10 @@ th {
 }
 
 .ancestors a {
+    color: var(--theme-primary-color);
+}
+
+.ancestors a:hover {
     color: var(--theme-secondary-color);
 }
 
