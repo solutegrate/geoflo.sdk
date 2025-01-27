@@ -886,10 +886,11 @@ const Draw = function () {
         }
     
         if (!coords) return false;
+
+        var isLineVertex = geoflo.Utilities.isLineString(hotFeature) && type === 'vertex';
     
-        console.log(closest, coords)
-        
-        vertex = geoflo.Utilities.isLineString(hotFeature) && type === 'vertex' ? turf.booleanPointOnLine(hotFeature, turf.point(coords)) : turf.point(coords);
+        point = turf.point(coords);        
+        vertex = /* isLineVertex ? turf.booleanPointOnLine(point, hotFeature) :  */point;
         vertex.properties.type = type;
     
         geoflo.fire('vertex.find', { vertex: vertex, feature: geoflo.hotFeature, closest: closest });
