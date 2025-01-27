@@ -15,17 +15,17 @@ const args = process.argv;
 const mode = args[2];
 const entry = path.resolve(__dirname, input);
 const docs = path.resolve(__dirname, './docs');
-const license = path.resolve(__dirname, './LICENSE');
+const license = await fs.readFile(path.resolve(__dirname, './LICENSE'), 'utf8');
 
-const DISCLAIMER = `
+let DISCLAIMER = `
 /*! 
  * GeoFlo SDK
  * Version ${packageJson.version}
  * Generated on: ${new Date().toISOString()}
- * 
- * ${await fs.readFile(license, 'utf8') }
  */
 `;
+
+DISCLAIMER += license;
 
 const tutorials = {
 	"latest": {
