@@ -10,6 +10,6 @@ git push origin main
 # Retrieve the new version from package.json
 $VERSION = node -p "require('./package.json').version"
 
-# Create and push the tag
-git tag -a $VERSION -m "Release $VERSION"
-git push origin $VERSION
+# Create and push the tag with v prefix
+git tag -a "v$VERSION" -m "Release $VERSION"
+git push origin "v$VERSION"
