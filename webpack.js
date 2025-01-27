@@ -1,11 +1,12 @@
 const path = require('path');
 const fs = require('fs/promises');
 const { exec } = require('child_process');
+
 const webpack = require('webpack');
-const packageJson = require('./package.json');
 const TerserPlugin = require("terser-webpack-plugin");
-var WebpackObfuscator = require('webpack-obfuscator');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackObfuscator = require('webpack-obfuscator');
+
+const packageJson = require('./package.json');
 
 const domain = 'sdk.geoflo.pro';
 const id = 'geoflo-sdk';
@@ -28,73 +29,60 @@ const DISCLAIMER = `
 
 const mode = args[2];
 
-let options = getOptions(mode);
+console.log(`Building ${id} in ${mode} mode...`);
 
-if (mode) webpack(options, build);
-
-function getOptions(mode) {
-	if (!mode) return console.error('No mode specified.'), process.exit(1);
-
-	let options = {
-        mode,
-        watch: false,
-        stats: { colors: true },
-        entry,
-        output: {
-            path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
-            filename: mode === 'development' ? `${id}.js` : `${id}.min.js`,
-            publicPath: '/'
-        },
-        resolve: { extensions: ['.json', '.js', '.jsx'] },
-        plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
-    };
-
-	if (mode === 'development') {
-		options.watch = true;
-        options.devtool = 'inline-source-map';
-	} else {
-        options.watch = false;
-        options.devtool = false;
-
-		options.optimization = {
-            minimize: true,
-            minimizer: [new TerserPlugin({
-				terserOptions: {
-					ecma: undefined,
-					parse: {},
-					compress: { drop_console: true },
-					mangle: true,
-					output: null,
-					format: null,
-					toplevel: false,
-					nameCache: null,
-					keep_classnames: true,
-					keep_fnames: false,
-				}
-			})],
-            splitChunks: { chunks: 'all' }
-        }
-
-		//options.plugins.push(new MiniCssExtractPlugin({ filename: `${id}.css` }));
-
-		options.plugins.push(new WebpackObfuscator({
-			target: 'browser',
-			compact: true,
-			selfDefending: true,
-			controlFlowFlattening: true,
-			controlFlowFlatteningThreshold: 0.4,
-			numbersToExpressions: true,
-			simplify: true,
-			stringArrayShuffle: true,
-			splitStrings: true,
-			stringArrayThreshold: 1,
-			rotateStringArray: true,
-			disableConsoleOutput: true,
-		}));
-    }
-
-	return options
+let options = {
+	mode: mode,
+	watch: false,
+	devtool: mode === 'development' ? 'inline-source-map' : false,
+	stats: { colors: true },
+	entry: entry,
+	output: {
+		path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
+		filename: mode === 'development' ? `${id}.js` : `${id}.min.js`,
+		publicPath: '/'
+	},
+	resolve: { extensions: ['.json', '.js', '.jsx'] },
+	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
 }
+
+if (mode === 'production') {
+	options.optimization = {
+		splitChunks: { chunks: 'all' },
+		minimize: true,
+		minimizer: [new TerserPlugin({
+			terserOptions: {
+				ecma: undefined,
+				parse: {},
+				compress: { drop_console: true },
+				mangle: true,
+				output: null,
+				format: null,
+				toplevel: false,
+				nameCache: null,
+				keep_classnames: true,
+				keep_fnames: false,
+			}
+		})]
+	}
+
+	options.plugins.push(new WebpackObfuscator({
+		target: 'browser',
+		compact: true,
+		selfDefending: true,
+		controlFlowFlattening: true,
+		controlFlowFlatteningThreshold: 0.4,
+		numbersToExpressions: true,
+		simplify: true,
+		stringArrayShuffle: true,
+		splitStrings: true,
+		stringArrayThreshold: 1,
+		rotateStringArray: true,
+		disableConsoleOutput: true,
+	}));
+}
+
+webpack(options, build);
 
 async function build(err, stats) {
 	if (err) return console.error('Error building:', err), process.exit(1);

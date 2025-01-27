@@ -31,13 +31,13 @@ jobs:
       - name: Webpack Dev Build
         id: webpack-dev
         run: |
-          node webpack.js "development"
+          node webpack.js development
         timeout-minutes: 10
 
       - name: Webpack Dist Build
         id: webpack-dist
         run: |
-          node webpack.js "production"
+          node webpack.js production
         timeout-minutes: 10
 
       - name: Cache Node Modules

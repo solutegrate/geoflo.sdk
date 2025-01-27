@@ -3,18 +3,22 @@ const fs = require('fs/promises');
 const { exec } = require('child_process');
 const webpack = require('webpack');
 const packageJson = require('./package.json');
-const TerserPlugin = require("terser-webpack-plugin");
-var WebpackObfuscator = require('webpack-obfuscator');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const domain = 'sdk.geoflo.pro';
+const TerserPlugin = require("terser-webpack-plugin");
+
 const id = 'geoflo-sdk';
 const input = 'index.js';
 const args = process.argv;
+const mode = args[2];
+const folder = args[3];
+const prod = mode === 'production';
+const name = prod ? `${id}.min.js` : `${id}.js`;
+
 const entry = path.resolve(__dirname, input);
+const output = path.resolve(__dirname, folder);
 const docs = path.resolve(__dirname, './docs');
 
-const DISCLAIMER = `
+const banner = `
 /*! 
  * GeoFlo SDK - Version ${packageJson.version}
  * Generated on: ${new Date().toISOString()}
@@ -25,78 +29,39 @@ const DISCLAIMER = `
  * Violators may be subject to legal actions.
  */
 `
-const banner = new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })
 
-const minimizer = new TerserPlugin({
-	terserOptions: {
-		ecma: undefined,
-		parse: {},
-		compress: { drop_console: true },
-		mangle: true,
-		output: null,
-		format: null,
-		toplevel: false,
-		nameCache: null,
-		keep_classnames: true,
-		keep_fnames: false,
-	}
-})
-
-let options = {};
-
-pack('development');
-
-async function pack(mode) {
-	options = {
-        mode,
-        watch: false,
-        stats: { colors: true },
-        entry,
-        output: {
-            path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
-            filename: mode === 'development' ? `${id}.js` : `${id}-v${packageJson.version}.min.js`,
-            publicPath: '/'
-        },
-        resolve: { extensions: ['.json', '.js', '.jsx'] },
-        plugins: [banner],
-        optimization: mode === 'production' ? {
-            minimize: true,
-            minimizer: [minimizer],
-            splitChunks: { chunks: 'all' }
-        } : undefined,
-        module: {
-            rules: [
-                {
-                    test: /\.js$/,
-                    enforce: 'post',
-                    use: {
-                        loader: WebpackObfuscator.loader,
-                        options: {
-							target: 'browser',
-							compact: true,
-							selfDefending: true,
-							controlFlowFlattening: true,
-							controlFlowFlatteningThreshold: 0.4,
-							numbersToExpressions: true,
-							simplify: true,
-							stringArrayShuffle: true,
-							splitStrings: true,
-							stringArrayThreshold: 1,
-							rotateStringArray: true,
-							disableConsoleOutput: true
-						}
-                    }
-                },
-				{
-					test: /\.css$/,
-					use: [MiniCssExtractPlugin.loader, 'css-loader']
+webpack({
+	mode: mode,
+	watch: false,
+	stats: { colors: true },
+	entry: entry,
+	output: {
+		path: output,
+		filename: name,
+		publicPath: '/'
+	},
+	resolve: { extensions: ['.json', '.js', '.jsx'] },
+	plugins: [ new webpack.BannerPlugin({ banner: banner.trim() }) ],
+	optimization: prod ? {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					ecma: undefined,
+					parse: {},
+					compress: { drop_console: true },
+					mangle: true,
+					output: null,
+					format: null,
+					toplevel: false,
+					nameCache: null,
+					keep_classnames: true,
+					keep_fnames: false,
 				}
-            ]
-        }
-    };
-
-	webpack(options, build)
-}
+			})
+		]
+	} : {}
+}, build);
 
 async function build(err, stats) {
 	if (err) return console.error('Error building:', err);
@@ -104,14 +69,16 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(output, name), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
-	if (mode === 'development') return pack('production');
-
 	try {
 		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');		
 		await fs.writeFile(path.resolve(__dirname, folder + '/' + id + '.css'), css);
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
 	}
+
+	console.log(mode + ' complete:', name);
+
+	if (!prod) return;
 
 	try {
 		const htmls = await fs.readdir(docs);
