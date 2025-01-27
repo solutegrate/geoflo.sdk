@@ -15,22 +15,21 @@ const args = process.argv;
 const mode = args[2];
 const entry = path.resolve(__dirname, input);
 const docs = path.resolve(__dirname, './docs');
+const license = path.resolve(__dirname, './LICENSE');
 
 const DISCLAIMER = `
 /*! 
- * GeoFlo SDK - Version ${packageJson.version}
+ * GeoFlo SDK
+ * Version ${packageJson.version}
  * Generated on: ${new Date().toISOString()}
  * 
- * DISCLAIMER:
- * This software is the property of Solutegrate/GeoFlo. Unauthorized copying, 
- * distribution, modification, or any use outside of licensed terms is strictly prohibited.
- * Violators may be subject to legal actions.
+ * ${await fs.readFile(license, 'utf8') }
  */
-`
+`;
 
 const tutorials = {
 	"latest": {
-		"title": `GeoFlo SDK - Version ${packageJson.version}`
+		"title": `Version ${packageJson.version}`
 	}
 };
 
