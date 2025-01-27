@@ -21,6 +21,7 @@ const Layers = function () {
         Image: ['-image']
     }
 
+    this.options = {};
     this.sources = [];
     this.layers = [];
     this._layers = [];
