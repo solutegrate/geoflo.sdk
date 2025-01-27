@@ -38,24 +38,13 @@ For more information on creating and using Mapbox access tokens:
 
 ## 🛠️ Usage/Examples
 
-
-### Module Import
-
-```bash
-  npm install @solutegrate/geoflo-sdk@latest
-```
-
-```javascript
-import geoflo from "@solutegrate/geoflo-sdk";
-```
-
 ### CDN Import
 
 ```javascript
   <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo-sdk.css">
 
   <div id="map"></div>
-  
+
   <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo-sdk.min.js"></script>
 ```
 

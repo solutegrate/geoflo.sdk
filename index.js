@@ -103,6 +103,8 @@ const GeoFlo = function () {
 
         buildMapbox.call(this);
 
+        turf.distanceToDegrees = function distanceToDegrees(distanceInKm) { return distanceInKm / 111.32; }
+
         this.mapbox = new mapboxgl.Map({
             accessToken: accessToken,
             container: container,

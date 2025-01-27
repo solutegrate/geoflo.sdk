@@ -887,6 +887,8 @@ const Draw = function () {
     
         if (!coords) return false;
     
+        console.log(closest, coords)
+        
         vertex = geoflo.Utilities.isLineString(hotFeature) && type === 'vertex' ? turf.booleanPointOnLine(hotFeature, turf.point(coords)) : turf.point(coords);
         vertex.properties.type = type;
     
