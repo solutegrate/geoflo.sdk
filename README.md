@@ -9,29 +9,11 @@
 </h3>
 </br>
 <p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/geoflo.sdk/pkgs/npm/geoflo.sdk" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/github/v/release/solutegrate/geoflo.sdk?style=flat&logo=github&label=Release&color=333333" alt="GitHub Release" />
-  </a>
-  <a style="margin:2px;color:transparent;">
-    <img src="https://img.shields.io/github/size/solutegrate/geoflo.sdk/dist%2Fgeoflo-sdk.min.js?style=flat&logo=github&label=Size&color=333333" alt="GitHub Size" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://github.com/solutegrate/geoflo.sdk" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/github/stars/solutegrate/geoflo.sdk?style=flat&logo=github&label=Stars&color=333333" alt="GitHub Stars" />
-  </a>
   <a style="margin:2px;color:transparent;" href="https://raw.githubusercontent.com/solutegrate/geoflo.sdk/main/LICENSE" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat&logo=github&label=License&color=333333" alt="MIT License" />
+    <img src="https://img.shields.io/badge/License-MPL-green.svg?style=flat&logo=github&label=License&color=333333" alt="MPL 2.0 License" />
   </a>
-</p>
-
-<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-demo.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/Demo-TRY_IT_OUT_!-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo Demo" />
-  </a>
-</p>
-
-<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://www.linkedin.com/company/geoflopro/about" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&color=5a5a5a" alt="GeoFlo LinkedIn" />
+  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-latest.html" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Demo-Click_Here-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo SDK Latest" />
   </a>
 </p>
 
