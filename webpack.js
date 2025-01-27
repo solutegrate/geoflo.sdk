@@ -12,6 +12,7 @@ const domain = 'sdk.geoflo.pro';
 const id = 'geoflo-sdk';
 const input = 'index.js';
 const args = process.argv;
+const mode = args[2];
 const entry = path.resolve(__dirname, input);
 const docs = path.resolve(__dirname, './docs');
 
@@ -27,7 +28,11 @@ const DISCLAIMER = `
  */
 `
 
-const mode = args[2];
+const tutorials = {
+	"latest": {
+		"title": `GeoFlo SDK - Version ${packageJson.version}`
+	}
+};
 
 console.log(`Building ${id} in ${mode} mode...`);
 
@@ -43,15 +48,7 @@ let options = {
 		publicPath: '/'
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })],
-	module: {
-		rules: [
-			{
-				test: /\.css$/i,
-				use: ["style-loader", "css-loader"],
-			},
-		],
-	}
+	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
 }
 
 if (mode === 'production') {
@@ -98,6 +95,8 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(options.output.path, options.output.filename), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
+	await fs.writeFile(path.join(docs, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
+
 	if (mode === 'development') return true;
 
 	try {
@@ -108,9 +107,9 @@ async function build(err, stats) {
 	}
 
 	try {
-		const htmls = await fs.readdir(docs);
-
-		for (const file of htmls) {
+		const Docs = await fs.readdir(docs);
+		
+		for (const file of Docs) {
 			if (file.endsWith('.html')) {
 				const filePath = path.join(docs, file);
 				await fs.unlink(filePath); // Delete only .html files
