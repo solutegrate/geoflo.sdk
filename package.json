@@ -44,6 +44,7 @@
     "terser-webpack-plugin": "^5.3.11",
     "better-docs": "^2.7.3",
     "jsdoc": "^4.0.4",
+    "jsdoc-to-markdown": "^9.1.1",
     "javascript-obfuscator": "^4.1.1",
     "webpack-obfuscator": "^3.5.1",
     "css-loader": "7.1.2"

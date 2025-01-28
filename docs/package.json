@@ -11,7 +11,6 @@
       "write-translations": "docusaurus write-translations"
     },
     "dependencies": {
-      "jsdoc-to-markdown": "^9.1.1",
       "@docusaurus/core": "^3.7.0",
       "@docusaurus/theme-classic": "^3.7.0"
     }
