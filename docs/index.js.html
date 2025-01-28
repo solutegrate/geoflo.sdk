@@ -193,12 +193,12 @@ const GeoFlo = function () {
         await loadScript("https://api.mapbox.com/search-js/v1.0.0-beta.18/core.js");
 
         this.styles = [
-            { title: "Standard", uri: "mapbox://styles/solutegrate/clxdoec8x006901qj7wjf8uxo" },
-            { title: "Satellite", uri: "mapbox://styles/solutegrate/clqb11d15005901pdbyb13b5i" },
-            { title: "Dark", uri: "mapbox://styles/solutegrate/clq8l159v003q01qu274z8e8p" },
-            { title: "Light", uri: "mapbox://styles/solutegrate/clq8l4ylp003m01qbapvf6yqn" },
-            { title: "Outdoors", uri: "mapbox://styles/solutegrate/clqb11yad005801nv6p2ke412" },
-            { title: "Streets", uri: "mapbox://styles/solutegrate/clqb0y4iz005901nt0u4h62qd" }         
+            { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
+            { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
+            { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
+            { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
+            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v12" },
+            { title: "Streets", uri: "mapbox://styles/mapbox/navigation-night-v1" }         
         ];
 
         this.options.map.style = "Dark";
@@ -239,7 +239,7 @@ const GeoFlo = function () {
         await this.redraw();
 
         this.setViewport();
-        this.setExtent(false, true);
+        //this.setExtent(false, true);
         this.setOpacity(this.options.map.opacity);
 
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
@@ -365,6 +365,7 @@ const GeoFlo = function () {
     this.redraw = async function () {
         if (!this.Events) return false;
         await this.Layers.refresh();
+        console.log(this.Layers.getSources())
         this.Events.removeEventListeners();
         this.Events.addEventListeners();
         this.Features.updateSource();
@@ -492,12 +493,12 @@ const GeoFlo = function () {
                 this.removeSelection();
             } else {
                 //this.wantingToEdit = true;
-                if (this.currentMode) this.currentMode.deactivate();
+                if (this.currentMode) this.currentMode.deactivate(options);
                 return this.setMode();
             }
         }
 
-        if (this.currentMode &amp;&amp; this.currentMode.activated) this.currentMode.deactivate();
+        if (this.currentMode &amp;&amp; this.currentMode.activated) this.currentMode.deactivate(options);
 
         this.container.classList.forEach(function(className) {
             if (className.indexOf("mouse-") !== -1) {
@@ -896,6 +897,14 @@ const GeoFlo = function () {
         })
     }
 
+    this.setColors = async function (colors={}) {
+        this.options.colors = Object.assign(this.options.colors, colors);
+        this.setTheme(this.options.colors);
+        await this.Layers.refresh();
+        this.Features.updateSource();
+        return this.getColors();
+    }
+
 
 
 
@@ -1247,11 +1256,7 @@ const GeoFlo = function () {
             id + "-line-cold",
             id + "-fill-cold",
             id + "-circle-cold",
-            id + "-icon-cold",
-            id + "-fill-select",
-            id + "-line-select",
-            id + '-point-select',
-            id + '-symbol-select'
+            id + "-icon-cold"
         ];
 
         var layers = [];
@@ -1298,8 +1303,16 @@ const GeoFlo = function () {
 
         var radius = turf.distanceToDegrees(radiusInKm);
         var bbox = [this.map.project([lngLat.lng - radius, lngLat.lat - radius]), this.map.project([lngLat.lng + radius, lngLat.lat + radius])];
-        var options = { layers: [this.statics.constants.layers.MESH + '-line', this.statics.constants.layers.MESH + '-circle'] };
+        var options = { layers: [] };
+
+        geoflo.Layers.getLayers().forEach(function(layer) {
+            if (!layer.id.includes('MESH')) return;
+            if (layer.type === 'fill') return;
+            options.layers.push(layer.id);
+        })
+
         filter ? options.filter = filter : false;
+
         var features = this.map.queryRenderedFeatures(bbox, options);
         return features &amp;&amp; features.length ? this.meshIndex.getFeaturesFromIndex(features) : [];
     }
@@ -1503,7 +1516,7 @@ const GeoFlo = function () {
 	 */
     this.cancelEdit = function (standby, feature) {
         if (this.currentMode.id !== 'draw') return false;
-        return this.currentMode.deactivate(true, standby, feature || this.editing);
+        return this.currentMode.deactivate({ cancel: true, standby: standby, feature: feature || this.editing });
     }
 
 	/**
@@ -1555,10 +1568,10 @@ const GeoFlo = function () {
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
         
+        this.Layers.refresh({ select: true });
+
         this.Features.setText(features);
         this.Features.updateFeatures(features);
-
-        this.Layers.refresh({ select: true });
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
 
