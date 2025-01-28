@@ -71,7 +71,7 @@
                         <div class="dropdown-content">
                         
                             <a class="dropdown-item" href="tutorial-latest.html">
-                                Version 1.0.10
+                                Version 1.0.11
                             </a>
                         
                         </div>
@@ -778,7 +778,6 @@ const Control = function (controls, options={}) {
                     key: "Delete",
                     title: 'Delete Selected or All Features',
                     onActivate: function onActivate() {
-                        geoflo.deleteMeshData();
                         geoflo.deleteUserData();
                         geoflo.getButtons('select').add();
                         return true;
