@@ -575,6 +575,8 @@ const Features = function () {
 	 * @returns {number} The converted units in the target unit format.
 	 */
     this.convertUnits = function (feature, units, convertTo) {
+        if (!feature) return 0;
+        
         var type = feature.properties.type;
         var unit = convertTo || this.getUnit(feature);
 

@@ -337,10 +337,10 @@ const Snapping = function (mode) {
         }
         
         var unit = 'feet';
-        var units = geoflo.Features.getUnits(feature);
-
-        units = geoflo.Features.convertUnits(feature, units, unit);
+        var units = geoflo.Features.convertUnits(geoflo.hotFeature, 0, unit);
+        units += geoflo.Features.convertUnits(feature, 0, unit);
         vertex = updateVertex(vertex, { units: units, unit: unit });
+
         return feature;
     }
 
