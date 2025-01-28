@@ -8,7 +8,7 @@ module.exports = {
   trailingSlash: false,
   presets: [
     [
-      "classic",
+      "@docusaurus/preset-classic",
       {
         docs: {
           path: "./", // Corrected path to use root-level docs
