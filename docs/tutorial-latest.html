@@ -131,27 +131,24 @@
 <script src="//cdn.rawgit.com/neilj/Squire/v1.6.3/build/squire.js"></script>
 <script src="https://sdk.geoflo.pro/geoflo-sdk.js"></script>
 <script class="code-js">
+    const token = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY2p5bmQ5aGVxMHFocTNncDV2N244YzNzZiJ9.kzvbPlCNWYkFzfZibvs7tg';
+
     const options = {
         container: 'map',
         noSelect: false,
         showFeatureText: true,
+        showLineUnits: true,
         map: {
             maxPitch: 75,
-            style: "Satellite",
-            extent: [[
-                [-126.9060439709589, 51.1952997950618],
-                [-65.18429019477269, 51.1952997950618],
-                [-65.18429019477269, 23.808093967213807],
-                [-126.9060439709589, 23.808093967213807],
-                [-126.9060439709589, 51.1952997950618]
-            ]]
+            style: "Standard",
+            opacity: 0.7
         }
     }
 
-    geoflo.init('pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ', options, onReady);
+    // You can either use await or a callback function similar to onReady
+    geoflo.init(token, options, onReady);
 
     function onReady(geoflo) {
-        geoflo.styles ? geoflo.styles.hide() : false;
         geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
         geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
         geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
@@ -159,7 +156,7 @@
         geoflo.viewportBottom = '8%';
         geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
         geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
-    };
+    }
 
     function onGeoFloEvent(event) {
         console.log(event);
