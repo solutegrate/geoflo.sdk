@@ -60,6 +60,7 @@ jobs:
           npm run generate
 
       - name: Build Docusaurus Site
+        timeout-minutes: 30
         run: |
           cd docs
           npm run build

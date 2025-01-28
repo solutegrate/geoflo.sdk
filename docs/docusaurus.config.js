@@ -13,7 +13,12 @@ module.exports = {
         docs: {
           path: "./", // Corrected path to use root-level docs
           sidebarPath: require.resolve("./sidebars.js"),
-          routeBasePath: "/", // Docs served at root URL
+          routeBasePath: "/",
+          exclude: [
+            "**/node_modules/**", // Exclude node_modules
+            "**/*.test.md",       // Example: Exclude test files
+            "**/*.spec.md",       // Example: Exclude spec files
+          ]
         },
         blog: {
           path: "blog",
