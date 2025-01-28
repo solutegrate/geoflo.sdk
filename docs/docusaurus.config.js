@@ -3,9 +3,11 @@ module.exports = {
   title: "GeoFlo SDK",
   tagline: "Documentation for GeoFlo SDK",
   url: "https://docs.geoflo.pro",
-  baseUrl: "/geoflo.sdk/",
+  baseUrl: "/",
   projectName: "geoflo.sdk", // Repository name
   trailingSlash: false,
+  nBrokenLinks: "warn",
+  onBrokenMarkdownLinks: "warn",
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -36,7 +38,7 @@ module.exports = {
       },
       items: [
         { to: "/intro", label: "Docs", position: "left" }, // Updated path
-        { to: "/api", label: "API", position: "left" },   // Updated path
+        { to: "/sdk", label: "SDK", position: "left" },   // Updated path
         { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/solutegrate/geoflo.sdk",
