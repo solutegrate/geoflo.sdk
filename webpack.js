@@ -119,7 +119,7 @@ async function build(err, stats) {
 	}
 
 	try {
-		const jsdocs = await execPromise('npx jsdoc -c ./jsdoc.config.json');
+		const jsdocs = await execPromise('npx jsdoc -c ./docs/jsdoc.config.json');
 		console.log(`JSDoc Complete ${jsdocs}`);
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
