@@ -3,9 +3,9 @@ const path = require("path");
 const jsdoc2md = require("jsdoc-to-markdown");
 
 // Paths
-const SRC_DIR = "./src"; // Source files with JSDoc comments
-const OUTPUT_DIR = "./docs/sdk"; // Output directory for SDK Markdown
-const SIDEBAR_FILE = "./docs/sidebars.js"; // Path for generated sidebars.js
+const SRC_DIR = path.resolve(__dirname, "src"); // Absolute path to src
+const OUTPUT_DIR = path.resolve(__dirname, "docs/sdk"); // Absolute path to docs/sdk
+const SIDEBAR_FILE = path.resolve(__dirname, "docs/sidebars.js"); // Absolute path to sidebars.js
 
 // Ensure the output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
