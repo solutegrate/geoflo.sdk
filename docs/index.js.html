@@ -527,11 +527,11 @@ const GeoFlo = function () {
             selectedMode.activate(options);
         }
 
-        this.Snapping = new Snapping(this, this.currentMode);
-        this.Pinning = new Pinning(this, this.currentMode);
-        this.Routing = new Routing(this, this.currentMode);
-        this.Exploring = new Exploring(this, this.currentMode);
-        this.Painting = new Painting(this, this.currentMode);
+        this.Snapping = new Snapping(this.currentMode);
+        this.Pinning = new Pinning(this.currentMode);
+        this.Routing = new Routing(this.currentMode);
+        this.Exploring = new Exploring(this.currentMode);
+        this.Painting = new Painting(this.currentMode);
         this.Layers.moveLayers();
         return this.currentMode;
     }
@@ -1554,8 +1554,11 @@ const GeoFlo = function () {
         this.setButtons();
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
+        
         this.Features.setText(features);
         this.Features.updateFeatures(features);
+
+        this.Layers.refresh({ select: true });
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
 
