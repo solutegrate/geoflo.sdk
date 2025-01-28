@@ -5,7 +5,7 @@
     "scripts": {
       "generate": "node ../docs.js",
       "start": "docusaurus start",
-      "build": "npm run generate && docusaurus build",
+      "build": "docusaurus build",
       "serve": "docusaurus serve",
       "clear": "docusaurus clear",
       "write-translations": "docusaurus write-translations"

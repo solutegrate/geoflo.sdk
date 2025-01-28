@@ -4,22 +4,22 @@ module.exports = {
   tagline: "Documentation for GeoFlo SDK",
   url: "https://docs.geoflo.pro",
   baseUrl: "/geoflo.sdk/",
-  projectName: "geoflo.sdk", // Your repository name
+  projectName: "geoflo.sdk", // Repository name
   trailingSlash: false,
   presets: [
     [
       "classic",
       {
         docs: {
-          path: "docs", // Build from the `/docs` folder
-          sidebarPath: require.resolve("./docs/sidebars.js"),
-          routeBasePath: "/docs",
+          path: "./", // Corrected path to use root-level docs
+          sidebarPath: require.resolve("./sidebars.js"),
+          routeBasePath: "/", // Docs served at root URL
         },
         blog: {
-          path: "docs/blog",
-          routeBasePath: "/blog",
+          path: "blog",
+          routeBasePath: "/blog", // Blog served at /blog
         },
-      }
+      },
     ],
   ],
   themeConfig: {
@@ -30,8 +30,8 @@ module.exports = {
         src: "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
       },
       items: [
-        { to: "/docs/intro", label: "Docs", position: "left" },
-        { to: "/docs/api", label: "API", position: "left" },
+        { to: "/intro", label: "Docs", position: "left" }, // Updated path
+        { to: "/api", label: "API", position: "left" },   // Updated path
         { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/solutegrate/geoflo.sdk",
