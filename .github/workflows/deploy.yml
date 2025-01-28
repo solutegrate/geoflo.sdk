@@ -4,14 +4,17 @@ on:
   push:
     branches:
       - main
+
 permissions:
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     concurrency:
       group: deploy
       cancel-in-progress: false
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,30 +26,53 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Node Modules
-        run: |
-          mkdir -p node_modules
-          npm install
-      
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Root Node Modules
+        run: npm install
+
       - name: Webpack Dev Build
         id: webpack-dev
-        run: |
-          node webpack.js development
+        run: node webpack.js development
         timeout-minutes: 10
 
       - name: Webpack Dist Build
         id: webpack-dist
-        run: |
-          node webpack.js production
+        run: node webpack.js production
         timeout-minutes: 10
+
+      - name: Install Docs Dependencies
+        run: |
+          cd docs
+          npm install
+
+      - name: Generate SDK Documentation
+        run: |
+          cd docs
+          npm run generate
+
+      - name: Build Docusaurus Site
+        run: |
+          cd docs
+          npm run build
 
       - name: Commit Changes
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add ./dist ./dev ./docs
-          git commit -m "Deployed on $(date) [skip ci]" || echo "No deploy changes to commit"
-          git push
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add ./dist ./dev ./docs
+            git commit -m "Deployed on $(date) [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
 
       - name: Upload Development to S3
         uses: tpaschalis/s3-sync-action@master
@@ -71,7 +97,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
 
       - name: Invalidate CloudFront
-        uses: chetan/invalidate-cloudfront-action@v2
+        uses: chetan/invalidate-cloudfront-action@master
         env:
           DISTRIBUTION: ${{ secrets.AWS_CFDIST }}
           PATHS: "/*"

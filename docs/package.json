@@ -1,0 +1,19 @@
+{
+    "name": "geoflo-sdk-docs",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "generate": "node ../docs.js",
+      "start": "docusaurus start",
+      "build": "npm run generate && docusaurus build",
+      "serve": "docusaurus serve",
+      "clear": "docusaurus clear",
+      "write-translations": "docusaurus write-translations"
+    },
+    "dependencies": {
+      "jsdoc-to-markdown": "^9.1.1",
+      "@docusaurus/core": "^3.7.0",
+      "@docusaurus/theme-classic": "^3.7.0"
+    }
+  }
+  
