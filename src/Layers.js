@@ -285,7 +285,7 @@ const Layers = function () {
                     'text-letter-spacing': 0.1,
                     'text-line-height': 1.2,
                     'text-max-angle': 10,
-                    'text-offset': [0, 1.5],
+                    'text-offset': [0, -1.5],
                     'text-padding': 2,
                     'text-rotate': 0,
                     'text-transform': ['get', 'transform']
@@ -544,6 +544,12 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers after the refresh operation.
 	 */
     this.refresh = async function (options={}) {
+        if (options.select) {
+            this.removeLayers(this.selectLayers);
+            this.addLayers(this.selectLayers, options);
+            return this.getLayers();
+        }
+
         if (!options.init) return this.init(options);
         
         var layers = geoflo.Utilities.cloneDeep(this._layers);

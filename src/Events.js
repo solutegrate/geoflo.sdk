@@ -113,6 +113,7 @@ const Events = function (geoflo) {
         geoflo.setMapClass('pointer');
 
         geoflo.lastMouseEvent = event;
+        if (!geoflo.currentMode) return;
         geoflo.currentMode.handleMove ? geoflo.currentMode.handleMove(event) : false;
     };
 

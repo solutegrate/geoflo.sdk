@@ -81,7 +81,11 @@ const Draw = function () {
         geoflo.on('source.hot', this._handleHistory);
         if (lngLat) this.handleMove({ lngLat: lngLat });
         geoflo.options.painting.enable || (geoflo.mobile && newType === 'Rectangle') ? geoflo.activatePainting() : false;
+
+        geoflo.refreshMeshData();
         this.updateHotSource();
+
+        setTimeout(function() { geoflo.Features.removeFeatures(id); }, 100);
         return this;
     }
 
@@ -691,6 +695,8 @@ const Draw = function () {
     function editMode (feature) {
         var type = geoflo.Features.getType(feature);
         if (!type) return alert('No Feature Type Found');
+
+        const id = feature.id;
     
         geoflo.currentMode.type = type;
         geoflo.currentMode.source = feature.source;
@@ -704,7 +710,9 @@ const Draw = function () {
     
         if (type === 'Polygon') {
             geoflo.hotFeature = turf.polygonToLine(geoflo.hotFeature);
-        } else if (type === 'Circle' || type === 'Icon' || type === 'Image') {
+        }
+        
+        if (type === 'Circle' || type === 'Icon' || type === 'Image') {
             geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([]));
         } else if (type === 'Text') {
             geoflo.map.getSource(geoflo.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([geoflo.hotFeature]));
@@ -715,11 +723,7 @@ const Draw = function () {
         }
 
         var coords = geoflo.Utilities.isPoint(geoflo.hotFeature) ? geoflo.hotFeature.geometry.coordinates : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
-        
-        geoflo.lastClick = { coords: coords };
-        geoflo.Features.removeFeatures(geoflo.hotFeature.id);
-        geoflo.refreshMeshData();
-        
+        geoflo.lastClick = { coords: coords };        
         return geoflo.currentMode.type;
     }
 
