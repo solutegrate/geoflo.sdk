@@ -195,11 +195,11 @@ const Events = function (geoflo) {
             })
         }
 
-        if (keyHandled) { return keyHandled }
+        if (keyHandled) return keyHandled;
 
-        if (event.key.includes('Arrow')) {
-            
-        }
+        if (event.key.includes('Arrow')) {}
+
+        geoflo.currentKeyPress = event.key;
 
         switch (event.code) {
             case "Enter": {
@@ -232,6 +232,11 @@ const Events = function (geoflo) {
                 break;
             }
         }
+    };
+
+    const keyrelease = function (event) {
+        console.log("keyrelease: ", event);
+        geoflo.currentKeyPress = false;
     };
 
     const touchstart = function (event) {
@@ -343,6 +348,7 @@ const Events = function (geoflo) {
         events.forEach(function(event) { geoflo.map.on(geoflo.id + ':' + event, fireEvent); })
 
         geoflo.container.addEventListener('keydown', keypress);
+        geoflo.container.addEventListener('keyup', keyrelease);
         geoflo.container.addEventListener('mouseover', mouseover);
         geoflo.container.addEventListener('mouseleave', mouseleave);
 

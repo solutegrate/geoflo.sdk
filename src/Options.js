@@ -26,20 +26,17 @@ const Options = {
         cancel: 'Escape',
         select: 'Escape',
         edit: 'Enter',
-        refresh: 'q',
-        zoom: 'z',
-        locate: 'l',
+        refresh: 'r',
         snapping: '!',
         pinning: '@',
         routing: '#',
         exploring: '$',
         painting: '%',
-        LineString: '1',
-        Polygon: '2',
-        Rectangle: '3',
-        Circle: '4',
-        Text: '5',
-        Icon: '6'
+        polyline: '1',
+        polygon: '2',
+        rectangle: '3',
+        circle: '4',
+        text: '5'
     },
     commands: [{
         key: '.',
@@ -76,22 +73,21 @@ const Options = {
         secondaryText: "#333333",
         secondaryBorder: "#404040",
 
-
-        primarySelect: "#333333",
+        primarySelect: "#d7ef7e",
         primaryEdit: "#d7ef7e",
-        primaryHot: "#d7ef7e",
-        primaryCold: "#6fafdb",
-        primarySnap: "#c5c5c5",
+        primaryHot: "#242424",
+        primaryCold: "#333333",
+        primarySnap: "#d7ef7e",
         primaryBase: "#c5c5c5",
         primaryDebug: "#ff7676",
-        primaryVertex: "#c5c5c5",
+        primaryVertex: "#d7ef7e",
 
-        secondarySelect: "#d7ef7e",
+        secondarySelect: "#c5c5c5",
         secondaryEdit: "#c5c5c5",
         secondaryHot: "#333333",
         secondaryCold: "#c5c5c5",
-        secondarySnap: "#d7ef7e",
-        secondaryBase: "#242424",
+        secondarySnap: "#c5c5c5",
+        secondaryBase: "#5a5a5a",
         secondaryDebug: "#d7ef7e",
         secondaryVertex: "#333333"
     },
@@ -116,7 +112,7 @@ const Options = {
     },
     exploring: {
         enable: false,
-        minZoom: 12,
+        minZoom: 9,
         buffer: (5000 / 5280) * 1.609344, // 300 feet to miles to kilometer. Download roadways within a 300 foot radius.
         tolerance: 0.00001 // How much tolerance to simplify coordinates. Can be a function with map argument.
     },

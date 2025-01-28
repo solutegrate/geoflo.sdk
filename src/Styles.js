@@ -30,7 +30,7 @@ const Styles = function (options={}) {
             { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" }
         ];
     
-        this.defaultStyle = this.options.selected || "Standard";
+        this.selected = this.options.selected || "Standard";
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
         return this;
@@ -47,7 +47,7 @@ const Styles = function (options={}) {
     this.select = function (name) {
         if (!this.mapStyleContainer || !this.mapStyleContainer.checkVisibility()) {
             var style = this.styles.find(style => style.title === name);
-            if (style) this.map.setStyle(style.uri);
+            if (style) this.map.setStyle(style.uri), this.selected = name;
             if (this.events && this.events.onChange && this.events.onChange({ style: style }, style))
             return;
         }
@@ -129,7 +129,7 @@ const Styles = function (options={}) {
                 if (this.events && this.events.onChange && this.events.onChange(event, style)) return;
             });
 
-            if (style.title === this.defaultStyle) {
+            if (style.title === this.selected) {
                 styleElement.classList.add("active");
             }
 

@@ -142,7 +142,6 @@ const Snapping = function (mode) {
         }
 
         geoflo.Utilities.setProperty(geoflo.hotFeature, 'type', this.type);
-        geoflo.Utilities.setProperty(geoflo.hotFeature, 'style', { primaryColor: geoflo.options.colors.primaryHot, secondaryColor: geoflo.options.colors.secondaryHot });
 
         feature = setFeature(isPolygon ? turf.lineString([firstClick, lastClick]) : turf.point(lastClick));
         geoflo.snapFeature = feature;
@@ -220,10 +219,6 @@ const Snapping = function (mode) {
 
         feature.properties.type = type;
         feature.properties.hint = true;
-        feature.properties.style = {
-            primaryColor: geoflo.options.colors.primarySnap,
-            secondaryColor: geoflo.options.colors.secondarySnap
-        }
         
         var unit = 'feet';
         var units = geoflo.Features.convertUnits(geoflo.hotFeature, 0, unit);
@@ -673,7 +668,6 @@ const Snapping = function (mode) {
     function setFeature (feature) {
         if (!feature) return geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([])), geoflo.snapFeature;
         geoflo.Utilities.setProperty(feature, 'type', geoflo.currentMode.type);
-        geoflo.Utilities.setProperty(feature, 'style', { primaryColor: geoflo.options.colors.primarySnap, secondaryColor: geoflo.options.colors.secondarySnap });
         geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([feature]));
         return feature;
     }

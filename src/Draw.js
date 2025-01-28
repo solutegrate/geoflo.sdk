@@ -39,8 +39,6 @@ const Draw = function () {
         if (this.activated) return false;
         if (geoflo.currentMode.id !== this.id) return options.mode = this.id, geoflo.setMode(options);
 
-        //cleanupDraw(this);
-
         this.activated = true;
         this._handleHistory = this.handleHistory.bind(this);
         this.history = [];
@@ -98,15 +96,16 @@ const Draw = function () {
 	 * @param {boolean} standby - Flag to indicate if the feature is in standby mode.
 	 * @param {object} feature - The feature to be deactivated.
 	 */
-    this.deactivate = function (cancel, standby, feature) {
+    this.deactivate = function (options={}) {
         if (!this.activated) return false;
-        if (cancel) this.cancelEdit(standby, feature);
+        const type = options.type || this.type;
+        if (options.cancel) this.cancelEdit(options.standby, options.feature);
         cleanupDraw(this);
         geoflo.setButtons();
         geoflo.off('source.hot', this._handleHistory);
         geoflo.fire('draw.deactivate', { activated: this.activated });
         setTimeout(function() { geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([])); }, 300);
-        !geoflo.options.repeatDraw ? geoflo.setMode() : this.activate(this.properties);
+        !geoflo.options.repeatDraw ? geoflo.setMode() : geoflo.setMode({ mode: geoflo.statics.constants.modes.DRAW, type: type });
     }
 
 
@@ -723,7 +722,8 @@ const Draw = function () {
         }
 
         var coords = geoflo.Utilities.isPoint(geoflo.hotFeature) ? geoflo.hotFeature.geometry.coordinates : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
-        geoflo.lastClick = { coords: coords };        
+        geoflo.lastClick = { coords: coords };
+        geoflo.firstClick = { coords: coords };
         return geoflo.currentMode.type;
     }
 

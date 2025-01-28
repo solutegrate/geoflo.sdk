@@ -6,6 +6,7 @@
  * @param {Object} options - The options object to configure the object.
  * @returns {Object} Returns the Layers object.
  */
+
 const Layers = function () {
     const geoflo = this.geoflo;
     if (!geoflo.map) throw new Error('No map object provided!');
@@ -18,7 +19,8 @@ const Layers = function () {
         Polygon: ['-fill', '-border'],
         Polyline: ['-line', '-dash', '-buffer'],
         Point: ['-circle', '-icon', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text'],
-        Image: ['-image']
+        Image: ['-image'],
+        All: ['-fill', '-border', '-line', '-dash', '-buffer', '-circle', '-icon', '-cluster-circle', '-cluster-icon', '-count-icon', '-count-text', '-image']
     }
 
     this.options = {};
@@ -37,28 +39,28 @@ const Layers = function () {
 	 */
     this.init = function (options={}) {
         this.options = Object.assign(this.options, options);
-        
+
         this.defaultLayers = [
             {
-                'source': geoflo.statics.constants.sources.COLD,
-                'id': id + '-fill-cold',
-                'type': 'fill',
-                'layout': {},
-                'filter': ["==", "$type", "Polygon"],
-                'paint': {
+                source: geoflo.statics.constants.sources.COLD,
+                id: id + '-fill-cold',
+                type: 'fill',
+                layout: {},
+                filter: ["==", "$type", "Polygon"],
+                paint: {
                     'fill-color': geoflo.options.colors.secondaryCold,
                     'fill-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.3]
                 }
             },
             {
-                'source': geoflo.statics.constants.sources.COLD,
-                'id': id + '-line-cold',
-                'type': 'line',
-                'layout': {
+                source: geoflo.statics.constants.sources.COLD,
+                id: id + '-line-cold',
+                type: 'line',
+                layout: {
                     'line-cap': 'round',
                     'line-join': 'miter'
                 },
-                'paint': {
+                paint: {
                     'line-color': geoflo.options.colors.primaryCold,
                     'line-width': 4,
                     'line-gap-width': ["match", ["get", "type"], "Polygon", 0, 0],
@@ -67,15 +69,12 @@ const Layers = function () {
                 }
             },
             {
-                'source': geoflo.statics.constants.sources.COLD,
-                'id': id + '-circle-cold',
-                'filter': ['all', ['==', ['get', 'type'], 'Circle'], ["!=", ["geometry-type"], "Polygon"] ],
-                'type': 'circle',
-                'paint': {
-                    'circle-radius': {
-                        'base': 6,
-                        'stops': [[10, 6], [14, 10]]
-                    },
+                source: geoflo.statics.constants.sources.COLD,
+                id: id + '-circle-cold',
+                filter: ['all', ['==', ['get', 'type'], 'Circle'], ["!=", ["geometry-type"], "Polygon"] ],
+                type: 'circle',
+                paint: {
+                    'circle-radius': { 'base': 6, 'stops': [[10, 8], [14, 10]] },
                     'circle-stroke-width': 1,
                     'circle-color': geoflo.options.colors.primaryCold,
                     'circle-stroke-color': geoflo.options.colors.secondaryCold,
@@ -114,11 +113,11 @@ const Layers = function () {
                 }
             },
             {
-                'source': geoflo.statics.constants.sources.COLD,
-                'id': id + '-text-cold',
-                'type': 'symbol',
-                'filter': ["==", "$type", "Point"],
-                'layout': {
+                source: geoflo.statics.constants.sources.COLD,
+                id: id + '-text-cold',
+                type: 'symbol',
+                filter: ["==", "$type", "Point"],
+                layout: {
                     "symbol-placement": "point",
                     'text-field': ['get', 'text'],
                     'text-font': ['DIN Pro Regular', 'DIN Pro Italic', 'Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
@@ -133,7 +132,7 @@ const Layers = function () {
                     'text-rotate': 0,
                     'text-transform': ['get', 'transform']
                 },
-                'paint': {
+                paint: {
                     'text-color': geoflo.options.colors.primaryCold,
                     'text-halo-color': geoflo.options.colors.primaryBackground,
                     'text-halo-width': 0.5,
@@ -183,20 +182,20 @@ const Layers = function () {
             {
                 id: geoflo.statics.constants.layers.MESH + '-circle',
                 source: geoflo.statics.constants.sources.MESH,
-                'type': 'circle',
-                'paint': {
+                type: 'circle',
+                paint: {
                     'circle-radius': 2,
                     'circle-color': geoflo.options.colors.primaryBase,
                     'circle-opacity': 0.3
                 }
             },
             {
-                'source': geoflo.statics.constants.sources.HOT,
-                'id': id + '-fill-hot',
-                'type': 'fill',
-                'layout': {},
-                'filter': ["==", "$type", "Polygon"],
-                'paint': {
+                source: geoflo.statics.constants.sources.HOT,
+                id: id + '-fill-hot',
+                type: 'fill',
+                layout: {},
+                filter: ["==", "$type", "Polygon"],
+                paint: {
                     'fill-color': geoflo.options.colors.secondaryHot,
                     'fill-opacity': ['case', ["boolean", ["has", "new"], true], 0.5, 0.1],
                 }
@@ -411,7 +410,6 @@ const Layers = function () {
             'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-line-select',
             'type': 'line',
-            'slot': 'top',
             'layout': {
                 'visibility': 'visible',
                 'line-cap': 'round',
@@ -428,7 +426,6 @@ const Layers = function () {
             'id': id + '-fill-select',
             'type': 'fill',
             'layout': {},
-            'slot': 'top',
             'filter': ["==", "$type", "Polygon"],
             'paint': {
                 'fill-color': geoflo.options.colors.primarySelect,
@@ -441,7 +438,6 @@ const Layers = function () {
             'id': id + '-point-select',
             'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"] ],
             'type': 'circle',
-            'slot': 'top',
             'layout': {
                 'visibility': 'visible',
             },
@@ -458,7 +454,6 @@ const Layers = function () {
             'id': id + '-symbol-select',
             'filter': ['==', ['get', 'type'], 'Icon'],
             'type': 'symbol',
-            'slot': 'top',
             'layout': {
                 'visibility': 'visible',
                 'icon-optional': true,
@@ -489,7 +484,6 @@ const Layers = function () {
             'id': id + '-text-select',
             'filter': ['==', ['get', 'type'], 'Text'],
             'type': 'symbol',
-            'slot': 'top',
             'layout': {
                 'visibility': 'visible',
                 "symbol-placement": "point",
@@ -521,7 +515,6 @@ const Layers = function () {
             'id': id + '-image-select',
             'filter': ['==', ['get', 'type'], 'Image'],
             'type': 'symbol',
-            'slot': 'top',
             'layout': {
                 'visibility': 'visible',
                 'icon-image': ['get', 'primaryImage', ['get','style', ['properties']]],
@@ -532,7 +525,7 @@ const Layers = function () {
             'metadata': { types: ['Image'] }
         }]
 
-        return this.refresh({ init: true});
+        return this.refresh({ init: true });
     }
 
 	/**
@@ -544,12 +537,7 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers after the refresh operation.
 	 */
     this.refresh = async function (options={}) {
-        if (options.select) {
-            this.removeLayers(this.selectLayers);
-            this.addLayers(this.selectLayers, options);
-            return this.getLayers();
-        }
-
+        if (options.select) return geoflo.Layers.moveLayers(this.selectLayers);
         if (!options.init) return this.init(options);
         
         var layers = geoflo.Utilities.cloneDeep(this._layers);
@@ -568,8 +556,7 @@ const Layers = function () {
         await buildLayers.call(this, layers);
         this.addLayers(this.selectLayers, this.options);
 
-        setTimeout(function() { geoflo.Layers.moveLayers(); }, 250);
-        //setTimeout(function() { geoflo.zoomToFeatures(geoflo.getRenderedDrawnFeatures()); }, 350);
+        setTimeout(function() { geoflo.Layers.moveLayers(this.selectLayers); }, 250);
         return this.getLayers();
     }
 
@@ -815,6 +802,11 @@ const Layers = function () {
         if (!layer || !layer.id) return false;        
         layer.metadata = layer.metadata || options;
 
+        if (map.getLayer(layer.id)) {
+            if (!this.layers.find(function(l) { return l.id === layer.id })) this.layers.push(layer);
+            return this.getLayer(layer.id);
+        }
+
         map.addLayer(layer);
 
         layer = map.getLayer(layer.id);
@@ -949,7 +941,6 @@ const Layers = function () {
 	 */
     this.removeLayer = function (id) {
         if (!id) return false;
-        console.log('Removing Layer:', id);
         if (map.getLayer(id)) map.removeLayer(id);
 
         var index = -1;
@@ -977,7 +968,7 @@ const Layers = function () {
 	 * @returns {void}
 	 */
     this.moveLayers = function (layers) {
-        layers = !layers ? this.defaultLayers : layers;
+        layers = !layers ? this.defaultLayers || [] : layers;
         layers.forEach(function (layer) { if (geoflo.map.getLayer(layer.id)) geoflo.map.moveLayer(layer.id) })
     }
 
@@ -1046,23 +1037,24 @@ const Layers = function () {
     async function buildLayers (layers=[], options={}) {
         await buildText.call(this);
         if (!layers.length) return false;
-        for (const layer of layers) await buildLayer.call(this, layer, options);
-        this.moveLayers();
+        await Promise.all(layers.map(layer => buildLayer.call(this, layer, options)));
+        setTimeout(function() { geoflo.Layers.moveLayers(); }, 250);
         if (this.showTextLayers) this.addTextLayer();
         return this.getLayers();
     }
 
     async function buildLayer (layer, opts) {
-        var details = layer.details || {};
+        var details = !layer.details && layer.id ? layer : layer.details || {};
         var options = layer.options || {};
         var layers = layer.layers || [];
         var features = layer.features || [];
         var hasFeatures = features && features.length;
+        var style = layer.style || false;
         var error;
 
         if (!details.id || !details.type) error = true;
 
-        const type = this.getType(details.type);
+        const type = details.type === 'ALL' ? 'ALL' : this.getType(details.type);
         if (!type) error = true;
 
         var metadata = { type: details.type} ;
@@ -1072,24 +1064,40 @@ const Layers = function () {
         var source = details.source || details.id;
         metadata.source = source;
 
+        if (details.style) delete details.style;
+
         var settings = {
             type: type,
             source: source,
             id: details.id,
             types: layerTypes[type],
-            style: layer.style || {},
+            style: style || {},
             filter: layer.filter,
             images: layer.images,
             details: details,
             options: options,
             layers: layers
         }
-        
-        layers = type === 'Image' ? await buildImage.call(this, settings, options) :
-        type === 'Polygon' ? await buildPolygon.call(this, settings, options) :
-        type === 'Polyline' ? await buildPolyline.call(this, settings, options) :
-        type === 'Point' ? await buildPoint.call(this, settings, options) : [];
 
+        if (type === 'ALL') {
+            const promises = Object.keys(layerTypes).filter(key => key !== 'All').map(async key => {
+                const layerConfig = { ...settings, type: key, types: layerTypes[key] };
+
+                return key === 'Image' ? buildImage.call(this, layerConfig, options) :
+                       key === 'Polygon' ? buildPolygon.call(this, layerConfig, options) :
+                       key === 'Polyline' ? buildPolyline.call(this, layerConfig, options) :
+                       key === 'Point' ? buildPoint.call(this, layerConfig, options) : [];
+            });
+    
+            const results = await Promise.all(promises);
+            layers = results.flat();
+        } else {
+            layers = type === 'Image' ? await buildImage.call(this, settings, options) :
+            type === 'Polygon' ? await buildPolygon.call(this, settings, options) :
+            type === 'Polyline' ? await buildPolyline.call(this, settings, options) :
+            type === 'Point' ? await buildPoint.call(this, settings, options) : [];
+        }
+        
         this.removeLayers(layers);
         this.removeSource(source);
         this.addSource(source, type, options);
@@ -1098,21 +1106,25 @@ const Layers = function () {
         removeLayer.call(this, { layer: details.id, source: source });
 
         settings.metadata = metadata;
-        this._layers.push(settings);
-        this._sources.push({ id: source, type: type, options: options });
+
+        if (metadata.custom) {
+            this._layers.push(settings);
+            this._sources.push({ id: source, type: type, options: options });
+        }
 
         if (hasFeatures) geoflo.Features.addFeatures(features);
         
-        return new Promise(async function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             if (error) return resolve(error);
 
-            var ready = setInterval(function() {
-                var feats = geoflo.Layers.getFeatures(source);
-                if (hasFeatures && !feats.length) return; 
+            const ready = setInterval(() => {
+                const feats = geoflo.Layers.getFeatures(metadata.source);
+                if (hasFeatures && !feats.length) return;
+                if (!map.getSource(metadata.source)) return;
                 clearInterval(ready);
-                return resolve({ layer: layer, features: feats });
+                resolve({ layer: settings, features: feats });
             }, 1);
-        })
+        });
     }
 
     async function buildText () {

@@ -414,12 +414,14 @@ const Control = function (controls, options={}) {
                 this.button.classList.remove(options.inactiveClass);
                 this.button.classList.add(options.activeClass);
                 this.button.classList.add(geoflo.statics.constants.classes.ACTIVE_BUTTON);
+                this.activated = true;
             }
     
             options.deactivate = function () {
                 button.classList.remove(options.activeClass);
                 button.classList.remove(geoflo.statics.constants.classes.ACTIVE_BUTTON);
                 button.classList.add(options.inactiveClass);
+                this.activated = false;
             }
     
             options.dontShow ? button.style.display = 'none' : false;
@@ -451,6 +453,8 @@ const Control = function (controls, options={}) {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                if (options.onClick) return options.onClick(e.target, options);
     
                 if (e.target === activeButton) {
                     deactivateButtons();
@@ -637,6 +641,8 @@ const Control = function (controls, options={}) {
                         this.button.style['background-color'] = geoflo.options.colors.secondaryColor;
                     },
                     onActivate: function onActivate(e) {
+                        geoflo.options.repeatDraw = false;
+                        geoflo.getButtons('repeat').deactivate();
                         geoflo.currentMode.handleClick({ finish: true })
                     }
                 });
@@ -702,6 +708,8 @@ const Control = function (controls, options={}) {
                     title: 'Cancel Edit',
                     dontShow: true,
                     onActivate: function onActivate() {
+                        geoflo.options.repeatDraw = false;
+                        geoflo.getButtons('repeat').deactivate();
                         return geoflo.cancelEdit();
                     }
                 });
@@ -878,6 +886,17 @@ const Control = function (controls, options={}) {
                     }
                 });
             } else if (control.type === 'utils') {
+                createControlButton("repeat", {
+                    container: buttons,
+                    className: geoflo.statics.constants.classes.CONTROL_BUTTON_REPEAT,
+                    key: "`",
+                    title: 'Repeat Selected Mode',
+                    onClick: function (target, options) {
+                        geoflo.options.repeatDraw = !geoflo.options.repeatDraw;
+                        geoflo.options.repeatDraw ? options.activate() : options.deactivate();
+                    }
+                });
+
                 createActionButton("zoom", {
                     container: buttons,
                     className: geoflo.statics.constants.classes.CONTROL_BUTTON_ZOOM_IN_FEATURES,
@@ -887,17 +906,6 @@ const Control = function (controls, options={}) {
                         return geoflo.zoomToFeatures();
                     }
                 });
-    
-                /* createActionButton("locate", {
-                    container: buttons,
-                    className: geoflo.statics.constants.classes.CONTROL_BUTTON_LOCATE,
-                    key: "u",
-                    title: 'Locate User',
-                    button: geoflo.locate.getButton(),
-                    onActivate: function onActivate() {
-                        geoflo.locate.onControlEvent(this);
-                    }
-                }); */
         
                 createActionButton("refresh", {
                     container: buttons,

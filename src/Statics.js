@@ -20,6 +20,7 @@ const Statics = {
             divider: true,
             show: true,
             buttons: {
+                repeat: true,
                 zoom: true,
                 refresh: true,
                 locate: true
@@ -125,6 +126,12 @@ const Statics = {
             CONTROL_BUTTON_CANCEL: Id + "-cancel",
             CONTROL_BUTTON_UNDO: Id + "-undo",
             CONTROL_BUTTON_REDO: Id + "-redo",
+            CONTROL_BUTTON_SNAPPING: Id + "-snapping",
+            CONTROL_BUTTON_PINNING: Id + "-pinning",
+            CONTROL_BUTTON_ROUTING: Id + "-routing",
+            CONTROL_BUTTON_EXPLORING: Id + "-exploring",
+            CONTROL_BUTTON_PAINTING: Id + "-painting",
+            CONTROL_BUTTON_REPEAT: Id + "-repeat",
             CONTROL_GROUP: Id + "-ctrl-group",
             DROPDOWN_GROUP: Id + "-dropdown-group",
             DIVIDER: Id + "-divider",
