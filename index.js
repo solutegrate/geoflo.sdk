@@ -129,6 +129,7 @@ const GeoFlo = function () {
 
         this.setViewport();
         this.setExtent(false, true);
+        this.setOpacity(this.options.map.opacity);
 
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
 
@@ -502,7 +503,7 @@ const GeoFlo = function () {
         }
         
         this.centerMarkerIcon = el;
-        this.centerMarker = new this.Mapbox.Marker(this.centerMarkerIcon);
+        this.centerMarker = new mapboxgl.Marker(this.centerMarkerIcon);
         this.centerMarker.setLngLat(this.map.getCenter()).addTo(this.map).setOffset([0,0]);
         this.centerMarker.noRemove = options.noRemove;
 
@@ -1975,9 +1976,10 @@ const GeoFlo = function () {
             if (window.confirm('Delete Selected Feature?')) {
                 var feature = this.getSelectedFeatures()[0];
                 id = feature.parent || feature.properties.parent || feature.id || feature.properties.id;
+                this.removeSelection(id);
                 this.Features.removeFeatures(id, true);
                 this.meshIndex ? this.meshIndex.removeFeature(id) : false;
-                this.fire('feature:delete', { features: this.Features.getColdFeatures() })
+                this.fire('feature.delete', { features: this.Features.getColdFeatures(), id: id, feature: feature })
             } else {
                 return;
             }
@@ -1995,8 +1997,6 @@ const GeoFlo = function () {
         this.lastClick = null;
         this.firstClick = null;
         this.drawStarted = null;
-
-        this.removeSelection(id);
 
         this.map.getSource(this.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.HOT).setData(turf.featureCollection([]));

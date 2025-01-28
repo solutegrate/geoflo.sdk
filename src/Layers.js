@@ -135,9 +135,38 @@ const Layers = function () {
                 },
                 'paint': {
                     'text-color': geoflo.options.colors.primaryCold,
-                    'text-halo-color': geoflo.options.colors.primaryText,
+                    'text-halo-color': geoflo.options.colors.primaryBackground,
                     'text-halo-width': 0.5,
-                    'text-opacity': 1,
+                    'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.COLD,
+                id: id + '-text-icon-cold',
+                type: 'symbol',
+                filter: ['==', ['get', 'type'], 'Text'],
+                layout: {
+                    'visibility': 'visible',
+                    'icon-optional': true,
+                    'text-field': ['get', 'primaryIcon', ['get','style', ['properties']]],
+                    'text-size': {
+                        'base': 16,
+                        'stops': [[10, 16], [14, 12]]
+                    },
+                    'text-line-height': 1,
+                    'text-padding': 0,
+                    'text-offset': [0, 0.2],
+                    'text-justify': 'auto',
+                    'text-anchor': 'center',
+                    'text-allow-overlap': true,
+                    'text-font': ['Font Awesome 6 Pro Solid'],
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-translate-anchor': 'viewport',
+                    'text-halo-width': 0,
+                    'text-halo-color': geoflo.options.colors.primaryCold,
+                    'text-color': geoflo.options.colors.secondaryBackground,
                     'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1]
                 }
             },
@@ -417,7 +446,7 @@ const Layers = function () {
                 'visibility': 'visible',
             },
             'paint': {
-                'circle-radius': 12,
+                'circle-radius': 8,
                 'circle-stroke-width': 2,
                 'circle-color': geoflo.options.colors.primarySelect,
                 'circle-stroke-color': geoflo.options.colors.secondarySelect,
@@ -1005,7 +1034,7 @@ const Layers = function () {
     }
 
 
-    this.init(options);
+    this.init();
 
 
     async function buildLayers (layers=[], options={}) {

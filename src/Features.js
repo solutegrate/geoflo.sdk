@@ -335,6 +335,7 @@ const Features = function () {
 
         var sources = [];
         var selectedFeatures = geoflo.getSelectedFeatures();
+        var coords = options.coords || null;
 
         this.updatingFeatures = true;
 
@@ -345,7 +346,7 @@ const Features = function () {
             var originalFeature = this.getFeatureById(id);
             if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
 
-            var selected = feature.properties._selected || selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+            var selected = selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
 
             if (selected && !geoflo.noSelect) {
                 selected.geometry.coordinates = feature.geometry.coordinates;
@@ -357,9 +358,7 @@ const Features = function () {
                 sources.push(originalFeature.source);
             }
             
-            if (options.type === 'pinning') {
-                if (!options.coords) return false;
-
+            if (options.type === 'pinning' && coords) {
                 originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords :
                 originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
                 originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
@@ -679,7 +678,7 @@ const Features = function () {
     function isRectangle (feature) {
         if (!feature) return false;
         let type = geoflo.Layers.getLayerType(feature.source);
-        return turf.getType(feature) === 'Polygon' && feature.properties.type === 'Rectangle' || type === '';
+        return turf.getType(feature) === 'Polygon' && feature.properties.type === 'Rectangle' || type === 'Rectangle';
     };
 
     function isPoint (feature) {

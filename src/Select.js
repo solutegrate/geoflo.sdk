@@ -104,8 +104,8 @@ const Select = function () {
 	 * @description Deselects the current feature by removing its selection.
 	 */
     this.deselectCurrentFeature = function () {
-        geoflo.fire('feature.deselect', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         geoflo.removeSelection();
+        geoflo.fire('feature.deselect', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
     };
 
 	/**

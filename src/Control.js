@@ -667,7 +667,6 @@ const Control = function (controls, options={}) {
                     key: "Delete",
                     title: 'Delete Selected or All Features',
                     onActivate: function onActivate() {
-                        geoflo.deleteMeshData();
                         geoflo.deleteUserData();
                         geoflo.getButtons('select').add();
                         return true;

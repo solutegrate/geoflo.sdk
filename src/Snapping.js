@@ -128,7 +128,7 @@ const Snapping = function (mode) {
         var snapCoords = feature.geometry.coordinates;
         var lastClick = coords || geoflo.lastClick.coords;
         var firstClick = geoflo.firstClick.coords;
-        var isPolygon = this.type === 'Polygon';
+        var isPolygon = this.type === 'Polygon' || feature.properties.type === 'Polygon';
         var isPolyline = feature.geometry.type === "LineString";
 
         if (!isPolyline || snapCoords.length < 2) {
@@ -686,7 +686,7 @@ const Snapping = function (mode) {
         vertex.properties.unit = options.unit;
         vertex.properties.text = `${options.units} ${options.unit}`;
         vertex.properties.transform = 'uppercase';
-        vertex.properties.anchor = 'bottom-left';
+        vertex.properties.anchor = 'top-left';
         vertex.properties.mouseLine = true;
     
         features.push(vertex);

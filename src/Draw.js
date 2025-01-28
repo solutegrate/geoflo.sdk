@@ -39,6 +39,8 @@ const Draw = function () {
         if (this.activated) return false;
         if (geoflo.currentMode.id !== this.id) return options.mode = this.id, geoflo.setMode(options);
 
+        //cleanupDraw(this);
+
         this.activated = true;
         this._handleHistory = this.handleHistory.bind(this);
         this.history = [];
@@ -65,7 +67,7 @@ const Draw = function () {
         geoflo.setButtons();
         geoflo.setActiveButton(newType);
         
-        if (geoflo.Utilities.isPoint(geoflo.hotFeature)) this.isPoint = true;
+        if (geoflo.Utilities.isPoint(geoflo.hotFeature, newType)) this.isPoint = true;
 
         geoflo.fire('draw.activate', {
             id: id,
@@ -292,7 +294,7 @@ const Draw = function () {
         
         geoflo.pinableFeatures = [];
         geoflo.mouseIsIdle = false;
-        addText.call(this, this.type);
+        addText.call(this, this.type, geoflo.snapFeature);
         geoflo.refreshMeshData();
     }
 
@@ -887,10 +889,12 @@ const Draw = function () {
     
         if (!coords) return false;
 
+        point = turf.point(coords); 
+
         var isLineVertex = geoflo.Utilities.isLineString(hotFeature) && type === 'vertex';
-    
-        point = turf.point(coords);        
-        vertex = /* isLineVertex ? turf.booleanPointOnLine(point, hotFeature) :  */point;
+        var nearestVertex = isLineVertex ? turf.nearestPointOnLine(hotFeature, point) : false;
+           
+        vertex = nearestVertex || point;
         vertex.properties.type = type;
     
         geoflo.fire('vertex.find', { vertex: vertex, feature: geoflo.hotFeature, closest: closest });
@@ -954,10 +958,9 @@ const Draw = function () {
     }
     
     function offVertex () {
-        if (!geoflo.hotFeature) return;    
         if (geoflo.mouseIsDown && geoflo.Painting.enabled) return false;
 
-        if (geoflo.snappedVertex) {
+        if (geoflo.hotFeature && geoflo.snappedVertex) {
             geoflo.lastIndex ? geoflo.lastClick = { coords: geoflo.snappedVertex } : false;
             geoflo.fire('vertex.off', { vertex: false, index: geoflo.dragIndex, feature: geoflo.hotFeature })
         }
@@ -998,7 +1001,7 @@ const Draw = function () {
         el.setAttribute('lng', lngLat.lng);
         el.setAttribute('lat', lngLat.lat);
         
-        geoflo.textMarker = new geoflo.Mapbox.Marker(el).setLngLat(lngLat).addTo(geoflo.map);
+        geoflo.textMarker = new mapboxgl.Marker(el).setLngLat(lngLat).addTo(geoflo.map);
         geoflo.textMarker.setOffset([0, -25])
 
         el.addEventListener("submit", finishText);
