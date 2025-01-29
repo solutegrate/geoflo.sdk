@@ -133,7 +133,7 @@ async function docs() {
 		console.log(`JSDoc JSON Complete`);
 
 		let jsdocData = JSON.parse(await fs.readFile('./docs/jsdoc-output.json', 'utf8'));
-		jsdocData = jsdocData.filter(item => !item.undocumented);
+		//jsdocData = jsdocData.filter(item => !item.undocumented);
 		jsdocData.forEach((item) => { item.id = item.longname; });
 
 		await generateMarkdownFile('GeoFlo', jsdocData, 'GeoFlo.md');
@@ -186,7 +186,14 @@ async function generateMarkdownFile(name, data, fileName) {
 	console.log(`✅ Sending complete jsdocData to jsdoc2md for ${name}`);
 	
 	// Generate Markdown for entire dataset
-	const markdown = await jsdoc2md.render({ data: data });
+	let markdown = await jsdoc2md.render({ data: data });
+
+	// Fix unclosed `<dd>` tags
+    markdown = markdown.replace(/<dd>(.*?)\n(?!\s*<\/dd>)/g, '<dd>$1</dd>\n');
+
+    // Fix invalid MDX syntax (unquoted attributes)
+    markdown = markdown.replace(/<(\w+)\s+("[^"]*")>/g, '<$1 value=$2>');
+
 	if (!markdown.trim()) console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
 
 	// Write Markdown file
