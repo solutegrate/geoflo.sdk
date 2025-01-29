@@ -132,37 +132,7 @@ async function docs() {
 		await execPromise('npx jsdoc -X -c ./jsdoc.config.json > ./docs/jsdoc-output.json');
 		console.log(`JSDoc JSON Complete`);
 
-		let jsdocData = JSON.parse(await fs.readFile('./docs/jsdoc-output.json', 'utf8'));
-		//jsdocData = jsdocData.filter(item => !item.undocumented);
-		jsdocData.forEach((item) => { item.id = item.longname; });
-
-		await generateMarkdownFile('GeoFlo', jsdocData, 'GeoFlo.md');
-
-		// **Sidebar structure**
-		const sidebarItems = [{ type: "doc", id: `sdk/GeoFlo` }];
-
-		// **Generate `sidebars.js`**
-		console.log("🛠️ Generating sidebars.js...");
-	
-		const sidebarContent = `
-			/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-			const sidebars = {
-			docs: [
-				{
-				type: "category",
-				label: "SDK",
-				collapsed: false,
-				items: ${JSON.stringify(sidebarItems, null, 2)},
-				}
-			],
-			};
-	
-			module.exports = sidebars;
-		`;
-
-		await fs.writeFile(path.resolve(__dirname, 'docs', 'sidebars.js'), sidebarContent, 'utf8');
-		console.log(`📄 Sidebar file created: ${path.resolve(__dirname, 'docs', 'sidebars.js')}`)
-		console.log("✅ SDK documentation generation complete!");
+		await generateMarkdownFile('GeoFlo');
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
 	}
@@ -179,24 +149,45 @@ function execPromise(command) {
 	});
 }
 
-async function generateMarkdownFile(name, data, fileName) {
-	const outputPath = path.join('./docs/sdk', fileName);
+async function generateMarkdownFile(name) {
+	return false;
+	
+	const outputPath = path.join('./docs/sdk', `${name}.md`);
+	const sidebarItems = [{ type: "doc", id: `sdk/GeoFlo` }];
+
+	let data = JSON.parse(await fs.readFile('./docs/jsdoc-output.json', 'utf8'));
+	data.forEach((item) => { item.id = item.longname; });
 
 	console.log(`\n📝 Generating Markdown for: ${name}`);
-	console.log(`✅ Sending complete jsdocData to jsdoc2md for ${name}`);
 	
 	// Generate Markdown for entire dataset
 	let markdown = await jsdoc2md.render({ data: data });
-
-	// 🔧 Fix broken MDX attributes
-    markdown = markdown.replace(/<(\w+)\s+("[^"]*")>/g, '<$1 attribute=$2>');
-
-    // 🔧 Fix self-closing JSX components (replace `<Tag />` if broken)
-    markdown = markdown.replace(/<(\w+)([^>]*?)\/>/g, '<$1$2></$1>');
-
 	if (!markdown.trim()) console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
 
 	// Write Markdown file
 	await fs.writeFile(outputPath, markdown, "utf8");
 	console.log(`📄 Markdown written: ${outputPath}`);
+
+	// **Generate `sidebars.js`**
+	console.log("🛠️ Generating sidebars.js...");
+
+	const sidebarContent = `
+		/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+		const sidebars = {
+		docs: [
+			{
+			type: "category",
+			label: "SDK",
+			collapsed: false,
+			items: ${JSON.stringify(sidebarItems, null, 2)},
+			}
+		],
+		};
+
+		module.exports = sidebars;
+	`;
+
+	await fs.writeFile(path.resolve(__dirname, 'docs', 'sidebars.js'), sidebarContent, 'utf8');
+	console.log(`📄 Sidebar file created: ${path.resolve(__dirname, 'docs', 'sidebars.js')}`)
+	console.log("✅ SDK documentation generation complete!");
 }
