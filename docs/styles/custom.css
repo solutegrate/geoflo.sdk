@@ -882,6 +882,7 @@ dd.yes-def ul {
 }
 
 .footer {
+    display: none;
     padding-top: 3px;
     line-height: 35px;
     height: 45px;
@@ -891,4 +892,41 @@ dd.yes-def ul {
     background-color: var(--theme-secondary-text);
     color: var(--theme-secondary-text);
     text-align: center;
+}
+
+.image img {
+    height: 45px;
+}
+
+@media screen and (max-width: 768px) {
+    .top-nav .logo {
+        display: none;
+    }
+}
+
+.navbar-burger {
+    color: var(--theme-primary-color);
+}
+
+.dropdown-content {
+    background-color: var(--theme-primary-text);
+    border-radius: 4px;
+    box-shadow: 0 .5em 1em -0.125em rgba(10, 10, 10, .1), 0 0px 0 1px rgba(10, 10, 10, .02);
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+}
+
+.dropdown-item {
+    color: var(--theme-primary-background);
+}
+
+#main>.sidebar {
+    padding: 40px 30px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: 240px;
+    border-right: 1px solid var(--theme-primary-color);
+    height: 100%;
+    overflow: auto;
+	background-color: var(--theme-primary-background)
 }
