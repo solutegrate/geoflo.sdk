@@ -5,7 +5,7 @@ const jsdoc2md = require("jsdoc-to-markdown");
 
 // Paths
 const MAIN_MODULE = "geoflo";
-const JSDOC_CONFIG = path.resolve(__dirname, "docs/jsdoc.config.json");
+const JSDOC_CONFIG = path.resolve(__dirname, "jsdoc.config.json");
 const JSDOC_OUTPUT = path.resolve(__dirname, "docs/jsdoc-output.json");
 const OUTPUT_DIR = path.resolve(__dirname, "docs/sdk");
 const SIDEBAR_FILE = path.resolve(__dirname, "docs/sidebars.js");
