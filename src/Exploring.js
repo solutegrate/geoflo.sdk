@@ -1,5 +1,5 @@
 /**
- * @mixin
+ * @module
  * @memberof module:geoflo
  * @name Exploring
  * @description This mixin provides the exploring functionality for the GeoFlo application. It allows users to explore features on the map by creating a buffer around the feature and snapping to nearby features.

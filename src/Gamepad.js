@@ -1,5 +1,5 @@
 /**
- * @mixin
+ * @module
  * @memberof module:geoflo
  * @name Gamepad
  * @description This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.

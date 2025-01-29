@@ -1,5 +1,5 @@
 /**
- * @mixin
+ * @module
  * @memberof module:geoflo
  * @name Layers
  * @description This module provides the layer functionality for the Geoflo application. It allows users to add, remove, and manipulate layers on the map.

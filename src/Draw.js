@@ -1,7 +1,6 @@
 /**
- * @mixin
+ * @module Draw
  * @memberof module:geoflo
- * @name Draw
  * @description This module provides the functionality for drawing features on the map.
  * @returns {Object} The current instance for method chaining.
  * 
@@ -12,9 +11,8 @@ const Draw = function () {
     this.id = 'draw';
 
 	/**
-	 * @function
+	 * @function canHandle
      * @memberof module:geoflo.Draw
-	 * @name canHandle
 	 * @description Checks if the given modeName is equal to the constant mode DRAW.
 	 * @param {string} modeName - The name of the mode to be checked.
 	 * @returns {boolean} Returns true if the modeName is equal to DRAW, false otherwise.

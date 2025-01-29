@@ -37,19 +37,17 @@
     "url": "https://github.com/solutegrate/geoflo-sdk/issues"
   },
   "homepage": "https://docs.geoflo.pro",
-  "dependencies": {},
   "devDependencies": {
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
-    "terser-webpack-plugin": "^5.3.11",
     "better-docs": "^2.7.3",
+    "css-loader": "7.1.2",
+    "javascript-obfuscator": "^4.1.1",
     "jsdoc": "^4.0.4",
     "jsdoc-to-markdown": "^9.1.1",
-    "javascript-obfuscator": "^4.1.1",
-    "webpack-obfuscator": "^3.5.1",
-    "css-loader": "7.1.2"
+    "terser-webpack-plugin": "^5.3.11",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-obfuscator": "^3.5.1"
   },
-  "peerDependencies": {},
   "files": [
     "dist",
     "dev",

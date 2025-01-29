@@ -1,5 +1,5 @@
 /**
- * @mixin
+ * @module
  * @memberof module:geoflo
  * @name Styles
  * @description This module provides the styling functionality for the Geoflo application. It allows users to change the map style by selecting from a list of predefined styles.
