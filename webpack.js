@@ -139,7 +139,7 @@ async function docs() {
 		await generateMarkdownFile('GeoFlo', jsdocData, 'GeoFlo.md');
 
 		// **Sidebar structure**
-		const sidebarItems = [{ type: "doc", id: `sdk/${MAIN_MODULE}` }];
+		const sidebarItems = [{ type: "doc", id: `sdk/GeoFlo` }];
 
 		// **Generate `sidebars.js`**
 		console.log("🛠️ Generating sidebars.js...");
