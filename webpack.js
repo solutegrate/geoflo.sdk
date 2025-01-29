@@ -91,8 +91,6 @@ async function build(err, stats) {
 	const data = await fs.readFile(path.join(options.output.path, options.output.filename), 'utf8');
 	if (!data) return console.error('Error handling JS file');
 
-	await fs.writeFile(path.join(docs, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
-
 	if (mode === 'development') return true;
 
 	try {
@@ -111,6 +109,8 @@ async function docs() {
 
 	try {
 		const Docs = await fs.readdir(docsFolder);
+
+		await fs.writeFile(path.join(docsFolder, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
 		
 		for (const file of Docs) {
 			if (file.endsWith('.html')) {
