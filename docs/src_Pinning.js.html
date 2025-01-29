@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GeoFlo SDK src/Pinning.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+             
+                <a class="image" href="index.html">
+                    <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" alt="logo">
+                </a>
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            <a class="dropdown-item" href="tutorial-latest.html">
+                                Version 1.0.11
+                            </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a></li><li><a href="module-geoflo.module_Control.html">Control</a></li><li><a href="module-geoflo.module_Draw.html">Draw</a></li><li><a href="module-geoflo.module_Exploring.html">Exploring</a></li><li><a href="module-geoflo.module_Features.html">Features</a></li><li><a href="module-geoflo.module_Gamepad.html">Gamepad</a></li><li><a href="module-geoflo.module_Layers.html">Layers</a></li><li><a href="module-geoflo.module_Locate.html">Locate</a></li><li><a href="module-geoflo.module_Mesh.html">Mesh</a></li><li><a href="module-geoflo.module_Painting.html">Painting</a></li><li><a href="module-geoflo.module_Pinning.html">Pinning</a></li><li><a href="module-geoflo.module_Routing.html">Routing</a></li><li><a href="module-geoflo.module_Select.html">Select</a></li><li><a href="module-geoflo.module_Snapping.html">Snapping</a></li><li><a href="module-geoflo.module_Styles.html">Styles</a></li><li><a href="module-geoflo.module_Utilities.html">Utilities</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>src/Pinning.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module
+ * @memberof module:geoflo
+ * @name Pinning
+ * @description This module provides the pinning functionality for the Geoflo application. It allows users to pin features to the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Pinning object.
+ */
+const Pinning = function (mode) {
+    const geoflo = this.geoflo;
+
+    this.type = mode.type;
+    this.updatedFeatures = [];
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name activate
+	 * @description Activates the feature by setting the enabled flag to true and enabling pinning in the options.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.updatedFeatures = [];
+        this.enabled = true;
+        geoflo.options['pinning'].enable = true;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name deactivate
+	 * @description This function deactivates the pinning feature by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['pinning'].enable = false;
+        this.resetFeatures();
+        delete this.buffer;
+        delete geoflo.pinableFeatures;
+        delete geoflo.pinningFeatures;
+        this.updatedFeatures = [];
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getFeatures
+	 * @description Retrieves the features from the pinnedFeatures array in the context object.
+	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
+	 */
+    this.getFeatures = function () {
+        var features = geoflo.pinnedFeatures &amp;&amp; geoflo.pinnedFeatures.length ? geoflo.pinnedFeatures.map(function (feature) { return feature.feature }) : [];
+        return features;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setBuffer
+	 * @description This function creates a buffer around the provided coordinates based on the pinning buffer option.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to create the buffer around.
+	 * @returns {Object|boolean} Returns the buffer object containing the feature, radius, and coordinates if successful, otherwise false.
+	 */
+    this.setBuffer = function (coords) {
+        delete this.buffer;
+
+        if (!this.enabled) return false;
+        if (!coords || !geoflo.options.pinning.buffer) return false;
+
+        var buffer = turf.buffer(turf.point(coords), geoflo.options.pinning.buffer);
+        var radius = turf.polygon(buffer.geometry.coordinates);
+
+        this.buffer = {
+            feature: buffer,
+            radius: radius,
+            coords: coords
+        }
+
+        return this.buffer;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setFeatures
+	 * @description Sets the pinable features based on the provided coordinates and fires an event.
+	 * @param {Object} coords - The coordinates to determine nearby features.
+	 * @returns {Array} - An array of pinable features.
+	 */
+    this.setFeatures = function (coords) {
+        geoflo.pinableFeatures = [];
+        if (!this.enabled || !coords) return false;
+        geoflo.pinableFeatures = this.getNearByFeatures(coords);
+        geoflo.fire('pinning.add', { features: geoflo.pinableFeatures, buffer: this.buffer });
+        return geoflo.pinableFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name resetFeatures
+	 * @description Resets the updated features by adding them to the canvas context.
+	 * @returns {boolean} Returns false if there are no updated features to reset.
+	 */
+    this.resetFeatures = function () {
+        if (!this.updatedFeatures.length) return false;
+        geoflo.addFeatures(this.updatedFeatures, true);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name updateFeatures
+	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
+	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
+	 */
+    this.updateFeatures = function () {
+        if (!this.enabled) return false;
+        if (!geoflo.pinableFeatures || !geoflo.pinableFeatures.length) return delete geoflo.pinningFeatures, false;
+        updateFeatures.call(this, geoflo.pinableFeatures);
+        geoflo.Features.updateFeatures(geoflo.pinableFeatures, { type: 'pinning', coords: geoflo.snappedVertex, addUnits: true });
+        geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(geoflo.pinableFeatures);
+        geoflo.fire('pinning.update', { feature: geoflo.hotFeature, vertex: turf.point(geoflo.snappedVertex), features: geoflo.pinnedFeatures });
+        return geoflo.pinningFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getNearByFeatures
+	 * @description This function calculates the radius based on the map zoom level and retrieves nearby features within that radius.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to find nearby features.
+	 * @returns {Array&lt;Object>} An array of nearby features with their IDs, types, indices, and feature objects.
+	 */
+    this.getNearByFeatures = function (coords) {
+        if (!this.enabled || !coords) return false;
+
+        var hotFeature = geoflo.hotFeature;
+        var calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
+        var radiusInKm = calculatedRadius / 100000;
+        var buffer = this.setBuffer(coords);
+        var features = geoflo.getRenderedDrawnFeatures({lng: coords[0], lat: coords[1]}, radiusInKm);
+        var nearby = [];
+
+        features.forEach(function (feature) {
+            turf.coordEach(feature, function (coord, index) {
+                var isNearby = false;
+    
+                if (buffer.radius &amp;&amp; turf.booleanWithin(turf.point(coord), buffer.radius)) isNearby = true;
+                if (!isNearby &amp;&amp; buffer.coords &amp;&amp; geoflo.Utilities.isPointEqual(coord, buffer.coords)) isNearby = true;
+                if (!isNearby) return;
+                if (hotFeature &amp;&amp; hotFeature.id === feature.id) return;
+                    
+                nearby.push({
+                    id: feature.id || feature.properties.id,
+                    type: feature.properties.type,
+                    index: index,
+                    feature: feature
+                })
+            });
+        });
+
+        return nearby;
+    }
+    
+    if (geoflo.options['pinning'].enable) this.activate();
+
+
+    function updateFeatures(features) {
+        if (!features || !features.length) return false;
+
+        features.forEach(function (feature) {
+            var pinned = this.updatedFeatures.find(function (f) { return f.id === feature.id });
+            if (pinned) return;
+            this.updatedFeatures.push(geoflo.Utilities.cloneDeep(feature.feature));
+        }, this);
+    }
+};
+
+export default Pinning;</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
