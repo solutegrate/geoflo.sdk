@@ -150,7 +150,7 @@ function execPromise(command) {
 }
 
 async function generateMarkdownFile(name) {
-	return false;
+	return true;
 	
 	const outputPath = path.join('./docs/sdk', `${name}.md`);
 	const sidebarItems = [{ type: "doc", id: `sdk/GeoFlo` }];

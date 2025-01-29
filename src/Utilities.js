@@ -1,5 +1,5 @@
 /**
- * @module
+ * @mixin
  * @memberof module:geoflo
  * @name Utilities
  * @description This module provides utility functions for the Geoflo application.
