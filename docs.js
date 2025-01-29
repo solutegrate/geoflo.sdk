@@ -13,38 +13,38 @@ const SIDEBAR_FILE = path.resolve(__dirname, "docs/sidebars.js");
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 (async () => {
-    console.log("Generating SDK documentation...");
+    console.log("📢 Generating SDK documentation...");
 
     // Generate JSDoc JSON
     console.log("Generating JSDoc JSON...");
     await execPromise(`npx jsdoc -X -c ${JSDOC_CONFIG} > ${JSDOC_OUTPUT}`);
 
     // Read JSDoc JSON
-    console.log("Reading JSDoc JSON...");
-    let jsdocData = JSON.parse(fs.readFileSync(JSDOC_OUTPUT, "utf8"));
+    console.log("📖 Reading JSDoc JSON...");
+    const jsdocData = JSON.parse(fs.readFileSync(JSDOC_OUTPUT, "utf8"));
 
-    jsdocData = jsdocData.map((item, index) => ({
-        ...item,
-        id: item.id || `${item.kind}-${item.longname || item.name || `item-${index}`}`,
-    }));
+    jsdocData.forEach((item) => { item.id = item.longname; });
 
-    // Extract the main module (`geoflo`)
+    // Process main module (Pass Full jsdocData)
+    return await generateMarkdownFile("geoflo", jsdocData, "geoflo.md");
+
+    // Detect `@module geoflo`
     const mainModule = jsdocData.find((item) => item.kind === "module" && item.name === "geoflo");
     if (!mainModule) {
-        console.error("ERROR: Main module 'geoflo' not found in JSDoc output.");
+        console.error("❌ ERROR: Main module 'geoflo' not found.");
         process.exit(1);
     }
+    console.log("✅ Found main module: geoflo");
 
-    console.log("Main module 'geoflo' found.");
-
-    // Extract mixins
+    // Extract all `@mixin`
     const mixins = jsdocData.filter((item) => item.kind === "mixin");
-    console.log(`Found ${mixins.length} mixins.`);
+    console.log(`📦 Found ${mixins.length} mixins.`);
 
-    const sidebarItems = ["sdk/geoflo"]; // Start with the main module in the sidebar
+    // Sidebar structure
+    const sidebarItems = [];
+    const mixinSidebar = [];
 
-    // Process the main module
-    await generateMarkdownFile("geoflo", [mainModule], "geoflo.md");
+    sidebarItems.push({ type: "doc", id: "sdk/geoflo" });
 
     // Process each mixin
     for (const mixin of mixins) {
@@ -52,92 +52,84 @@ if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
         const sanitizedMixinName = mixinName.replace(/[^a-zA-Z0-9_-]/g, "_");
         const markdownFile = `${sanitizedMixinName}.md`;
 
-        console.log(`Processing mixin: ${mixinName}`);
+        console.log(`🔹 Processing mixin: ${mixinName}`);
 
-        // Find functions and properties belonging to this mixin
-        const mixinEntries = jsdocData.filter((entry) => entry.memberof === mixinName);
+        // Generate Markdown (Pass Full jsdocData)
+        //await generateMarkdownFile(mixinName, jsdocData, markdownFile);
 
-        if (mixinEntries.length === 0) {
-            console.warn(`WARNING: No members found for mixin: ${mixinName}`);
-        } else {
-            console.log(`Found ${mixinEntries.length} members for mixin: ${mixinName}`);
-        }
-
-        // Generate Markdown
-        await generateMarkdownFile(mixinName, [mixin, ...mixinEntries], markdownFile);
-
-        // Add to sidebar
-        sidebarItems.push(`sdk/${sanitizedMixinName}`);
+        // Add mixin to sidebar
+        mixinSidebar.push({ type: "doc", id: `sdk/${sanitizedMixinName}` });
     }
 
-    // Generate sidebars.js
-    console.log("Generating sidebars.js...");
-    const sidebarContent = `
-/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-const sidebars = {
-  docs: [
-    {
-      type: "category",
-      label: "SDK Reference",
-      items: ${JSON.stringify(sidebarItems, null, 2)},
-    },
-  ],
-};
+    // Process additional Markdown files in `docs/sdk`
+    console.log("📂 Scanning for existing markdown files...");
+    const docFiles = fs.readdirSync(OUTPUT_DIR).filter((file) => file.endsWith(".md"));
 
-module.exports = sidebars;
+    // Add other files to sidebar (ensuring no duplicates)
+    docFiles.forEach((file) => {
+        const id = `sdk/${file.replace(".md", "")}`;
+        if (
+            !sidebarItems.some((item) => item.id === id) &&
+            !mixinSidebar.some((item) => item.id === id)
+        ) {
+            mixinSidebar.push({ type: "doc", id });
+        }
+    });
+
+    // Sort sidebar alphabetically
+    sidebarItems.sort((a, b) => a.id.localeCompare(b.id));
+    mixinSidebar.sort((a, b) => a.id.localeCompare(b.id));
+
+    // Generate `sidebars.js`
+    console.log("🛠️ Generating sidebars.js...");
+    const sidebarContent = `
+        /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+        const sidebars = {
+        docs: [
+            {
+            type: "category",
+            label: "GeoFlo SDK",
+            collapsed: false,
+            items: ${JSON.stringify(sidebarItems, null, 2)},
+            },
+            {
+            type: "category",
+            label: "Mixins",
+            collapsed: false,
+            items: ${JSON.stringify(mixinSidebar, null, 2)},
+            }
+        ],
+        };
+
+        module.exports = sidebars;
     `;
     fs.writeFileSync(SIDEBAR_FILE, sidebarContent, "utf8");
-    console.log(`Generated: ${SIDEBAR_FILE}`);
+    console.log(`📄 Sidebar file created: ${SIDEBAR_FILE}`);
 
-    console.log("SDK documentation generation complete!");
+    console.log("✅ SDK documentation generation complete!");
 })();
 
 /**
  * Generates Markdown for a given module/mixin.
  * @param {string} name - Name of the module/mixin.
- * @param {Array} data - Array of JSDoc items.
+ * @param {Array} data - Complete JSDoc JSON data.
  * @param {string} fileName - Output Markdown file name.
  */
 async function generateMarkdownFile(name, data, fileName) {
     const outputPath = path.join(OUTPUT_DIR, fileName);
 
-    console.log(`\n🔹 Generating Markdown for: ${name}`);
+    console.log(`\n📝 Generating Markdown for: ${name}`);
+    console.log(`✅ Sending complete jsdocData to jsdoc2md for ${name}`);
 
-    // Filter only relevant kinds
-    const validData = data.filter((item) =>
-        ["function", "property", "class", "member", "constant", "method"].includes(item.kind)
-    );
-
-    if (validData.length === 0) {
-        console.warn(`⚠️ WARNING: No valid functions/properties found for ${name}`);
-        console.log("🔍 DEBUG: Full data for module/mixin:", JSON.stringify(data, null, 2)); // DEBUG LOG
-        return;
-    }
-
-    console.log(`✅ Sending ${validData.length} items to jsdoc2md for ${name}`);
-    console.log(JSON.stringify(validData, null, 2)); // DEBUGGING LOG
-
-    // Generate Markdown using jsdoc2md
-    const markdown = await jsdoc2md.render({
-        data: validData,
-        configure: "docs/jsdoc.config.json",
-        template: fs.readFileSync(path.resolve(__dirname, "docs/template.hbs"), "utf8"),
-        undocumented: true // <-- Force inclusion
-    });
-
-    if (!markdown.trim()) {
-        console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
-    }
+    // Generate Markdown for entire dataset
+    const markdown = await jsdoc2md.render({ data: data });
+    if (!markdown.trim()) console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
 
     // Write Markdown file
     fs.writeFileSync(outputPath, markdown, "utf8");
     console.log(`📄 Markdown written: ${outputPath}`);
 }
 
-/**
- * Executes a shell command and returns a Promise.
- * @param {string} command - Command to execute.
- */
 function execPromise(command) {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {

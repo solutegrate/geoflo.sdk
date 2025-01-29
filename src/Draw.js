@@ -1,5 +1,5 @@
 /**
- * @mixin
+ * @module
  * @memberof module:geoflo
  * @name Draw
  * @description This module provides the functionality for drawing features on the map.
