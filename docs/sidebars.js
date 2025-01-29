@@ -6,22 +6,20 @@ const sidebars = {
       type: "category",
       label: "SDK Reference",
       items: [
+  "sdk/geoflo",
   "sdk/Control",
   "sdk/Draw",
-  "sdk/Events",
   "sdk/Exploring",
   "sdk/Features",
   "sdk/Gamepad",
   "sdk/Layers",
   "sdk/Locate",
   "sdk/Mesh",
-  "sdk/Options",
   "sdk/Painting",
   "sdk/Pinning",
   "sdk/Routing",
   "sdk/Select",
   "sdk/Snapping",
-  "sdk/Statics",
   "sdk/Styles",
   "sdk/Utilities"
 ],
@@ -30,3 +28,4 @@ const sidebars = {
 };
 
 module.exports = sidebars;
+    

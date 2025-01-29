@@ -1,5 +1,5 @@
 /**
- * @module
+ * @mixin
  * @memberof module:geoflo
  * @name Mesh
  * @description This module provides the mesh functionality for the Geoflo application. It allows users to create a mesh of features by splitting them into segments and checking for intersections.

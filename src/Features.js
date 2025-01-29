@@ -1,5 +1,5 @@
 /**
- * @module
+ * @mixin
  * @memberof module:geoflo
  * @name Features
  * @description This module provides the features functionality for the Geoflo application. It allows users to add, remove, update, and retrieve features from the map.

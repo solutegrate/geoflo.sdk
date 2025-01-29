@@ -1,69 +1,151 @@
 const fs = require("fs");
 const path = require("path");
+const { exec } = require("child_process");
 const jsdoc2md = require("jsdoc-to-markdown");
 
 // Paths
-const SRC_DIR = path.resolve(__dirname, "src"); // Source directory
-const INDEX_FILE = path.resolve(__dirname, "index.js"); // Main entry file
-const OUTPUT_DIR = path.resolve(__dirname, "docs/sdk"); // Output directory
+const JSDOC_CONFIG = path.resolve(__dirname, "docs/jsdoc.config.json");
+const JSDOC_OUTPUT = path.resolve(__dirname, "docs/jsdoc-output.json");
+const OUTPUT_DIR = path.resolve(__dirname, "docs/sdk");
+const SIDEBAR_FILE = path.resolve(__dirname, "docs/sidebars.js");
 
-// Ensure the output directory exists
+// Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 (async () => {
-  console.log("Generating SDK documentation...");
+    console.log("Generating SDK documentation...");
 
-  const SIDEBAR_FILE = path.resolve(__dirname, "sidebars.js");
-  const sidebarItems = [];
+    // Generate JSDoc JSON
+    console.log("Generating JSDoc JSON...");
+    await execPromise(`npx jsdoc -X -c ${JSDOC_CONFIG} > ${JSDOC_OUTPUT}`);
 
-  // Get all JavaScript files in the src directory
-  const files = fs.readdirSync(SRC_DIR)
-    .filter((file) => file.endsWith(".js"))
-    .map((file) => path.join(SRC_DIR, file));
+    // Read JSDoc JSON
+    console.log("Reading JSDoc JSON...");
+    let jsdocData = JSON.parse(fs.readFileSync(JSDOC_OUTPUT, "utf8"));
 
-  // Add the main index.js file
-  files.unshift(INDEX_FILE);
+    jsdocData = jsdocData.map((item, index) => ({
+        ...item,
+        id: item.id || `${item.kind}-${item.longname || item.name || `item-${index}`}`,
+    }));
 
-  for (const file of files) {
-    const outputFile = path.join(OUTPUT_DIR, path.basename(file).replace(".js", ".md"));
-
-    try {
-      console.log(`Processing file: ${file}`);
-      const markdown = await jsdoc2md.render({ files: file });
-
-      if (markdown.trim().length === 0) {
-        console.warn(`WARNING: Generated empty Markdown for ${file}`);
-      }
-
-      console.log(`Generated Markdown for ${file}:\n${markdown}`);
-      fs.writeFileSync(outputFile, markdown, "utf8");
-
-      const fileNameWithoutExtension = file.replace(".js", "");
-      sidebarItems.push(`sdk/${fileNameWithoutExtension}`);
-    } catch (error) {
-      console.error(`ERROR processing ${file}:`, error);
+    // Extract the main module (`geoflo`)
+    const mainModule = jsdocData.find((item) => item.kind === "module" && item.name === "geoflo");
+    if (!mainModule) {
+        console.error("ERROR: Main module 'geoflo' not found in JSDoc output.");
+        process.exit(1);
     }
-  }
 
-  // Generate sidebars.js
-  console.log("Generating sidebars.js...");
-  
-  const sidebarContent = `
-    /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-    const sidebars = {
-      docs: [
-        {
-          type: "category",
-          label: "SDK Reference",
-          items: ${JSON.stringify(sidebarItems, null, 2)},
-        },
-      ],
-    };
+    console.log("Main module 'geoflo' found.");
 
-    module.exports = sidebars;
-  `;
+    // Extract mixins
+    const mixins = jsdocData.filter((item) => item.kind === "mixin");
+    console.log(`Found ${mixins.length} mixins.`);
 
-  fs.writeFileSync(SIDEBAR_FILE, sidebarContent, "utf8");
-  console.log(`Generated: ${SIDEBAR_FILE}`);
-  console.log("SDK documentation generation complete!");
+    const sidebarItems = ["sdk/geoflo"]; // Start with the main module in the sidebar
+
+    // Process the main module
+    await generateMarkdownFile("geoflo", [mainModule], "geoflo.md");
+
+    // Process each mixin
+    for (const mixin of mixins) {
+        const mixinName = mixin.name;
+        const sanitizedMixinName = mixinName.replace(/[^a-zA-Z0-9_-]/g, "_");
+        const markdownFile = `${sanitizedMixinName}.md`;
+
+        console.log(`Processing mixin: ${mixinName}`);
+
+        // Find functions and properties belonging to this mixin
+        const mixinEntries = jsdocData.filter((entry) => entry.memberof === mixinName);
+
+        if (mixinEntries.length === 0) {
+            console.warn(`WARNING: No members found for mixin: ${mixinName}`);
+        } else {
+            console.log(`Found ${mixinEntries.length} members for mixin: ${mixinName}`);
+        }
+
+        // Generate Markdown
+        await generateMarkdownFile(mixinName, [mixin, ...mixinEntries], markdownFile);
+
+        // Add to sidebar
+        sidebarItems.push(`sdk/${sanitizedMixinName}`);
+    }
+
+    // Generate sidebars.js
+    console.log("Generating sidebars.js...");
+    const sidebarContent = `
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
+  docs: [
+    {
+      type: "category",
+      label: "SDK Reference",
+      items: ${JSON.stringify(sidebarItems, null, 2)},
+    },
+  ],
+};
+
+module.exports = sidebars;
+    `;
+    fs.writeFileSync(SIDEBAR_FILE, sidebarContent, "utf8");
+    console.log(`Generated: ${SIDEBAR_FILE}`);
+
+    console.log("SDK documentation generation complete!");
 })();
+
+/**
+ * Generates Markdown for a given module/mixin.
+ * @param {string} name - Name of the module/mixin.
+ * @param {Array} data - Array of JSDoc items.
+ * @param {string} fileName - Output Markdown file name.
+ */
+async function generateMarkdownFile(name, data, fileName) {
+    const outputPath = path.join(OUTPUT_DIR, fileName);
+
+    console.log(`\n🔹 Generating Markdown for: ${name}`);
+
+    // Filter only relevant kinds
+    const validData = data.filter((item) =>
+        ["function", "property", "class", "member", "constant", "method"].includes(item.kind)
+    );
+
+    if (validData.length === 0) {
+        console.warn(`⚠️ WARNING: No valid functions/properties found for ${name}`);
+        console.log("🔍 DEBUG: Full data for module/mixin:", JSON.stringify(data, null, 2)); // DEBUG LOG
+        return;
+    }
+
+    console.log(`✅ Sending ${validData.length} items to jsdoc2md for ${name}`);
+    console.log(JSON.stringify(validData, null, 2)); // DEBUGGING LOG
+
+    // Generate Markdown using jsdoc2md
+    const markdown = await jsdoc2md.render({
+        data: validData,
+        configure: "docs/jsdoc.config.json",
+        template: fs.readFileSync(path.resolve(__dirname, "docs/template.hbs"), "utf8"),
+        undocumented: true // <-- Force inclusion
+    });
+
+    if (!markdown.trim()) {
+        console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
+    }
+
+    // Write Markdown file
+    fs.writeFileSync(outputPath, markdown, "utf8");
+    console.log(`📄 Markdown written: ${outputPath}`);
+}
+
+/**
+ * Executes a shell command and returns a Promise.
+ * @param {string} command - Command to execute.
+ */
+function execPromise(command) {
+    return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Command failed: ${command}`);
+                return reject(new Error(`Error: ${error.message}\n${stderr}`));
+            }
+            resolve(stdout);
+        });
+    });
+}

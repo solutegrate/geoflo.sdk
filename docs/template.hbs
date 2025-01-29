@@ -1,0 +1,25 @@
+{{#each data}}
+
+# {{name}} {{#if kind}}({{kind}}){{/if}}
+
+{{#if description}}
+**Description:**  
+{{description}}
+{{/if}}
+
+{{#if params}}
+## Parameters
+{{#each params}}
+- **{{name}}** ({{type.names.[0]}}): {{description}}
+{{/each}}
+{{/if}}
+
+{{#if returns}}
+## Returns
+{{#each returns}}
+- **Type:** {{type.names.[0]}}  
+- **Description:** {{description}}
+{{/each}}
+{{/if}}
+
+{{/each}}

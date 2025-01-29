@@ -1,5 +1,5 @@
 /**
- * @module
+ * @mixin
  * @memberof module:geoflo
  * @name Control
  * @description This module is responsible for creating and managing the control buttons in the Geoflo application.

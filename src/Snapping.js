@@ -1,5 +1,5 @@
 /**
- * @module
+ * @mixin
  * @memberof module:geoflo
  * @name Snapping
  * @description This module provides the snapping functionality for the Geoflo application. It allows users to snap features to the map by creating a buffer around the feature and snapping to nearby features.
