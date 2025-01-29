@@ -1,7 +1,7 @@
 {
   "id": "sdk/Gamepad",
   "title": "Gamepad",
-  "description": "",
+  "description": "Gamepad ⇒ Object",
   "source": "@site/sdk/Gamepad.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Gamepad",

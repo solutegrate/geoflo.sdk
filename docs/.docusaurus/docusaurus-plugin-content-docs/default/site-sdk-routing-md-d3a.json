@@ -1,7 +1,7 @@
 {
   "id": "sdk/Routing",
   "title": "Routing",
-  "description": "",
+  "description": "Routing ⇒ Object",
   "source": "@site/sdk/Routing.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Routing",

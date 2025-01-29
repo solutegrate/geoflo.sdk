@@ -1,7 +1,7 @@
 {
   "id": "sdk/Draw",
   "title": "Draw",
-  "description": "",
+  "description": "Draw ⇒ Object",
   "source": "@site/sdk/Draw.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Draw",

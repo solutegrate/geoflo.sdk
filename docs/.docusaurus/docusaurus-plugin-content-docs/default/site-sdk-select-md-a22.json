@@ -1,7 +1,7 @@
 {
   "id": "sdk/Select",
   "title": "Select",
-  "description": "",
+  "description": "Select ⇒ Object",
   "source": "@site/sdk/Select.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Select",
