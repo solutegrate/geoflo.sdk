@@ -126,11 +126,11 @@ async function docs() {
 	}
 
 	try {
-		await execPromise('npx jsdoc -c ./jsdoc.config.json');
-		console.log(`JSDoc HTML Complete`);
-
 		await execPromise('npx jsdoc -X -c ./jsdoc.config.json > ./docs/jsdoc-output.json');
 		console.log(`JSDoc JSON Complete`);
+		
+		await execPromise('npx jsdoc -c ./jsdoc.config.json');
+		console.log(`JSDoc HTML Complete`);
 
 		await generateMarkdownFile('GeoFlo');
 	} catch (error) {
