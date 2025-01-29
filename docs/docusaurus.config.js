@@ -6,7 +6,7 @@ module.exports = {
   baseUrl: "/",
   projectName: "geoflo.sdk", // Repository name
   trailingSlash: false,
-  nBrokenLinks: "warn",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   presets: [
     [
