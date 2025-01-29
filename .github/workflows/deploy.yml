@@ -49,6 +49,22 @@ jobs:
         run: node webpack.js production
         timeout-minutes: 10
 
+      - name: Install Docs Dependencies
+        run: |
+          cd docs
+          npm install
+
+      - name: Generate SDK Documentation
+        run: |
+          cd docs
+          npm run generate
+
+      - name: Build Docusaurus Site
+        timeout-minutes: 30
+        run: |
+          cd docs
+          npm run build
+
       - name: Commit Changes
         run: |
           git config --global user.name 'github-actions'

@@ -37,7 +37,7 @@ module.exports = {
         src: "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
       },
       items: [
-        { to: "/intro", label: "Docs", position: "left" }, // Updated path
+        { to: "/intro", label: "Intro", position: "left" }, // Updated path
         { to: "/sdk", label: "SDK", position: "left" },   // Updated path
         { to: "/blog", label: "Blog", position: "left" },
         {

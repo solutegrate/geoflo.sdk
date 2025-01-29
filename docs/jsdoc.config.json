@@ -46,7 +46,7 @@
 		},
 		"better-docs": {
 			"entryPoint": "README.md",
-			"name": "Documentation",
+			"name": "",
 			"title": "GeoFlo SDK",
 			"logo": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
 			"css": [
