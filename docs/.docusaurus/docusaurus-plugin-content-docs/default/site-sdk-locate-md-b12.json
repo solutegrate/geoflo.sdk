@@ -1,7 +1,7 @@
 {
   "id": "sdk/Locate",
   "title": "Locate",
-  "description": "",
+  "description": "Locate ⇒ Object",
   "source": "@site/sdk/Locate.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Locate",

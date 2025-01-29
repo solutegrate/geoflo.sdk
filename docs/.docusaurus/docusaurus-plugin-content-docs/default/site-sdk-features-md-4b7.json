@@ -1,7 +1,7 @@
 {
   "id": "sdk/Features",
   "title": "Features",
-  "description": "",
+  "description": "Features ⇒ Object",
   "source": "@site/sdk/Features.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Features",

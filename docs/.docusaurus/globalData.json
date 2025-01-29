@@ -49,6 +49,10 @@
               "sidebar": "docs"
             },
             {
+              "id": "sdk/index",
+              "path": "/sdk/"
+            },
+            {
               "id": "sdk/Layers",
               "path": "/sdk/Layers",
               "sidebar": "docs"

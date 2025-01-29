@@ -10,6 +10,7 @@ export default {
   "4271d51c": [() => import(/* webpackChunkName: "4271d51c" */ "@site/sdk/Gamepad.md"), "@site/sdk/Gamepad.md", require.resolveWeak("@site/sdk/Gamepad.md")],
   "4b70a5ad": [() => import(/* webpackChunkName: "4b70a5ad" */ "@site/sdk/Features.md"), "@site/sdk/Features.md", require.resolveWeak("@site/sdk/Features.md")],
   "4cd495da": [() => import(/* webpackChunkName: "4cd495da" */ "@site/api.md"), "@site/api.md", require.resolveWeak("@site/api.md")],
+  "55395fde": [() => import(/* webpackChunkName: "55395fde" */ "@site/sdk/index.md"), "@site/sdk/index.md", require.resolveWeak("@site/sdk/index.md")],
   "55cf3730": [() => import(/* webpackChunkName: "55cf3730" */ "@site/sdk/Exploring.md"), "@site/sdk/Exploring.md", require.resolveWeak("@site/sdk/Exploring.md")],
   "5e95c892": [() => import(/* webpackChunkName: "5e95c892" */ "@theme/DocsRoot"), "@theme/DocsRoot", require.resolveWeak("@theme/DocsRoot")],
   "a2249450": [() => import(/* webpackChunkName: "a2249450" */ "@site/sdk/Select.md"), "@site/sdk/Select.md", require.resolveWeak("@site/sdk/Select.md")],

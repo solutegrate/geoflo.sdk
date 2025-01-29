@@ -1,7 +1,7 @@
 {
   "id": "sdk/Mesh",
   "title": "Mesh",
-  "description": "",
+  "description": "Mesh ⇒ Object",
   "source": "@site/sdk/Mesh.md",
   "sourceDirName": "sdk",
   "slug": "/sdk/Mesh",
