@@ -188,12 +188,6 @@ async function generateMarkdownFile(name, data, fileName) {
 	// Generate Markdown for entire dataset
 	let markdown = await jsdoc2md.render({ data: data });
 
-	// Fix unclosed `<dd>` tags
-    markdown = markdown.replace(/<dd>(.*?)\n(?!\s*<\/dd>)/g, '<dd>$1</dd>\n');
-
-    // Fix invalid MDX syntax (unquoted attributes)
-    markdown = markdown.replace(/<(\w+)\s+("[^"]*")>/g, '<$1 value=$2>');
-
 	if (!markdown.trim()) console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
 
 	// Write Markdown file
