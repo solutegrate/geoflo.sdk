@@ -213,7 +213,7 @@ table.params tr.deep-level-1, table.props tr.deep-level-1 {
 }
 
 h3.subsection-title {
-    color: var(--theme-primary-color);
+    color: var(--theme-secondary-color);
 }
 
 body {
@@ -768,7 +768,7 @@ span.arrow {
 }
 
 .param-desc {
-    color: var(--theme-secondary-color)
+    color: var(--theme-secondary-text);
 }
 
 dt dl {
@@ -929,4 +929,42 @@ dd.yes-def ul {
     height: 100%;
     overflow: auto;
 	background-color: var(--theme-primary-background)
+}
+
+.container-overview .description {
+	color: var(--theme-primary-color);
+	font-size: 18px;
+}
+
+.container-overview .tag-source {
+	display: block;
+}
+
+.button {
+    transition: all .2s;
+    border-radius: 4px;
+    padding: 8px 24px;
+    height: 40px;
+    border-color: var(--theme-primary-text);
+    color: var(--theme-primary-color);
+    background-color: var(--theme-secondary-background);
+}
+
+.button:hover {
+	border-color: var(--theme-primary-color);
+    color: var(--theme-primary-text);
+    background-color: var(--theme-secondary-background);
+}
+
+.tag-source span {
+	color: var(--theme-primary-text);
+}
+
+.tag-source span a {
+	color: var(--theme-primary-text);
+	font-size: 16px;
+}
+
+.tag-source span a:hover {
+	color: var(--theme-primary-color);
 }

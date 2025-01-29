@@ -22,6 +22,7 @@ import Gamepad from './src/Gamepad.js';
  * @name geoflo
  * @description Represents the GeoFlo object that manages all modules.
  * @returns {Object} The GeoFlo object with various methods for managing the entire app.
+ * @example 
  */
 const GeoFlo = function () {
     const geoflo = this;
@@ -1359,6 +1360,15 @@ const GeoFlo = function () {
 
 
 
+    /**
+     * @function
+     * @name selectFeature
+     * @memberOf module:geoflo
+     * @description Selects a feature by its ID and returns the selection result.
+     *
+     * @param {string} id - The ID of the feature to be selected.
+     * @returns {boolean|Object} Returns false if the feature is not found, otherwise returns the result of the selection.
+     */
     this.selectFeature = function (id) {
         var feature = this.getFeatureById(id);
         if (!feature) return false;
@@ -2266,6 +2276,16 @@ const GeoFlo = function () {
     }
 
 
+    /**
+     * @function
+     * @name onLoad
+     * @memberOf module:geoflo
+     * @description Handles the loading of a MapboxGL map object, setting up the container and event listeners, and configuring map options.
+     *
+     * @param {Object} event - The event object triggered on load.
+     * @param {Object} event.target - The target object that triggered the event, expected to be a MapboxGL map instance.
+     * @returns {Promise} A promise that resolves when the map has finished loading.
+     */
     this.onLoad = function (event) {
         if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
 
@@ -2283,10 +2303,28 @@ const GeoFlo = function () {
         return this.load(event.target);
     }
 
+    /**
+     * @function
+     * @name onStyleLoad
+     * @memberOf module:geoflo
+     * @description Handles the style load event and triggers a redraw after a delay.
+     *
+     * @param {Event} event - The event object associated with the style load.
+     * @returns {void} This function does not return a value.
+     */
     this.onStyleLoad = function (event) {
         setTimeout(function() { geoflo.redraw(); }, 500)
     }
 
+    /**
+     * @function
+     * @name onMapMove
+     * @memberOf module:geoflo
+     * @description Handles the event triggered when the map is moved.
+     *
+     * @param {Object} event - The event object containing information about the map movement.
+     * @returns {void} This function does not return a value.
+     */
     this.onMapMove = function (event) {
 
     }

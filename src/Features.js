@@ -301,7 +301,15 @@ const Features = function () {
         return feature;
     };
 
-
+    /**
+     * @function
+     * @name selectFeatures
+     * @memberof module:geoflo.Features
+     * @description Selects features from a given array and marks them as selected if they are not already selected.
+     *
+     * @param {Array} features - An array of feature objects to be selected.
+     * @returns {Array|boolean} Returns an array of selected features if any features were selected, otherwise returns false.
+     */
     this.selectFeatures = function (features) {
         if (!features || !features.length) return false;
 

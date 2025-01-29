@@ -1,3 +1,96 @@
+/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Options
+ * @description Options for the Geoflo map.
+ * @property {string} theme - The theme of the map. Default is 'dark'.
+ * @property {boolean} showLineUnits - Show line units. Default is false.
+ * @property {boolean} showFeatureText - Show feature text. Default is true.
+ * @property {object} controls - Controls for the map.
+ * @property {boolean} controls.options - Show options control. Default is true.
+ * @property {boolean} controls.modes - Show modes control. Default is true.
+ * @property {boolean} controls.utils - Show utilities control. Default is true.
+ * @property {boolean} controls.types - Show types control. Default is true.
+ * @property {boolean} controls.actions - Show actions control. Default is true.
+ * @property {object} map - Map options.
+ * @property {string} map.container - Map container. Default is 'map'.
+ * @property {array} map.center - Map center. Default is [-95.52816680236892, 39.56431143986035].
+ * @property {number} map.zoom - Map zoom. Default is 3.5.
+ * @property {number} map.maxPitch - Maximum pitch of the map. Default is 50.
+ * @property {string} map.projection - Map projection. Default is 'mercator'.
+ * @property {string} map.style - Map style. Default is 'mapbox://styles/mapbox/dark-v11'.
+ * @property {boolean} map.hash - Enable map hash navigation. Default is true.
+ * @property {array} map.extent - Map bounding extent.
+ * @property {object} keys - Keyboard shortcuts.
+ * @property {string} keys.import - Import key. Default is 'u'.
+ * @property {string} keys.export - Export key. Default is 'd'.
+ * @property {string} keys.delete - Delete key. Default is 'Delete'.
+ * @property {string} keys.cancel - Cancel key. Default is 'Escape'.
+ * @property {string} keys.select - Select key. Default is 'Escape'.
+ * @property {string} keys.edit - Edit key. Default is 'Enter'.
+ * @property {string} keys.refresh - Refresh key. Default is 'r'.
+ * @property {string} keys.snapping - Snapping key. Default is '!'.
+ * @property {string} keys.pinning - Pinning key. Default is '@'.
+ * @property {string} keys.routing - Routing key. Default is '#'.
+ * @property {string} keys.exploring - Exploring key. Default is '$'.
+ * @property {string} keys.painting - Painting key. Default is '%'.
+ * @property {string} keys.polyline - Polyline key. Default is '1'.
+ * @property {string} keys.polygon - Polygon key. Default is '2'.
+ * @property {string} keys.rectangle - Rectangle key. Default is '3'.
+ * @property {string} keys.circle - Circle key. Default is '4'.
+ * @property {string} keys.text - Text key. Default is '5'.
+ * @property {object} units - Measurement units for different geometries.
+ * @property {string} units.Polyline - Polyline unit. Default is 'feet'.
+ * @property {string} units.Polygon - Polygon unit. Default is 'acres'.
+ * @property {string} units.Rectangle - Rectangle unit. Default is 'acres'.
+ * @property {string} units.Icon - Icon unit. Default is 'feature'.
+ * @property {string} units.Circle - Circle unit. Default is 'feature'.
+ * @property {string} units.Marker - Marker unit. Default is 'feature'.
+ * @property {object} colors - Color scheme settings.
+ * @property {string} colors.error - Error color. Default is '#ff7676'.
+ * @property {string} colors.primaryColor - Primary color. Default is '#d7ef7e'.
+ * @property {string} colors.primaryBackground - Primary background color. Default is '#5a5a5a'.
+ * @property {string} colors.primaryText - Primary text color. Default is '#c5c5c5'.
+ * @property {string} colors.primaryBorder - Primary border color. Default is '#6fafdb'.
+ * @property {string} colors.secondaryColor - Secondary color. Default is '#6fafdb'.
+ * @property {string} colors.secondaryBackground - Secondary background color. Default is '#333333'.
+ * @property {string} colors.secondaryText - Secondary text color. Default is '#333333'.
+ * @property {object} select - Selection options.
+ * @property {boolean} select.popup - Enable selection popups. Default is false.
+ * @property {boolean} select.multiple - Allow multiple selection. Default is false.
+ * @property {object} snapping - Snapping settings.
+ * @property {boolean} snapping.enable - Enable snapping to features. Default is false.
+ * @property {boolean} snapping.pixels - Pixel-based snapping. Default is false.
+ * @property {number} snapping.distance - Snapping distance in kilometers.
+ * @property {number} snapping.tolerance - Snapping tolerance in kilometers.
+ * @property {object} routing - Routing settings.
+ * @property {boolean} routing.enable - Enable routing functionality. Default is false.
+ * @property {number} routing.precision - Routing coordinate precision.
+ * @property {object} pinning - Pinning settings.
+ * @property {boolean} pinning.enable - Enable feature pinning. Default is false.
+ * @property {number} pinning.buffer - Pinning buffer distance in kilometers.
+ * @property {number} pinning.idle - Idle time before updating pinned features.
+ * @property {object} exploring - Exploring settings.
+ * @property {boolean} exploring.enable - Enable feature exploration. Default is false.
+ * @property {number} exploring.minZoom - Minimum zoom level for exploration. Default is 9.
+ * @property {number} exploring.buffer - Exploration buffer distance in kilometers.
+ * @property {number} exploring.tolerance - Exploration coordinate simplification tolerance.
+ * @property {object} painting - Painting settings.
+ * @property {boolean} painting.enable - Enable painting mode. Default is false.
+ * @property {number} painting.tolerance - Painting coordinate simplification tolerance.
+ * @property {object} gamepad - Gamepad configuration settings.
+ * @property {boolean} gamepad.enable - Enable gamepad support. Default is true.
+ * @property {boolean} gamepad.debug - Enable gamepad debugging. Default is false.
+ * @property {boolean} gamepad.crosshairs - Show crosshairs on the map. Default is true.
+ * @property {object} gamepad.joystick - Joystick settings.
+ * @property {number} gamepad.joystick.min - Minimum joystick threshold. Default is 0.2.
+ * @property {number} gamepad.joystick.max - Maximum joystick threshold. Default is 0.7.
+ * @property {object} gamepad.pan - Pan settings.
+ * @property {number} gamepad.pan.speed - Pan speed. Default is 0.001.
+ * @property {object} gamepad.zoom - Zoom settings.
+ * @property {number} gamepad.zoom.speed - Zoom speed. Default is 0.008.
+ */
+
 const Options = {
     theme: 'dark',
     showLineUnits: false,
