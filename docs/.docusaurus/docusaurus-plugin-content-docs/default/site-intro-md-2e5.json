@@ -1,0 +1,14 @@
+{
+  "id": "intro",
+  "title": "Welcome to GeoFlo SDK",
+  "description": "This is the introduction page.",
+  "source": "@site/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/intro",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

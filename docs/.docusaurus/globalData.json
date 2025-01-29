@@ -1,0 +1,126 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/",
+          "mainDocId": "sdk/Control",
+          "docs": [
+            {
+              "id": "api",
+              "path": "/api"
+            },
+            {
+              "id": "intro",
+              "path": "/intro"
+            },
+            {
+              "id": "sdk/Control",
+              "path": "/sdk/Control",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Draw",
+              "path": "/sdk/Draw",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Events",
+              "path": "/sdk/Events",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Exploring",
+              "path": "/sdk/Exploring",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Features",
+              "path": "/sdk/Features",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Gamepad",
+              "path": "/sdk/Gamepad",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Layers",
+              "path": "/sdk/Layers",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Locate",
+              "path": "/sdk/Locate",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Mesh",
+              "path": "/sdk/Mesh",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Options",
+              "path": "/sdk/Options",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Painting",
+              "path": "/sdk/Painting",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Pinning",
+              "path": "/sdk/Pinning",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Routing",
+              "path": "/sdk/Routing",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Select",
+              "path": "/sdk/Select",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Snapping",
+              "path": "/sdk/Snapping",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Statics",
+              "path": "/sdk/Statics",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Styles",
+              "path": "/sdk/Styles",
+              "sidebar": "docs"
+            },
+            {
+              "id": "sdk/Utilities",
+              "path": "/sdk/Utilities",
+              "sidebar": "docs"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "docs": {
+              "link": {
+                "path": "/sdk/Control",
+                "label": "sdk/Control"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

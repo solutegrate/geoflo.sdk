@@ -1,0 +1,23 @@
+{
+  "id": "sdk/Styles",
+  "title": "Styles",
+  "description": "",
+  "source": "@site/sdk/Styles.md",
+  "sourceDirName": "sdk",
+  "slug": "/sdk/Styles",
+  "permalink": "/sdk/Styles",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "docs",
+  "previous": {
+    "title": "Statics",
+    "permalink": "/sdk/Statics"
+  },
+  "next": {
+    "title": "Utilities",
+    "permalink": "/sdk/Utilities"
+  }
+}

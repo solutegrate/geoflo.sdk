@@ -1,0 +1,19 @@
+{
+  "id": "sdk/Utilities",
+  "title": "Utilities",
+  "description": "",
+  "source": "@site/sdk/Utilities.md",
+  "sourceDirName": "sdk",
+  "slug": "/sdk/Utilities",
+  "permalink": "/sdk/Utilities",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "docs",
+  "previous": {
+    "title": "Styles",
+    "permalink": "/sdk/Styles"
+  }
+}
