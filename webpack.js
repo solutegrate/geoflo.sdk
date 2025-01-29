@@ -5,6 +5,7 @@ const { exec } = require('child_process');
 const webpack = require('webpack');
 const TerserPlugin = require("terser-webpack-plugin");
 const WebpackObfuscator = require('webpack-obfuscator');
+const jsdoc2md = require("jsdoc-to-markdown");
 
 const packageJson = require('./package.json');
 
@@ -14,7 +15,6 @@ const input = 'index.js';
 const args = process.argv;
 const mode = args[2];
 const entry = path.resolve(__dirname, input);
-const docs = path.resolve(__dirname, './docs');
 
 const DISCLAIMER = `
 /*! 
@@ -102,12 +102,19 @@ async function build(err, stats) {
 		console.error('Error handling CSS file:', error);
 	}
 
+	await docs();
+	return true;
+}
+
+async function docs() {
+	const docsFolder = path.resolve(__dirname, 'docs');
+
 	try {
-		const Docs = await fs.readdir(docs);
+		const Docs = await fs.readdir(docsFolder);
 		
 		for (const file of Docs) {
 			if (file.endsWith('.html')) {
-				const filePath = path.join(docs, file);
+				const filePath = path.join(docsFolder, file);
 				await fs.unlink(filePath); // Delete only .html files
 				console.log(`Deleted file: ${filePath}`);
 			}
@@ -119,13 +126,46 @@ async function build(err, stats) {
 	}
 
 	try {
-		const jsdocs = await execPromise('npx jsdoc -c ./jsdoc.config.json');
-		console.log(`JSDoc Complete ${jsdocs}`);
+		await execPromise('npx jsdoc -c ./jsdoc.config.json');
+		console.log(`JSDoc HTML Complete`);
+
+		await execPromise('npx jsdoc -X -c ./jsdoc.config.json > ./docs/jsdoc-output.json');
+		console.log(`JSDoc JSON Complete`);
+
+		let jsdocData = JSON.parse(await fs.readFile('./docs/jsdoc-output.json', 'utf8'));
+		jsdocData = jsdocData.filter(item => !item.undocumented);
+		jsdocData.forEach((item) => { item.id = item.longname; });
+
+		await generateMarkdownFile('GeoFlo', jsdocData, 'GeoFlo.md');
+
+		// **Sidebar structure**
+		const sidebarItems = [{ type: "doc", id: `sdk/${MAIN_MODULE}` }];
+
+		// **Generate `sidebars.js`**
+		console.log("🛠️ Generating sidebars.js...");
+	
+		const sidebarContent = `
+			/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+			const sidebars = {
+			docs: [
+				{
+				type: "category",
+				label: "SDK",
+				collapsed: false,
+				items: ${JSON.stringify(sidebarItems, null, 2)},
+				}
+			],
+			};
+	
+			module.exports = sidebars;
+		`;
+
+		await fs.writeFile(path.resolve(__dirname, 'docs', 'sidebars.js'), sidebarContent, 'utf8');
+		console.log(`📄 Sidebar file created: ${path.resolve(__dirname, 'docs', 'sidebars.js')}`)
+		console.log("✅ SDK documentation generation complete!");
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
 	}
-
-	return true;
 }
 
 function execPromise(command) {
@@ -137,4 +177,19 @@ function execPromise(command) {
 			resolve(stdout);
 		});
 	});
+}
+
+async function generateMarkdownFile(name, data, fileName) {
+	const outputPath = path.join('./docs/sdk', fileName);
+
+	console.log(`\n📝 Generating Markdown for: ${name}`);
+	console.log(`✅ Sending complete jsdocData to jsdoc2md for ${name}`);
+	
+	// Generate Markdown for entire dataset
+	const markdown = await jsdoc2md.render({ data: data });
+	if (!markdown.trim()) console.warn(`⚠️ WARNING: Generated empty Markdown for ${name}`);
+
+	// Write Markdown file
+	await fs.writeFile(outputPath, markdown, "utf8");
+	console.log(`📄 Markdown written: ${outputPath}`);
 }

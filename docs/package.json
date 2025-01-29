@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "generate": "node ../docs.js",
       "start": "docusaurus start",
       "build": "docusaurus build",
       "serve": "docusaurus serve",

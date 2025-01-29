@@ -47,17 +47,12 @@ jobs:
       - name: Webpack Dist Build
         id: webpack-dist
         run: node webpack.js production
-        timeout-minutes: 10
+        timeout-minutes: 20
 
       - name: Install Docs Dependencies
         run: |
           cd docs
           npm install
-
-      - name: Generate SDK Documentation
-        run: |
-          cd docs
-          npm run generate
 
       - name: Build Docusaurus Site
         timeout-minutes: 30
