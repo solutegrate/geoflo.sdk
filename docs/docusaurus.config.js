@@ -4,7 +4,7 @@ module.exports = {
   tagline: "Documentation for GeoFlo SDK",
   url: "https://docs.geoflo.pro",
   baseUrl: "/",
-  projectName: "geoflo.sdk", // Repository name
+  projectName: "geoflo.sdk",
   trailingSlash: false,
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
