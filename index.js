@@ -553,15 +553,21 @@ const GeoFlo = function () {
         this.Control ? this.Control.setTheme(colors) : false;
     }
 
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name setLayers
-	 * @description Sets custom layers on the map.
-	 * @param {Array} layers - An array of custom layers to be added to the map.
-	 * @param {Object} options - Additional options for setting custom layers.
-	 * @returns {Promise} A promise that resolves when the custom layers are set on the map.
-	 */
+	
+    /**
+     * @function
+     * @name setLayers
+     * @memberof module:geoflo
+     * @description Sets custom layers and optionally resets features based on the provided options.
+     *
+     * @param {Array} layers - An array of layers to be set.
+     * @param {Object} options - An object containing options for setting layers.
+     * @param {boolean} options.reset - Indicates whether to reset features before setting layers.
+     * @returns {Promise} A promise that resolves when the custom layers have been set.
+     * 
+     * @author Solutegrate
+     * @copyright 2025
+     */
     this.setLayers = async function (layers=[], options={}) {
         if (options.reset) this.removeFeatures(layers, options);
         return await this.Layers.setCustomLayers(layers, options);
