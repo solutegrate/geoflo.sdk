@@ -22,7 +22,6 @@ import Gamepad from './src/Gamepad.js';
  * @name geoflo
  * @description Represents the GeoFlo object that manages all modules.
  * @returns {Object} The GeoFlo object with various methods for managing the entire app.
- * @example 
  */
 const GeoFlo = function () {
     const geoflo = this;

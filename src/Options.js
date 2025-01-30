@@ -91,6 +91,7 @@
  * @property {number} gamepad.zoom.speed - Zoom speed. Default is 0.008.
  */
 
+
 const Options = {
     theme: 'dark',
     showLineUnits: false,
@@ -134,6 +135,17 @@ const Options = {
     commands: [{
         key: '.',
         modifier: false,
+        /**
+         * @function
+         * @name command
+         * @memberof module:geoflo.Options.commands
+         * @description Executes a command based on the current mode and geoflo context.
+         *
+         * @param {Object} event - The event object containing details about the command execution.
+         * @param {Object} geoflo - The geoflo context containing map and mode information.
+         * @param {string} command - The command identifier to be executed.
+         * @returns {void} This function does not return a value.
+         */
         command: function (event, geoflo, command) {
             var options = { lngLat: geoflo.map.getCenter() }
             
@@ -250,6 +262,21 @@ const Options = {
             strongMagnitude: 1.0
         },
         mapping: {
+            /**
+             * @function
+             * @name Select
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events: press, hold, and release. 
+             * On release, it triggers the click action for the 'clear' button.
+             *
+             * @param {Object} event - The event object containing details about the event.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.ctx - The context object that contains methods related to the event.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Select': function (event) {
                 if (event.type === 'press') {
                     
@@ -259,6 +286,24 @@ const Options = {
                     event.ctx.getButtons('clear').button.click();
                 }
             },
+            /**
+             * @function
+             * @name Start
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events such as press, hold, and release for gamepad interactions.
+             *
+             * @param {Object} event - The event object containing details about the input event.
+             * @param {string} event.type - The type of the event (press, hold, release).
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.mode - The current mode of the application.
+             * @param {string} event.mode.id - The identifier for the current mode.
+             * @param {Object} event.ctx - The context object used to interact with the application.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Start': function (event) {
                 if (event.type === 'press') {
                     
@@ -271,6 +316,20 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name Power
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of power events such as press, hold, and release.
+             *
+             * @param {Object} event - The event object that contains information about the power event.
+             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
+             * @param {Object} event.ctx - The context object that provides access to UI elements.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Power': function (event) {
                 if (event.type === 'press') {
                     
@@ -280,6 +339,19 @@ const Options = {
                     event.ctx.getButtons('save').button.click();
                 }
             },
+            /**
+             * @function
+             * @name Menu
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of menu events such as press, hold, and release.
+             *
+             * @param {Object} event - The event object that contains information about the event.
+             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Menu': function (event) {
                 if (event.type === 'press') {
                     
@@ -289,6 +361,23 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name Misc
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events related to gamepad interactions, including press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the gamepad interaction.
+             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.
+             * @param {Object} event.ctx - The context object providing access to the map and buttons.
+             * @param {Object} event.ctx.map - The map object that contains methods for getting the center and zoom level.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Misc': function (event) {
                 if (event.type === 'press') {
                     
@@ -308,6 +397,24 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name A
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events such as press, hold, and release for gamepad interactions.
+             *
+             * @param {Object} event - The event object containing details about the gamepad interaction.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
+             * @param {Object} event.ctx - The context object for the event.
+             * @returns {Function|undefined} Returns the result of the JoyLeftClick function if certain conditions are met; otherwise, it performs a button click action or
+             * returns undefined.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'A': function (event) {
                 if (event.type === 'press') {
                     
@@ -323,6 +430,23 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name B
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events related to a gamepad button press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the button action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
+             * @param {Object} event.ctx - The context object for the event.
+             * @returns {Function|undefined} Returns the result of the JoyRightClick function if certain conditions are met, otherwise returns undefined.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'B': function (event) {
                 if (event.type === 'press') {
                     
@@ -338,6 +462,23 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name Y
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles gamepad events for pressing, holding, and releasing buttons.
+             *
+             * @param {Object} event - The event object containing information about the gamepad action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
+             * @param {function} event.gamepad.setSpeed - A function to set the speed of the gamepad.
+             * @param {Object} event.ctx - The context object used to interact with the gamepad.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'Y': function (event) {
                 if (event.type === 'press') {
                     if (!event.gamepad.hasJoysticks) {
@@ -351,6 +492,24 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name X
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles gamepad events for press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the gamepad action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons that are currently pressed.
+             * @param {function} event.gamepad.setSpeed - A method to set the speed of the gamepad.
+             * @param {Object} event.ctx - The context object that provides access to the gamepad's buttons.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'X': function (event) {
                 if (event.type === 'press') {
                     if (!event.gamepad.hasJoysticks) {
@@ -364,6 +523,21 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name JoyLeftMove
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the joystick left movement events, including press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the joystick action.
+             * @param {string} event.type - The type of the event (press, hold, or release).
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.value - The value indicating the direction or state of the joystick.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'JoyLeftMove': function (event) {
                 if (event.type === 'press') {
                     
@@ -373,6 +547,24 @@ const Options = {
                     event.gamepad.setCenter(false, event.gamepad.options.camera.free) // Reset map center
                 }
             },
+            /**
+             * @function
+             * @name JoyRightMove
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the movement of the gamepad based on the event type and name.
+             *
+             * @param {Object} event - The event object containing details about the input.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {string} event.name - The name of the input event (e.g., 'Up', 'Down', 'Left', 'Right').
+             * @param {number} event.value - The value associated with the input event.
+             * @param {Object} event.gamepad - The gamepad object that handles movement.
+             * @param {function} event.gamepad.setPitch - Function to set the pitch of the map.
+             * @param {function} event.gamepad.setBearing - Function to set the bearing of the map.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'JoyRightMove': function (event) {
                 if (event.type === 'press') {
                     
@@ -386,6 +578,21 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name JoyLeftClick
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the left click events for drawing actions, including press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the click action.
+             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
+             * @param {Object} event.mode - The mode object associated with the event.
+             * @param {string} event.mode.id - The identifier for the mode, which determines the action taken on release.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'JoyLeftClick': function (event) {
                 if (event.type === 'press') {
                     
@@ -397,6 +604,21 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name JoyRightClick
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles right-click events for drawing modes, processing different event types such as press, hold, and release.
+             *
+             * @param {Object} event - The event object containing details about the right-click action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.mode - The current mode of the application, which includes methods for handling events.
+             * @param {Object} event.lngLat - The longitude and latitude of the click location.
+             * @returns {boolean} Returns false if the event does not have a valid lngLat or if the event type is not handled.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'JoyRightClick': function (event) {
                 if (event.type === 'press') {
                     if (event.mode.id === 'draw') {
@@ -416,6 +638,24 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name BumpLeft
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the bump left action based on the event type and gamepad state.
+             *
+             * @param {Object} event - The event object containing information about the action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons pressed on the gamepad.
+             * @param {function} event.gamepad.setSpeed - A function to set the speed of the gamepad.
+             * @param {number} event.value - The value to be used for setting the speed.
+             * @returns {boolean|undefined} Returns false if the right bump is pressed without joysticks, otherwise returns the result of setSpeed.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'BumpLeft': function (event) {
                 if (event.type === 'press') {
                     if (!event.gamepad.hasJoysticks) {
@@ -431,6 +671,24 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name BumpRight
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the bump right action based on the event type and gamepad state.
+             *
+             * @param {Object} event - The event object containing information about the action.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - The current pressed buttons on the gamepad.
+             * @param {function} event.gamepad.setSpeed - Function to set the speed of the gamepad.
+             * @param {number} event.value - The value to set the speed to.
+             * @returns {boolean} Returns false if the left bump is pressed and no joysticks are present, otherwise returns the result of setting the speed.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'BumpRight': function (event) {
                 if (event.type === 'press') {
                     if (!event.gamepad.hasJoysticks) {
@@ -444,6 +702,21 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name TrigLeft
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events related to gamepad input, specifically press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing information about the gamepad input.
+             * @param {string} event.type - The type of event, which can be 'press', 'hold', or 'release'.
+             * @param {number} event.value - The value associated with the event, used when the event type is 'hold'.
+             * @param {Object} event.gamepad - The gamepad object that provides methods for interaction.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'TrigLeft': function (event) {
                 if (event.type === 'press') {
                     
@@ -453,6 +726,21 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name TrigRight
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles different types of events related to gamepad interactions, including press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the interaction.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {number} event.value - The value associated with the event, used when the event type is 'hold'.
+             * @param {Object} event.gamepad - The gamepad object that provides methods for interaction.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'TrigRight': function (event) {
                 if (event.type === 'press') {
                     
@@ -462,6 +750,27 @@ const Options = {
                     
                 }
             },
+            /**
+             * @function
+             * @name DpadUp
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the D-pad up input events for gamepad controls, managing different actions based on the event type.
+             *
+             * @param {Object} event - The event object containing details about the input event.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
+             * @param {function} event.gamepad.setPitch - Function to set the pitch based on the event value.
+             * @param {function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.
+             * @param {Object} event.ctx - The context object for accessing gamepad buttons.
+             * @param {Object} event.ctx.getButtons - Function to retrieve button states.
+             * @param {Object} event.value - The value associated with the event.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'DpadUp': function (event) {
                 if (event.type === 'press') {
                     
@@ -479,6 +788,28 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name DpadDown
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the D-pad down input event for gamepad controls, managing different actions based on the event type.
+             *
+             * @param {Object} event - The event object containing information about the input event.
+             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
+             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
+             * @param {Function} event.gamepad.setPitch - Function to set the pitch based on the event value.
+             * @param {Function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.
+             * @param {Object} event.ctx - The context object for the gamepad.
+             * @param {Object} event.ctx.getButtons - Function to retrieve button states.
+             * @param {Object} event.ctx.getButtons('Circle') - The button object for the 'Circle' button.
+             * @param {Function} event.ctx.getButtons('Circle').button.click - Function to simulate a button click.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'DpadDown': function (event) {
                 if (event.type === 'press') {
                     
@@ -496,6 +827,26 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name DpadLeft
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the D-pad left input events for a gamepad, processing press, hold, and release actions.
+             *
+             * @param {Object} event - The event object containing details about the input action.
+             * @param {string} event.type - The type of the event (press, hold, or release).
+             * @param {Object} event.gamepad - The gamepad object associated with the event.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
+             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.
+             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.
+             * @param {Object} event.gamepad.options - Options related to the gamepad.
+             * @param {Object} event.ctx - The context object for the gamepad.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'DpadLeft': function (event) {
                 if (event.type === 'press') {
                     
@@ -513,6 +864,26 @@ const Options = {
                     }
                 }
             },
+            /**
+             * @function
+             * @name DpadRight
+             * @memberof module:geoflo.Options.gamepad.mapping
+             * @description Handles the D-pad right input events for gamepad controls, managing actions based on the type of event (press, hold, release).
+             *
+             * @param {Object} event - The event object containing details about the input event.
+             * @param {string} event.type - The type of the event (press, hold, release).
+             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.
+             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.
+             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
+             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.
+             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.
+             * @param {Object} event.gamepad.options - Options for the gamepad.
+             * @param {Object} event.ctx - The context object for the gamepad.
+             * @returns {void} This function does not return a value.
+             * 
+             * @author Solutegrate
+             * @copyright 2025
+             */
             'DpadRight': function (event) {
                 if (event.type === 'press') {
                     
