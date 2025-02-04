@@ -12,7 +12,7 @@
 		"tutorials": "./docs/tutorials"
 	},
 	"source": {
-		"include": [ "./index.js", "./src/" ],
+		"include": [ "./index.js" ],
 		"includePattern": ".+\\.js(doc|x)?$",
 		"excludePattern": "(^|/)node_modules/"
 	},

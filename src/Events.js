@@ -128,7 +128,6 @@ const Events = function (geoflo) {
     const mapMoveEnd = function (event) {
         geoflo.mapMoving = false;
         if (geoflo.settingExtent) return;
-        geoflo.onMapMove(event);
         if (geoflo.locate) geoflo.locate.onMapMove(event);
         geoflo.setIcon(event);
     };
@@ -396,7 +395,9 @@ const Events = function (geoflo) {
      * @returns {void} This function does not return a value.
      */
     const gamepadconnected = function (event) {
-        geoflo.addGamepad(event.gamepad || event.detail.gamepad);
+        const gamepad = event.gamepad || event.detail.gamepad;
+        geoflo.gamepads[gamepad.index] = new Gamepad(gamepad);
+        geoflo.fire('gamepad.add', { gamepad: gamepad });
     };
 
     /**
@@ -409,7 +410,11 @@ const Events = function (geoflo) {
      * @returns {void} This function does not return a value.
      */
     const gamepaddisconnected = function (event) {
-        geoflo.removeGamepad(event.gamepad || event.detail.gamepad);
+        const gamepad = event.gamepad || event.detail.gamepad;
+        if (!geoflo.gamepads[gamepad.index]) return false;
+        geoflo.gamepads[gamepad.index].onDisconnect(gamepad);
+        delete geoflo.gamepads[gamepad.index]
+        geoflo.fire('gamepad.remove', { gamepad: gamepad });
     };
 
     /**

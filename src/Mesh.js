@@ -54,8 +54,8 @@ const Mesh = function (originalFeatures, linesOnly) {
         if (feature !== undefined) {
             var pos = allSegments.indexOf(feature);
             allSegments.splice(pos, 1);
-            var line1 = geoflo.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[0]]);
-            var line2 = geoflo.Utilities.createLineWithLength([pointCoords, feature.geometry.coordinates[1]]);
+            var line1 = createLineWithLength([pointCoords, feature.geometry.coordinates[0]]);
+            var line2 = createLineWithLength([pointCoords, feature.geometry.coordinates[1]]);
             addFeatureToIndex(line1);
             addFeatureToIndex(line2);
             allSegments.push(line1, line2);
@@ -294,7 +294,7 @@ const Mesh = function (originalFeatures, linesOnly) {
         var checkIfPointInCloseRange = function checkIfPointInCloseRange(feature, coords) {
             var pointOnline = turf.pointOnLine(feature, turf.point(coords));
             if (pointOnline.properties.dist < geoflo.statics.constants.MIN_DISTANCE) {
-                if (!geoflo.Utilities.isPointAtVertex(feature.geometry.coordinates, coords)) {
+                if (!isPointAtVertex(feature.geometry.coordinates, coords)) {
                     appendCutFeatures(segmentsWithCutPoints, feature, [pointOnline]);
                     return true;
                 }
@@ -314,7 +314,7 @@ const Mesh = function (originalFeatures, linesOnly) {
                 var id = segmentFeature2.id || segmentFeature2.properties.id;
 
                 if (feature1Type === "LineString" && feature2Type === "LineString") {
-                    if (geoflo.Utilities.isOverlapping(segmentFeature1, segmentFeature2)) {
+                    if (isOverlapping(segmentFeature1, segmentFeature2)) {
                         var intersectionPoints = turf.lineIntersect(segmentFeature1, segmentFeature2).features;
 
                         if (intersectionPoints.length > 0) {
@@ -433,6 +433,56 @@ const Mesh = function (originalFeatures, linesOnly) {
         }
 
         return allSegments;
+    }
+
+    function isPointAtVertex(geometryCoords, pointCoords) {
+        var firstPoint = geometryCoords[0];
+        var lastPoint = geometryCoords[geometryCoords.length - 1];
+        return geoflo.Utilities.isPointEqual(firstPoint, pointCoords) || geoflo.Utilities.isPointEqual(lastPoint, pointCoords);
+    }
+
+    function createLineWithLength(coords) {
+        var line = turf.lineString(coords);
+        var length = turf.lineDistance(line);
+        geoflo.Utilities.setProperties(line, { length: length });
+        return line;
+    }
+
+    function isOverlapping(feature1, feature2) {
+        var coords1 = feature1.geometry.coordinates;
+        var coords2 = feature2.geometry.coordinates;
+
+        if (coords1.length === 2 && coords2.length === 2) {
+            var bbox1 = createBbox(coords1);
+            var bbox2 = createBbox(coords2);
+            if (bbox1.east < bbox2.west || bbox1.west > bbox2.east) {
+                return false;
+            } else if (bbox1.north < bbox2.south || bbox1.south > bbox2.north) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new Error("wrong number of coordinates, expected 2");
+        }
+    }
+
+    function createBbox(coords) {
+        var bbox1 = {};
+        if (coords[0][0] < coords[1][0]) {
+            bbox1.west = coords[0][0];
+            bbox1.east = coords[1][0];
+        } else {
+            bbox1.west = coords[1][0];
+            bbox1.east = coords[0][0];
+        }
+        if (coords[0][1] < coords[1][1]) {
+            bbox1.south = coords[0][1];
+            bbox1.north = coords[1][1];
+        } else {
+            bbox1.south = coords[1][1];
+            bbox1.north = coords[0][1];
+        }
+        return bbox1;
     }
 };
 

@@ -738,7 +738,7 @@ const Draw = function () {
 
             if (geoflo.hotFeature) {
                 geoflo.removeSelection();
-                geoflo.removeFeature(geoflo.hotFeature.id, true);
+                geoflo.removeFeature(geoflo.hotFeature.id);
                 geoflo.addFeatures([geoflo.hotFeature], true);
             }
 

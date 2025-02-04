@@ -339,7 +339,7 @@ const Features = function () {
 	 * @param {Array} coords - The new coordinates to set for the features.
 	 */
     this.updateFeatures = function(features, options={}) {
-        features = features || geoflo.getFeatures();
+        features = features || [geoflo.getDrawnFeatures(), geoflo.getSelectedFeatures()].flat();
 
         var sources = [];
         var selectedFeatures = geoflo.getSelectedFeatures();

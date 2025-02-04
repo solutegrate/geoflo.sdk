@@ -40,13 +40,6 @@ const GeoFlo = function () {
     var selectedFeatures = [];
     var hiddenFeatures = [];
 
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name initialize
-	 * @description Initializes the object and optionally assigns it to the global window object.
-	 * @returns {Object} The initialized object.
-	 */
     this.initialize = function () {
         if (this.initialized) return this;
         window[this.id] = this;
@@ -59,9 +52,10 @@ const GeoFlo = function () {
      * @memberOf module:geoflo
 	 * @name init
 	 * @description Initializes the map component with the provided options and a callback function when ready.
-	 * @param {Object} [options={}] - The options object for configuring the map component.
+     * @param {string} accessToken - The Mapbox Access Token to be used for the map component.
+	 * @param {Object} [options={}] - The options object for configuring GeoFlo. This object will be assigned to geoflo.Options
 	 * @param {Function} onReady - The callback function to be executed when the map is ready.
-	 * @returns {Object} Returns the map component instance.
+	 * @returns {Promise<Object>} A promise that resolves to the map object after initialization.
 	 */
     this.init = async function (accessToken, options={}, onReady) {
         var onReadyReturn;
@@ -112,7 +106,7 @@ const GeoFlo = function () {
         this.viewportLeft = '10px';
         this.viewportBottom = '5%';
         this.noSelect = options.noSelect || false;
-        this.mapbox.on('load', this.onLoad.bind(this));
+        this.mapbox.on('load', onLoad);
 
         await loaded(this);
         await this.redraw();
@@ -140,45 +134,6 @@ const GeoFlo = function () {
         return this;
     }
 
-    /**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name load
-	 * @description This function loads the MapboxGL SDK with the given MapboxGL map object and sets up necessary components for interaction. Loads the User, Layers, and Features components, and initializes event listeners. Calls the onReady callback if provided.
-	 * @param {Object} map - The MapboxGL map object to be used by the SDK.
-	 * @returns {Object} - Returns the SDK instance after loading and initialization.
-	 */
-    this.load = function (map) {
-        if (this.isLoaded || !this.isReady) return this;
-
-        this.map = map;
-        this.locate = new Locate();
-        this.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
-        this.navigation.hide = function () { this._container.style.display = 'none' }.bind(this.navigation);
-        this.navigation.show = function () { this._container.style.display = 'block' }.bind(this.navigation);
-        this.map.addControl(this.navigation, 'top-right');
-
-        if (!this.mobile) {
-            this.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
-            this.fullscreen.hide = function () { this._controlContainer.style.display = 'none' }.bind(this.fullscreen);
-            this.fullscreen.show = function () { this._controlContainer.style.display = 'block' }.bind(this.fullscreen);
-            this.map.addControl(this.fullscreen, 'top-right');
-        }
-    
-        this.styles = new Styles(this, { styles: this.options.styles, selected: this.options.map.style });
-        this.Layers = new Layers(this);
-        this.Features = new Features(this);
-
-        this.map.addControl(this.styles);
-        
-        this.Events = Events(this);
-        this.Events.removeEventListeners();
-        this.Events.addEventListeners();
-
-        this.isLoaded = true;
-        return this;
-    }
-
 	/**
 	 * @function
      * @memberOf module:geoflo
@@ -195,7 +150,11 @@ const GeoFlo = function () {
         this.type = type;
 
         this.setOptions(options);
-        this.setControls();
+
+        if (this.options.controls) {
+            this.controls = [];
+            this.statics.controls.forEach(function (control) { this.controls.push(new Control(control)) }, this);
+        }
 
         this.Select = new Select(this);
         this.Draw = new Draw(this);
@@ -334,7 +293,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated options object after merging.
 	 */
     this.setOptions = function(options={}) {
-        this.options = this.Utilities.assignDeep(this.options || {}, options);
+        this.options = this.Utilities.assignDeep(Options, this.options || {}, options);
         return this.options;
     }
 
@@ -416,28 +375,6 @@ const GeoFlo = function () {
 	/**
 	 * @function
      * @memberOf module:geoflo
-	 * @name setControls
-	 * @description Initializes and sets the controls for the map. Adds the fullscreen and navigation controls, and initializes the custom controls.
-	 * @params {none} - No parameters needed for this function.
-	 * @returns {Array} - An array of initialized controls for the map.
-	 */
-    this.setControls = function (controls=[]) {
-        if (this.controls && this.controls.length) {
-            this.controls.forEach(function(control) { control.enable() });
-            return this.controls;
-        }
-
-        if (!this.options.controls) return false;
-
-        this.controls = [];
-        controls = controls.length ? controls : this.statics.controls;
-        controls.forEach(function(control) { this.controls.push(new Control(control)) }, this);
-        return this.controls;
-    }
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
 	 * @name setIcon
 	 * @description This function determines the appropriate icon to display based on the user's following status and navigation compass icon.
      * @deprecated
@@ -448,10 +385,12 @@ const GeoFlo = function () {
         var icon = this.navigation ? this.navigation._compassIcon : false;
         var following = this.Locate && this.Locate.following;
 
+        // Need to work on this
+
         if (following) {
 
         } else if (icon) {
-            //control.style.transform = icon.style.transform;
+        
         }
     }
 
@@ -469,11 +408,10 @@ const GeoFlo = function () {
 	 * @return {Object|boolean} Returns the center marker object if successfully added or updated, or false if not applicable.
 	 */
     this.setCenterMarker = function (options={}) {
-        return;
         if (!this.mobile || this.noCenterMarker) return false;
         
         var following = this.Locate && this.Locate.following;
-        var icon = this.statics.logo.icon;
+        var icon = options.icon || this.statics.logo.icon;
         var el;
 
         if (options.remove) {
@@ -541,7 +479,7 @@ const GeoFlo = function () {
 	 * @param {Object} colors - An object containing the theme colors.
 	 * @returns {void}
 	 */
-    this.setTheme = function (colors) {
+    this.setTheme = function (colors={}) {
         this.Control ? this.Control.setTheme(colors) : false;
     }
 	
@@ -783,6 +721,14 @@ const GeoFlo = function () {
         })
     }
 
+    /**
+     * @memberof module:geoflo
+     * @function
+     * @name setColors
+     * @description This function sets the colors for the map based on the provided object. It merges the provided colors with the existing colors and updates the theme.
+     * @param {Object} colors - The colors object to set for the map.
+     * @returns {Object} The updated colors object after setting the colors.
+     */
     this.setColors = async function (colors={}) {
         this.options.colors = Object.assign(this.options.colors, colors);
         this.setTheme(this.options.colors);
@@ -1084,20 +1030,6 @@ const GeoFlo = function () {
         return buttons;
     }
 
-
-
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name getFeatures
-	 * @description This function retrieves both the drawn and selected features and returns them as a single array.
-	 * @return {Array} An array containing both the drawn and selected features.
-	 */
-    this.getFeatures = function () {
-        return [this.getDrawnFeatures(), this.getSelectedFeatures()].flat();
-    }
-
 	/**
 	 * @function
      * @memberOf module:geoflo
@@ -1253,9 +1185,6 @@ const GeoFlo = function () {
 
         return features && features.length ? this.Features.getFeaturesById(ids) : [];;
     }
-
-
-
 
 	/**
 	 * @function
@@ -1427,24 +1356,22 @@ const GeoFlo = function () {
 
 
 
-
-
 	/**
 	 * @function
      * @memberOf module:geoflo
 	 * @name addFeatures
 	 * @description Adds features to the map and optionally zooms to them.
 	 * @param {Array} features - Array of features to be added to the map.
-	 * @param {boolean} noZoom - Flag to indicate whether to zoom to the added features.
+	 * @param {boolean} preventZoom - Flag to indicate whether to zoom to the added features.
 	 */
-    this.addFeatures = function (features, noZoom) {
+    this.addFeatures = function (features, preventZoom) {
         if (!features) return false;
         if (features.features) features = features.features;
         if (!Array.isArray(features)) features = [features];
         if (!features.length) return false;
 
         this.Features.addFeatures(features);
-        !noZoom ? this.zoomToFeatures() : false;
+        !preventZoom ? this.zoomToFeatures() : false;
     }
 
 	/**
@@ -1453,6 +1380,15 @@ const GeoFlo = function () {
 	 * @name addFeaturesToSelected
 	 * @description This function adds the provided features to the selected features list, updates the map sources, sets buttons and updates the text.
 	 * @param {Array} features - The features to be added to the selected features list.
+     * @param {Object} options - Additional options for adding features.
+     * @param {boolean} options.zoom - Flag to indicate whether to zoom to the added features.
+     * @param {boolean} options.center - Flag to indicate whether to center the map on the added features.
+     * @param {Object} options.text - Options for adding text to the features.
+     * @param {Array} options.text.ids - The IDs of the features to add text to.
+     * @param {string} options.text.field - The field to use for the text.
+     * @param {Object} options.text.layout - The layout options for the text.
+     * @returns {boolean} Returns false if no features are provided.
+     * @returns {Array} The selected features list after adding the provided features.
 	 */
     this.addFeaturesToSelected = function (features, options={}) {
         if (!features || !features.length) return false;
@@ -1482,6 +1418,8 @@ const GeoFlo = function () {
                 }
             });
         }
+
+        return this.getSelectedFeatures();
     }
 
 	/**
@@ -1498,57 +1436,20 @@ const GeoFlo = function () {
         return features;
     }
 
-	/**
-	 * @function
+    /**
+     * @function
      * @memberOf module:geoflo
-	 * @name addGamepad
-	 * @description Adds a gamepad to the list of available gamepads and fires an event. Fires a custom event 'gamepad.add' with the gamepad object.
-	 * @param {Object} gamepad - The gamepad object to be added.
-	 * @returns {boolean} Returns false if the 'Gamepad' plugin is not available.
-	 */
-    this.addGamepad = function (gamepad) {
-        this.gamepads[gamepad.index] = new Gamepad(gamepad);
-        this.fire('gamepad.add', { gamepad: gamepad });
-    }
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name addTooltip
-	 * @description Attaches a tooltip by calling setTooltip to a specified element within a parent element.
-	 * @param {Element} parent - The parent element to which the tooltip will be attached.
-	 * @param {Element} element - The element to which the tooltip will be applied.
-	 * @param {Object} options - The options for customizing the tooltip.
-	 * @param {Element} appendTo - The element to which the tooltip will be appended.
-	 */
-    this.addTooltip = function (parent, element, options, appendTo) {
-        if (!this.setTooltip) return false;
-
-        this.setTooltip(element, {
-            parent: parent,
-            appendTo: appendTo,
-            options: options
-        })
-    }
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name addPlugin
-	 * @description Adds a plugin to the plugins object of the current instance.
-	 * @param {Object} plugin - The plugin object to be added.
-	 * @param {string} plugin.id - The unique identifier of the plugin.
-	 * @throws {Error} If no Plugin ID is provided.
-	 */
-    this.addPlugin = function (plugin) {
-        if (!plugin.id) throw new Error('No Plugin ID provided')
-        var id = plugin.id;
-        this.plugins[id] = plugin;
+     * @name addControls
+     * @description This function is responsible for adding controls.
+     * @params {none} No parameters needed.
+     * @returns {boolean} Returns false if no controls are available.
+     */
+    this.addControls = function () {
+        if (!this.controls || !this.controls.length) return false;
+        this.controls.forEach(function (control) { control.enable(); });
     }
 
 
-
-    
 
 	/**
 	 * @description Removes the selection of features based on the provided feature ID. If no ID is provided, all selected features are deselected.
@@ -1589,27 +1490,11 @@ const GeoFlo = function () {
 	/**
 	 * @function
      * @memberOf module:geoflo
-	 * @name removeGamepad
-	 * @description Removes a gamepad from the list of connected gamepads and triggers the onDisconnect event. Fires a custom event 'gamepad.remove' with the gamepad object.
-	 * @param {Object} gamepad - The gamepad object to be removed.
-	 * @returns {boolean} Returns false if the gamepad is not found in the list.
-	 */
-    this.removeGamepad = function (gamepad) {
-        if (!this.gamepads[gamepad.index]) return false;
-        this.gamepads[gamepad.index].onDisconnect(gamepad);
-        delete this.gamepads[gamepad.index]
-        this.fire('gamepad.remove', { gamepad: gamepad });
-    }
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
 	 * @name removeFeatures
 	 * @description Removes specified features from the map. If no layers are provided, all features are removed. If the layers parameter is not an array, the function returns false.
 	 * @param {Array} layers - An array of layers to remove features from.
-	 * @param {Object} options - Additional options for removing features.
 	 */
-    this.removeFeatures = function (layers, options) {
+    this.removeFeatures = function (layers) {
         if (!layers) return this.Features.deleteFeatures();
         if (!Array.isArray(layers)) return false;
         this.Features.removeFeatures(layers, true);
@@ -1621,11 +1506,10 @@ const GeoFlo = function () {
 	 * @name removeFeature
 	 * @description Removes a feature from the Features collection and fires an event if edit mode is not enabled. Fires a custom event 'feature.delete' with the ID and feature object.
 	 * @param {string} id - The ID of the feature to be removed.
-	 * @param {boolean} edit - A flag indicating whether edit mode is enabled.
 	 * @returns {boolean} - Returns true if the feature was successfully removed, otherwise false.
 	 */
-    this.removeFeature = function (id, edit) {
-        var removed = id ? this.Features.removeFeatures(id, edit) : false;
+    this.removeFeature = function (id) {
+        var removed = id ? this.Features.removeFeatures(id, true) : false;
         !edit ? this.fire('feature.delete', { id: id, feature: removed }) : false;
         return removed;
     }
@@ -1865,11 +1749,27 @@ const GeoFlo = function () {
         function handleSelection(event) {
             const files = [];
 
-            for (let x = 0; x < event.target.files.length; x++) {
-                files.push(event.target.files[x]);
-            }
+            for (let x = 0; x < event.target.files.length; x++) { files.push(event.target.files[x]); }
 
-            geoflo.Utilities.processFiles(files, processFiles);
+            for (let x = 0; x < files.length; x++) {
+                const file = files[x];
+                const name = file.name;
+                const ext = name.substring(name.lastIndexOf('.') + 1, name.length).toLowerCase();
+                const reader = new FileReader();
+
+                reader.onloadend = function () {
+                    if (reader.readyState === FileReader.DONE) {
+                        try {
+                            processFiles(reader.result, name, ext);
+                        } catch (e) {
+                            console.log(e);
+                            console.error("Invalid JSON data");
+                        }
+                    }
+                }
+
+                reader.readAsText(file);
+            }
         }
 
         function processFiles (file, name, ext) {
@@ -2145,7 +2045,6 @@ const GeoFlo = function () {
 	 * @returns {Array} An array of new coordinates for the feature after moving.
 	 */
     this.moveFeature = function (feature, direction) {
-        return;
         if (!this.options.moving || !this.options.moving.enable) return false
         
         var distance = this.options.moving.distance;
@@ -2218,10 +2117,11 @@ const GeoFlo = function () {
 	 * @name forEachSelectedFeature
 	 * @description Iterates over each selected feature and applies a handler function to it.
 	 * @param {Function} handler - The function to be applied to each selected feature.
-	 * @returns {void}
+	 * @returns {Array} The array of selected features after applying the handler function.
 	 */
     this.forEachSelectedFeature = function (handler) {
         this.getSelectedFeatures().forEach(handler);
+        return this.getSelectedFeatures();
     }
 
 	/**
@@ -2248,82 +2148,21 @@ const GeoFlo = function () {
 	 * @returns {void}
 	 */
     this.createPolygon = function () {
-        if (this.mode === this.statics.constants.modes.SELECT) {
-            if (this.hasSelection()) {
-                var allFeaturesType = this.getCommonGeometryType();
+        if (!this.hasSelection() || this.mode !== this.statics.constants.modes.SELECT) return false;
 
-                if (allFeaturesType === "LineString") {
-                    var coords = geoflo.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
+        var allFeaturesType = this.getCommonGeometryType();
+        if (allFeaturesType !== "LineString") return false;
 
-                    if (coords.length > 0) {
-                        if (!geoflo.Utilities.isPointEqual(coords[0], coords[coords.length - 1])) {
-                            coords.push(coords[0]);
-                        }
+        var coords = geoflo.Utilities.combineSameTypeFeatures(this.getSelectedFeatures());
 
-                        this.addFeaturesToSelected([turf.polygon([coords], this.getSelectedPropertyValues())]);
-                        this.removeSelection();
-                    }
-                } else {
-                    console.error("Only objects of type LineString can be combined into a polygon");
-                }
+        if (coords.length > 0) {
+            if (!geoflo.Utilities.isPointEqual(coords[0], coords[coords.length - 1])) {
+                coords.push(coords[0]);
             }
-        } else {
-            console.error("Create polygon can only be executed in selection mode");
+
+            this.addFeaturesToSelected([turf.polygon([coords], this.getSelectedPropertyValues())]);
+            this.removeSelection();
         }
-    }
-
-
-    /**
-     * @function
-     * @name onLoad
-     * @memberOf module:geoflo
-     * @description Handles the loading of a MapboxGL map object, setting up the container and event listeners, and configuring map options.
-     *
-     * @param {Object} event - The event object triggered on load.
-     * @param {Object} event.target - The target object that triggered the event, expected to be a MapboxGL map instance.
-     * @returns {Promise} A promise that resolves when the map has finished loading.
-     */
-    this.onLoad = function (event) {
-        if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
-
-        this.container = event.target._container;
-        this.viewport ? this.container.insertBefore(this.viewport, this.container.firstChild) : false;
-
-        event.target.off('style.load', this.onStyleLoad.bind(this));
-        event.target.on('style.load', this.onStyleLoad.bind(this));
-
-        if (this.options.map.maxPitch) event.target.setMaxPitch(this.options.map.maxPitch);
-        if (this.options.map.maxZoom) event.target.setMaxZoom(this.options.map.maxZoom);
-        if (this.options.map.minPitch) event.target.setMinPitch(this.options.map.minPitch);
-        if (this.options.map.minZoom) event.target.setMinZoom(this.options.map.minZoom);
-
-        return this.load(event.target);
-    }
-
-    /**
-     * @function
-     * @name onStyleLoad
-     * @memberOf module:geoflo
-     * @description Handles the style load event and triggers a redraw after a delay.
-     *
-     * @param {Event} event - The event object associated with the style load.
-     * @returns {void} This function does not return a value.
-     */
-    this.onStyleLoad = function (event) {
-        setTimeout(function() { geoflo.redraw(); }, 500)
-    }
-
-    /**
-     * @function
-     * @name onMapMove
-     * @memberOf module:geoflo
-     * @description Handles the event triggered when the map is moved.
-     *
-     * @param {Object} event - The event object containing information about the map movement.
-     * @returns {void} This function does not return a value.
-     */
-    this.onMapMove = function (event) {
-
     }
 
     this.initialize();
@@ -2416,6 +2255,58 @@ async function loaded (geoflo) {
             return resolve(geoflo.isLoaded);
         }, 1);
     })
+}
+
+function load(map) {
+    if (geoflo.isLoaded || !geoflo.isReady) return geoflo;
+
+    geoflo.map = map;
+    geoflo.locate = new Locate();
+    geoflo.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
+    geoflo.navigation.hide = function () { geoflo._container.style.display = 'none' }.bind(geoflo.navigation);
+    geoflo.navigation.show = function () { geoflo._container.style.display = 'block' }.bind(geoflo.navigation);
+    geoflo.map.addControl(geoflo.navigation, 'top-right');
+
+    if (!geoflo.mobile) {
+        geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
+        geoflo.fullscreen.hide = function () { geoflo._controlContainer.style.display = 'none' }.bind(geoflo.fullscreen);
+        geoflo.fullscreen.show = function () { geoflo._controlContainer.style.display = 'block' }.bind(geoflo.fullscreen);
+        geoflo.map.addControl(geoflo.fullscreen, 'top-right');
+    }
+
+    geoflo.styles = new Styles(geoflo, { styles: geoflo.options.styles, selected: geoflo.options.map.style });
+    geoflo.Layers = new Layers(geoflo);
+    geoflo.Features = new Features(geoflo);
+
+    geoflo.map.addControl(geoflo.styles);
+
+    geoflo.Events = Events(geoflo);
+    geoflo.Events.removeEventListeners();
+    geoflo.Events.addEventListeners();
+
+    geoflo.isLoaded = true;
+    return geoflo;
+}
+
+function onLoad(event) {
+    if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
+
+    geoflo.container = event.target._container;
+    geoflo.viewport ? geoflo.container.insertBefore(geoflo.viewport, geoflo.container.firstChild) : false;
+
+    event.target.off('style.load', onStyleLoad);
+    event.target.on('style.load', onStyleLoad);
+
+    if (geoflo.options.map.maxPitch) event.target.setMaxPitch(geoflo.options.map.maxPitch);
+    if (geoflo.options.map.maxZoom) event.target.setMaxZoom(geoflo.options.map.maxZoom);
+    if (geoflo.options.map.minPitch) event.target.setMinPitch(geoflo.options.map.minPitch);
+    if (geoflo.options.map.minZoom) event.target.setMinZoom(geoflo.options.map.minZoom);
+
+    return load(geoflo, event.target);
+}
+
+function onStyleLoad(event) {
+    setTimeout(function () { geoflo.redraw(); }, 500)
 }
 
 function buildMapbox () {
