@@ -188,16 +188,7 @@ const GeoFlo = function () {
         await loadScript("https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js");
         await loadScript("https://api.mapbox.com/search-js/v1.0.0-beta.18/core.js");
 
-        this.styles = [
-            { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
-            { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
-            { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
-            { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
-            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v12" },
-            { title: "Streets", uri: "mapbox://styles/mapbox/navigation-night-v1" }         
-        ];
-
-        this.options.map.style = "Dark";
+        this.styles = this.options.map.styles;
         this.setOptions(options);
         
         var container = await ready(id);
@@ -659,7 +650,6 @@ const GeoFlo = function () {
     this.setTheme = function (colors) {
         this.Control ? this.Control.setTheme(colors) : false;
     }
-
 	
     /**
      * @function
