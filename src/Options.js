@@ -279,7 +279,7 @@ const Options = {
              *
              * @param {Object} event - The event object containing details about the event.
              * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').
-             * @param {Object} event.ctx - The context object that contains methods related to the event.
+             * @param {Object} event.geoflo - The context object that contains methods related to the event.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -291,7 +291,7 @@ const Options = {
                 } else if (event.type === 'hold') {
                     
                 } else if (event.type === 'release') {
-                    event.ctx.getButtons('clear').button.click();
+                    event.geoflo.getButtons('clear').button.click();
                 }
             },
             /**
@@ -306,7 +306,7 @@ const Options = {
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
              * @param {Object} event.mode - The current mode of the application.
              * @param {string} event.mode.id - The identifier for the current mode.
-             * @param {Object} event.ctx - The context object used to interact with the application.
+             * @param {Object} event.geoflo - The context object used to interact with the application.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -320,7 +320,7 @@ const Options = {
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
                         var button = event.mode.id === 'select' ? 'edit' : 'select';
-                        event.ctx.getButtons(button).button.click();
+                        event.geoflo.getButtons(button).button.click();
                     }
                 }
             },
@@ -332,7 +332,7 @@ const Options = {
              *
              * @param {Object} event - The event object that contains information about the power event.
              * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
-             * @param {Object} event.ctx - The context object that provides access to UI elements.
+             * @param {Object} event.geoflo - The context object that provides access to UI elements.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -344,7 +344,7 @@ const Options = {
                 } else if (event.type === 'hold') {
                     
                 } else if (event.type === 'release') {
-                    event.ctx.getButtons('save').button.click();
+                    event.geoflo.getButtons('save').button.click();
                 }
             },
             /**
@@ -379,8 +379,8 @@ const Options = {
              * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.
              * @param {Object} event.gamepad - The gamepad object associated with the event.
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.
-             * @param {Object} event.ctx - The context object providing access to the map and buttons.
-             * @param {Object} event.ctx.map - The map object that contains methods for getting the center and zoom level.
+             * @param {Object} event.geoflo - The context object providing access to the map and buttons.
+             * @param {Object} event.geoflo.map - The map object that contains methods for getting the center and zoom level.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -393,13 +393,13 @@ const Options = {
                     
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('zoom').button.click();
+                        event.geoflo.getButtons('zoom').button.click();
     
                         var ready = setInterval(function() {
                             if (!ctx.mapMoving) {
                                 clearInterval(ready);
-                                event.gamepad.map.center = event.ctx.map.getCenter();
-                                event.gamepad.map.zoom = event.ctx.map.getZoom();
+                                event.gamepad.map.center = event.geoflo.map.getCenter();
+                                event.gamepad.map.zoom = event.geoflo.map.getZoom();
                             }
                         }, 1);
                     }
@@ -416,7 +416,7 @@ const Options = {
              * @param {Object} event.gamepad - The gamepad object associated with the event.
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
              * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
-             * @param {Object} event.ctx - The context object for the event.
+             * @param {Object} event.geoflo - The context object for the event.
              * @returns {Function|undefined} Returns the result of the JoyLeftClick function if certain conditions are met; otherwise, it performs a button click action or
              * returns undefined.
              * 
@@ -434,7 +434,7 @@ const Options = {
                             return this['JoyLeftClick'](event);
                         }
                     } else {
-                        event.ctx.getButtons('routing').button.click();
+                        event.geoflo.getButtons('routing').button.click();
                     }
                 }
             },
@@ -449,7 +449,7 @@ const Options = {
              * @param {Object} event.gamepad - The gamepad object associated with the event.
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
              * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
-             * @param {Object} event.ctx - The context object for the event.
+             * @param {Object} event.geoflo - The context object for the event.
              * @returns {Function|undefined} Returns the result of the JoyRightClick function if certain conditions are met, otherwise returns undefined.
              * 
              * @author Solutegrate
@@ -466,7 +466,7 @@ const Options = {
                             return this['JoyRightClick'](event);
                         }
                     } else {
-                        event.ctx.getButtons('painting').button.click();
+                        event.geoflo.getButtons('painting').button.click();
                     }
                 }
             },
@@ -482,7 +482,7 @@ const Options = {
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
              * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.
              * @param {function} event.gamepad.setSpeed - A function to set the speed of the gamepad.
-             * @param {Object} event.ctx - The context object used to interact with the gamepad.
+             * @param {Object} event.geoflo - The context object used to interact with the gamepad.
              * 
              * @author Solutegrate
              * @copyright 2025
@@ -496,7 +496,7 @@ const Options = {
                     
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('snapping').button.click();
+                        event.geoflo.getButtons('snapping').button.click();
                     }
                 }
             },
@@ -512,7 +512,7 @@ const Options = {
              * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.
              * @param {Object} event.gamepad.pressed - An object representing the buttons that are currently pressed.
              * @param {function} event.gamepad.setSpeed - A method to set the speed of the gamepad.
-             * @param {Object} event.ctx - The context object that provides access to the gamepad's buttons.
+             * @param {Object} event.geoflo - The context object that provides access to the gamepad's buttons.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -527,7 +527,7 @@ const Options = {
                     
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('pinning').button.click();
+                        event.geoflo.getButtons('pinning').button.click();
                     }
                 }
             },
@@ -771,8 +771,8 @@ const Options = {
              * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
              * @param {function} event.gamepad.setPitch - Function to set the pitch based on the event value.
              * @param {function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.
-             * @param {Object} event.ctx - The context object for accessing gamepad buttons.
-             * @param {Object} event.ctx.getButtons - Function to retrieve button states.
+             * @param {Object} event.geoflo - The context object for accessing gamepad buttons.
+             * @param {Object} event.geoflo.getButtons - Function to retrieve button states.
              * @param {Object} event.value - The value associated with the event.
              * @returns {void} This function does not return a value.
              * 
@@ -792,7 +792,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('Polygon').button.click();
+                        event.geoflo.getButtons('Polygon').button.click();
                     }
                 }
             },
@@ -809,10 +809,10 @@ const Options = {
              * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.
              * @param {Function} event.gamepad.setPitch - Function to set the pitch based on the event value.
              * @param {Function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.
-             * @param {Object} event.ctx - The context object for the gamepad.
-             * @param {Object} event.ctx.getButtons - Function to retrieve button states.
-             * @param {Object} event.ctx.getButtons('Circle') - The button object for the 'Circle' button.
-             * @param {Function} event.ctx.getButtons('Circle').button.click - Function to simulate a button click.
+             * @param {Object} event.geoflo - The context object for the gamepad.
+             * @param {Object} event.geoflo.getButtons - Function to retrieve button states.
+             * @param {Object} event.geoflo.getButtons('Circle') - The button object for the 'Circle' button.
+             * @param {Function} event.geoflo.getButtons('Circle').button.click - Function to simulate a button click.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -831,7 +831,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('Circle').button.click();
+                        event.geoflo.getButtons('Circle').button.click();
                     }
                 }
             },
@@ -849,7 +849,7 @@ const Options = {
              * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.
              * @param {Function} event.gamepad.setCenter - Function to set the center of the map.
              * @param {Object} event.gamepad.options - Options related to the gamepad.
-             * @param {Object} event.ctx - The context object for the gamepad.
+             * @param {Object} event.geoflo - The context object for the gamepad.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -868,7 +868,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('Polyline').button.click();
+                        event.geoflo.getButtons('Polyline').button.click();
                     }
                 }
             },
@@ -886,7 +886,7 @@ const Options = {
              * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.
              * @param {Function} event.gamepad.setCenter - Function to set the center of the map.
              * @param {Object} event.gamepad.options - Options for the gamepad.
-             * @param {Object} event.ctx - The context object for the gamepad.
+             * @param {Object} event.geoflo - The context object for the gamepad.
              * @returns {void} This function does not return a value.
              * 
              * @author Solutegrate
@@ -905,7 +905,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.ctx.getButtons('Rectangle').button.click();
+                        event.geoflo.getButtons('Rectangle').button.click();
                     }
                 }
             }
