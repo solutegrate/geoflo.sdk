@@ -945,9 +945,9 @@ dd.yes-def ul {
 	font-size: 18px;
 }
 
-.container-overview .tag-source {
+/* .container-overview .tag-source {
 	display: block;
-}
+} */
 
 .button {
     transition: all .2s;

@@ -108,7 +108,7 @@ async function docs() {
 	const docsFolder = path.resolve(__dirname, 'docs');
 
 	try {
-		const Docs = await fs.readdir(docsFolder);
+		let Docs = await fs.readdir(docsFolder);
 
 		await fs.writeFile(path.join(docsFolder, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
 		
@@ -133,6 +133,16 @@ async function docs() {
 		console.log(`JSDoc HTML Complete`);
 
 		await generateMarkdownFile('GeoFlo');
+
+		let Docs = await fs.readdir(docsFolder);
+
+		for (const file of Docs) {
+			if (file.endsWith('.js.html')) {
+				const filePath = path.join(docsFolder, file);
+				await fs.unlink(filePath); // Delete only .js.html files
+				console.log(`Deleted file: ${filePath}`);
+			}
+		}
 	} catch (error) {
 		console.error(`Error generating JSDoc ${error.message}`);
 	}
