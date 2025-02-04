@@ -442,10 +442,12 @@ const Layers = function () {
                 'visibility': 'visible',
             },
             'paint': {
-                'circle-radius': 8,
-                'circle-stroke-width': 2,
+                'circle-radius': 12,
+                'circle-stroke-width': 3,
                 'circle-color': geoflo.options.colors.primarySelect,
                 'circle-stroke-color': geoflo.options.colors.secondarySelect,
+                'circle-stroke-opacity': 1,
+                'circle-opacity': 0.8
             },
             'metadata': { types: ['Point', 'Circle', 'Marker', 'Icon'] }
         },
