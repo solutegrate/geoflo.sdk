@@ -226,11 +226,37 @@ const Locate = function () {
     }
 
 
+
+    /**
+     * @function
+     * @name onAdd
+     * @memberof module:geoflo.Locate
+     * @description Logs the event object to the console.
+     *
+     * @param {Event} event - The event object that is triggered when an action occurs.
+     * @returns {void} This function does not return a value.
+     * 
+     * @author Solutegrate
+     * @copyright 2025
+     */
     this.onAdd = function (event) {
         console.log(event)
     }
 
-
+    /**
+     * @function
+     * @name onControlEvent
+     * @memberof module:geoflo.Locate
+     * @description Handles control events, updating the marker and managing the state based on the event details.
+     *
+     * @param {Object} event - The event object containing details about the control event.
+     * @param {Object} event.coords - The coordinates associated with the event, if available.
+     * @param {HTMLElement} event.target - The target element that triggered the event.
+     * @returns {void} This function does not return a value.
+     * 
+     * @author Solutegrate
+     * @copyright 2025
+     */
     this.onControlEvent = function (event) {
         //this.button = this.button || event.button;
         this.marker = this.control._userLocationDotMarker;
@@ -249,6 +275,19 @@ const Locate = function () {
         } 
     }
 
+    /**
+     * @function
+     * @name onLocate
+     * @memberof module:geoflo.Locate
+     * @description Handles the location update event, updating the current location and firing an event with the new state.
+     *
+     * @param {Object} event - The event object containing location data.
+     * @param {Object} event.coords - The coordinates of the current location.
+     * @returns {void} This function does not return a value.
+     * 
+     * @author Solutegrate
+     * @copyright 2025
+     */
     this.onLocate = function (event) {
         if (this.state() === 'ACTIVE_LOCK' && this.locating) {
             this.locating = false;
@@ -259,6 +298,18 @@ const Locate = function () {
         geoflo.fire('locate.update', { locating: this.locating, coords: event.coords, state: this.state() });
     }
 
+    /**
+     * @function
+     * @name onMapMove
+     * @memberof module:geoflo.Locate
+     * @description Handles the map movement event, updating the button classes based on the current state and conditions.
+     *
+     * @param {Object} event - The event object representing the map movement.
+     * @returns {void} This function does not return a value.
+     * 
+     * @author Solutegrate
+     * @copyright 2025
+     */
     this.onMapMove = function (event) {
         if (!this.button || this.following || this.unlocated) return;
         if (this.state() === 'ACTIVE_LOCK') return addClasses(this.button, ['mapboxgl-ctrl-geolocate-active']);

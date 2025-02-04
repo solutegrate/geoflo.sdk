@@ -1346,7 +1346,7 @@ const Layers = function () {
 
         var layers = [];
         var source = settings.source;
-        var dontRender = map.getStyle().imports && map.getStyle().imports.length;
+        var dontRender = false; //map.getStyle().imports && map.getStyle().imports.length;
 
         for (var i = 0; i < settings.types.length; i++) {
             var type = settings.types[i];
