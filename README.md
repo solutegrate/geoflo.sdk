@@ -17,22 +17,24 @@
   </a>
 </p>
 
-## 🌟 Features
+## 🌟 Key Features
 
-- Draw, Edit, Snap, Pin, Route, Paint, Explore and more...
-- Circles, Icons, Images, Polylines, Polygons, Rectangles, Text and more to come...
-- Import and Export Features
-- Custom Color Schema
-- Embedded Overpass API and OSRM Router
-- Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)
-- User Location & Follow Mode
-- Base Map Control
+- **Advanced Editing:** Draw, edit, snap, pin, route, paint, explore and much more.
+- **Versatile Features:** Work with circles, icons, images, polylines, polygons, rectangles, text, and continuously expanding element types.
+- **Robust Import/Export:** Seamlessly import and export your data.
+- **Customizable Color Schemes:** Tailor your map's look and feel with custom colors.
+- **Integrated APIs:** Fully embedded Overpass API and OSRM Router for enhanced geospatial data and routing.
+- **Comprehensive Gamepad Support:** Compatible with controllers including XBOX, PlayStation, Nintendo, iBuffalo, Logitech, and others.
+- **Smart Location Services:** Enable user location tracking and follow mode for dynamic navigation.
+- **Intuitive Base Map Control:** Easily manage and customize your base map settings.
+- **Dynamic Layer Management:** Create, edit, and delete layers with ease.
+- **Interactive Feature Management:** Select, move, rotate, scale, and delete features with simple gestures.
+- **Effortless Undo/Redo:** Quickly undo and redo your actions with a single click. (In Development)
+
 
 ## ⚡ Deployment
 
-Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the `geoflo-sdk` npm package.
-
+Before you get started with GeoFlo, you need to have a Mapbox access token.
 For more information on creating and using Mapbox access tokens:
 [<img width="100" alt="Mapbox logo" src="./img/mapbox-logo-blue.png">](https://docs.mapbox.com/accounts/guides/tokens/)
 
@@ -51,40 +53,10 @@ For more information on creating and using Mapbox access tokens:
 ### Initialization
 
 ```javascript
-  const options = {
-      container: 'map',
-      noSelect: false,
-      showFeatureText: true,
-      map: {
-          maxPitch: 75,
-          style: "Satellite",
-          extent: [[
-              [-126.9060439709589, 51.1952997950618],
-              [-65.18429019477269, 51.1952997950618],
-              [-65.18429019477269, 23.808093967213807],
-              [-126.9060439709589, 23.808093967213807],
-              [-126.9060439709589, 51.1952997950618]
-          ]]
-      }
-  }
-
-  // You can either use await or a callback function similar to onReady
-  geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
-
-  function onReady(geoflo) {
-      geoflo.styles ? geoflo.styles.hide() : false;
-      geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
-      geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
-      geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
-      geoflo.viewportLeft = geoflo.mobile ? '10px' : '30px';
-      geoflo.viewportBottom = '8%';
-      geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
-      geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
-  };
-
-  function onGeoFloEvent(event) {
-      console.log(event);
-  }
+  (async function() {
+      await geoflo.init('YOUR_MAPBOX_TOKEN', { container: 'map' });
+      geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
+  })();
 ```
 
 ## 🗺️ Roadmap

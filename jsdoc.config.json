@@ -25,7 +25,7 @@
 		]
 	},
 	"templates": {
-		"name": "Documentation",
+		"name": "Home",
 		"footerText": "Solutegrate/GeoFlo © 2025",
 		"includeSource": false,
 		"systemName": "GeoFlo",
@@ -54,7 +54,7 @@
 			],
 			"navigation": [
 				{
-					"label": "Documentation",
+					"label": "Home",
 					"href": "index.html"
 				},
 				{
