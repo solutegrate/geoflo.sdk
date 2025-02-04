@@ -13,6 +13,7 @@
 	},
 	"source": {
 		"include": [ "./index.js" ],
+		"exclude": [ "./src/" ], 
 		"includePattern": ".+\\.js(doc|x)?$",
 		"excludePattern": "(^|/)node_modules/"
 	},
@@ -46,6 +47,7 @@
 		},
 		"better-docs": {
 			"entryPoint": "README.md",
+			"includeSource": false,
 			"name": "",
 			"title": "GeoFlo SDK",
 			"logo": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
