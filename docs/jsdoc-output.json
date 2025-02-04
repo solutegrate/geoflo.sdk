@@ -89134,7 +89134,7 @@
         "meta": {
             "range": [
                 6401,
-                47136
+                47229
             ],
             "filename": "Options.js",
             "lineno": 95,
@@ -92052,7 +92052,7 @@
         "meta": {
             "range": [
                 11793,
-                47134
+                47227
             ],
             "filename": "Options.js",
             "lineno": 240,
@@ -92677,7 +92677,7 @@
         "meta": {
             "range": [
                 12431,
-                47128
+                47221
             ],
             "filename": "Options.js",
             "lineno": 272,
@@ -92698,7 +92698,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name Select\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events: press, hold, and release. \n             * On release, it triggers the click action for the 'clear' button.\n             *\n             * @param {Object} event - The event object containing details about the event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.ctx - The context object that contains methods related to the event.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name Select\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events: press, hold, and release. \n             * On release, it triggers the click action for the 'clear' button.\n             *\n             * @param {Object} event - The event object containing details about the event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.geoflo - The context object that contains methods related to the event.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 273,
@@ -92736,7 +92736,7 @@
                     ]
                 },
                 "description": "The context object that contains methods related to the event.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -92760,8 +92760,8 @@
         "comment": "",
         "meta": {
             "range": [
-                13239,
-                13560
+                13242,
+                13566
             ],
             "filename": "Options.js",
             "lineno": 288,
@@ -92781,7 +92781,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name Start\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events such as press, hold, and release for gamepad interactions.\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (press, hold, release).\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.mode - The current mode of the application.\n             * @param {string} event.mode.id - The identifier for the current mode.\n             * @param {Object} event.ctx - The context object used to interact with the application.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name Start\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events such as press, hold, and release for gamepad interactions.\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (press, hold, release).\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.mode - The current mode of the application.\n             * @param {string} event.mode.id - The identifier for the current mode.\n             * @param {Object} event.geoflo - The context object used to interact with the application.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 297,
@@ -92855,7 +92855,7 @@
                     ]
                 },
                 "description": "The context object used to interact with the application.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -92879,8 +92879,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14657,
-                15141
+                14666,
+                15153
             ],
             "filename": "Options.js",
             "lineno": 315,
@@ -92906,8 +92906,8 @@
         "comment": "",
         "meta": {
             "range": [
-                14962,
-                15017
+                14971,
+                15026
             ],
             "filename": "Options.js",
             "lineno": 322,
@@ -92929,7 +92929,7 @@
         "params": []
     },
     {
-        "comment": "/**\n             * @function\n             * @name Power\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of power events such as press, hold, and release.\n             *\n             * @param {Object} event - The event object that contains information about the power event.\n             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.\n             * @param {Object} event.ctx - The context object that provides access to UI elements.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name Power\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of power events such as press, hold, and release.\n             *\n             * @param {Object} event - The event object that contains information about the power event.\n             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.\n             * @param {Object} event.geoflo - The context object that provides access to UI elements.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 327,
@@ -92967,7 +92967,7 @@
                     ]
                 },
                 "description": "The context object that provides access to UI elements.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -92991,8 +92991,8 @@
         "comment": "",
         "meta": {
             "range": [
-                15886,
-                16205
+                15901,
+                16223
             ],
             "filename": "Options.js",
             "lineno": 341,
@@ -93065,8 +93065,8 @@
         "comment": "",
         "meta": {
             "range": [
-                16843,
-                17117
+                16861,
+                17135
             ],
             "filename": "Options.js",
             "lineno": 363,
@@ -93086,7 +93086,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name Misc\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events related to gamepad interactions, including press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad interaction.\n             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.ctx - The context object providing access to the map and buttons.\n             * @param {Object} event.ctx.map - The map object that contains methods for getting the center and zoom level.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name Misc\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events related to gamepad interactions, including press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad interaction.\n             * @param {string} event.type - The type of the event, which can be 'press', 'hold', or 'release'.\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.geoflo - The context object providing access to the map and buttons.\n             * @param {Object} event.geoflo.map - The map object that contains methods for getting the center and zoom level.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 372,
@@ -93142,7 +93142,7 @@
                     ]
                 },
                 "description": "The context object providing access to the map and buttons.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             },
             {
                 "type": {
@@ -93151,7 +93151,7 @@
                     ]
                 },
                 "description": "The map object that contains methods for getting the center and zoom level.",
-                "name": "event.ctx.map"
+                "name": "event.geoflo.map"
             }
         ],
         "returns": [
@@ -93175,8 +93175,8 @@
         "comment": "",
         "meta": {
             "range": [
-                18228,
-                19025
+                18252,
+                19058
             ],
             "filename": "Options.js",
             "lineno": 389,
@@ -93203,8 +93203,8 @@
         "comment": "",
         "meta": {
             "range": [
-                18606,
-                18970
+                18633,
+                19003
             ],
             "filename": "Options.js",
             "lineno": 398,
@@ -93229,8 +93229,8 @@
         "comment": "",
         "meta": {
             "range": [
-                18775,
-                18827
+                18802,
+                18857
             ],
             "filename": "Options.js",
             "lineno": 401,
@@ -93255,8 +93255,8 @@
         "comment": "",
         "meta": {
             "range": [
-                18861,
-                18909
+                18891,
+                18942
             ],
             "filename": "Options.js",
             "lineno": 402,
@@ -93278,7 +93278,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name A\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events such as press, hold, and release for gamepad interactions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad interaction.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {Object} event.ctx - The context object for the event.\n             * @returns {Function|undefined} Returns the result of the JoyLeftClick function if certain conditions are met; otherwise, it performs a button click action or\n             * returns undefined.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name A\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events such as press, hold, and release for gamepad interactions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad interaction.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {Object} event.geoflo - The context object for the event.\n             * @returns {Function|undefined} Returns the result of the JoyLeftClick function if certain conditions are met; otherwise, it performs a button click action or\n             * returns undefined.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 408,
@@ -93343,7 +93343,7 @@
                     ]
                 },
                 "description": "The context object for the event.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -93368,8 +93368,8 @@
         "comment": "",
         "meta": {
             "range": [
-                20199,
-                20822
+                20235,
+                20861
             ],
             "filename": "Options.js",
             "lineno": 426,
@@ -93389,7 +93389,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name B\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events related to a gamepad button press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the button action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {Object} event.ctx - The context object for the event.\n             * @returns {Function|undefined} Returns the result of the JoyRightClick function if certain conditions are met, otherwise returns undefined.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name B\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles different types of events related to a gamepad button press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the button action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {Object} event.geoflo - The context object for the event.\n             * @returns {Function|undefined} Returns the result of the JoyRightClick function if certain conditions are met, otherwise returns undefined.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 441,
@@ -93454,7 +93454,7 @@
                     ]
                 },
                 "description": "The context object for the event.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -93479,8 +93479,8 @@
         "comment": "",
         "meta": {
             "range": [
-                21941,
-                22566
+                21983,
+                22611
             ],
             "filename": "Options.js",
             "lineno": 458,
@@ -93500,7 +93500,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name Y\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles gamepad events for pressing, holding, and releasing buttons.\n             *\n             * @param {Object} event - The event object containing information about the gamepad action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {function} event.gamepad.setSpeed - A function to set the speed of the gamepad.\n             * @param {Object} event.ctx - The context object used to interact with the gamepad.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name Y\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles gamepad events for pressing, holding, and releasing buttons.\n             *\n             * @param {Object} event - The event object containing information about the gamepad action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the pressed buttons on the gamepad.\n             * @param {function} event.gamepad.setSpeed - A function to set the speed of the gamepad.\n             * @param {Object} event.geoflo - The context object used to interact with the gamepad.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 473,
@@ -93574,7 +93574,7 @@
                     ]
                 },
                 "description": "The context object used to interact with the gamepad.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "author": [
@@ -93588,8 +93588,8 @@
         "comment": "",
         "meta": {
             "range": [
-                23644,
-                24246
+                23692,
+                24297
             ],
             "filename": "Options.js",
             "lineno": 490,
@@ -93609,7 +93609,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name X\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles gamepad events for press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons that are currently pressed.\n             * @param {function} event.gamepad.setSpeed - A method to set the speed of the gamepad.\n             * @param {Object} event.ctx - The context object that provides access to the gamepad's buttons.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name X\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles gamepad events for press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the gamepad action.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons that are currently pressed.\n             * @param {function} event.gamepad.setSpeed - A method to set the speed of the gamepad.\n             * @param {Object} event.geoflo - The context object that provides access to the gamepad's buttons.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 503,
@@ -93683,7 +93683,7 @@
                     ]
                 },
                 "description": "The context object that provides access to the gamepad's buttons.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -93707,8 +93707,8 @@
         "comment": "",
         "meta": {
             "range": [
-                25396,
-                25996
+                25450,
+                26053
             ],
             "filename": "Options.js",
             "lineno": 521,
@@ -93799,8 +93799,8 @@
         "comment": "",
         "meta": {
             "range": [
-                26840,
-                27288
+                26897,
+                27345
             ],
             "filename": "Options.js",
             "lineno": 549,
@@ -93918,8 +93918,8 @@
         "comment": "",
         "meta": {
             "range": [
-                28399,
-                29067
+                28456,
+                29124
             ],
             "filename": "Options.js",
             "lineno": 576,
@@ -94010,8 +94010,8 @@
         "comment": "",
         "meta": {
             "range": [
-                29944,
-                30330
+                30001,
+                30387
             ],
             "filename": "Options.js",
             "lineno": 604,
@@ -94102,8 +94102,8 @@
         "comment": "",
         "meta": {
             "range": [
-                31292,
-                32049
+                31349,
+                32106
             ],
             "filename": "Options.js",
             "lineno": 630,
@@ -94222,8 +94222,8 @@
         "comment": "",
         "meta": {
             "range": [
-                33256,
-                33849
+                33313,
+                33906
             ],
             "filename": "Options.js",
             "lineno": 667,
@@ -94341,8 +94341,8 @@
         "comment": "",
         "meta": {
             "range": [
-                35037,
-                35570
+                35094,
+                35627
             ],
             "filename": "Options.js",
             "lineno": 700,
@@ -94433,8 +94433,8 @@
         "comment": "",
         "meta": {
             "range": [
-                36470,
-                36789
+                36527,
+                36846
             ],
             "filename": "Options.js",
             "lineno": 728,
@@ -94525,8 +94525,8 @@
         "comment": "",
         "meta": {
             "range": [
-                37683,
-                38004
+                37740,
+                38061
             ],
             "filename": "Options.js",
             "lineno": 752,
@@ -94546,7 +94546,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name DpadUp\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad up input events for gamepad controls, managing different actions based on the event type.\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {function} event.gamepad.setPitch - Function to set the pitch based on the event value.\n             * @param {function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.\n             * @param {Object} event.ctx - The context object for accessing gamepad buttons.\n             * @param {Object} event.ctx.getButtons - Function to retrieve button states.\n             * @param {Object} event.value - The value associated with the event.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name DpadUp\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad up input events for gamepad controls, managing different actions based on the event type.\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {function} event.gamepad.setPitch - Function to set the pitch based on the event value.\n             * @param {function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.\n             * @param {Object} event.geoflo - The context object for accessing gamepad buttons.\n             * @param {Object} event.geoflo.getButtons - Function to retrieve button states.\n             * @param {Object} event.value - The value associated with the event.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 761,
@@ -94629,7 +94629,7 @@
                     ]
                 },
                 "description": "The context object for accessing gamepad buttons.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             },
             {
                 "type": {
@@ -94638,7 +94638,7 @@
                     ]
                 },
                 "description": "Function to retrieve button states.",
-                "name": "event.ctx.getButtons"
+                "name": "event.geoflo.getButtons"
             },
             {
                 "type": {
@@ -94671,8 +94671,8 @@
         "comment": "",
         "meta": {
             "range": [
-                39493,
-                40309
+                39556,
+                40375
             ],
             "filename": "Options.js",
             "lineno": 782,
@@ -94692,7 +94692,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name DpadDown\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad down input event for gamepad controls, managing different actions based on the event type.\n             *\n             * @param {Object} event - The event object containing information about the input event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setPitch - Function to set the pitch based on the event value.\n             * @param {Function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.\n             * @param {Object} event.ctx - The context object for the gamepad.\n             * @param {Object} event.ctx.getButtons - Function to retrieve button states.\n             * @param {Object} event.ctx.getButtons('Circle') - The button object for the 'Circle' button.\n             * @param {Function} event.ctx.getButtons('Circle').button.click - Function to simulate a button click.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name DpadDown\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad down input event for gamepad controls, managing different actions based on the event type.\n             *\n             * @param {Object} event - The event object containing information about the input event.\n             * @param {string} event.type - The type of the event (e.g., 'press', 'hold', 'release').\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setPitch - Function to set the pitch based on the event value.\n             * @param {Function} event.gamepad.setCenter - Function to set the center based on the event value and camera options.\n             * @param {Object} event.geoflo - The context object for the gamepad.\n             * @param {Object} event.geoflo.getButtons - Function to retrieve button states.\n             * @param {Object} event.geoflo.getButtons('Circle') - The button object for the 'Circle' button.\n             * @param {Function} event.geoflo.getButtons('Circle').button.click - Function to simulate a button click.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 799,
@@ -94775,7 +94775,7 @@
                     ]
                 },
                 "description": "The context object for the gamepad.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             },
             {
                 "type": {
@@ -94784,7 +94784,7 @@
                     ]
                 },
                 "description": "Function to retrieve button states.",
-                "name": "event.ctx.getButtons"
+                "name": "event.geoflo.getButtons"
             },
             {
                 "type": {
@@ -94793,7 +94793,7 @@
                     ]
                 },
                 "description": "The button object for the 'Circle' button.",
-                "name": "event.ctx.getButtons('Circle')"
+                "name": "event.geoflo.getButtons('Circle')"
             },
             {
                 "type": {
@@ -94802,7 +94802,7 @@
                     ]
                 },
                 "description": "Function to simulate a button click.",
-                "name": "event.ctx.getButtons('Circle').button.click"
+                "name": "event.geoflo.getButtons('Circle').button.click"
             }
         ],
         "returns": [
@@ -94826,8 +94826,8 @@
         "comment": "",
         "meta": {
             "range": [
-                41953,
-                42771
+                42031,
+                42852
             ],
             "filename": "Options.js",
             "lineno": 821,
@@ -94847,7 +94847,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name DpadLeft\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad left input events for a gamepad, processing press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the input action.\n             * @param {string} event.type - The type of the event (press, hold, or release).\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.\n             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.\n             * @param {Object} event.gamepad.options - Options related to the gamepad.\n             * @param {Object} event.ctx - The context object for the gamepad.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name DpadLeft\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad left input events for a gamepad, processing press, hold, and release actions.\n             *\n             * @param {Object} event - The event object containing details about the input action.\n             * @param {string} event.type - The type of the event (press, hold, or release).\n             * @param {Object} event.gamepad - The gamepad object associated with the event.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joysticks.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.\n             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.\n             * @param {Object} event.gamepad.options - Options related to the gamepad.\n             * @param {Object} event.geoflo - The context object for the gamepad.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 838,
@@ -94939,7 +94939,7 @@
                     ]
                 },
                 "description": "The context object for the gamepad.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -94963,8 +94963,8 @@
         "comment": "",
         "meta": {
             "range": [
-                44100,
-                44922
+                44184,
+                45009
             ],
             "filename": "Options.js",
             "lineno": 858,
@@ -94984,7 +94984,7 @@
         "scope": "static"
     },
     {
-        "comment": "/**\n             * @function\n             * @name DpadRight\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad right input events for gamepad controls, managing actions based on the type of event (press, hold, release).\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (press, hold, release).\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.\n             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.\n             * @param {Object} event.gamepad.options - Options for the gamepad.\n             * @param {Object} event.ctx - The context object for the gamepad.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
+        "comment": "/**\n             * @function\n             * @name DpadRight\n             * @memberof module:geoflo.Options.gamepad.mapping\n             * @description Handles the D-pad right input events for gamepad controls, managing actions based on the type of event (press, hold, release).\n             *\n             * @param {Object} event - The event object containing details about the input event.\n             * @param {string} event.type - The type of the event (press, hold, release).\n             * @param {Object} event.gamepad - The gamepad object that contains the state of the gamepad.\n             * @param {boolean} event.gamepad.hasJoysticks - Indicates if the gamepad has joystick controls.\n             * @param {Object} event.gamepad.pressed - An object representing the buttons currently pressed on the gamepad.\n             * @param {Function} event.gamepad.setBearing - Function to set the bearing of the map.\n             * @param {Function} event.gamepad.setCenter - Function to set the center of the map.\n             * @param {Object} event.gamepad.options - Options for the gamepad.\n             * @param {Object} event.geoflo - The context object for the gamepad.\n             * @returns {void} This function does not return a value.\n             * \n             * @author Solutegrate\n             * @copyright 2025\n             */",
         "meta": {
             "filename": "Options.js",
             "lineno": 875,
@@ -95076,7 +95076,7 @@
                     ]
                 },
                 "description": "The context object for the gamepad.",
-                "name": "event.ctx"
+                "name": "event.geoflo"
             }
         ],
         "returns": [
@@ -95100,8 +95100,8 @@
         "comment": "",
         "meta": {
             "range": [
-                46293,
-                47118
+                46383,
+                47211
             ],
             "filename": "Options.js",
             "lineno": 895,
@@ -95124,8 +95124,8 @@
         "comment": "",
         "meta": {
             "range": [
-                47138,
-                47161
+                47231,
+                47254
             ],
             "filename": "Options.js",
             "lineno": 916,
