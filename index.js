@@ -770,7 +770,7 @@ const GeoFlo = function () {
 	 * @param {number} value - The opacity value to set for the layers.
 	 */
     this.setOpacity = function (value) {
-        var opacity = this.opacity = Number(value);
+        var opacity = this.opacity = Number(value || 1);
         var layers = this.map.getStyle().layers;
 
         layers.map((layer) => {

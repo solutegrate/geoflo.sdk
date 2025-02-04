@@ -107,6 +107,7 @@ const Options = {
         container: 'map',
         center: [-95.52816680236892, 39.56431143986035],
         zoom: 3.5,
+        opacity: 1,
         maxPitch: 50,
         projection: 'mercator',
         style: 'Standard',

@@ -818,7 +818,7 @@ const Layers = function () {
     }
 
     this.addTextLayer = function (options={}) {
-        var layers = options.select ? geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT) : this.getCustomLayers();
+        var layers = options.select ? this.getLayer(geoflo.statics.constants.sources.SELECT) : this.getCustomLayers();
         var field = options.field || 'text';
 
         this.removeTextLayer(options);
@@ -872,6 +872,7 @@ const Layers = function () {
             }
             
             if (!map.getLayer(id)) map.addLayer(style);
+            this.layers.push(map.getLayer(id));
         }, this);
 
         this.showTextLayers = true;
