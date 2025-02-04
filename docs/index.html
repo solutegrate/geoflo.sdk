@@ -137,21 +137,23 @@
     <img src="https://img.shields.io/badge/Demo-Click_Here-blue.svg?color=d7ef7e&logo=github" alt="GeoFlo SDK Latest" />
   </a>
 </p>
-<h2>🌟 Features</h2>
+<h2>🌟 Key Features</h2>
 <ul>
-<li>Draw, Edit, Snap, Pin, Route, Paint, Explore and more...</li>
-<li>Circles, Icons, Images, Polylines, Polygons, Rectangles, Text and more to come...</li>
-<li>Import and Export Features</li>
-<li>Custom Color Schema</li>
-<li>Embedded Overpass API and OSRM Router</li>
-<li>Gamepad Connectivity (XBOX, Playstation, Nintendo, iBuffalo, Logitech and more)</li>
-<li>User Location &amp; Follow Mode</li>
-<li>Base Map Control</li>
+<li><strong>Advanced Editing:</strong> Draw, edit, snap, pin, route, paint, explore and much more.</li>
+<li><strong>Versatile Features:</strong> Work with circles, icons, images, polylines, polygons, rectangles, text, and continuously expanding element types.</li>
+<li><strong>Robust Import/Export:</strong> Seamlessly import and export your data.</li>
+<li><strong>Customizable Color Schemes:</strong> Tailor your map's look and feel with custom colors.</li>
+<li><strong>Integrated APIs:</strong> Fully embedded Overpass API and OSRM Router for enhanced geospatial data and routing.</li>
+<li><strong>Comprehensive Gamepad Support:</strong> Compatible with controllers including XBOX, PlayStation, Nintendo, iBuffalo, Logitech, and others.</li>
+<li><strong>Smart Location Services:</strong> Enable user location tracking and follow mode for dynamic navigation.</li>
+<li><strong>Intuitive Base Map Control:</strong> Easily manage and customize your base map settings.</li>
+<li><strong>Dynamic Layer Management:</strong> Create, edit, and delete layers with ease.</li>
+<li><strong>Interactive Feature Management:</strong> Select, move, rotate, scale, and delete features with simple gestures.</li>
+<li><strong>Effortless Undo/Redo:</strong> Quickly undo and redo your actions with a single click. (In Development)</li>
 </ul>
 <h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo,
-you need to have a Mapbox access token and add GeoFlo to your project using either the CDN or the <code>geoflo-sdk</code> npm package.</p>
-<p>For more information on creating and using Mapbox access tokens:
+<p>Before you get started with GeoFlo, you need to have a Mapbox access token.
+For more information on creating and using Mapbox access tokens:
 <a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="./img/mapbox-logo-blue.png"></a></p>
 <h2>🛠️ Usage/Examples</h2>
 <h3>CDN Import</h3>
@@ -162,40 +164,10 @@ you need to have a Mapbox access token and add GeoFlo to your project using eith
   &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/geoflo-sdk.min.js&quot;>&lt;/script>
 </code></pre>
 <h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  const options = {
-      container: 'map',
-      noSelect: false,
-      showFeatureText: true,
-      map: {
-          maxPitch: 75,
-          style: &quot;Satellite&quot;,
-          extent: [[
-              [-126.9060439709589, 51.1952997950618],
-              [-65.18429019477269, 51.1952997950618],
-              [-65.18429019477269, 23.808093967213807],
-              [-126.9060439709589, 23.808093967213807],
-              [-126.9060439709589, 51.1952997950618]
-          ]]
-      }
-  }
-
-  // You can either use await or a callback function similar to onReady
-  geoflo.init('YOUR_MAPBOX_TOKEN', options, onReady);
-
-  function onReady(geoflo) {
-      geoflo.styles ? geoflo.styles.hide() : false;
-      geoflo.mobile && geoflo.navigation ? geoflo.navigation.hide() : false;
-      geoflo.mobile && geoflo.fullscreen ? geoflo.fullscreen.hide() : false;
-      geoflo.viewportHeightOffset = geoflo.mobile ? 70 : 120;
-      geoflo.viewportLeft = geoflo.mobile ? '10px' : '30px';
-      geoflo.viewportBottom = '8%';
-      geoflo.viewportWidthOffset = geoflo.mobile ? 60 : 100;
-      geoflo.map.on(geoflo.id, onGeoFloEvent.bind(geoflo));
-  };
-
-  function onGeoFloEvent(event) {
-      console.log(event);
-  }
+<pre class="prettyprint source lang-javascript"><code>  (async function() {
+      await geoflo.init('YOUR_MAPBOX_TOKEN', { container: 'map' });
+      geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
+  })();
 </code></pre>
 <h2>🗺️ Roadmap</h2>
 <ul>
