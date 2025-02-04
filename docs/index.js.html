@@ -188,11 +188,10 @@ const GeoFlo = function () {
         await loadScript("https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js");
         await loadScript("https://api.mapbox.com/search-js/v1.0.0-beta.18/core.js");
 
-        this.styles = this.options.map.styles;
         this.setOptions(options);
         
         var container = await ready(id);
-        var style = this.styles.find(style => style.title === this.options.map.style).uri;
+        var style = this.options.map.styles.find(style => style.title === this.options.map.style).uri;
 
         this.isReady = container ? true : false;
         if (!this.isReady) throw new Error('Element id is required in the DOM for the map!');
@@ -226,7 +225,6 @@ const GeoFlo = function () {
         await this.redraw();
 
         this.setViewport();
-        //this.setExtent(false, true);
         this.setOpacity(this.options.map.opacity);
 
         this.fire('sdk.ready', { enabled: this.enabled, map: this.map, ready: this.isLoaded });
@@ -261,9 +259,7 @@ const GeoFlo = function () {
         if (this.isLoaded || !this.isReady) return this;
 
         this.map = map;
-
         this.locate = new Locate();
-
         this.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
         this.navigation.hide = function () { this._container.style.display = 'none' }.bind(this.navigation);
         this.navigation.show = function () { this._container.style.display = 'block' }.bind(this.navigation);
@@ -276,7 +272,7 @@ const GeoFlo = function () {
             this.map.addControl(this.fullscreen, 'top-right');
         }
     
-        this.styles = new Styles(this, { styles: this.styles, selected: this.options.map.style });
+        this.styles = new Styles(this, { styles: this.options.map.styles, selected: this.options.map.style });
         this.Layers = new Layers(this);
         this.Features = new Features(this);
 
