@@ -20,6 +20,14 @@ const Pinning = function (mode) {
 	 * @params {void} None
 	 * @returns {void}
 	 */
+    /**
+    * @function activate
+    * @memberof _MEMBER_OF_
+    * @description - This function activates the pinning functionality by setting the enabled flag to true and enabling pinning in the options.
+    *
+    * @returns {void} No return value.
+    *
+    */
     this.activate = function () {
         this.updatedFeatures = [];
         this.enabled = true;
@@ -30,7 +38,7 @@ const Pinning = function (mode) {
 	 * @function
      * @memberof module:geoflo.Pinning
 	 * @name deactivate
-	 * @description This function deactivates the pinning feature by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
+	 * @description This function deactivates pinning by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
 	 */
     this.deactivate = function () {
         this.enabled = false;
