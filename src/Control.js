@@ -64,10 +64,9 @@ const Control = function (controls, options={}) {
      * @param {Object} control - The control object to enable.
      * @returns {Object} Returns the control object.
      */
-    this.enable = function (control) {
-        if (!control) return null;
-        this.position = control.position;
-        geoflo.map.addControl(this, control.position);
+    this.enable = function (position) {
+        this.position = position || 'top-center';
+        geoflo.map.addControl(this, this.position);
     }
 
     /**
@@ -107,9 +106,7 @@ const Control = function (controls, options={}) {
      * @returns {Object} Returns the control object.
      */
     this.onRemove = function() {
-        geoflo.buttons.removeButtons();
-        geoflo.fire('control.remove', { element: this.element });
-        geoflo.disable();
+        geoflo.fire('control.remove', { element: this.element, control: this });
     }
 
 
@@ -193,7 +190,7 @@ const Control = function (controls, options={}) {
             Object.assign(this, buttons);
         }
         
-        this.enable(buttons);
+        this.enable(buttons.position);
     }
 
 

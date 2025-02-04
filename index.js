@@ -426,8 +426,13 @@ const GeoFlo = function () {
 	 * @returns {Array} - An array of initialized controls for the map.
 	 */
     this.setControls = function (controls=[]) {
-        if (this.controls && this.controls.length) return this.controls;
+        if (this.controls && this.controls.length) {
+            this.controls.forEach(function(control) { control.enable() });
+            return this.controls;
+        }
+
         if (!this.options.controls) return false;
+
         this.controls = [];
         controls = controls.length ? controls : this.statics.controls;
         controls.forEach(function(control) { this.controls.push(new Control(control)) }, this);
@@ -1581,7 +1586,8 @@ const GeoFlo = function () {
 	 * @params {none} No parameters needed.
 	 */
     this.removeControls = function () {
-        console.log('NEED TO REMOVE CONTROLS')
+        if (!this.controls || !this.controls.length) return false;
+        this.controls.forEach(function (control) { control.disable(); });
     }
 
 	/**
