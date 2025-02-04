@@ -155,12 +155,16 @@ dl a {
     text-decoration: none;
 }
 
+.kwd {
+    color: var(--theme-secondary-color);
+}
+
 a:hover {
     color: var(--theme-secondary-color);
 }
 
 strong {
-    color: var(--theme-primary-color);
+    color: var(--theme-secondary-color);
     font-weight: 700;
 }
 

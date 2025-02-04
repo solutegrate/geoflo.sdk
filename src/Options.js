@@ -114,16 +114,16 @@ const Options = {
         projection: 'mercator',
         style: 'Standard',
         hash: true,
-        extent: [[[-127.3638459,49.6212752],[-73.7295136,49.6212752],[-73.7295136,24.7473201],[-127.3638459,24.7473201],[-127.3638459,49.6212752]]],
-        styles: [
-            { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
-            { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
-            { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
-            { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
-            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v12" },
-            { title: "Streets", uri: "mapbox://styles/mapbox/navigation-night-v1" }
-        ]
+        extent: [[[-127.3638459,49.6212752],[-73.7295136,49.6212752],[-73.7295136,24.7473201],[-127.3638459,24.7473201],[-127.3638459,49.6212752]]]
     },
+    styles: [
+        { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
+        { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
+        { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
+        { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
+        { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v12" },
+        { title: "Streets", uri: "mapbox://styles/mapbox/navigation-night-v1" }
+    ],
     keys: {
         import: 'u',
         export: 'd',

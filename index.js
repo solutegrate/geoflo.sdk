@@ -84,7 +84,7 @@ const GeoFlo = function () {
         this.setOptions(options);
         
         var container = await ready(id);
-        var style = this.options.map.styles.find(style => style.title === this.options.map.style).uri;
+        var style = this.options.styles.find(style => style.title === this.options.map.style).uri;
 
         this.isReady = container ? true : false;
         if (!this.isReady) throw new Error('Element id is required in the DOM for the map!');
@@ -165,7 +165,7 @@ const GeoFlo = function () {
             this.map.addControl(this.fullscreen, 'top-right');
         }
     
-        this.styles = new Styles(this, { styles: this.options.map.styles, selected: this.options.map.style });
+        this.styles = new Styles(this, { styles: this.options.styles, selected: this.options.map.style });
         this.Layers = new Layers(this);
         this.Features = new Features(this);
 

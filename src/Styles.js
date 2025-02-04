@@ -8,7 +8,7 @@
  */
 const Styles = function (options={}) {
     const geoflo = this.geoflo;
-    this.options = options;
+    this.options = Object.assign(geoflo.options.styles || {}, options);
     
     /**
 	 * @function
@@ -19,17 +19,8 @@ const Styles = function (options={}) {
      * @returns {Object} Returns the Styles object.
      */
     this.init = function (options={}) {
-        geoflo.Utilities.extend(this.options, options);
-
-        this.styles = this.options.styles || [
-            { title: "Standard", uri: "mapbox://styles/solutegrate/clxdoec8x006901qj7wjf8uxo" },
-            { title: "Satellite", uri: "mapbox://styles/mapbox/satellite-streets-v11" },
-            { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
-            { title: "Dark", uri: "mapbox://styles/mapbox/dark-v11" },
-            { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
-            { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v11" }
-        ];
-    
+        this.options = Object.assign(this.options, options);
+        this.styles = this.options.styles;
         this.selected = this.options.selected || "Standard";
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
