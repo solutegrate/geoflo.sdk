@@ -780,7 +780,8 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name activateSnapping
-	 * @description This function activates snapping by getting the snapping buttons, activating them, and triggering the snapping activation event. Fires a custom event 'snapping.activate' with the enabled status and the snapping object.
+	 * @description This function activates snapping to nearby feature. Snapping options can be set using geoflo.options.snapping
+     * Fires a custom event 'snapping.activate' with the enabled status and the snapping object.
 	 * @returns {Object} The activated Snapping object.
 	 */
     this.activateSnapping = function () {
@@ -796,14 +797,14 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name activatePinning
-	 * @description This function activates pinning by getting the pinning buttons, activating them, enabling snapping, activating pinning, and firing an event. Fires a custom event 'pinning.activate' with the enabled status and the pinning object.
+	 * @description This function activates pinning to snapped features. Allows moving the snapped feature with the current feature.
+     * Fires a custom event 'pinning.activate' with the enabled status and the pinning object.
 	 * @returns {Object} The activated pinning object.
 	 */
     this.activatePinning = function () {
         var buttons = this.getButtons('pinning');
         if (!buttons) return;
         buttons.activate();
-        //this.deactivateRouting();
         this.activateSnapping();
         this.Pinning.activate();
         this.fire('pinning.activate', { enabled: true, pinning: this.Pinning });
@@ -813,7 +814,8 @@ const GeoFlo = function () {
 	/**
      * @function
      * @memberOf module:geoflo
-	 * @description This function activates the routing feature by getting the routing buttons, activating them, enabling snapping, deactivating painting, and activating the routing itself. Fires a custom event 'routing.activate' with the enabled status and the routing object.
+	 * @description This function activates routing along drawn lines. The router will find the shortest path from start to end.
+     * Fires a custom event 'routing.activate' with the enabled status and the routing object.
 	 * @name activateRouting
 	 * @returns {Object} The activated Routing object.
 	 */
@@ -832,7 +834,8 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name activateExploring
-	 * @description This function activates the exploring mode by activating the exploring buttons, functionalities, and events. Fires a custom event 'exploring.activate' with the enabled status and the exploring object.
+	 * @description This function activates exploring nearby streets using the OSRM Router.
+     * Fires a custom event 'exploring.activate' with the enabled status and the exploring object.
 	 * @returns {Object} The activated exploring object.
 	 */
     this.activateExploring = function () {
@@ -849,7 +852,8 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name activatePainting
-	 * @description Activates the painting functionality by setting the draw mode, activating the painting buttons, deactivating routing and exploring, and firing an event. Fires a custom event 'painting.activate' with the enabled status and the painting object.
+	 * @description This function activates painting by free-hand drawing features.
+     * Fires a custom event 'painting.activate' with the enabled status and the painting object.
 	 * @returns {Object} The activated Painting object.
 	 */
     this.activatePainting = function () {
@@ -1152,10 +1156,10 @@ const GeoFlo = function () {
 	 * @name getFeatureById
 	 * @description Retrieves a feature by its ID from the Features object.
 	 * @param {string} id - The ID of the feature to retrieve.
-	 * @returns {boolean|object} Returns the feature object if found, otherwise false.
+	 * @returns {object} Returns the feature object if found, otherwise an empty object.
 	 */
     this.getFeatureById = function (id) {
-        if (!id) return false;
+        if (!id) return {};
         return this.Features.getFeatureById(id);
     }
 
@@ -1194,7 +1198,7 @@ const GeoFlo = function () {
         var features = this.map.queryRenderedFeatures(bbox, options);
         var ids = features.map(function(feature) { return feature.parent || feature.properties.parent || feature.id || feature.properties.id; });
 
-        return features && features.length ? this.Features.getFeaturesById(ids) : [];;
+        return features && features.length ? this.Features.getFeaturesById(ids) : [];
     }
 
 	/**
