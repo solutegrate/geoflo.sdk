@@ -1500,7 +1500,7 @@ const GeoFlo = function () {
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
         this.Features.setText();
-        this.updateFeatures(features);
+        //this.updateFeatures(features);
         this.setButtons();
         if (options.extent) this.setViewport(), this.setExtent();
         if (options.removeText) this.Layers.removeTextLayer();
