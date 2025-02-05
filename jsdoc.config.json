@@ -8,7 +8,7 @@
 		"readme": "./README.md",
 		"encoding": "utf8",
 		"destination": "./docs/",
-		"template": "./node_modules/better-docs",
+		"template": "./node_modules/tui-jsdoc-template",
 		"tutorials": "./docs/tutorials"
 	},
 	"source": {
@@ -25,7 +25,7 @@
 		]
 	},
 	"templates": {
-		"name": "Home",
+		"name": "Documentation",
 		"footerText": "Solutegrate/GeoFlo © 2025",
 		"includeSource": false,
 		"systemName": "GeoFlo",
@@ -35,13 +35,13 @@
 		"useCollapsibles": true,
 		"logo": {
 			"url": "https://geoflo.s3.amazonaws.com/logos/logo_full_white.png",
-			"link": "https://demo.geoflo.pro"
+			"link": "https://docs.geoflo.pro"
 		},
 		"css": [
 			"./styles/custom.css"
 		],
 		"tabNames": {
-			"api": "API",
+			"api": "SDK",
 			"tutorials": "Examples"
 		},
 		"better-docs": {
