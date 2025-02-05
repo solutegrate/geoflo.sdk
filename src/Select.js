@@ -105,8 +105,10 @@ const Select = function () {
 	 * @description Deselects the current feature by removing its selection.
 	 */
     this.deselectCurrentFeature = function () {
+        const ids = geoflo.getSelectedFeatureIds();
+        const features = geoflo.getSelectedFeatures();
         geoflo.removeSelection();
-        geoflo.fire('feature.deselect', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
+        geoflo.fire('feature.deselect', { ids: ids, features: features });
     };
 
 	/**
@@ -288,7 +290,7 @@ const Select = function () {
         if (features.length > 1) {
             features.forEach((feature) => {
                 const id = feature.id || feature.properties['id'];
-                if (lastKnownSelectIds.indexOf(id) === -1) {
+                if (lastKnownSelectIds.indexOf(id) === -1 && !feature.properties['_selected']) {
                     selectedId = id;
                     feat = feature;
                 }

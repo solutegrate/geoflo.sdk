@@ -1102,26 +1102,12 @@ const GeoFlo = function () {
     this.getRenderedDrawnFeatures = function (lngLat, radiusInKm, filter) {
         var bbox;
         var id = this.id;
-
-        var prelayers = [
-            id + "-line-cold",
-            id + "-fill-cold",
-            id + "-circle-cold",
-            id + "-icon-cold"
-        ];
-
-        var layers = [];
-
-        prelayers.forEach(function(layer) {
-            if (this.map.getLayer(layer)) layers.push(layer);
-        }, this)
+        var options = { layers: [] };
 
         this.Layers.getLayers().forEach(function(layer) {
-            if (layer.id.includes(id)) return;
-            if (this.map.getLayer(layer.id)) layers.push(layer.id);
+            if (layer.id.includes(id) && !layer.id.includes('-cold')) return;
+            if (this.map.getLayer(layer.id)) options.layers.push(layer.id);
         }, this)
-
-        var options = { layers: layers };
 
         if (radiusInKm) {
             var radius = turf.distanceToDegrees(radiusInKm);
@@ -1136,7 +1122,7 @@ const GeoFlo = function () {
         var features = this.map.queryRenderedFeatures(bbox, options);
         var ids = features.map(function(feature) { return feature.parent || feature.properties.parent || feature.id || feature.properties.id; });
 
-        return features && features.length ? this.Features.getFeaturesById(ids) : [];;
+        return features && features.length ? this.Features.getFeaturesById(ids) : [];
     }
     
 	/**
@@ -1156,9 +1142,8 @@ const GeoFlo = function () {
         var bbox = [this.map.project([lngLat.lng - radius, lngLat.lat - radius]), this.map.project([lngLat.lng + radius, lngLat.lat + radius])];
         var options = { layers: [] };
 
-        geoflo.Layers.getLayers().forEach(function(layer) {
-            if (!layer.id.includes('MESH')) return;
-            if (layer.type === 'fill') return;
+        this.Layers.getLayers().forEach(function(layer) {
+            if (!layer.id.includes('-mesh-')) return;
             options.layers.push(layer.id);
         })
 
