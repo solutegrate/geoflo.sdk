@@ -1,5 +1,8 @@
 {
-    "latest": {
-        "title": "Version 1.0.11"
+    "basic": {
+        "title": "Free License"
+    },
+    "premium": {
+        "title": "Premium License"
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Basic License</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/codemirror/CodeMirror/5.19.0/lib/codemirror.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/default.min.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/nhnent/tui.editor/0.10.11/dist/tui-editor.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/nhnent/tui.editor/0.10.11/dist/tui-editor-contents.css">
+    <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo-sdk.css">
+</head>
+
+<body>
+    <div class="code-html" style="height: 100%;width: 100%;">
+        <div id="map"></div>
+    </div>
+
+    <script src='//cdn.rawgit.com/markdown-it/markdown-it/8.1.0/dist/markdown-it.min.js'></script>
+    <script src="//cdn.rawgit.com/shiren/toMark/0.0.10/dist/toMark.min.js"></script>
+    <script src="//cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/nhnent/tui.code-snippet/1.2.0/code-snippet.js"></script>
+    <script src="//cdn.rawgit.com/codemirror/CodeMirror/5.19.0/lib/codemirror.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script>
+    <script src="//cdn.rawgit.com/neilj/Squire/v1.6.3/build/squire.js"></script>
+    <script src="https://sdk.geoflo.pro/geoflo-sdk.js"></script>
+
+    <script class="code-js">
+        const token = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY2p5bmQ5aGVxMHFocTNncDV2N244YzNzZiJ9.kzvbPlCNWYkFzfZibvs7tg';
+
+        (async function () {
+            await geoflo.init(token, { container: 'map' });
+            geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
+        })();
+    </script>
+</body>
+
+</html>
