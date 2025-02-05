@@ -87,9 +87,10 @@ const Select = function () {
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
         //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
-        removedFeatures = geoflo.Features.removeFeatures(id, true);
+        removedFeatures = geoflo.Features.removeFeatures(id);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
+
 
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;

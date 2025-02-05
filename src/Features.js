@@ -360,8 +360,9 @@ const Features = function () {
                 selected.geometry.coordinates = feature.geometry.coordinates;
                 selected.properties = feature.properties;
                 selected.properties._selected = true;
-                /* geoflo.Layers.getLayer(geoflo.statics.constants.sources.SELECT).forEachLayer(function (layer) { }) */
-                return geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selectedFeatures));
+                return true;
             } else if (!sources.includes(originalFeature.source)) {
                 sources.push(originalFeature.source);
             }

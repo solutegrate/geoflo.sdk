@@ -1407,11 +1407,8 @@ const GeoFlo = function () {
         this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
-        this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
-        this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
         
         this.Layers.refresh({ select: true });
-
         this.Features.setText(features);
         this.Features.updateFeatures(features);
 
