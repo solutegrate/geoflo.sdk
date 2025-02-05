@@ -433,6 +433,7 @@ const Draw = function () {
         if (!snapFeature && this.isPoint) delete this.isPoint;
         if (editPolygon && calculateRoute) geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
 
+        if (this.type === 'Rectangle' && !geoflo.editMode) return this.handleRectangle(event);
         if (this.type === 'Icon') return this.handleIcon(event, geoflo.snapFeature);
         if (this.type === 'Text') return this.handleText(event, geoflo.snapFeature);
     }
