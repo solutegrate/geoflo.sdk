@@ -433,7 +433,6 @@ const Draw = function () {
         if (!snapFeature && this.isPoint) delete this.isPoint;
         if (editPolygon && calculateRoute) geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
 
-        if (this.type === 'Rectangle') return this.handleRectangle(event);
         if (this.type === 'Icon') return this.handleIcon(event, geoflo.snapFeature);
         if (this.type === 'Text') return this.handleText(event, geoflo.snapFeature);
     }
@@ -470,6 +469,22 @@ const Draw = function () {
 
         if (this.type === 'Circle' || this.type === 'Icon' || this.type === 'Image') {
             if (!geoflo.Painting || !geoflo.Painting.enabled) geoflo.hotFeature.geometry.coordinates = geoflo.snappedVertex;
+        } else if (this.type === 'Rectangle') {
+            let rectCoords = geoflo.hotFeature.geometry.coordinates[0];
+            let rectPx = rectCoords.map(coord => map.project(coord));
+
+            let movedPx = map.project(geoflo.snappedVertex);
+            let oppositeIndex = (geoflo.dragIndex + 2) % 4; // Get opposite corner index
+            let adjacent1Index = (geoflo.dragIndex + 1) % 4; // Adjacent point 1
+            let adjacent2Index = (geoflo.dragIndex + 3) % 4; // Adjacent point 2
+
+            rectPx[geoflo.dragIndex] = movedPx;
+            rectPx[adjacent1Index].x = movedPx.x;
+            rectPx[adjacent2Index].y = movedPx.y;
+
+            let newGeoCoords = rectPx.map(px => map.unproject(px));
+            newGeoCoords.push(newGeoCoords[0]);
+            geoflo.hotFeature.geometry.coordinates[0] = newGeoCoords;
         } else {
             var isLastIndex = geoflo.Utilities.isLastIndex(geoflo.dragIndex, geoflo.hotFeature);
             geoflo.hotFeature.geometry.coordinates[geoflo.dragIndex] = geoflo.snappedVertex;
@@ -569,23 +584,47 @@ const Draw = function () {
         if (!geoflo.dragMoving) geoflo.Utilities.setProperty(geoflo.hotFeature, 'type', this.type);
         geoflo.dragMoving = true;
 
-        var coords = geoflo.snapFeature ? geoflo.snapFeature.geometry.coordinates : [event.lngLat.lng, event.lngLat.lat];
+        var map = geoflo.map;
+
+        // Convert start point to pixel space
+        var startPointPx = map.project(geoflo.startPoint);
+        var eventPx = map.project([event.lngLat.lng, event.lngLat.lat]);
 
         if (geoflo.dragIndex > -1) {
-            var startPoint = geoflo.dragIndex == 0 || geoflo.dragIndex == 4 ? 4 : geoflo.dragIndex;
-            var endPoint = startPoint == 1 ? 3 : startPoint == 2 ? 4 : startPoint == 3 ? 1 : 2;
-            var leftPoint = endPoint == 1 ? 4 : endPoint == 2 ? 1 : endPoint == 3 ? 2 : 3
-            var rightPoint = leftPoint == 1 ? 3 : leftPoint == 2 ? 4 : leftPoint == 3 ? 1 : 2;
+            var startPointIndex = geoflo.dragIndex == 0 || geoflo.dragIndex == 4 ? 4 : geoflo.dragIndex;
+            var endPointIndex = startPointIndex == 1 ? 3 : startPointIndex == 2 ? 4 : startPointIndex == 3 ? 1 : 2;
+            var leftPointIndex = endPointIndex == 1 ? 4 : endPointIndex == 2 ? 1 : endPointIndex == 3 ? 2 : 3;
+            var rightPointIndex = leftPointIndex == 1 ? 3 : leftPointIndex == 2 ? 4 : leftPointIndex == 3 ? 1 : 2;
 
-            updateCoordinate(geoflo.hotFeature, "0." + startPoint, coords[0], coords[1]);
-            updateCoordinate(geoflo.hotFeature, "0." + leftPoint, coords[0], geoflo.startPoint[1]);
-            updateCoordinate(geoflo.hotFeature, "0." + rightPoint, geoflo.startPoint[0], coords[1]);
-            updateCoordinate(geoflo.hotFeature, "0." + endPoint, geoflo.startPoint[0], geoflo.startPoint[1] );
+            // Create new pixel points ensuring a rectangle
+            var newPxCoords = [
+                eventPx,
+                { x: eventPx.x, y: startPointPx.y },
+                { x: startPointPx.x, y: eventPx.y },
+                startPointPx
+            ];
+
+            // Convert pixel coordinates back to lng/lat
+            var geoCoords = newPxCoords.map(px => map.unproject(px));
+
+            updateCoordinate(geoflo.hotFeature, `0.${startPointIndex}`, geoCoords[0].lng, geoCoords[0].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${leftPointIndex}`, geoCoords[1].lng, geoCoords[1].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${rightPointIndex}`, geoCoords[2].lng, geoCoords[2].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${endPointIndex}`, geoCoords[3].lng, geoCoords[3].lat);
         } else {
-            updateCoordinate(geoflo.hotFeature, "0.1", coords[0], geoflo.startPoint[1]);
-            updateCoordinate(geoflo.hotFeature, "0.2", coords[0], coords[1]);
-            updateCoordinate(geoflo.hotFeature, "0.3", geoflo.startPoint[0], coords[1]);
-            updateCoordinate(geoflo.hotFeature, "0.4", geoflo.startPoint[0], geoflo.startPoint[1] );
+            var newPxCoords = [
+                eventPx,
+                { x: eventPx.x, y: startPointPx.y },
+                { x: startPointPx.x, y: eventPx.y },
+                startPointPx
+            ];
+
+            var geoCoords = newPxCoords.map(px => map.unproject(px));
+
+            updateCoordinate(geoflo.hotFeature, "0.1", geoCoords[1].lng, geoCoords[1].lat);
+            updateCoordinate(geoflo.hotFeature, "0.2", geoCoords[0].lng, geoCoords[0].lat);
+            updateCoordinate(geoflo.hotFeature, "0.3", geoCoords[2].lng, geoCoords[2].lat);
+            updateCoordinate(geoflo.hotFeature, "0.4", geoCoords[3].lng, geoCoords[3].lat);
         }
 
         geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
