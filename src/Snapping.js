@@ -160,7 +160,7 @@ const Snapping = function (mode) {
         var snapToFeature = geoflo.Snapping.enabled;
         if (geoflo.bypassSnapping) snapToFeature = false;
 
-        var calculateRoute = geoflo.Routing.enabled;
+        var calculateRoute = geoflo.Routing && geoflo.Routing.enabled;
         if (geoflo.bypassRouting) calculateRoute = false;
 
         if (!snapToFeature || !geoflo.snappedVertex) return false;

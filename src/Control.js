@@ -711,7 +711,7 @@ const Control = function (controls, options={}) {
                     }
                 });
             } else if (control.type === 'actions') {
-                createOptionButton("snapping", {
+                if (geoflo._Snapping) createOptionButton("snapping", {
                     container: buttons,
                     name: "snapping",
                     title: 'Enable/Disable Snapping',
@@ -725,7 +725,7 @@ const Control = function (controls, options={}) {
                     }
                 });
         
-                createOptionButton("pinning", {
+                if (geoflo._Pinning) createOptionButton("pinning", {
                     container: buttons,
                     name: "pinning",
                     title: 'Enable/Disable Pinning',
@@ -739,7 +739,7 @@ const Control = function (controls, options={}) {
                     }
                 });
         
-                createOptionButton("routing", {
+                if (geoflo._Routing) createOptionButton("routing", {
                     container: buttons,
                     name: "routing",
                     title: 'Enable/Disable Routing',
@@ -753,7 +753,7 @@ const Control = function (controls, options={}) {
                     }
                 });
     
-                createOptionButton("exploring", {
+                if (geoflo._Exploring) createOptionButton("exploring", {
                     container: buttons,
                     name: "exploring",
                     title: `Enable/Disable Exploring`,
@@ -767,7 +767,7 @@ const Control = function (controls, options={}) {
                     }
                 });
         
-                createOptionButton("painting", {
+                if (geoflo._Painting) createOptionButton("painting", {
                     container: buttons,
                     name: "painting",
                     title: 'Enable/Disable Painting',

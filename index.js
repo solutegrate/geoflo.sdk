@@ -9,13 +9,7 @@ import Events from './src/Events.js';
 import Select from './src/Select.js';
 import Draw from './src/Draw.js';
 import Locate from './src/Locate.js';
-import Snapping from './src/Snapping.js';
-import Pinning from './src/Pinning.js';
-import Routing from './src/Routing.js';
-import Exploring from './src/Exploring.js';
-import Painting from './src/Painting.js';
 import Control from './src/Control.js';
-import Gamepad from './src/Gamepad.js';
 
 /**
  * @module geoflo
@@ -60,6 +54,17 @@ const GeoFlo = function () {
     this.init = async function (accessToken, options={}, onReady) {
         var onReadyReturn;
 
+        this.license = await loadPremiumModules(options.license);
+
+        if (this.license && this.license.name) {
+            if (this.license.name === this.statics.id) {
+                const host = window.location.hostname;
+                if (!host.includes('geoflo.pro')) throw new Error('Invalid License Key!');
+            }
+        }
+
+        delete options.license;
+
         this.Utilities = new Utilities();
 
         if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
@@ -87,7 +92,7 @@ const GeoFlo = function () {
 
         buildMapbox.call(this);
 
-        turf.distanceToDegrees = function distanceToDegrees(distanceInKm) { return distanceInKm / 111.32; }
+        turf.distanceToDegrees = function distanceToDegrees(distanceInKm) { return distanceInKm / 111.32; };
 
         this.mapbox = new mapboxgl.Map({
             accessToken: accessToken,
@@ -363,11 +368,14 @@ const GeoFlo = function () {
             selectedMode.activate(options);
         }
 
-        this.Snapping = new Snapping(this.currentMode);
-        this.Pinning = new Pinning(this.currentMode);
-        this.Routing = new Routing(this.currentMode);
-        this.Exploring = new Exploring(this.currentMode);
-        this.Painting = new Painting(this.currentMode);
+        if (this.license) {
+            this.Snapping = new this._Snapping(this.currentMode);
+            this.Pinning = new this._Pinning(this.currentMode);
+            this.Routing = new this._Routing(this.currentMode);
+            this.Exploring = new this._Exploring(this.currentMode);
+            this.Painting = new this._Painting(this.currentMode);
+        }
+
         this.Layers.moveLayers();
         return this.currentMode;
     }
@@ -785,6 +793,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The activated Snapping object.
 	 */
     this.activateSnapping = function () {
+        if (!this.Snapping) return false;
         var buttons = this.getButtons('snapping');
         if (!buttons) return;
         buttons.activate();
@@ -802,6 +811,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The activated pinning object.
 	 */
     this.activatePinning = function () {
+        if (!this.Pinning) return false;
         var buttons = this.getButtons('pinning');
         if (!buttons) return;
         buttons.activate();
@@ -820,6 +830,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The activated Routing object.
 	 */
     this.activateRouting = function () {
+        if (!this.Routing) return false;
         var buttons = this.getButtons('routing');
         if (!buttons) return;
         buttons.activate();
@@ -839,6 +850,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The activated exploring object.
 	 */
     this.activateExploring = function () {
+        if (!this.Exploring) return false;
         var buttons = this.getButtons('exploring');
         if (!buttons) return;
         buttons.activate();
@@ -857,6 +869,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The activated Painting object.
 	 */
     this.activatePainting = function () {
+        if (!this.Painting) return false;
         var buttons = this.getButtons('painting');
         if (!buttons) return;
         buttons.activate();
@@ -878,6 +891,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false after deactivating the snapping feature.
 	 */
     this.deactivateSnapping = function () {
+        if (!this.Snapping) return false;
         var buttons = this.getButtons('snapping');
         if (!buttons) return;
         buttons.deactivate();
@@ -895,6 +909,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false after deactivating pinning.
 	 */
     this.deactivatePinning = function () {
+        if (!this.Pinning) return false;
         var buttons = this.getButtons('pinning');
         if (!buttons) return;
         buttons.deactivate();
@@ -911,6 +926,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false after deactivating the routing functionality.
 	 */
     this.deactivateRouting = function () {
+        if (!this.Routing) return false;
         var buttons = this.getButtons('routing');
         if (!buttons) return;
         buttons.deactivate();
@@ -927,6 +943,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false after deactivating the exploring mode.
 	 */
     this.deactivateExploring = function () {
+        if (!this.Exploring) return false;
         var buttons = this.getButtons('exploring');
         if (!buttons) return;
         buttons.deactivate();
@@ -944,6 +961,7 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns false.
 	 */
     this.deactivatePainting = function () {
+        if (!this.Painting) return false;
         var buttons = this.getButtons('painting');
         if (!buttons) return;
         if (this.mobile && !this.currentMode.finished && this.currentMode.id === 'draw' && this.currentMode.type && this.currentMode.type === 'Rectangle') return;
@@ -2192,13 +2210,11 @@ Locate.prototype.geoflo = geoflo;
 Mesh.prototype.geoflo = geoflo;
 Draw.prototype.geoflo = geoflo;
 Select.prototype.geoflo = geoflo;
-Gamepad.prototype.geoflo = geoflo;
 Styles.prototype.geoflo = geoflo;
-Snapping.prototype.geoflo = geoflo;
-Pinning.prototype.geoflo = geoflo;
-Routing.prototype.geoflo = geoflo;
-Exploring.prototype.geoflo = geoflo;
-Painting.prototype.geoflo = geoflo;
+
+export { geoflo as default }
+
+
 
 
 async function loadScript(url) {
@@ -2234,7 +2250,6 @@ async function loadStylesheet(url) {
         console.error(`Error loading stylesheet: ${error.message}`);
     }
 }
-
 
 function isMobile() {
     const e = /(iphone|ipod|ipad|android|iemobile|blackberry|bada)/.test(window.navigator.userAgent.toLowerCase());
@@ -2371,4 +2386,53 @@ function buildMapbox () {
     }
 }
 
-export { geoflo as default }
+async function loadPremiumModules(key) {
+    const license = await validateLicense(key);
+
+    if (license) {
+        const [Snapping, Pinning, Routing, Exploring, Painting, Gaming] = await Promise.all([
+            import(/* webpackChunkName: "premium-snapping" */ "./src/Snapping.js"),
+            import(/* webpackChunkName: "premium-pinning" */ "./src/Pinning.js"),
+            import(/* webpackChunkName: "premium-routing" */ "./src/Routing.js"),
+            import(/* webpackChunkName: "premium-exploring" */ "./src/Exploring.js"),
+            import(/* webpackChunkName: "premium-painting" */ "./src/Painting.js"),
+            import(/* webpackChunkName: "premium-gaming" */ "./src/Gaming.js"),
+        ]);
+
+        geoflo._Snapping = Snapping.default;
+        geoflo._Pinning = Pinning.default;
+        geoflo._Routing = Routing.default;
+        geoflo._Exploring = Exploring.default;
+        geoflo._Painting = Painting.default;
+        geoflo._Gaming = Gaming.default;
+
+        geoflo._Snapping.prototype.geoflo = geoflo;
+        geoflo._Pinning.prototype.geoflo = geoflo;
+        geoflo._Routing.prototype.geoflo = geoflo;
+        geoflo._Exploring.prototype.geoflo = geoflo;
+        geoflo._Painting.prototype.geoflo = geoflo;
+        geoflo._Gaming.prototype.geoflo = geoflo;
+
+        console.log("✅ Premium modules loaded successfully.");
+    }
+
+    return license;
+}
+
+async function validateLicense(key) {
+    try {
+        const response = await fetch(`https://api.geoflo.com/v1/license?key=${key}`);
+        const data = await response.json();
+
+        if (response.status === 200) {
+            console.log("✅ License validated! Loading premium features...");
+            return data;
+        } else {
+            console.warn("⚠️ License invalid. Running in basic mode.");
+            return false;
+        }
+    } catch (error) {
+        console.error("License validation failed:", error);
+        return false;
+    }
+}

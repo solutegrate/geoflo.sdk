@@ -67,6 +67,7 @@ const Routing = function (mode) {
 	 * @returns {Promise<Object>} The matched feature with routing property set to true.
 	 */
     this.getMatch = async function (coords) {
+        if (!geoflo.Exploring) return {};
         var feature = await geoflo.Exploring.getMatch(coords, { set: true, start: geoflo.startPoint });
         feature.properties.routing = true;
         return feature;

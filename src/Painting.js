@@ -133,7 +133,7 @@ const Painting = function (mode) {
 
         var feature;
 
-        if (geoflo.Exploring.enabled) this.feature = await geoflo.Exploring.getMatch(this.currentCoords, { set: true, start: geoflo.startPoint });
+        if (geoflo.Exploring && geoflo.Exploring.enabled) this.feature = await geoflo.Exploring.getMatch(this.currentCoords, { set: true, start: geoflo.startPoint });
 
         feature = mode.updateHotSource(this.feature);
         feature = geoflo.Utilities.cloneDeep(feature);

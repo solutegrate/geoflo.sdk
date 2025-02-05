@@ -260,7 +260,7 @@ const Draw = function () {
             return onVertex(getVertex(point), true);
         }
 
-        geoflo.Pinning.setFeatures(geoflo.snappedVertex);
+        if (geoflo.Pinning) geoflo.Pinning.setFeatures(geoflo.snappedVertex);
         startIdleTime();
     }
 
@@ -276,7 +276,7 @@ const Draw = function () {
         geoflo.mouseIsDown = false;
         geoflo.touchDown = false;
 
-        if (geoflo.Painting.enabled) return geoflo.Painting.handleUp(event);
+        if (geoflo.Painting && geoflo.Painting.enabled) return geoflo.Painting.handleUp(event);
         if (geoflo.addedVertexOnLine && !geoflo.dragMoving) return;
         if (event.touch && geoflo.touchMoving) return geoflo.dragMoving = false;
 
@@ -311,11 +311,17 @@ const Draw = function () {
 	 */
     this.handleClick = function (event) {
         if (event.finish) return geoflo.editMode ? this.saveEdit() : finishDraw(this.type);
-        if (event.touch && geoflo.touchMoving) return geoflo.touchMoving = false, geoflo.Snapping.setFeature(), this.updateHotSource();
+
+        if (event.touch && geoflo.touchMoving) {
+            geoflo.touchMoving = false
+            if (geoflo.Snapping) geoflo.Snapping.setFeature();
+            return this.updateHotSource();
+        }
+
         if (event.touch) geoflo.touchClick = true;
 
         if (geoflo.addedVertexOnLine) {
-            geoflo.Snapping.setFeature();
+            if (geoflo.Snapping) geoflo.Snapping.setFeature();
             this.updateHotSource();
             onVertex(getVertex(geoflo.addedVertexOnLine));
             this.handleDrag(event);
@@ -369,9 +375,9 @@ const Draw = function () {
 
         geoflo.lastClick = lastPoint;
         geoflo.firstClick = geoflo.firstClick ? geoflo.firstClick : { coords: lastPoint.coords };
-        geoflo.Snapping.setFeature();
+        if (geoflo.Snapping) geoflo.Snapping.setFeature();
         addText.call(this, this.type);
-        geoflo.Exploring.setFeatures(lastPoint.coords, { set: true });
+        if (geoflo.Exploring) geoflo.Exploring.setFeatures(lastPoint.coords, { set: true });
         delete geoflo.touchClick;
         return this.updateHotSource();
     }
@@ -389,16 +395,17 @@ const Draw = function () {
         if (geoflo.overpassDownloading) return false;
         if (geoflo.mouseIsDown && geoflo.canAddVertex) return false;
         if (geoflo.canDragMove && geoflo.snappedVertex && geoflo.mouseIsDown) return this.handleDrag(event);
-        if (geoflo.mouseIsDown && geoflo.Painting.enabled) return this.handlePainting(event);
+        if (geoflo.mouseIsDown && geoflo.Painting && geoflo.Painting.enabled) return this.handlePainting(event);
         if (event.touch && geoflo.touchMoving) return geoflo.snapFeature = false;
 
         var button = !event.originalEvent ? false : event.originalEvent.buttons !== undefined ? event.originalEvent.buttons : event.originalEvent.which;
         if (button === 1) return false;
 
-        var calculateRoute = geoflo.Routing.enabled;
+        var calculateRoute = geoflo.Routing && geoflo.Routing.enabled;
         if (event.originalEvent && event.originalEvent.altKey) calculateRoute = false;
 
-        var snapToPoint = geoflo.Snapping.enabled;
+        var snapToPoint = false;
+        if (geoflo.Snapping) snapToPoint = geoflo.Snapping.enabled;
         if (event.originalEvent && event.originalEvent.shiftKey) snapToPoint = false;
 
         var evtCoords = [event.lngLat.lng, event.lngLat.lat];
@@ -410,9 +417,9 @@ const Draw = function () {
         if (editPolygon) {
             snapFeature = point;
         } else if (snapToPoint) {
-            snapFeature = geoflo.Snapping.setClosest(evtCoords, isPoint);
+            if (geoflo.Snapping) snapFeature = geoflo.Snapping.setClosest(evtCoords, isPoint);
         } else if (!isPoint) {
-            snapFeature = geoflo.Snapping.updateFeature(evtCoords);
+            if (geoflo.Snapping) snapFeature = geoflo.Snapping.updateFeature(evtCoords);
         } else if (isPoint) {
             snapFeature = point;
         }
@@ -420,7 +427,7 @@ const Draw = function () {
         if (calculateRoute) snapFeature = geoflo.Routing.getClosest() || snapFeature;
         if (!snapFeature) snapFeature = point;
 
-        geoflo.Snapping.addFeature(snapFeature, this.properties, editPolygon);
+        if (geoflo.Snapping) geoflo.Snapping.addFeature(snapFeature, this.properties, editPolygon);
         onVertex(getVertex(point));
         
         if (!snapFeature && this.isPoint) delete this.isPoint;
@@ -444,7 +451,7 @@ const Draw = function () {
         
         if (!validIndex) {
             offVertex();
-            if (geoflo.mouseIsDown && geoflo.Painting.enabled) this.handlePainting(event);
+            if (geoflo.mouseIsDown && geoflo.Painting && geoflo.Painting.enabled) this.handlePainting(event);
             return false;
         }
 
@@ -462,7 +469,7 @@ const Draw = function () {
         if (geoflo.lastIndex) geoflo.lastClick = { coords: geoflo.snappedVertex };
 
         if (this.type === 'Circle' || this.type === 'Icon' || this.type === 'Image') {
-            if (!geoflo.Painting.enabled) geoflo.hotFeature.geometry.coordinates = geoflo.snappedVertex;
+            if (!geoflo.Painting || !geoflo.Painting.enabled) geoflo.hotFeature.geometry.coordinates = geoflo.snappedVertex;
         } else {
             var isLastIndex = geoflo.Utilities.isLastIndex(geoflo.dragIndex, geoflo.hotFeature);
             geoflo.hotFeature.geometry.coordinates[geoflo.dragIndex] = geoflo.snappedVertex;
@@ -480,7 +487,7 @@ const Draw = function () {
         geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
         geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([vertex]));
         geoflo.fire('vertex.drag', { type: this.type, coords: [event.lngLat.lng, event.lngLat.lat], feature: geoflo.hotFeature, vertex: vertex });
-        geoflo.Pinning.updateFeatures();
+        if (geoflo.Pinning) geoflo.Pinning.updateFeatures();
     }
 
 	/**
@@ -535,11 +542,12 @@ const Draw = function () {
 	 * @returns {boolean} Returns false if mouse is not down or no coordinates are available, otherwise updates the feature coordinates.
 	 */
     this.handlePainting = function (event) {
-        if (!geoflo.mouseIsDown) return false;
+        if (!geoflo.mouseIsDown || !geoflo.Painting) return false;
         geoflo.map.dragPan.disable();
         geoflo.setMapClass('painting');
 
-        var snapCoords = geoflo.snapFeature && !geoflo.Painting.feature;
+        var paintFeature = geoflo.Painting && geoflo.Painting.feature;
+        var snapCoords = geoflo.snapFeature && !paintFeature;
         var coords = event.lngLat && event.lngLat.lng ? [event.lngLat.lng, event.lngLat.lat] : false;
         if (snapCoords) coords = geoflo.snapFeature.geometry.coordinates;
 
@@ -742,7 +750,7 @@ const Draw = function () {
                 geoflo.addFeatures([geoflo.hotFeature], true);
             }
 
-            geoflo.Pinning.resetFeatures();
+            if (geoflo.Pinning) geoflo.Pinning.resetFeatures();
 
             if (!geoflo.editMode) geoflo.fire('draw.cancel', { cancel: true, feature: geoflo.hotFeature });
             return false;
@@ -754,7 +762,7 @@ const Draw = function () {
                 geoflo.hotFeature.geometry.coordinates[0] :
                 [geoflo.hotFeature.geometry.coordinates[0], geoflo.hotFeature.geometry.coordinates[1]]
     
-                point = geoflo.Painting.enabled || geoflo.currentMode.savingEdit ? point : turf.point(coords);
+                point = (geoflo.Painting && geoflo.Painting.enabled) || geoflo.currentMode.savingEdit ? point : turf.point(coords);
                 feature = point;
             } else if (geoflo.Utilities.isPolygon(geoflo.hotFeature, type)) {
                 geoflo.hotFeature.geometry.type = "Polygon";
@@ -777,7 +785,7 @@ const Draw = function () {
                 feature = point;
             }
     
-            if (geoflo.Painting.enabled) {
+            if (geoflo.Painting && geoflo.Painting.enabled) {
                 var tolerance = geoflo.options.painting.tolerance;
     
                 geoflo.hotFeature = type === 'Circle' ? geoflo.hotFeature : turf.simplify(geoflo.hotFeature, {
@@ -792,11 +800,16 @@ const Draw = function () {
             feature = point;
         }
     
-        feature = geoflo.Exploring.currentFeature || feature || geoflo.hotFeature;
+        var exploreFeature = false;
+        if (geoflo.Exploring) exploreFeature = geoflo.Exploring.currentFeature;
+        feature = exploreFeature || feature || geoflo.hotFeature;
         if (!feature || !geoflo.currentMode.activated) return geoflo.currentMode.deactivate();
 
         feature = geoflo.Features.addFeature(feature, geoflo.currentMode.source, geoflo.currentMode.properties);
-        geoflo.fire('draw.finish', { feature: feature, pinned: geoflo.Pinning.getFeatures(), type: type, editing: geoflo.editMode });
+
+        var pinnedFeatures = [];
+        if (geoflo.Pinning) pinnedFeatures = geoflo.Pinning.getFeatures();
+        geoflo.fire('draw.finish', { feature: feature, pinned: pinnedFeatures, type: type, editing: geoflo.editMode });
         return geoflo.currentMode.deactivate();
     }
 
@@ -879,7 +892,8 @@ const Draw = function () {
         if (geoflo.dragMoving) return false;
         if (!hotFeature) return false;
     
-        var closest = geoflo.Snapping.getClosest(point.geometry.coordinates);
+        var closest = {}
+        if (geoflo.Snapping) closest = geoflo.Snapping.getClosest(point.geometry.coordinates);
         var coords = closest.coords;
         var type = closest.point ? closest.point.type : false;
         
@@ -957,12 +971,12 @@ const Draw = function () {
         geoflo.canAddVertex = false;
         geoflo.canDragMove = true;
         geoflo.snappedVertex = vertex.geometry.coordinates;
-        geoflo.Pinning.setFeatures(geoflo.snappedVertex);
+        if (geoflo.Pinning) geoflo.Pinning.setFeatures(geoflo.snappedVertex);
         geoflo.fire('vertex.on', { vertex: vertex, index: dragIndex, feature: geoflo.hotFeature });
     }
     
     function offVertex () {
-        if (geoflo.mouseIsDown && geoflo.Painting.enabled) return false;
+        if (geoflo.mouseIsDown && geoflo.Painting && geoflo.Painting.enabled) return false;
 
         if (geoflo.hotFeature && geoflo.snappedVertex) {
             geoflo.lastIndex ? geoflo.lastClick = { coords: geoflo.snappedVertex } : false;
@@ -1112,8 +1126,8 @@ const Draw = function () {
     function checkIdleMove () {
         if (geoflo.lastDragMove < geoflo.options.pinning.idle) return geoflo.mouseIsIdle = false, false;
         geoflo.mouseIsIdle = true;
-        geoflo.Snapping.setVertex();
-        geoflo.Pinning.updateFeatures();
+        if (geoflo.Snapping) geoflo.Snapping.setVertex();
+        if (geoflo.Pinning) geoflo.Pinning.updateFeatures();
         return true;
     }
 

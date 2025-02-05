@@ -48,7 +48,7 @@ const Exploring = function (mode) {
     this.setFeatures = function (coords, options={}) {
         if (geoflo.mapMoving || !this.enabled || geoflo.currentMode.id !== 'draw') return false;
         
-        if (!geoflo.Routing.enabled) {
+        if (!geoflo.Routing || !geoflo.Routing.enabled) {
             if (geoflo.hotFeature) geoflo.hotFeature.geometry.coordinates.pop();
             var fromPoint = geoflo.currentMode.firstClick || !geoflo.hotFeature ? geoflo.firstClick.coords : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
             var coords = [fromPoint, coords];
@@ -267,7 +267,7 @@ const Exploring = function (mode) {
         geoflo.overpassDownloading = false;
         if (geoflo.mapMoving || !geoflo.Exploring.enabled || geoflo.currentMode.id !== 'draw') return geoflo.updateMeshData([], true);
         geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
-        geoflo.Snapping.addFeature(geoflo.snapFeature);
+        if (geoflo.Snapping) geoflo.Snapping.addFeature(geoflo.snapFeature);
         geoflo.setMeshFeatures(features);
         geoflo.currentMode.updateHotSource();
         geoflo.fire('overpass.add', { features: features });

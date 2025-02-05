@@ -396,7 +396,8 @@ const Events = function (geoflo) {
      */
     const gamepadconnected = function (event) {
         const gamepad = event.gamepad || event.detail.gamepad;
-        geoflo.gamepads[gamepad.index] = new Gamepad(gamepad);
+        if (!geoflo._Gamepad) throw new Error('GeoFlo Premium Required!');
+        geoflo.gamepads[gamepad.index] = new geoflo._Gamepad(gamepad);
         geoflo.fire('gamepad.add', { gamepad: gamepad });
     };
 
@@ -411,6 +412,7 @@ const Events = function (geoflo) {
      */
     const gamepaddisconnected = function (event) {
         const gamepad = event.gamepad || event.detail.gamepad;
+        if (!geoflo._Gamepad) return false;
         if (!geoflo.gamepads[gamepad.index]) return false;
         geoflo.gamepads[gamepad.index].onDisconnect(gamepad);
         delete geoflo.gamepads[gamepad.index]

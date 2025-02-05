@@ -1,13 +1,13 @@
 /**
  * @mixin
  * @memberof module:geoflo
- * @name Gamepad
+ * @name Gaming
  * @description This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.
  * @param {Object} gamepad - The gamepad object to be initialized.
  * @param {Object} options - The options for gamepad initialization. Comes from geoFlo.options.gamepad.
  * @returns {Object} The current object instance.
  */
-const Gamepad = function (gamepad) {
+const Gaming = function (gamepad) {
     const geoflo = this.geoflo;
 
     if (!supported()) throw new Error('Gamepads are not supported on your browser!');
@@ -214,7 +214,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name init
 	 * @description This function initializes the gamepad with the specified options. It fires an event to notify the gamepad initialization, sets the gamepad, adds event listeners, and requests animation frame.
 	 * @param {Object} gamepad - The gamepad object to be initialized.
@@ -233,7 +233,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name refresh
 	 * @description Refreshes the gamepad state by checking button presses, axes values, and triggers.
 	 * @params {void}
@@ -297,7 +297,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name trigger
 	 * @description This function handles triggering actions based on gamepad input. It checks if a specific button or axis is triggered and performs corresponding actions.
 	 * @param {string} id - The identifier of the gamepad input.
@@ -333,7 +333,7 @@ const Gamepad = function (gamepad) {
 
     /**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name remove
 	 * @description Disconnects and removes the gamepad object.
 	 * @param {Object} gamepad - The gamepad object to be disconnected and removed.
@@ -350,7 +350,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setMap
 	 * @description This function updates the map properties using the handleMove function and sets the center, zoom, pitch, and bearing accordingly.
 	 * @param {Function} handleMove - The function used to handle map movement.
@@ -384,7 +384,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setContainer
 	 * @description Creates a new HTML element with the specified tag name and class name, appends it to a container if provided, and sets it as the container property of the current object.
 	 * @param {string} tagName - The tag name of the HTML element to create.
@@ -403,7 +403,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad 
+     * @memberof module:geoflo.Gaming 
 	 * @name setLocation
 	 * @description This function updates the visibility, left, and top properties of the container element based on the provided value.
 	 * @param {Array<number>} value - An array containing the x and y coordinates for the new location.
@@ -418,7 +418,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setMarker
 	 * @description Sets a marker on the map using the center coordinates provided by the context.
 	 * @return {Object} Returns the marker object created on the map.
@@ -429,7 +429,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setGamepad
 	 * @description Initializes a gamepad object with specific properties based on the provided gamepad input.
 	 * @param {Object} gamepad - The gamepad object to be processed.
@@ -495,7 +495,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setCenter
 	 * @description This function calculates the new center of the map based on the input values and gamepad controls. It handles both joystick and D-pad inputs to adjust the map center accordingly.
 	 * @param {Object} value - The value used to calculate the new center of the map.
@@ -553,7 +553,7 @@ const Gamepad = function (gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setBearing
 	 * @description This function updates the bearing of the map by adjusting it with the specified value and direction.
 	 * @param {number | Array<number>} value - The value to adjust the bearing by. If dpad is false, it should be an array of numbers, otherwise a single number.
@@ -577,7 +577,7 @@ const Gamepad = function (gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setPitch
 	 * @description This function adjusts the pitch of the map by a specified amount in the given direction.
 	 * @param {number|Array<number>} value - The value or array of values to adjust the pitch by.
@@ -604,7 +604,7 @@ const Gamepad = function (gamepad) {
     
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setZoom
 	 * @description This function adjusts the zoom level of a map based on the provided value and direction.
 	 * @param {number} value - The amount by which to change the zoom level.
@@ -627,7 +627,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad
+     * @memberof module:geoflo.Gaming
 	 * @name setSpeed
 	 * @description This function calculates the speed of panning based on the provided value and direction. It ensures that the speed falls within the specified minimum and maximum values.
 	 * @param {number} value - The value that influences the speed of panning.
@@ -653,7 +653,7 @@ const Gamepad = function (gamepad) {
 
 	/**
 	 * @function
-     * @memberof module:geoflo.Gamepad associateEvent
+     * @memberof module:geoflo.Gaming associateEvent
 	 * @name associateEvent
 	 * @description This function allows the user to associate an event with a callback function for a specific button or axis on the gamepad.
 	 * @param {string} eventName - The name of the event to associate with the callback function.
@@ -774,4 +774,4 @@ const Gamepad = function (gamepad) {
     this.init(gamepad);
 };
 
-export default Gamepad;
+export default Gaming;

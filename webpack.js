@@ -41,7 +41,22 @@ let options = {
 	output: {
 		path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
 		filename: mode === 'development' ? `${id}.js` : `${id}.min.js`,
+		chunkFilename: `[name].${id}.js`,
 		publicPath: '/'
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader",
+					options: {
+						presets: ["@babel/preset-env"]
+					}
+				}
+			}
+		]
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
 	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
