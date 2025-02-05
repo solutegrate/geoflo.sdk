@@ -8,7 +8,7 @@
  */
 const Styles = function (options={}) {
     const geoflo = this.geoflo;
-    this.options = Object.assign(geoflo.options.styles || {}, options);
+    this.options = options;
     
     /**
 	 * @function
@@ -20,7 +20,6 @@ const Styles = function (options={}) {
      */
     this.init = function (options={}) {
         this.options = Object.assign(this.options, options);
-        this.styles = this.options.styles;
         this.selected = this.options.selected || "Standard";
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
@@ -37,7 +36,7 @@ const Styles = function (options={}) {
      */
     this.select = function (name) {
         if (!this.mapStyleContainer || !this.mapStyleContainer.checkVisibility()) {
-            var style = this.styles.find(style => style.title === name);
+            var style = this.options.styles.find(style => style.title === name);
             if (style) this.map.setStyle(style.uri), this.selected = name;
             if (this.events && this.events.onChange && this.events.onChange({ style: style }, style))
             return;
@@ -100,7 +99,7 @@ const Styles = function (options={}) {
         this.styleButton.type = "button";
         this.mapStyleContainer.classList.add("mapboxgl-style-list");
 
-        for (const style of this.styles) {
+        for (const style of this.options.styles) {
             const styleElement = document.createElement("button");
 
             styleElement.type = "button";
