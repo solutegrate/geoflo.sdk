@@ -2309,9 +2309,9 @@ function onLoad(geoflo, event) {
         geoflo.map.addControl(geoflo.fullscreen, 'top-right');
     }
 
-    geoflo.styles = new Styles(geoflo, { styles: geoflo.options.styles, selected: geoflo.options.map.style });
-    geoflo.Layers = new Layers(geoflo);
-    geoflo.Features = new Features(geoflo);
+    geoflo.styles = new Styles({ styles: geoflo.options.styles, selected: geoflo.options.map.style });
+    geoflo.Layers = new Layers();
+    geoflo.Features = new Features();
     geoflo.locate = new Locate();
 
     geoflo.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
