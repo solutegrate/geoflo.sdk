@@ -52,6 +52,9 @@ const GeoFlo = function () {
 	 * @returns {Promise<Object>} A promise that resolves to the map object after initialization.
 	 */
     this.init = async function (accessToken, options={}, onReady) {
+        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
+        if (this.isLoaded) return this;
+
         var onReadyReturn;
 
         this.license = await loadPremiumModules(options.license);
@@ -66,9 +69,6 @@ const GeoFlo = function () {
         delete options.license;
 
         this.Utilities = new Utilities();
-
-        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
-        if (this.isReady) return this.setOptions(options);
 
         const id = options.container || this.options.map.container;
         if (!id) throw new Error('Element id is required in the DOM for the map!');
@@ -2287,20 +2287,19 @@ async function loaded (geoflo) {
 }
 
 function onLoad(geoflo, event) {
-    if (geoflo.isLoaded || !geoflo.isReady) return geoflo;
     if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
     
     geoflo.map = event.target;
-    geoflo.container = event.target._container;
+    geoflo.container = geoflo.map._container;
     geoflo.viewport ? geoflo.container.insertBefore(geoflo.viewport, geoflo.container.firstChild) : false;
 
-    event.target.off('style.load', onStyleLoad);
-    event.target.on('style.load', onStyleLoad);
+    geoflo.map.off('style.load', onStyleLoad);
+    geoflo.map.on('style.load', onStyleLoad);
 
-    if (geoflo.options.map.maxPitch) event.target.setMaxPitch(geoflo.options.map.maxPitch);
-    if (geoflo.options.map.maxZoom) event.target.setMaxZoom(geoflo.options.map.maxZoom);
-    if (geoflo.options.map.minPitch) event.target.setMinPitch(geoflo.options.map.minPitch);
-    if (geoflo.options.map.minZoom) event.target.setMinZoom(geoflo.options.map.minZoom);
+    if (geoflo.options.map.maxPitch) geoflo.map.setMaxPitch(geoflo.options.map.maxPitch);
+    if (geoflo.options.map.maxZoom) geoflo.map.setMaxZoom(geoflo.options.map.maxZoom);
+    if (geoflo.options.map.minPitch) geoflo.map.setMinPitch(geoflo.options.map.minPitch);
+    if (geoflo.options.map.minZoom) geoflo.map.setMinZoom(geoflo.options.map.minZoom);
 
     if (!geoflo.mobile) {
         geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
