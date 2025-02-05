@@ -794,9 +794,9 @@ const GeoFlo = function () {
 	 */
     this.activateSnapping = function () {
         if (!this.Snapping) return false;
-        var buttons = this.getButtons('snapping');
-        if (!buttons) return;
-        buttons.activate();
+        var button = this.getButtons('snapping');
+        if (!button) return;
+        button.activate();
         this.Snapping.activate();
         this.fire('snapping.activate', { enabled: true, mesh: this.meshIndex, snapping: this.Snapping })
         return this.Snapping;
@@ -812,9 +812,9 @@ const GeoFlo = function () {
 	 */
     this.activatePinning = function () {
         if (!this.Pinning) return false;
-        var buttons = this.getButtons('pinning');
-        if (!buttons) return;
-        buttons.activate();
+        var button = this.getButtons('pinning');
+        if (!button) return;
+        button.activate();
         this.activateSnapping();
         this.Pinning.activate();
         this.fire('pinning.activate', { enabled: true, pinning: this.Pinning });
@@ -831,9 +831,9 @@ const GeoFlo = function () {
 	 */
     this.activateRouting = function () {
         if (!this.Routing) return false;
-        var buttons = this.getButtons('routing');
-        if (!buttons) return;
-        buttons.activate();
+        var button = this.getButtons('routing');
+        if (!button) return;
+        button.activate();
         this.activateSnapping();
         this.deactivatePainting();
         this.Routing.activate();
@@ -851,9 +851,9 @@ const GeoFlo = function () {
 	 */
     this.activateExploring = function () {
         if (!this.Exploring) return false;
-        var buttons = this.getButtons('exploring');
-        if (!buttons) return;
-        buttons.activate();
+        var button = this.getButtons('exploring');
+        if (!button) return;
+        button.activate();
         this.deactivatePainting();
         this.Exploring.activate();
         this.fire('exploring.activate', { enabled: true, exploring: this.Exploring });
@@ -870,9 +870,9 @@ const GeoFlo = function () {
 	 */
     this.activatePainting = function () {
         if (!this.Painting) return false;
-        var buttons = this.getButtons('painting');
-        if (!buttons) return;
-        buttons.activate();
+        var button = this.getButtons('painting');
+        if (!button) return;
+        button.activate();
         this.deactivateRouting();
         this.deactivateExploring();
         this.Painting.activate(this.drawMode);
@@ -892,9 +892,9 @@ const GeoFlo = function () {
 	 */
     this.deactivateSnapping = function () {
         if (!this.Snapping) return false;
-        var buttons = this.getButtons('snapping');
-        if (!buttons) return;
-        buttons.deactivate();
+        var button = this.getButtons('snapping');
+        if (!button) return;
+        button.deactivate();
         this.deleteMeshData();
         this.Snapping.deactivate();
         this.fire('snapping.deactivate', { enable: false })
@@ -910,9 +910,9 @@ const GeoFlo = function () {
 	 */
     this.deactivatePinning = function () {
         if (!this.Pinning) return false;
-        var buttons = this.getButtons('pinning');
-        if (!buttons) return;
-        buttons.deactivate();
+        var button = this.getButtons('pinning');
+        if (!button) return;
+        button.deactivate();
         this.Pinning.deactivate();
         this.fire('pinning.deactivate', { enable: false });
         return false;
@@ -927,9 +927,9 @@ const GeoFlo = function () {
 	 */
     this.deactivateRouting = function () {
         if (!this.Routing) return false;
-        var buttons = this.getButtons('routing');
-        if (!buttons) return;
-        buttons.deactivate();
+        var button = this.getButtons('routing');
+        if (!button) return;
+        button.deactivate();
         this.Routing.deactivate();
         this.fire('routing.deactivate', { enable: false })
         return false;
@@ -944,9 +944,9 @@ const GeoFlo = function () {
 	 */
     this.deactivateExploring = function () {
         if (!this.Exploring) return false;
-        var buttons = this.getButtons('exploring');
-        if (!buttons) return;
-        buttons.deactivate();
+        var button = this.getButtons('exploring');
+        if (!button) return;
+        button.deactivate();
         this.deleteMeshData();
         this.Exploring.deactivate();
         this.fire('exploring.deactivate', { enable: false });
@@ -962,10 +962,10 @@ const GeoFlo = function () {
 	 */
     this.deactivatePainting = function () {
         if (!this.Painting) return false;
-        var buttons = this.getButtons('painting');
-        if (!buttons) return;
+        var button = this.getButtons('painting');
+        if (!button) return;
         if (this.mobile && !this.currentMode.finished && this.currentMode.id === 'draw' && this.currentMode.type && this.currentMode.type === 'Rectangle') return;
-        buttons.deactivate();
+        button.deactivate();
         this.Painting.deactivate();
         this.fire('painting.deactivate', { enable: false });
         return false;
