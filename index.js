@@ -1159,7 +1159,7 @@ const GeoFlo = function () {
 	 * @returns {object} Returns the feature object if found, otherwise an empty object.
 	 */
     this.getFeatureById = function (id) {
-        if (!id) return {};
+        if (!id) return false;
         return this.Features.getFeatureById(id);
     }
 
