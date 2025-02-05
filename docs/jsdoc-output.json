@@ -19604,7 +19604,7 @@
         "meta": {
             "range": [
                 94894,
-                95450
+                95482
             ],
             "filename": "index.js",
             "lineno": 2422,
@@ -19636,15 +19636,40 @@
         "comment": "",
         "meta": {
             "range": [
-                94956,
-                95026
+                94945,
+                94959
             ],
             "filename": "index.js",
-            "lineno": 2424,
+            "lineno": 2423,
+            "columnno": 13,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
+            "code": {
+                "id": "astnode100009519",
+                "name": "name",
+                "type": "Literal",
+                "value": "geoflo"
+            }
+        },
+        "undocumented": true,
+        "name": "name",
+        "longname": "module:geoflo~name",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:geoflo"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                94988,
+                95058
+            ],
+            "filename": "index.js",
+            "lineno": 2426,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009520",
+                "id": "astnode100009524",
                 "name": "response",
                 "type": "AwaitExpression",
                 "value": ""
@@ -19662,15 +19687,15 @@
         "comment": "",
         "meta": {
             "range": [
-                95042,
-                95070
+                95074,
+                95102
             ],
             "filename": "index.js",
-            "lineno": 2425,
+            "lineno": 2427,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009530",
+                "id": "astnode100009534",
                 "name": "data",
                 "type": "AwaitExpression",
                 "value": ""
