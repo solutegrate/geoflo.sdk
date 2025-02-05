@@ -2,15 +2,16 @@
 	"plugins": [],
 	"recurseDepth": 10,
 	"opts": {
-		"recurse": true,
-		"lenient": false,
-        "sort": true,
-		"readme": "./README.md",
-		"encoding": "utf8",
-		"destination": "./docs/",
-		"template": "./node_modules/tui-jsdoc-template",
-		"tutorials": "./docs/tutorials"
-	},
+    "recurse": true,
+    "lenient": false,
+    "sort": true,
+    "readme": "./README.md",
+    "encoding": "utf8",
+    "destination": "./docs/",
+    "template": "./node_modules/tui-jsdoc-template",
+    "package": "./package.json",
+    "tutorials": "./docs/tutorials"
+  },
 	"source": {
 		"include": [ "./index.js" ],
 		"includePattern": ".+\\.js(doc|x)?$",

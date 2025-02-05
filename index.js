@@ -1030,6 +1030,17 @@ const GeoFlo = function () {
         return buttons;
     }
 
+    /**
+     * @function
+     * @name getHotFeature
+     * @memberof module:geoflo
+     * @description Retrieves the hot feature being drawn or edited.
+     * @returns {Object} The hot feature object.
+     */
+    this.getHotFeature = function () {
+        return this.hotFeature;
+    }
+
 	/**
 	 * @function
      * @memberOf module:geoflo
