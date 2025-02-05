@@ -1374,15 +1374,17 @@ const GeoFlo = function () {
 	 * @description Adds features to the map and optionally zooms to them.
 	 * @param {Array} features - Array of features to be added to the map.
 	 * @param {boolean} preventZoom - Flag to indicate whether to zoom to the added features.
+     * @returns {Array} Returns empty Array if no features are provided, otherwise returns the drawn features.
 	 */
     this.addFeatures = function (features, preventZoom) {
-        if (!features) return false;
+        if (!features) return [];
         if (features.features) features = features.features;
         if (!Array.isArray(features)) features = [features];
-        if (!features.length) return false;
+        if (!features.length) return [];
 
         this.Features.addFeatures(features);
         !preventZoom ? this.zoomToFeatures() : false;
+        return this.getDrawnFeatures();
     }
 
 	/**
@@ -1395,14 +1397,14 @@ const GeoFlo = function () {
      * @param {boolean} options.zoom - Flag to indicate whether to zoom to the added features.
      * @param {boolean} options.center - Flag to indicate whether to center the map on the added features.
      * @param {Object} options.text - Options for adding text to the features.
-     * @param {Array} options.text.ids - The IDs of the features to add text to.
-     * @param {string} options.text.field - The field to use for the text.
-     * @param {Object} options.text.layout - The layout options for the text.
-     * @returns {boolean} Returns false if no features are provided.
+     * @param {Array} [options.text.ids="selectedFeatures"] - The IDs of the features to add text to.
+     * @param {string} [options.text.field="'text'"] - The field to use for the text.
+     * @param {Object} [options.text.layout] - The layout options for the text.
+     * @returns {Array} Returns empty Array if no features are provided.
      * @returns {Array} The selected features list after adding the provided features.
 	 */
     this.addFeaturesToSelected = function (features, options={}) {
-        if (!features || !features.length) return false;
+        if (!features || !features.length) return [];
 
         this.getSelectedFeatures().push(...features);
         this.setViewport();
@@ -1417,7 +1419,7 @@ const GeoFlo = function () {
         if (options.text) {
             this.Layers.addTextLayer({
                 select: true,
-                ids: options.text.ids,
+                ids: options.text.ids || this.getSelectedFeatureIds(),
                 field: options.text.field || 'text',
                 layout: options.text.layout || {
                     'text-transform': 'uppercase',

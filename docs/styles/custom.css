@@ -25,7 +25,7 @@ html {
     max-width: calc(100% - 300px);
 }
 
-#main .section {
+#main section {
     width: calc(100% - 300px);
 }
 
@@ -208,7 +208,7 @@ table.params td.name code, table.props td.name code {
     background: transparent;
     padding: 0;
     font-size: 15px;
-    color: var(--theme-primary-text);
+    color: var(--theme-primary-color);
 }
 
 table.params tr.deep-level-1, table.props tr.deep-level-1 {
@@ -286,7 +286,8 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
 }
 .lnb .lnb-api a,
 .lnb .lnb-examples a {
-    color: #7cafc2;
+    color: var(--theme-primary-text);
+    font-size: 14px;
 }
 .lnb .lnb-api a:hover,
 .lnb .lnb-examples a:hover {
@@ -408,9 +409,9 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
     font-weight: bold;
 }
 .main section article dl h4 .signature {
-    color: var(--theme-primary-text);
-    font-size: 9pt;
-    margin-left: 2px;
+    color: var(--theme-secondary-text);
+    font-size: 14pt;
+    margin-left: 3px;
 }
 .main section article dl h4 .type-signature {
     font-size: 9pt;
@@ -422,7 +423,7 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
     padding: 3px 10px;
     background-color: var(--theme-secondary-background);
     color: var(--theme-primary-text);
-    font-size: 12pt;
+    font-size: 20pt;
 }
 .main section article dl dd {
     padding: 0 30px;
@@ -439,6 +440,7 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
     font-size: 8pt;
     text-align: right;
     padding-right: 10px;
+    display: none;
 }
 .main section article .container-returns {
     color: var(--theme-primary-text);
@@ -775,7 +777,7 @@ span.arrow {
 /* CUSTOM */
 
 .description {
-    color: var(--theme-primary-text);
+    color: var(--theme-secondary-text);
     font-weight: bold;
     font-size: 14px;
 }
@@ -830,7 +832,7 @@ th {
 }
 
 .main section article .container-returns h5 {
-    color: var(--theme-primary-color);
+    color: var(--theme-error);
 }
 
 .name a {
