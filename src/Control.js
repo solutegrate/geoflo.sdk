@@ -435,7 +435,7 @@ const Control = function (controls, options={}) {
             }
     
             options.container.tooltipPosition = position;
-            geoflo.addTooltip(options.container, button, createTitle(options));
+            //geoflo.addTooltip(options.container, button, createTitle(options));
             return button;
         }
     
