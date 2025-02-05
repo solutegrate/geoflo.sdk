@@ -17,11 +17,11 @@ const Features = function () {
 	/**
 	 * @function
      * @memberof module:geoflo.Features
-	 * @name getColdFeatures
+	 * @name getFeatures
 	 * @description This function returns an array of cold features.
 	 * @return {Array} An array of cold features.
 	 */
-    this.getColdFeatures = function () {
+    this.getFeatures = function () {
         return coldFeatures;
     };
 
@@ -300,34 +300,6 @@ const Features = function () {
         feature.geometry.unit = unit;
         return feature;
     };
-
-    /**
-     * @function
-     * @name selectFeatures
-     * @memberof module:geoflo.Features
-     * @description Selects features from a given array and marks them as selected if they are not already selected.
-     *
-     * @param {Array} features - An array of feature objects to be selected.
-     * @returns {Array|boolean} Returns an array of selected features if any features were selected, otherwise returns false.
-     */
-    this.selectFeatures = function (features) {
-        if (!features || !features.length) return false;
-
-        var selected = geoflo.getSelectedFeatures();
-
-        features.forEach(function (feature) {
-            var id = feature.id || feature.properties.id;
-            var index = selected.findIndex((f) => { return f.id === id || f.properties.id === id });
-
-            if (index > -1) return false;
-
-            feature.properties._selected = true;
-            selected.push(feature);
-        })
-
-        return selected;
-    }
-
 
 
 	/**

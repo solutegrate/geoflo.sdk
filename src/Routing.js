@@ -11,7 +11,7 @@ const Routing = function (mode) {
 
     this.type = mode.type;
     this.graphData = {};
-    this.features = geoflo.Features.getColdFeatures();
+    this.features = geoflo.getDrawnFeatures();
 
 	/**
 	 * @function
@@ -97,8 +97,7 @@ const Routing = function (mode) {
 	 * @returns {Array} An array of features of type 'LineString'.
 	 */
     this.getFeatures = function () {
-        var mesh = geoflo.meshIndex.getFeatures();
-        var features = [mesh, this.features].flat();
+        var features = [geoflo.getSnapFeatures(), geoflo.getDrawnFeatures()].flat();
         return features.filter(function(feature) { return feature.geometry.type === 'LineString' });
     };
 

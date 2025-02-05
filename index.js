@@ -542,7 +542,7 @@ const GeoFlo = function () {
     this.setMeshFeatures = function (features=[]) {
         if (!features.length) return false;
         this.updateMeshData(features, true);
-        return this.meshIndex.getFeatures();
+        return this.Mesh.getFeatures();
     }
 
 	/**
@@ -795,7 +795,7 @@ const GeoFlo = function () {
         if (!button) return;
         button.activate();
         this.Snapping.activate();
-        this.fire('snapping.activate', { enabled: true, mesh: this.meshIndex, snapping: this.Snapping })
+        this.fire('snapping.activate', { enabled: true, mesh: this.Mesh, snapping: this.Snapping })
         return this.Snapping;
     }
 
@@ -1068,7 +1068,19 @@ const GeoFlo = function () {
 	 * @returns {Array} An array of drawn features.
 	 */
     this.getDrawnFeatures = function () {
-        return this.Features.getColdFeatures();
+        return this.Features.getFeatures();
+    }
+
+    /**
+     * @function
+     * @name getSnapFeatures
+     * @memberof module:geoflo
+     * @description Retrieves the snap features from the mesh index.
+     * @returns {Array} An array of snap features.
+     */
+    this.getSnapFeatures = function () {
+        if (!this.Mesh) return [];
+        return this.Mesh.getFeatures();
     }
 
 	/**
@@ -1133,7 +1145,7 @@ const GeoFlo = function () {
 	 * @returns {Array} An array of features that fall within the specified radius around the given point.
 	 */
     this.getRenderedSnapFeatures = function (lngLat, radiusInKm, filter) {
-        if (!this.meshIndex) return [];
+        if (!this.Mesh) return [];
 
         var radius = turf.distanceToDegrees(radiusInKm);
         var bbox = [this.map.project([lngLat.lng - radius, lngLat.lat - radius]), this.map.project([lngLat.lng + radius, lngLat.lat + radius])];
@@ -1147,7 +1159,7 @@ const GeoFlo = function () {
         filter ? options.filter = filter : false;
 
         var features = this.map.queryRenderedFeatures(bbox, options);
-        return features && features.length ? this.meshIndex.getFeaturesFromIndex(features) : [];
+        return features && features.length ? this.Mesh.getFeaturesFromIndex(features) : [];
     }
 
 	/**
@@ -1312,8 +1324,7 @@ const GeoFlo = function () {
     this.selectFeature = function (id) {
         var feature = this.getFeatureById(id);
         if (!feature) return false;
-        var selected = this.Features.selectFeatures([feature]);
-        
+        var selected = this.addFeaturesToSelected([feature]);        
         return selected;
     }
 
@@ -1561,11 +1572,11 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated feature collection that was set on the map source.
 	 */
     this.updateMeshData = function (features=[], reset) {
-        if (!this.meshIndex || reset) this.meshIndex = new Mesh([]);
-        this.meshIndex.addNewFeatures(features);
+        if (!this.Mesh || reset) this.Mesh = new Mesh([]);
+        this.Mesh.addNewFeatures(features);
 
         var source = this.statics.constants.sources.MESH;
-        var features = turf.featureCollection(this.meshIndex.getFeatures());
+        var features = turf.featureCollection(this.Mesh.getFeatures());
 
         this.map.getSource(source).setData(features);
         this.fire('mesh.update', { features: features });
@@ -1639,7 +1650,7 @@ const GeoFlo = function () {
                 fc = turf.featureCollection(this.getSelectedFeatures());
             } else {
                 folderName = folderName = 'All Features';
-                fc = turf.featureCollection(this.Features.getColdFeatures());
+                fc = turf.featureCollection(this.getDrawnFeatures());
             }
         } else {
             if (!layer.id || !layer.name) return window.alert('Layer ID and Name are required!');
@@ -1885,11 +1896,11 @@ const GeoFlo = function () {
 	 * @params {void} - No parameters needed for this function.
 	 */
     this.refreshMeshData = function () {
-        if (!this.meshIndex) return;
+        if (!this.Mesh) return;
         if (this.mapMoving) return;
         //this.deleteMeshData();
         //this.addFeaturesToMesh(this.getDrawnFeatures())
-        this.fire('snapping.refresh', { features: this.meshIndex.getFeatures() })
+        this.fire('snapping.refresh', { features: this.Mesh.getFeatures() })
     }
 
 	/**
@@ -1902,7 +1913,7 @@ const GeoFlo = function () {
 	 */
     this.deleteMeshData = function () {
         this.updateMeshData([], true);
-        this.fire('snapping.delete', { features: this.meshIndex.getFeatures() })
+        this.fire('snapping.delete', { features: this.Mesh.getFeatures() })
     }
 
 	/**
@@ -1922,15 +1933,15 @@ const GeoFlo = function () {
                 id = feature.parent || feature.properties.parent || feature.id || feature.properties.id;
                 this.removeSelection(id);
                 this.Features.removeFeatures(id, true);
-                this.meshIndex ? this.meshIndex.removeFeature(id) : false;
-                this.fire('feature.delete', { features: this.Features.getColdFeatures(), id: id, feature: feature })
+                this.Mesh ? this.Mesh.removeFeature(id) : false;
+                this.fire('feature.delete', { features: this.getDrawnFeatures(), id: id, feature: feature })
             } else {
                 return;
             }
         } else {
             if (window.confirm('Delete All Features?')) {
                 this.Features.deleteFeatures();
-                this.fire('features.delete', { features: this.Features.getColdFeatures() })
+                this.fire('features.delete', { features: this.getDrawnFeatures() })
             } else {
                 return;
             }

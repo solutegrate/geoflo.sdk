@@ -143,8 +143,8 @@ const Mesh = function (originalFeatures, linesOnly) {
     
         var meshFeatures = [];
     
-        if (geoflo.closestPoint && geoflo.closestPoint.borders && geoflo.closestPoint.id !== undefined) {
-            geoflo.meshIndex.splitSegmentAtPoint(geoflo.closestPoint.id, geoflo.closestPoint.coords);
+        if (geoflo.Mesh && geoflo.closestPoint && geoflo.closestPoint.borders && geoflo.closestPoint.id !== undefined) {
+            geoflo.Mesh.splitSegmentAtPoint(geoflo.closestPoint.id, geoflo.closestPoint.coords);
             geoflo.updateMeshData();
         }
     
