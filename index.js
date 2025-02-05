@@ -325,12 +325,9 @@ const GeoFlo = function () {
         
         if (editMode) {
             if (options.feature) {
-                options.feature = geoflo.Utilities.cloneDeep(options.feature);
                 options.mode = this.statics.constants.modes.DRAW;
                 options.type = options.type || options.feature.properties.type;
-
-                this.editing = geoflo.Utilities.cloneDeep(options.feature);
-                this.removeSelection();
+                this.editing = options.feature;
             } else {
                 //this.wantingToEdit = true;
                 if (this.currentMode) this.currentMode.deactivate(options);
@@ -1338,11 +1335,15 @@ const GeoFlo = function () {
             feature = this.getSelectedFeatures()[0];
         }
 
+        feature = this.Utilities.clone(feature);
+
         options.id = feature.id;
         options.mode = 'edit';
         options.feature = feature;
+        options.type = feature.properties.type;
 
         this.fire('feature.edit', { feature: feature, id: feature.id });
+        this.removeSelection();
         this.setMode(options);
         return feature;
     }
@@ -1358,7 +1359,8 @@ const GeoFlo = function () {
 	 */
     this.cancelEdit = function (standby, feature) {
         if (this.currentMode.id !== 'draw') return false;
-        return this.currentMode.deactivate({ cancel: true, standby: standby, feature: feature || this.editing });
+        feature = feature || this.editing;
+        return this.currentMode.deactivate({ cancel: true, standby: standby, feature: feature });
     }
 
 	/**
@@ -1419,7 +1421,7 @@ const GeoFlo = function () {
         
         this.Layers.refresh({ select: true });
         this.Features.setText(features);
-        this.Features.updateFeatures(features);
+        this.updateFeatures(features);
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
 

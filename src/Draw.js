@@ -44,7 +44,7 @@ const Draw = function () {
         this.history = [];
         this.undo = [];
 
-        if (options.feature) options.type = editMode(options.feature);
+        if (options.feature) editMode(options.feature);
         geoflo.drawMode = !geoflo.editMode;
         
         var lngLat = options.lngLat;
@@ -702,8 +702,6 @@ const Draw = function () {
     function editMode (feature) {
         var type = geoflo.Features.getType(feature);
         if (!type) return alert('No Feature Type Found');
-
-        const id = feature.id;
     
         geoflo.currentMode.type = type;
         geoflo.currentMode.source = feature.source;
