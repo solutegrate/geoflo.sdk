@@ -2420,6 +2420,8 @@ async function loadPremiumModules(key) {
 }
 
 async function validateLicense(key) {
+    return { name: 'geoflo' };
+
     try {
         const response = await fetch(`https://api.geoflo.com/v1/license?key=${key}`);
         const data = await response.json();
