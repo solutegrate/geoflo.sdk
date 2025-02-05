@@ -1337,8 +1337,10 @@ const GeoFlo = function () {
 
         feature = this.Utilities.clone(feature);
 
-        options.id = feature.id;
+        console.log(feature, options)
+
         options.mode = 'edit';
+        options.id = feature.id;
         options.feature = feature;
         options.type = feature.properties.type;
 
