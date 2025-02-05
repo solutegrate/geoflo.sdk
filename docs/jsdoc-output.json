@@ -18005,7 +18005,7 @@
         "meta": {
             "range": [
                 89154,
-                91290
+                91270
             ],
             "filename": "index.js",
             "lineno": 2289,
@@ -18258,7 +18258,7 @@
         "meta": {
             "range": [
                 90457,
-                90562
+                90554
             ],
             "filename": "index.js",
             "lineno": 2312,
@@ -18283,15 +18283,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90494,
-                90523
+                90486,
+                90515
             ],
             "filename": "index.js",
             "lineno": 2312,
-            "columnno": 41,
+            "columnno": 33,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008930",
+                "id": "astnode100008929",
                 "name": "styles",
                 "type": "MemberExpression",
                 "value": "geoflo.options.styles"
@@ -18308,15 +18308,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90525,
-                90559
+                90517,
+                90551
             ],
             "filename": "index.js",
             "lineno": 2312,
-            "columnno": 72,
+            "columnno": 64,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008936",
+                "id": "astnode100008935",
                 "name": "selected",
                 "type": "MemberExpression",
                 "value": "geoflo.options.map.style"
@@ -18333,15 +18333,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90568,
-                90602
+                90560,
+                90588
             ],
             "filename": "index.js",
             "lineno": 2313,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008945",
+                "id": "astnode100008944",
                 "name": "geoflo.Layers",
                 "type": "NewExpression",
                 "value": "",
@@ -18359,15 +18359,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90608,
-                90646
+                90594,
+                90626
             ],
             "filename": "index.js",
             "lineno": 2314,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008953",
+                "id": "astnode100008951",
                 "name": "geoflo.Features",
                 "type": "NewExpression",
                 "value": "",
@@ -18385,15 +18385,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90652,
-                90680
+                90632,
+                90660
             ],
             "filename": "index.js",
             "lineno": 2315,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008961",
+                "id": "astnode100008958",
                 "name": "geoflo.locate",
                 "type": "NewExpression",
                 "value": "",
@@ -18411,15 +18411,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90687,
-                90798
+                90667,
+                90778
             ],
             "filename": "index.js",
             "lineno": 2317,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008968",
+                "id": "astnode100008965",
                 "name": "geoflo.navigation",
                 "type": "NewExpression",
                 "value": "",
@@ -18437,15 +18437,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90740,
-                90760
+                90720,
+                90740
             ],
             "filename": "index.js",
             "lineno": 2317,
             "columnno": 57,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008977",
+                "id": "astnode100008974",
                 "name": "visualizePitch",
                 "type": "Literal",
                 "value": true
@@ -18462,15 +18462,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90762,
-                90776
+                90742,
+                90756
             ],
             "filename": "index.js",
             "lineno": 2317,
             "columnno": 79,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008979",
+                "id": "astnode100008976",
                 "name": "showZoom",
                 "type": "Literal",
                 "value": true
@@ -18487,15 +18487,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90778,
-                90795
+                90758,
+                90775
             ],
             "filename": "index.js",
             "lineno": 2317,
             "columnno": 95,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008981",
+                "id": "astnode100008978",
                 "name": "showCompass",
                 "type": "Literal",
                 "value": true
@@ -18512,15 +18512,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90804,
-                90909
+                90784,
+                90889
             ],
             "filename": "index.js",
             "lineno": 2318,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008984",
+                "id": "astnode100008981",
                 "name": "geoflo.navigation.hide",
                 "type": "CallExpression",
                 "value": "",
@@ -18538,15 +18538,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90843,
-                90883
+                90823,
+                90863
             ],
             "filename": "index.js",
             "lineno": 2318,
             "columnno": 43,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100008995",
+                "id": "astnode100008992",
                 "name": "geoflo._container.style.display",
                 "type": "Literal",
                 "value": "none",
@@ -18564,15 +18564,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90915,
-                91021
+                90895,
+                91001
             ],
             "filename": "index.js",
             "lineno": 2319,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009009",
+                "id": "astnode100009006",
                 "name": "geoflo.navigation.show",
                 "type": "CallExpression",
                 "value": "",
@@ -18590,15 +18590,15 @@
         "comment": "",
         "meta": {
             "range": [
-                90954,
-                90995
+                90934,
+                90975
             ],
             "filename": "index.js",
             "lineno": 2319,
             "columnno": 43,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009020",
+                "id": "astnode100009017",
                 "name": "geoflo._container.style.display",
                 "type": "Literal",
                 "value": "block",
@@ -18616,15 +18616,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91128,
-                91158
+                91108,
+                91138
             ],
             "filename": "index.js",
             "lineno": 2322,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009055",
+                "id": "astnode100009052",
                 "name": "geoflo.Events",
                 "type": "CallExpression",
                 "value": "",
@@ -18642,15 +18642,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91245,
-                91267
+                91225,
+                91247
             ],
             "filename": "index.js",
             "lineno": 2325,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009077",
+                "id": "astnode100009074",
                 "name": "geoflo.isLoaded",
                 "type": "Literal",
                 "value": true,
@@ -18668,15 +18668,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91292,
-                91377
+                91272,
+                91357
             ],
             "filename": "index.js",
             "lineno": 2330,
             "columnno": 0,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009084",
+                "id": "astnode100009081",
                 "name": "onStyleLoad",
                 "type": "FunctionDeclaration",
                 "paramnames": [
@@ -18699,15 +18699,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91379,
-                93493
+                91359,
+                93473
             ],
             "filename": "index.js",
             "lineno": 2334,
             "columnno": 0,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009099",
+                "id": "astnode100009096",
                 "name": "buildMapbox",
                 "type": "FunctionDeclaration",
                 "paramnames": []
@@ -18730,15 +18730,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91415,
-                91711
+                91395,
+                91691
             ],
             "filename": "index.js",
             "lineno": 2335,
             "columnno": 10,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009103",
+                "id": "astnode100009100",
                 "name": "DOM",
                 "type": "ObjectExpression",
                 "value": "{\"create\":\"\"}"
@@ -18756,15 +18756,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91431,
-                91705
+                91411,
+                91685
             ],
             "filename": "index.js",
             "lineno": 2336,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009106",
+                "id": "astnode100009103",
                 "name": "create",
                 "type": "FunctionExpression",
                 "value": "create"
@@ -18785,15 +18785,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91507,
-                91550
+                91487,
+                91530
             ],
             "filename": "index.js",
             "lineno": 2337,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009114",
+                "id": "astnode100009111",
                 "name": "el",
                 "type": "CallExpression",
                 "value": ""
@@ -18811,15 +18811,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91593,
-                91617
+                91573,
+                91597
             ],
             "filename": "index.js",
             "lineno": 2338,
             "columnno": 41,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009128",
+                "id": "astnode100009125",
                 "name": "el.className",
                 "type": "Identifier",
                 "funcscope": "module:geoflo~buildMapbox~DOM.create",
@@ -18838,15 +18838,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91753,
-                93491
+                91733,
+                93471
             ],
             "filename": "index.js",
             "lineno": 2345,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009144",
+                "id": "astnode100009141",
                 "name": "mapboxgl.Map.prototype._setupContainer",
                 "type": "FunctionExpression",
                 "paramnames": []
@@ -18877,15 +18877,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91822,
-                91849
+                91802,
+                91829
             ],
             "filename": "index.js",
             "lineno": 2346,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009155",
+                "id": "astnode100009152",
                 "name": "container",
                 "type": "MemberExpression",
                 "value": "this._container"
@@ -18903,15 +18903,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91915,
-                92006
+                91895,
+                91986
             ],
             "filename": "index.js",
             "lineno": 2349,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009169",
+                "id": "astnode100009166",
                 "name": "missingCSSCanary",
                 "type": "AssignmentExpression",
                 "value": "this._missingCSSCanary"
@@ -18929,15 +18929,15 @@
         "comment": "",
         "meta": {
             "range": [
-                91934,
-                92006
+                91914,
+                91986
             ],
             "filename": "index.js",
             "lineno": 2349,
             "columnno": 33,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009171",
+                "id": "astnode100009168",
                 "name": "this._missingCSSCanary",
                 "type": "CallExpression",
                 "value": "",
@@ -18955,15 +18955,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92016,
-                92060
+                91996,
+                92040
             ],
             "filename": "index.js",
             "lineno": 2350,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009183",
+                "id": "astnode100009180",
                 "name": "missingCSSCanary.style.visibility",
                 "type": "Literal",
                 "funcscope": "module:geoflo~mapboxgl.Map#_setupContainer",
@@ -18982,15 +18982,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92111,
-                92210
+                92091,
+                92190
             ],
             "filename": "index.js",
             "lineno": 2353,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009196",
+                "id": "astnode100009193",
                 "name": "canvasContainer",
                 "type": "AssignmentExpression",
                 "value": "this._canvasContainer"
@@ -19008,15 +19008,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92129,
-                92210
+                92109,
+                92190
             ],
             "filename": "index.js",
             "lineno": 2353,
             "columnno": 32,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009198",
+                "id": "astnode100009195",
                 "name": "this._canvasContainer",
                 "type": "CallExpression",
                 "value": "",
@@ -19034,15 +19034,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92331,
-                92402
+                92311,
+                92382
             ],
             "filename": "index.js",
             "lineno": 2358,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009223",
+                "id": "astnode100009220",
                 "name": "this._canvas",
                 "type": "CallExpression",
                 "value": "",
@@ -19060,15 +19060,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92980,
-                93082
+                92960,
+                93062
             ],
             "filename": "index.js",
             "lineno": 2370,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009306",
+                "id": "astnode100009303",
                 "name": "controlContainer",
                 "type": "AssignmentExpression",
                 "value": "this._controlContainer"
@@ -19086,15 +19086,15 @@
         "comment": "",
         "meta": {
             "range": [
-                92999,
-                93082
+                92979,
+                93062
             ],
             "filename": "index.js",
             "lineno": 2370,
             "columnno": 33,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009308",
+                "id": "astnode100009305",
                 "name": "this._controlContainer",
                 "type": "CallExpression",
                 "value": "",
@@ -19112,15 +19112,15 @@
         "comment": "",
         "meta": {
             "range": [
-                93098,
-                93137
+                93078,
+                93117
             ],
             "filename": "index.js",
             "lineno": 2371,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009320",
+                "id": "astnode100009317",
                 "name": "positions",
                 "type": "AssignmentExpression",
                 "value": "this._controlPositions"
@@ -19138,15 +19138,15 @@
         "comment": "",
         "meta": {
             "range": [
-                93110,
-                93137
+                93090,
+                93117
             ],
             "filename": "index.js",
             "lineno": 2371,
             "columnno": 26,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009322",
+                "id": "astnode100009319",
                 "name": "this._controlPositions",
                 "type": "ObjectExpression",
                 "value": "{}",
@@ -19164,15 +19164,15 @@
         "comment": "",
         "meta": {
             "range": [
-                93259,
-                93353
+                93239,
+                93333
             ],
             "filename": "index.js",
             "lineno": 2374,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009341",
+                "id": "astnode100009338",
                 "name": "positions[undefined]",
                 "type": "CallExpression",
                 "funcscope": "module:geoflo~mapboxgl.Map#_setupContainer",
@@ -19191,15 +19191,15 @@
         "comment": "",
         "meta": {
             "range": [
-                93495,
-                94827
+                93475,
+                94807
             ],
             "filename": "index.js",
             "lineno": 2382,
             "columnno": 0,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009367",
+                "id": "astnode100009364",
                 "name": "loadPremiumModules",
                 "type": "FunctionDeclaration",
                 "paramnames": [
@@ -19236,15 +19236,15 @@
         "comment": "",
         "meta": {
             "range": [
-                93546,
-                93582
+                93526,
+                93562
             ],
             "filename": "index.js",
             "lineno": 2383,
             "columnno": 10,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009372",
+                "id": "astnode100009369",
                 "name": "license",
                 "type": "AwaitExpression",
                 "value": ""
@@ -19262,15 +19262,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94169,
-                94204
+                94149,
+                94184
             ],
             "filename": "index.js",
             "lineno": 2395,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009397",
+                "id": "astnode100009394",
                 "name": "geoflo._Snapping",
                 "type": "MemberExpression",
                 "value": "Snapping.default",
@@ -19288,15 +19288,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94214,
-                94247
+                94194,
+                94227
             ],
             "filename": "index.js",
             "lineno": 2396,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009405",
+                "id": "astnode100009402",
                 "name": "geoflo._Pinning",
                 "type": "MemberExpression",
                 "value": "Pinning.default",
@@ -19314,15 +19314,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94257,
-                94290
+                94237,
+                94270
             ],
             "filename": "index.js",
             "lineno": 2397,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009413",
+                "id": "astnode100009410",
                 "name": "geoflo._Routing",
                 "type": "MemberExpression",
                 "value": "Routing.default",
@@ -19340,15 +19340,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94300,
-                94337
+                94280,
+                94317
             ],
             "filename": "index.js",
             "lineno": 2398,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009421",
+                "id": "astnode100009418",
                 "name": "geoflo._Exploring",
                 "type": "MemberExpression",
                 "value": "Exploring.default",
@@ -19366,15 +19366,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94347,
-                94382
+                94327,
+                94362
             ],
             "filename": "index.js",
             "lineno": 2399,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009429",
+                "id": "astnode100009426",
                 "name": "geoflo._Painting",
                 "type": "MemberExpression",
                 "value": "Painting.default",
@@ -19392,15 +19392,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94392,
-                94423
+                94372,
+                94403
             ],
             "filename": "index.js",
             "lineno": 2400,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009437",
+                "id": "astnode100009434",
                 "name": "geoflo._Gaming",
                 "type": "MemberExpression",
                 "value": "Gaming.default",
@@ -19418,15 +19418,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94434,
-                94476
+                94414,
+                94456
             ],
             "filename": "index.js",
             "lineno": 2402,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009445",
+                "id": "astnode100009442",
                 "name": "geoflo._Snapping.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19444,15 +19444,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94486,
-                94527
+                94466,
+                94507
             ],
             "filename": "index.js",
             "lineno": 2403,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009455",
+                "id": "astnode100009452",
                 "name": "geoflo._Pinning.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19470,15 +19470,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94537,
-                94578
+                94517,
+                94558
             ],
             "filename": "index.js",
             "lineno": 2404,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009465",
+                "id": "astnode100009462",
                 "name": "geoflo._Routing.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19496,15 +19496,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94588,
-                94631
+                94568,
+                94611
             ],
             "filename": "index.js",
             "lineno": 2405,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009475",
+                "id": "astnode100009472",
                 "name": "geoflo._Exploring.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19522,15 +19522,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94641,
-                94683
+                94621,
+                94663
             ],
             "filename": "index.js",
             "lineno": 2406,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009485",
+                "id": "astnode100009482",
                 "name": "geoflo._Painting.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19548,15 +19548,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94693,
-                94733
+                94673,
+                94713
             ],
             "filename": "index.js",
             "lineno": 2407,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009495",
+                "id": "astnode100009492",
                 "name": "geoflo._Gaming.prototype.geoflo",
                 "type": "Identifier",
                 "value": "geoflo",
@@ -19574,15 +19574,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94829,
-                95417
+                94809,
+                95397
             ],
             "filename": "index.js",
             "lineno": 2415,
             "columnno": 0,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009512",
+                "id": "astnode100009509",
                 "name": "validateLicense",
                 "type": "FunctionDeclaration",
                 "paramnames": [
@@ -19607,15 +19607,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94880,
-                94894
+                94860,
+                94874
             ],
             "filename": "index.js",
             "lineno": 2416,
             "columnno": 13,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009518",
+                "id": "astnode100009515",
                 "name": "name",
                 "type": "Literal",
                 "value": "geoflo"
@@ -19632,15 +19632,15 @@
         "comment": "",
         "meta": {
             "range": [
-                94923,
-                94993
+                94903,
+                94973
             ],
             "filename": "index.js",
             "lineno": 2419,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009523",
+                "id": "astnode100009520",
                 "name": "response",
                 "type": "AwaitExpression",
                 "value": ""
@@ -19658,15 +19658,15 @@
         "comment": "",
         "meta": {
             "range": [
-                95009,
-                95037
+                94989,
+                95017
             ],
             "filename": "index.js",
             "lineno": 2420,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009533",
+                "id": "astnode100009530",
                 "name": "data",
                 "type": "AwaitExpression",
                 "value": ""
