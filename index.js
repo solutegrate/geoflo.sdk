@@ -111,7 +111,7 @@ const GeoFlo = function () {
         this.viewportLeft = '10px';
         this.viewportBottom = '5%';
         this.noSelect = options.noSelect || false;
-        this.mapbox.on('load', onLoad);
+        this.mapbox.on('load', function (e) { onLoad(geoflo, e) });
 
         await loaded(this);
         await this.redraw();
@@ -2286,40 +2286,11 @@ async function loaded (geoflo) {
     })
 }
 
-function load(map) {
+function onLoad(geoflo, event) {
     if (geoflo.isLoaded || !geoflo.isReady) return geoflo;
-
-    geoflo.map = map;
-    geoflo.locate = new Locate();
-    geoflo.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
-    geoflo.navigation.hide = function () { geoflo._container.style.display = 'none' }.bind(geoflo.navigation);
-    geoflo.navigation.show = function () { geoflo._container.style.display = 'block' }.bind(geoflo.navigation);
-    geoflo.map.addControl(geoflo.navigation, 'top-right');
-
-    if (!geoflo.mobile) {
-        geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
-        geoflo.fullscreen.hide = function () { geoflo._controlContainer.style.display = 'none' }.bind(geoflo.fullscreen);
-        geoflo.fullscreen.show = function () { geoflo._controlContainer.style.display = 'block' }.bind(geoflo.fullscreen);
-        geoflo.map.addControl(geoflo.fullscreen, 'top-right');
-    }
-
-    geoflo.styles = new Styles(geoflo, { styles: geoflo.options.styles, selected: geoflo.options.map.style });
-    geoflo.Layers = new Layers(geoflo);
-    geoflo.Features = new Features(geoflo);
-
-    geoflo.map.addControl(geoflo.styles);
-
-    geoflo.Events = Events(geoflo);
-    geoflo.Events.removeEventListeners();
-    geoflo.Events.addEventListeners();
-
-    geoflo.isLoaded = true;
-    return geoflo;
-}
-
-function onLoad(event) {
     if (!event.target || !event.target.getContainer) throw new Error('MapboxGL map object is required!');
-
+    
+    geoflo.map = event.target;
     geoflo.container = event.target._container;
     geoflo.viewport ? geoflo.container.insertBefore(geoflo.viewport, geoflo.container.firstChild) : false;
 
@@ -2331,7 +2302,29 @@ function onLoad(event) {
     if (geoflo.options.map.minPitch) event.target.setMinPitch(geoflo.options.map.minPitch);
     if (geoflo.options.map.minZoom) event.target.setMinZoom(geoflo.options.map.minZoom);
 
-    return load(geoflo, event.target);
+    if (!geoflo.mobile) {
+        geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
+        geoflo.fullscreen.hide = function () { geoflo._controlContainer.style.display = 'none' }.bind(geoflo.fullscreen);
+        geoflo.fullscreen.show = function () { geoflo._controlContainer.style.display = 'block' }.bind(geoflo.fullscreen);
+        geoflo.map.addControl(geoflo.fullscreen, 'top-right');
+    }
+
+    geoflo.styles = new Styles(geoflo, { styles: geoflo.options.styles, selected: geoflo.options.map.style });
+    geoflo.Layers = new Layers(geoflo);
+    geoflo.Features = new Features(geoflo);
+    geoflo.locate = new Locate();
+
+    geoflo.navigation = new mapboxgl.NavigationControl({ visualizePitch: true, showZoom: true, showCompass: true });
+    geoflo.navigation.hide = function () { geoflo._container.style.display = 'none' }.bind(geoflo.navigation);
+    geoflo.navigation.show = function () { geoflo._container.style.display = 'block' }.bind(geoflo.navigation);
+    geoflo.map.addControl(geoflo.navigation, 'top-right');
+    geoflo.map.addControl(geoflo.styles);
+    geoflo.Events = Events(geoflo);
+    geoflo.Events.removeEventListeners();
+    geoflo.Events.addEventListeners();
+    geoflo.isLoaded = true;
+
+    return geoflo;
 }
 
 function onStyleLoad(event) {
@@ -2391,12 +2384,12 @@ async function loadPremiumModules(key) {
 
     if (license) {
         const [Snapping, Pinning, Routing, Exploring, Painting, Gaming] = await Promise.all([
-            import(/* webpackChunkName: "premium-snapping" */ "./src/Snapping.js"),
-            import(/* webpackChunkName: "premium-pinning" */ "./src/Pinning.js"),
-            import(/* webpackChunkName: "premium-routing" */ "./src/Routing.js"),
-            import(/* webpackChunkName: "premium-exploring" */ "./src/Exploring.js"),
-            import(/* webpackChunkName: "premium-painting" */ "./src/Painting.js"),
-            import(/* webpackChunkName: "premium-gaming" */ "./src/Gaming.js"),
+            import(/* webpackChunkName: "snapping" */ "./src/Snapping.js"),
+            import(/* webpackChunkName: "pinning" */ "./src/Pinning.js"),
+            import(/* webpackChunkName: "routing" */ "./src/Routing.js"),
+            import(/* webpackChunkName: "exploring" */ "./src/Exploring.js"),
+            import(/* webpackChunkName: "painting" */ "./src/Painting.js"),
+            import(/* webpackChunkName: "gaming" */ "./src/Gaming.js"),
         ]);
 
         geoflo._Snapping = Snapping.default;
