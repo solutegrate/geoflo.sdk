@@ -1,0 +1,99 @@
+{
+  "short_name": "GeoFlo SDK",
+  "name": "GeoFlo SDK",
+  "description": "Professional Geospatial Management Library for Mapbox GL JS",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#333333",
+  "theme_color": "#d7ef7e",
+  "orientation": "portrait",
+  "publicPath": "./",
+  "icons": [
+    {
+      "src": "https://geoflo.s3.amazonaws.com/logos/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://geoflo.s3.amazonaws.com/logos/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://geoflo.s3.amazonaws.com/logos/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "https://geoflo.s3.amazonaws.com/logos/logo_profile.png",
+      "sizes": "1000x1000",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://geoflo.s3.amazonaws.com/screenshots/loading.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    },
+    {
+      "src": "https://geoflo.s3.amazonaws.com/screenshots/events.png",
+      "sizes": "1080x1920",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Examples",
+      "url": "/tutorial-basic.html",
+      "description": "Basic Tutorial"
+    }
+  ],
+  "protocol_handlers": [],
+  "scope": "/",
+  "prefer_related_applications": false,
+  "id": "sdk.geoflo.pro",
+  "dir": "auto",
+  "lang": "en",
+  "handle_links": "preferred_external",
+  "categories": [
+    "navigation",
+    "utilities",
+    "productivity",
+    "tools",
+    "communication"
+  ],
+  "edge_side_panel": {
+    "preferred_width": 75
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "file_handlers": [
+    {
+      "action": "/open-file",
+      "accept": {
+        "application/pdf": [".pdf"],
+        "image/*": [".png", ".jpg", ".jpeg", ".gif"]
+      }
+    },
+    {
+      "action": "/open-text",
+      "accept": {
+        "text/plain": [".txt"],
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "name",
+      "text": "description",
+      "url": "link"
+    }
+  }
+}

@@ -25,9 +25,12 @@ const DISCLAIMER = `
 `;
 
 const tutorials = {
-	"latest": {
-		"title": `Version ${packageJson.version}`
-	}
+	"basic": {
+		"title": `Free Version ${packageJson.version}`
+	},
+	"premium": {
+		"title": `Pro Version ${packageJson.version}`
+	},
 };
 
 console.log(`Building ${id} in ${mode} mode...`);
@@ -120,16 +123,16 @@ async function build(err, stats) {
 }
 
 async function docs() {
-	const docsFolder = path.resolve(__dirname, 'docs');
+	const docsPath = path.resolve(__dirname, 'docs');
+	const docsFolder = await fs.readdir(docsPath);
+	const manifestFile = docsFolder.find(file => file.startsWith('manifest') && file.endsWith('.json'));
 
 	try {
-		let Docs = await fs.readdir(docsFolder);
-
-		await fs.writeFile(path.join(docsFolder, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
+		await fs.writeFile(path.join(docsPath, 'tutorials', 'tutorial.json'), JSON.stringify(tutorials, null, 4));
 		
-		for (const file of Docs) {
+		for (const file of docsFolder) {
 			if (file.endsWith('.html')) {
-				const filePath = path.join(docsFolder, file);
+				const filePath = path.join(docsPath, file);
 				await fs.unlink(filePath); // Delete only .html files
 				console.log(`Deleted file: ${filePath}`);
 			}
@@ -149,13 +152,14 @@ async function docs() {
 
 		await generateMarkdownFile('GeoFlo');
 
-		let Docs = await fs.readdir(docsFolder);
-
-		for (const file of Docs) {
+		for (const file of docsFolder) {
 			if (file.endsWith('.js.html')) {
-				const filePath = path.join(docsFolder, file);
+				const filePath = path.join(docsPath, file);
 				await fs.unlink(filePath); // Delete only .js.html files
 				console.log(`Deleted file: ${filePath}`);
+			} else if (file === 'index.html') {
+				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
+				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);				
 			}
 		}
 	} catch (error) {
