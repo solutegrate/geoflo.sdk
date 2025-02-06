@@ -1,8 +1,8 @@
 /*!
  * /*!
  *  * GeoFlo SDK
- *  * Version 1.1.5
- *  * Generated on: 2025-02-06T19:27:01.848Z
+ *  * Version 1.1.6
+ *  * Generated on: 2025-02-06T19:30:15.871Z
  *  * /
  */
 "use strict";
