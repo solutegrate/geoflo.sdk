@@ -10,7 +10,7 @@ const jsdoc2md = require("jsdoc-to-markdown");
 const packageJson = require('./package.json');
 
 const domain = 'sdk.geoflo.pro';
-const id = 'geoflo-sdk';
+const id = 'geoflo';
 const input = 'index.js';
 const args = process.argv;
 const mode = args[2];
