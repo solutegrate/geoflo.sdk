@@ -9,10 +9,11 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  build:
+    if: ${{ !startsWith(github.event.head_commit.message, 'Release - v') }}
     runs-on: ubuntu-latest
     concurrency:
-      group: deploy
+      group: build
       cancel-in-progress: false
 
     steps:
