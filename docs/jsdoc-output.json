@@ -19727,15 +19727,15 @@
     },
     {
         "kind": "package",
-        "name": "@solutegrate/geoflo-sdk",
-        "longname": "package:@solutegrate/geoflo-sdk",
+        "name": "@solutegrate/geoflo",
+        "longname": "package:@solutegrate/geoflo",
         "author": {
             "name": "Solutegrate",
             "email": "support@solutegrate.com",
-            "url": "https://github.com/solutegrate/geoflo-sdk"
+            "url": "https://github.com/solutegrate/geoflo.sdk"
         },
         "bugs": {
-            "url": "https://github.com/solutegrate/geoflo-sdk/issues"
+            "url": "https://github.com/solutegrate/geoflo.sdk/issues"
         },
         "description": "MapboxGL Wrapper for Professional Geospatial Management",
         "devDependencies": {
@@ -19756,7 +19756,7 @@
             "@babel/plugin-syntax-dynamic-import": "^7.8.3"
         },
         "engines": {
-            "node": ">=16.0.0"
+            "node": ">=18.0.0"
         },
         "files": [
             "/home/runner/work/geoflo.sdk/geoflo.sdk/index.js"
@@ -19782,7 +19782,7 @@
                 "type": "MIT"
             }
         ],
-        "main": "dist/geoflo-sdk.min.js",
+        "main": "dist/geoflo.min.js",
         "repository": {
             "type": "git",
             "url": "https://github.com/solutegrate/geoflo.sdk.git"
