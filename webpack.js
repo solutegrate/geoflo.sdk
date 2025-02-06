@@ -157,7 +157,7 @@ async function docs() {
 				const filePath = path.join(docsPath, file);
 				await fs.unlink(filePath); // Delete only .js.html files
 				console.log(`Deleted file: ${filePath}`);
-			} else if (file === 'index.html') {
+			} else if (file.endsWith('index.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
 				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);				
 			}

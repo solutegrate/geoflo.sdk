@@ -44,6 +44,10 @@ html {
     background-color: var(--geoflo-secondary-background);
 }
 
+#module:geoflo_sub {
+    display: block !important;
+}
+
 .top-nav {
     background: var(--theme-secondary-background);
     padding: 8px 24px;
