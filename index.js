@@ -1493,7 +1493,7 @@ const GeoFlo = function () {
 	 */
     this.removeSelection = function (id, options={}) {
         this.removePopup();
-        if (!this.hasSelection()) return this.Features.setText(), this.updateFeatures();
+        if (!this.hasSelection()) return this.Features.setText();
         var features = this.Utilities.clone(this.getSelectedFeatures());
         this.Features.addFeatures(features, true, id);
         this.getSelectedFeatures().splice(0, features.length);
