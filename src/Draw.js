@@ -82,8 +82,6 @@ const Draw = function () {
 
         geoflo.refreshMeshData();
         this.updateHotSource();
-
-        setTimeout(function() { geoflo.Features.removeFeatures(id); }, 100);
         return this;
     }
 
@@ -421,7 +419,7 @@ const Draw = function () {
         } else if (!isPoint) {
             if (geoflo.Snapping) snapFeature = geoflo.Snapping.updateFeature(evtCoords);
         } else if (isPoint) {
-            snapFeature = point;
+            snapFeature = geoflo.firstClick ? turf.lineString([geoflo.firstClick.coords, evtCoords]) : point;
         }
 
         if (calculateRoute) snapFeature = geoflo.Routing.getClosest() || snapFeature;
@@ -433,7 +431,7 @@ const Draw = function () {
         if (!snapFeature && this.isPoint) delete this.isPoint;
         if (editPolygon && calculateRoute) geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
 
-        if (this.type === 'Rectangle' && !geoflo.editMode) return this.handleRectangle(event);
+        if (this.type === 'Rectangle' /* && !geoflo.editMode */) return this.handleRectangle(event);
         if (this.type === 'Icon') return this.handleIcon(event, geoflo.snapFeature);
         if (this.type === 'Text') return this.handleText(event, geoflo.snapFeature);
     }
@@ -448,6 +446,7 @@ const Draw = function () {
 	 */
     this.handleDrag = function (event) {
         var validIndex = geoflo.dragIndex > -1;
+        var map = geoflo.map;
         
         if (!validIndex) {
             offVertex();
@@ -471,20 +470,54 @@ const Draw = function () {
         if (this.type === 'Circle' || this.type === 'Icon' || this.type === 'Image') {
             if (!geoflo.Painting || !geoflo.Painting.enabled) geoflo.hotFeature.geometry.coordinates = geoflo.snappedVertex;
         } else if (this.type === 'Rectangle') {
-            let rectCoords = geoflo.hotFeature.geometry.coordinates[0];
-            let rectPx = rectCoords.map(coord => geoflo.map.project(coord));
-            let movedPx = geoflo.map.project(geoflo.snappedVertex);
-            let oppositeIndex = (geoflo.dragIndex + 2) % 4; // Get opposite corner index
-            let adjacent1Index = (geoflo.dragIndex + 1) % 4; // Adjacent point 1
-            let adjacent2Index = (geoflo.dragIndex + 3) % 4; // Adjacent point 2
+            var startPointPx = map.project(geoflo.startPoint);
+            var eventPx = map.project(geoflo.snappedVertex);
 
-            rectPx[geoflo.dragIndex] = movedPx;
-            rectPx[adjacent1Index].x = movedPx.x;
-            rectPx[adjacent2Index].y = movedPx.y;
+            // Identify which corner is being dragged
+            var startPointIndex = geoflo.dragIndex;
+            var oppositeIndex, adjacentXIndex, adjacentYIndex;
 
-            let newGeoCoords = rectPx.map(px => geoflo.map.unproject(px));
-            newGeoCoords.push(newGeoCoords[0]);
-            geoflo.hotFeature.geometry.coordinates[0] = newGeoCoords;
+            // Determine the opposite and adjacent indices based on which corner is being moved
+            switch (startPointIndex) {
+                case 1: // Top-left
+                    oppositeIndex = 3; // Bottom-right
+                    adjacentXIndex = 2; // Bottom-left
+                    adjacentYIndex = 4; // Top-right
+                    break;
+                case 2: // Bottom-left
+                    oppositeIndex = 4; // Top-right
+                    adjacentXIndex = 1; // Top-left
+                    adjacentYIndex = 3; // Bottom-right
+                    break;
+                case 3: // Bottom-right
+                    oppositeIndex = 1; // Top-left
+                    adjacentXIndex = 4; // Top-right
+                    adjacentYIndex = 2; // Bottom-left
+                    break;
+                case 4: // Top-right
+                    oppositeIndex = 2; // Bottom-left
+                    adjacentXIndex = 3; // Bottom-right
+                    adjacentYIndex = 1; // Top-left
+                    break;
+            }
+
+            // Create new pixel points ensuring a rectangle
+            var newPxCoords = [
+                eventPx, // Dragged corner
+                { x: eventPx.x, y: startPointPx.y }, // Adjusted X for one adjacent
+                { x: startPointPx.x, y: eventPx.y }, // Adjusted Y for the other adjacent
+                { x: startPointPx.x, y: startPointPx.y } // Opposite corner calculated dynamically
+            ];
+
+            // Convert pixel coordinates back to lng/lat
+            var geoCoords = newPxCoords.map(px => map.unproject(px));
+            geoCoords.push(geoCoords[0]);
+
+            // Update rectangle coordinates
+            updateCoordinate(geoflo.hotFeature, `0.${startPointIndex}`, geoCoords[0].lng, geoCoords[0].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${adjacentXIndex}`, geoCoords[1].lng, geoCoords[1].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${adjacentYIndex}`, geoCoords[2].lng, geoCoords[2].lat);
+            updateCoordinate(geoflo.hotFeature, `0.${oppositeIndex}`, geoCoords[3].lng, geoCoords[3].lat);
         } else {
             var isLastIndex = geoflo.Utilities.isLastIndex(geoflo.dragIndex, geoflo.hotFeature);
             geoflo.hotFeature.geometry.coordinates[geoflo.dragIndex] = geoflo.snappedVertex;
@@ -708,7 +741,8 @@ const Draw = function () {
 	 * @returns {void}
 	 */
     this.handleUndo = function () {
-        return alert("UNDER DEVELOPMENT");
+        return false;
+
         var history = geoflo.currentMode.history;
         var undo = geoflo.currentMode.undo;
 
@@ -729,7 +763,7 @@ const Draw = function () {
 	 * @returns {void}
 	 */
     this.handleRedo = function () {
-        return alert("UNDER DEVELOPMENT");
+        return false;
         var redo = false
     }
 
@@ -740,8 +774,11 @@ const Draw = function () {
 
     function editMode (feature) {
         var type = geoflo.Features.getType(feature);
-        if (!type) return alert('No Feature Type Found');
+        if (!type) throw new Error('No Feature Type Found to edit');
     
+        const id = geoflo.Utilities.getFeatureId(feature);
+        if (!id) throw new Error('No Feature ID Found to edit');
+
         geoflo.currentMode.type = type;
         geoflo.currentMode.source = feature.source;
         geoflo.editMode = true;
@@ -757,7 +794,7 @@ const Draw = function () {
         }
         
         if (type === 'Circle' || type === 'Icon' || type === 'Image') {
-            geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([]));
+            geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
         } else if (type === 'Text') {
             geoflo.map.getSource(geoflo.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([geoflo.hotFeature]));
             addText.call(geoflo.currentMode, type, geoflo.hotFeature);
@@ -769,6 +806,8 @@ const Draw = function () {
         var coords = geoflo.Utilities.isPoint(geoflo.hotFeature) ? geoflo.hotFeature.geometry.coordinates : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
         geoflo.lastClick = { coords: coords };
         geoflo.firstClick = { coords: coords };
+
+        setTimeout(function () { geoflo.Features.removeFeatures(id); }, 100);
         return geoflo.currentMode.type;
     }
 
@@ -783,12 +822,10 @@ const Draw = function () {
 
             if (geoflo.hotFeature) {
                 geoflo.removeSelection();
-                geoflo.removeFeature(geoflo.hotFeature.id);
-                geoflo.addFeatures([geoflo.hotFeature], true);
+                geoflo.addFeatures([geoflo.editing || geoflo.hotFeature], true);
             }
 
             if (geoflo.Pinning) geoflo.Pinning.resetFeatures();
-
             if (!geoflo.editMode) geoflo.fire('draw.cancel', { cancel: true, feature: geoflo.hotFeature });
             return false;
         } else if (type === 'Text' && !text) {
@@ -806,6 +843,7 @@ const Draw = function () {
 
                 if (type === 'Rectangle') {
                     geoflo.endPoint ? updateCoordinate(geoflo.hotFeature, "0.2", geoflo.endPoint[0], geoflo.endPoint[1]) : false;
+                    updateCoordinate(geoflo.hotFeature, "0.5", geoflo.hotFeature.geometry.coordinates[0][0][0], geoflo.hotFeature.geometry.coordinates[0][0][1]);
                 } else {
                     geoflo.hotFeature.geometry.coordinates.push(geoflo.hotFeature.geometry.coordinates[0]);
                     geoflo.hotFeature.geometry.coordinates = [geoflo.hotFeature.geometry.coordinates];
@@ -817,6 +855,7 @@ const Draw = function () {
                     geoflo.hotFeature.geometry.coordinates = [geoflo.hotFeature.geometry.coordinates];
                 } else if (type === 'Rectangle') {
                     geoflo.endPoint ? updateCoordinate(geoflo.hotFeature, "0.2", geoflo.endPoint[0], geoflo.endPoint[1]) : false;
+                    updateCoordinate(geoflo.hotFeature, "0.5", geoflo.hotFeature.geometry.coordinates[0][0][0], geoflo.hotFeature.geometry.coordinates[0][0][1]);
                 }
             } else if (point) {
                 feature = point;

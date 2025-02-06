@@ -154,6 +154,7 @@ const Features = function () {
         
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
+            console.log(feature, state)
             geoflo.map.setFeatureState({ source: feature.source, id: id }, state);
         })
 
@@ -230,7 +231,7 @@ const Features = function () {
         delete feature.properties.painting;
         delete feature.properties.edit;
         delete feature.properties.new;
-        delete feature.properties.selected;
+        delete feature.properties._selected;
         delete feature.properties.hidden;
         delete feature.properties.offset;
         
@@ -268,6 +269,7 @@ const Features = function () {
                 this.setFeatureState(feature.id, { hidden: !unselect });
                 coldFeatures[index] = feature;
                 update = !unselect;
+                if (unselect) delete coldFeatures[index].properties._selected;
             } else {
                 update = !this.updatingFeatures;
                 coldFeatures.push(feature);

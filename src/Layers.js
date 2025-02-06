@@ -75,7 +75,7 @@ const Layers = function () {
                 type: 'circle',
                 paint: {
                     'circle-radius': { 'base': 6, 'stops': [[10, 8], [14, 10]] },
-                    'circle-stroke-width': 1,
+                    'circle-stroke-width': 2,
                     'circle-color': geoflo.options.colors.primaryCold,
                     'circle-stroke-color': geoflo.options.colors.secondaryCold,
                     'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 1],
@@ -221,8 +221,8 @@ const Layers = function () {
                 'type': 'circle',
                 //'filter': ["==", 0, ['number', ['get', 'painting']]],
                 'paint': {
-                    'circle-radius': ["match", ["get", "type"], "Circle", 8, 4],
-                    'circle-stroke-width': 1,
+                    'circle-radius': ["match", ["get", "type"], "Circle", 10, 4],
+                    'circle-stroke-width': 2,
                     'circle-color': geoflo.options.colors.primaryHot,
                     'circle-stroke-color': geoflo.options.colors.secondaryHot
                 }
@@ -442,7 +442,7 @@ const Layers = function () {
                 'visibility': 'visible',
             },
             'paint': {
-                'circle-radius': 12,
+                'circle-radius': 10,
                 'circle-stroke-width': 3,
                 'circle-color': geoflo.options.colors.primarySelect,
                 'circle-stroke-color': geoflo.options.colors.secondarySelect,

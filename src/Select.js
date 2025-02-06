@@ -172,7 +172,15 @@ const Select = function () {
 
         if (features.length > 0) {
             if (!geoflo.Layers.getSelection(features, clickCoords)) return;
-            selectFeature.call(this, features);
+
+            // If a different feature stack is clicked, reset the cycling order
+            let newFeatureSet = JSON.stringify(features);
+            if (newFeatureSet !== JSON.stringify(nearFeatures)) {
+                nearFeatures = features;
+                selectedId = null; // Reset selection tracking
+            }
+
+            selectFeature.call(this, nearFeatures);
         } else if (!multipleSelect) {
             lastKnownSelectIds = [];
             nearFeatures = [];
@@ -192,6 +200,7 @@ const Select = function () {
     this.handleDrag = function (event) {
         //geoflo.setMapClass('grabbing');
     }
+
 
 
     function buildPopup (features) {
@@ -275,32 +284,42 @@ const Select = function () {
         return tr;
     }
 
-    function selectFeature (features) {
+    function selectFeature(features) {
         multipleSelect = geoflo.options.select.multiple;
         nearFeatures = features;
-        lastKnownSelectIds = lastKnownSelectIds === undefined ? [] : lastKnownSelectIds;
 
-        if (features.length >= lastKnownSelectIds.length) {
-            lastKnownSelectIds.splice(0, features.length - lastKnownSelectIds.length + 1);
+        if (!nearFeatures.length) return;
+
+        // Find index of currently selected feature
+        let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
+
+        let nextIndex = currentIndex;
+        let loopCount = 0;  // Prevents infinite loops
+
+        // Find the next feature that is *not* already selected
+        do {
+            nextIndex = (nextIndex + 1) % nearFeatures.length;
+            loopCount++;
+
+            // If we've looped through all options, break (prevents infinite loops)
+            if (loopCount > nearFeatures.length) {
+                console.warn("Looped through all features, no new selection available.");
+                return;
+            }
+
+        } while (nearFeatures[nextIndex].properties['_selected']); // Skip selected features
+
+        selectedId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
+
+        console.log("Selecting Feature:", selectedId);
+
+        if (!multipleSelect) {
+            geoflo.currentMode.deselectCurrentFeature();
         }
 
-        var feat = features[0];
-        selectedId = feat.id || feat.properties['id'];
-
-        if (features.length > 1) {
-            features.forEach((feature) => {
-                const id = feature.id || feature.properties['id'];
-                if (lastKnownSelectIds.indexOf(id) === -1 && !feature.properties['_selected']) {
-                    selectedId = id;
-                    feat = feature;
-                }
-            });
-        }
-
-        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
         geoflo.currentMode.selectFeature(selectedId);
     }
-
+    
     function editFeature (feature) {
         geoflo.wantingToEdit = false;
         geoflo.setMode('edit', feature.properties.type, feature);

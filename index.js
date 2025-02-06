@@ -10,6 +10,8 @@ import Select from './src/Select.js';
 import Draw from './src/Draw.js';
 import Locate from './src/Locate.js';
 import Control from './src/Control.js';
+import Snapping from './src/Snapping.js';
+
 
 /**
  * @module geoflo
@@ -56,19 +58,12 @@ const GeoFlo = function () {
 
         var onReadyReturn;
 
-        this.license = await loadPremiumModules(options.license);
-
-        if (this.license && this.license.name) {
-            if (this.license.name === this.statics.id) {
-                const host = window.location.hostname;
-                if (!host.includes('geoflo.pro')) throw new Error('Invalid License Key!');
-                accessToken = this.license.accessToken;
-            }
-        }
-
+        this.license = await validateLicense.call(this, options.license);
+        if (this.license && this.license.enabled) await loadPremiumModules.call(this);
+        accessToken = accessToken || this.license.accessToken;
         delete options.license;
 
-        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
+        if (!accessToken) return alert('No Mapbox Access Token Provided!');
 
         this.Utilities = new Utilities();
 
@@ -329,7 +324,7 @@ const GeoFlo = function () {
             if (options.feature) {
                 options.mode = this.statics.constants.modes.DRAW;
                 options.type = options.type || options.feature.properties.type;
-                this.editing = options.feature;
+                this.editing = this.Utilities.cloneDeep(options.feature);
             } else {
                 //this.wantingToEdit = true;
                 if (this.currentMode) this.currentMode.deactivate(options);
@@ -367,12 +362,13 @@ const GeoFlo = function () {
             selectedMode.activate(options);
         }
 
-        if (this.license) {
-            this.Snapping = new this._Snapping(this.currentMode);
-            this.Pinning = new this._Pinning(this.currentMode);
-            this.Routing = new this._Routing(this.currentMode);
-            this.Exploring = new this._Exploring(this.currentMode);
-            this.Painting = new this._Painting(this.currentMode);
+        this.Snapping = new Snapping(this.currentMode);
+
+        if (this.license && this.license.enabled && this.premiumModules) {
+            this.Pinning = new this.premiumModules.Pinning(this.currentMode);
+            this.Routing = new this.premiumModules.Routing(this.currentMode);
+            this.Exploring = new this.premiumModules.Exploring(this.currentMode);
+            this.Painting = new this.premiumModules.Painting(this.currentMode);
         }
 
         this.Layers.moveLayers();
@@ -1349,8 +1345,7 @@ const GeoFlo = function () {
         }
 
         feature = this.Utilities.clone(feature);
-
-        console.log(feature, options)
+        delete feature.properties._selected;
 
         options.mode = 'edit';
         options.id = feature.id;
@@ -1544,7 +1539,7 @@ const GeoFlo = function () {
 	 */
     this.removeFeature = function (id) {
         var removed = id ? this.Features.removeFeatures(id, true) : false;
-        !edit ? this.fire('feature.delete', { id: id, feature: removed }) : false;
+        this.fire('feature.delete', { id: id, feature: removed })
         return removed;
     }
 
@@ -2213,6 +2208,7 @@ Mesh.prototype.geoflo = geoflo;
 Draw.prototype.geoflo = geoflo;
 Select.prototype.geoflo = geoflo;
 Styles.prototype.geoflo = geoflo;
+Snapping.prototype.geoflo = geoflo;
 
 export { geoflo as default }
 
@@ -2380,53 +2376,54 @@ function buildMapbox () {
     }
 }
 
-async function loadPremiumModules(key) {
-    const license = await validateLicense(key);
+async function loadPremiumModules() {
+    if (!this.license || !this.license.name) return false;
 
-    if (license) {
-        const [Snapping, Pinning, Routing, Exploring, Painting, Gaming] = await Promise.all([
-            import(/* webpackChunkName: "snapping" */ "./src/Snapping.js"),
-            import(/* webpackChunkName: "pinning" */ "./src/Pinning.js"),
-            import(/* webpackChunkName: "routing" */ "./src/Routing.js"),
-            import(/* webpackChunkName: "exploring" */ "./src/Exploring.js"),
-            import(/* webpackChunkName: "painting" */ "./src/Painting.js"),
-            import(/* webpackChunkName: "gaming" */ "./src/Gaming.js"),
-        ]);
+    const [Pinning, Routing, Exploring, Painting, Gaming] = await Promise.all([
+        import(/* webpackChunkName: "pinning" */ "./src/Pinning.js"),
+        import(/* webpackChunkName: "routing" */ "./src/Routing.js"),
+        import(/* webpackChunkName: "exploring" */ "./src/Exploring.js"),
+        import(/* webpackChunkName: "painting" */ "./src/Painting.js"),
+        import(/* webpackChunkName: "gaming" */ "./src/Gaming.js"),
+    ]);
 
-        geoflo._Snapping = Snapping.default;
-        geoflo._Pinning = Pinning.default;
-        geoflo._Routing = Routing.default;
-        geoflo._Exploring = Exploring.default;
-        geoflo._Painting = Painting.default;
-        geoflo._Gaming = Gaming.default;
-
-        geoflo._Snapping.prototype.geoflo = geoflo;
-        geoflo._Pinning.prototype.geoflo = geoflo;
-        geoflo._Routing.prototype.geoflo = geoflo;
-        geoflo._Exploring.prototype.geoflo = geoflo;
-        geoflo._Painting.prototype.geoflo = geoflo;
-        geoflo._Gaming.prototype.geoflo = geoflo;
-
-        console.log("✅ Premium modules loaded successfully.");
+    geoflo.premiumModules = {
+        Pinning: Pinning.default,
+        Routing: Routing.default,
+        Exploring: Exploring.default,
+        Painting: Painting.default,
+        Gaming: Gaming.default
     }
 
-    return license;
+    geoflo.premiumModules.Pinning.prototype.geoflo = geoflo;
+    geoflo.premiumModules.Routing.prototype.geoflo = geoflo;
+    geoflo.premiumModules.Exploring.prototype.geoflo = geoflo;
+    geoflo.premiumModules.Painting.prototype.geoflo = geoflo;
+    geoflo.premiumModules.Gaming.prototype.geoflo = geoflo;
+
+    console.log("✅ Premium modules loaded successfully.");
 }
 
 async function validateLicense(key) {
+    let license = {};
+
     try {
         const response = await fetch(`https://api.geoflo.pro/v1/license?key=${key}`);
         const data = await response.json();
 
         if (response.status === 200) {
             console.log("✅ License validated! Loading premium features...");
-            return data;
+            license = data;
         } else {
             console.warn("⚠️ License invalid. Running in basic mode.");
-            return false;
         }
     } catch (error) {
         console.error("License validation failed:", error);
-        return false;
     }
+
+    if (license.name && license.name === this.statics.id) {
+        if (!window.location.hostname.endsWith('geoflo.pro')) return false;
+    }
+
+    return license;
 }

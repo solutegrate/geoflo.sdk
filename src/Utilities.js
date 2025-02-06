@@ -24,6 +24,10 @@ const Utilities = function () {
         return color;
     }
 
+    this.getFeatureId = function (feature) {
+        return feature.id || feature.properties.id;
+    }
+
 	/**
 	 * @function
      * @memberof module:geoflo.Utilities
