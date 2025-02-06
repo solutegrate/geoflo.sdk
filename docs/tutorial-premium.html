@@ -81,13 +81,16 @@
             
             <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/premium.html></iframe>
             <div id="example-js" class="hidden"><pre class="prettyprint source">
-        const token = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY2p5bmQ5aGVxMHFocTNncDV2N244YzNzZiJ9.kzvbPlCNWYkFzfZibvs7tg';
-        const license = 'wcs2IkJA7FapwGATYuCKVbNZLhHLVE1869XOhMa3';
+        const MAPBOX_TOKEN = '' // Add your Mapbox token here
+        const API_KEY = '' // Add your GeoFlo API key here for premium features
 
-        (async function () {
-            await geoflo.init(token, { container: 'map', license: license });
-            geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-        })();
+            (async function (token, key) {
+                await geoflo.init(token, { container: 'map', license: key });
+                geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
+            })(
+                MAPBOX_TOKEN,
+                API_KEY
+            );
     </pre></div>
             <div id="example-html" class="hidden"><pre class="prettyprint source">
         &lt;div id="map">&lt;/div>
