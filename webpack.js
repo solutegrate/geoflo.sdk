@@ -26,11 +26,8 @@ const DISCLAIMER = `
 
 const tutorials = {
 	"basic": {
-		"title": `Free Version ${packageJson.version}`
-	},
-	"premium": {
-		"title": `Pro Version ${packageJson.version}`
-	},
+		"title": `Version ${packageJson.version}`
+	}
 };
 
 console.log(`Building ${id} in ${mode} mode...`);
