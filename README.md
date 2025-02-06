@@ -43,11 +43,11 @@ For more information on creating and using Mapbox access tokens:
 ### CDN Import
 
 ```javascript
-  <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo-sdk.css">
+  <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo.css">
 
   <div id="map"></div>
 
-  <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo-sdk.min.js"></script>
+  <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo.min.js"></script>
 ```
 
 ### Initialization

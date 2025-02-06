@@ -159,7 +159,8 @@ async function docs() {
 				console.log(`Deleted file: ${filePath}`);
 			} else if (file.endsWith('index.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);				
+				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
+				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}
 	} catch (error) {
