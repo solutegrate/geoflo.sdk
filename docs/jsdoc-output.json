@@ -19591,7 +19591,7 @@
         "meta": {
             "range": [
                 94474,
-                95172
+                95236
             ],
             "filename": "index.js",
             "lineno": 2407,
@@ -19606,9 +19606,7 @@
                 ]
             },
             "vars": {
-                "license": "module:geoflo~license",
-                "response": "module:geoflo~validateLicense~response",
-                "data": "module:geoflo~validateLicense~data"
+                "license": "module:geoflo~validateLicense~license"
             }
         },
         "undocumented": true,
@@ -19625,7 +19623,7 @@
         "meta": {
             "range": [
                 94520,
-                94532
+                94570
             ],
             "filename": "index.js",
             "lineno": 2408,
@@ -19635,7 +19633,7 @@
                 "id": "astnode100009465",
                 "name": "license",
                 "type": "ObjectExpression",
-                "value": "{}"
+                "value": "{\"enabled\":true,\"name\":\"\"}"
             }
         },
         "undocumented": true,
@@ -19650,80 +19648,51 @@
         "comment": "",
         "meta": {
             "range": [
-                94559,
-                94629
+                94532,
+                94545
             ],
             "filename": "index.js",
-            "lineno": 2411,
-            "columnno": 14,
+            "lineno": 2408,
+            "columnno": 20,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
             "code": {
-                "id": "astnode100009471",
-                "name": "response",
-                "type": "AwaitExpression",
-                "value": ""
+                "id": "astnode100009468",
+                "name": "enabled",
+                "type": "Literal",
+                "value": true
             }
         },
         "undocumented": true,
-        "name": "response",
-        "longname": "module:geoflo~validateLicense~response",
-        "kind": "constant",
-        "memberof": "module:geoflo~validateLicense",
-        "scope": "inner",
-        "params": []
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                94645,
-                94673
-            ],
-            "filename": "index.js",
-            "lineno": 2412,
-            "columnno": 14,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
-            "code": {
-                "id": "astnode100009481",
-                "name": "data",
-                "type": "AwaitExpression",
-                "value": ""
-            }
-        },
-        "undocumented": true,
-        "name": "data",
-        "longname": "module:geoflo~validateLicense~data",
-        "kind": "constant",
-        "memberof": "module:geoflo~validateLicense",
-        "scope": "inner",
-        "params": []
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                94804,
-                94818
-            ],
-            "filename": "index.js",
-            "lineno": 2416,
-            "columnno": 12,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
-            "code": {
-                "id": "astnode100009502",
-                "name": "license",
-                "type": "Identifier",
-                "funcscope": "module:geoflo~validateLicense",
-                "value": "data",
-                "paramnames": []
-            }
-        },
-        "undocumented": true,
-        "name": "license",
-        "longname": "module:geoflo~license",
+        "name": "enabled",
+        "longname": "module:geoflo~validateLicense~license.enabled",
         "kind": "member",
-        "scope": "inner",
-        "memberof": "module:geoflo"
+        "memberof": "module:geoflo~validateLicense~license",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                94547,
+                94568
+            ],
+            "filename": "index.js",
+            "lineno": 2408,
+            "columnno": 35,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk",
+            "code": {
+                "id": "astnode100009470",
+                "name": "name",
+                "type": "MemberExpression",
+                "value": "this.statics.id"
+            }
+        },
+        "undocumented": true,
+        "name": "name",
+        "longname": "module:geoflo~validateLicense~license.name",
+        "kind": "member",
+        "memberof": "module:geoflo~validateLicense~license",
+        "scope": "static"
     },
     {
         "kind": "package",
