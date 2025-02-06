@@ -418,8 +418,10 @@ const Draw = function () {
             if (geoflo.Snapping) snapFeature = geoflo.Snapping.setClosest(evtCoords, isPoint);
         } else if (!isPoint) {
             if (geoflo.Snapping) snapFeature = geoflo.Snapping.updateFeature(evtCoords);
-        } else if (isPoint) {
-            snapFeature = geoflo.firstClick ? turf.lineString([geoflo.firstClick.coords, evtCoords]) : point;
+        }
+        
+        if (isPoint) {
+            snapFeature = snapFeature ? snapFeature : geoflo.firstClick ? turf.lineString([geoflo.firstClick.coords, evtCoords]) : point;
         }
 
         if (calculateRoute) snapFeature = geoflo.Routing.getClosest() || snapFeature;

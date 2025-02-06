@@ -20,7 +20,7 @@ const Styles = function (options={}) {
      */
     this.init = function (options={}) {
         this.options = Object.assign(this.options, options);
-        this.selected = this.options.selected || "Standard";
+        this.selected = this.options.selected || "Dark";
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.events = this.options.eventListeners;
         return this;
