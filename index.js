@@ -52,7 +52,6 @@ const GeoFlo = function () {
 	 * @returns {Promise<Object>} A promise that resolves to the map object after initialization.
 	 */
     this.init = async function (accessToken, options={}, onReady) {
-        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
         if (this.isLoaded) return this;
 
         var onReadyReturn;
@@ -63,10 +62,13 @@ const GeoFlo = function () {
             if (this.license.name === this.statics.id) {
                 const host = window.location.hostname;
                 if (!host.includes('geoflo.pro')) throw new Error('Invalid License Key!');
+                accessToken = this.license.accessToken;
             }
         }
 
         delete options.license;
+
+        if (!accessToken) throw new Error('No Mapbox Access Token Provided!');
 
         this.Utilities = new Utilities();
 
@@ -2412,8 +2414,6 @@ async function loadPremiumModules(key) {
 }
 
 async function validateLicense(key) {
-    return { name: 'geoflo' };
-
     try {
         const response = await fetch(`https://api.geoflo.com/v1/license?key=${key}`);
         const data = await response.json();

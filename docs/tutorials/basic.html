@@ -26,12 +26,16 @@
     <script src="https://sdk.geoflo.pro/geoflo-sdk.min.js"></script>
 
     <script class="code-js">
-        const token = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY2p5bmQ5aGVxMHFocTNncDV2N244YzNzZiJ9.kzvbPlCNWYkFzfZibvs7tg';
+        const MAPBOX_TOKEN = '' // Add your Mapbox token here
+        const API_KEY = '' // Add your GeoFlo API key here for premium features
 
-        (async function () {
-            await geoflo.init(token, { container: 'map' });
+        (async function (token, key) {
+            await geoflo.init(token, { container: 'map', license: key });
             geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-        })();
+        })(
+            MAPBOX_TOKEN,
+            API_KEY
+        );
     </script>
 </body>
 
