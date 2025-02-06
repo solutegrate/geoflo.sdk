@@ -41,8 +41,8 @@ let options = {
 	output: {
 		path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
 		filename: mode === 'development' ? `${id}.js` : `${id}.min.js`,
-		chunkFilename: `[name].${id}.js`,
-		publicPath: 'https://sdk.geoflo.pro/'
+		chunkFilename: 'development' ? `[name].${id}.js` : `[name].${id}.min.js`,
+		publicPath: 'https://' + domain + '/'
 	},
 	module: {
 		rules: [

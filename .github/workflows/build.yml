@@ -1,4 +1,4 @@
-name: Deploy
+name: Build
 
 on:
   push:
@@ -60,28 +60,6 @@ jobs:
           else
             echo "No changes to commit"
           fi
-
-      - name: Upload Development to S3
-        uses: tpaschalis/s3-sync-action@master
-        with:
-          args: --acl public-read --recursive
-        env:
-          FILE: ./dev/
-          AWS_REGION: "us-east-1"
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-
-      - name: Upload CSS to S3
-        uses: tpaschalis/s3-sync-action@master
-        with:
-          args: --acl public-read
-        env:
-          FILE: ./dist/geoflo-sdk.css
-          AWS_REGION: "us-east-1"
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
 
       - name: Invalidate CloudFront
         uses: chetan/invalidate-cloudfront-action@master
