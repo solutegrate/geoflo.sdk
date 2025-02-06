@@ -2415,7 +2415,7 @@ async function loadPremiumModules(key) {
 
 async function validateLicense(key) {
     try {
-        const response = await fetch(`https://api.geoflo.com/v1/license?key=${key}`);
+        const response = await fetch(`https://api.geoflo.pro/v1/license?key=${key}`);
         const data = await response.json();
 
         if (response.status === 200) {
