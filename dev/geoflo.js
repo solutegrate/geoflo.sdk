@@ -1,8 +1,8 @@
 /*!
  * /*!
  *  * GeoFlo SDK
- *  * Version 1.1.1
- *  * Generated on: 2025-02-06T18:09:08.590Z
+ *  * Version 1.1.2
+ *  * Generated on: 2025-02-06T18:15:48.504Z
  *  * /
  */
 /******/ (() => { // webpackBootstrap
