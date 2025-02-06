@@ -472,9 +472,8 @@ const Draw = function () {
             if (!geoflo.Painting || !geoflo.Painting.enabled) geoflo.hotFeature.geometry.coordinates = geoflo.snappedVertex;
         } else if (this.type === 'Rectangle') {
             let rectCoords = geoflo.hotFeature.geometry.coordinates[0];
-            let rectPx = rectCoords.map(coord => map.project(coord));
-
-            let movedPx = map.project(geoflo.snappedVertex);
+            let rectPx = rectCoords.map(coord => geoflo.map.project(coord));
+            let movedPx = geoflo.map.project(geoflo.snappedVertex);
             let oppositeIndex = (geoflo.dragIndex + 2) % 4; // Get opposite corner index
             let adjacent1Index = (geoflo.dragIndex + 1) % 4; // Adjacent point 1
             let adjacent2Index = (geoflo.dragIndex + 3) % 4; // Adjacent point 2
@@ -483,7 +482,7 @@ const Draw = function () {
             rectPx[adjacent1Index].x = movedPx.x;
             rectPx[adjacent2Index].y = movedPx.y;
 
-            let newGeoCoords = rectPx.map(px => map.unproject(px));
+            let newGeoCoords = rectPx.map(px => geoflo.map.unproject(px));
             newGeoCoords.push(newGeoCoords[0]);
             geoflo.hotFeature.geometry.coordinates[0] = newGeoCoords;
         } else {
