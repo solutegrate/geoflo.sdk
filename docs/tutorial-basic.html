@@ -85,8 +85,6 @@
         const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
 
         (async function (token, key) {
-            const GeoFlo = await import('./index.js');
-            const geoflo = GeoFlo.default;
             await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
             geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
         })();
