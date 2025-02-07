@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Tutorial: Version 0.1.0 | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Routing.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -66,169 +58,713 @@
 <div class="main" id="main">
     
 
-<section>
-    <header>
-        
 
-        <h2>Version 0.1.0</h2>
-    </header>
 
     
-        
-
-        <ul id="example-nav" class="nav nav-tabs">
-            <li role="presentation" id="example-result-btn" class="active" onclick="showResult()">
-                <a href="#">Result</a>
-            </li>
-            <li role="presentation" id="example-js-btn" class="" onclick="showJs()">
-                <a href="#">JS</a>
-            </li>
-            <li role="presentation" id="example-html-btn" class="" onclick="showHtml()">
-                <a href="#">HTML</a>
-            </li>
-        </ul>
+    <section>
         <article>
-            
-            <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/basic.html></iframe>
-            <div id="example-js" class="hidden"><pre class="prettyprint source">
-        document.addEventListener("DOMContentLoaded", function () {
-            // Replace with your Mapbox token
-            const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Routing
+ * @description This module provides the routing functionality for the Geoflo application. It allows users to calculate routes between two points on the map using a PathFinder object.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Routing object.
+ */
+const Routing = function (mode) {
+    const geoflo = this.geoflo;
 
-            (async function (token, key) {
-                await geoflo.init(MAPBOX_TOKEN, { container: 'map', controls: true });
-                buildLegend();
-                geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
-            })();
+    this.type = mode.type;
+    this.graphData = {};
+    this.features = geoflo.getDrawnFeatures();
 
-            function buildLegend () {
-                const legendList = document.getElementById("legend-list");
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name activate
+	 * @description Activates the functionality by setting the 'enabled' property to true and enabling routing in the options.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.enabled = true;
+        geoflo.options['routing'].enable = true;
+    };
 
-                const buttons = [
-                    { class: "geoflo-select", label: "Select Feature" },
-                    { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
-                    { class: "geoflo-repeat", label: "Repeat Draw Mode" },
-                    { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
-                    { class: "geoflo-export", label: "Export Features" },
-                    { class: "geoflo-import", label: "Import Features" },
-                    { class: "geoflo-delete-data", label: "Delete Features" },
-                    { class: "mapbox-gl-draw_line", label: "Draw Line" },
-                    { class: "mapbox-gl-draw_polygon", label: "Draw Polygon" },
-                    { class: "mapbox-gl-draw_rectangle", label: "Draw Rectangle" },
-                    { class: "mapbox-gl-draw_point", label: "Draw Point" },
-                    { class: "mapbox-gl-draw_text", label: "Draw Text" },
-                    { class: "mapbox-gl-draw_icon", label: "Draw Icon" },
-                    { class: "geoflo-snapping-enabled", label: "Snapping Enabled" },
-                    { class: "geoflo-pinning-enabled", label: "Pinning Enabled" },
-                    { class: "geoflo-routing-enabled", label: "Routing Enabled" },
-                    { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
-                    { class: "geoflo-painting-enabled", label: "Painting Enabled" },
-                    /* { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
-                    { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
-                    { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
-                    { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
-                    { class: "mapboxgl-style-switcher", label: "Map Styles" } */
-                ];
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name deactivate
+	 * @description This function deactivates the routing feature by setting the enabled flag to false, disabling routing in the options, and clearing the route data on the map.
+	 * @returns {void}
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['routing'].enable = false;
+        geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+    };
 
-                buttons.forEach(button => {
-                    const listItem = document.createElement("li");
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getRoute
+	 * @description This function calculates a route between two points on a map using a PathFinder object. It checks if the routing feature is enabled and if the map is not currently moving. It then creates a feature collection from the existing features, initializes a PathFinder object, and finds a path between the two points. The path is validated and then added to the map with a 'routing.add' event.
+	 * @param {Object} fromPoint - The starting point for the route.
+	 * @param {Object} toPoint - The destination point for the route.
+	 * @returns {Array|boolean} The calculated route path as an array of points, or false if the route could not be calculated.
+	 */
+    this.getRoute = function (fromPoint, toPoint) {
+        if (!this.enabled || geoflo.mapMoving) return false;
+        var features = turf.featureCollection(this.getFeatures());
+        var pathfinder = new PathFinder(features, geoflo.options.routing);
+        var path = pathfinder.findPath ? pathfinder.findPath(fromPoint, toPoint) : false;
+        path = validatePath(fromPoint, toPoint, path);
+        geoflo.fire('routing.add', { from: fromPoint, to: toPoint, path: path });
+        return path;
+    };
 
-                    const icon = document.createElement("div");
-                    icon.className = button.class;
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getMatch
+	 * @description Retrieves a match for the given coordinates using the Exploring service. Sets the match as a starting point for routing.
+	 * @param {Object} coords - The coordinates for which to find a match.
+	 * @returns {Promise&lt;Object>} The matched feature with routing property set to true.
+	 */
+    this.getMatch = async function (coords) {
+        if (!geoflo.Exploring) return {};
+        var feature = await geoflo.Exploring.getMatch(coords, { set: true, start: geoflo.startPoint });
+        feature.properties.routing = true;
+        return feature;
+    }
 
-                    const label = document.createElement("span");
-                    label.textContent = button.label;
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getClosest
+	 * @description Calculates the closest point on a route based on the last click and the closest point to it.
+	 * @returns {Object|boolean} Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
+	 */
+    this.getClosest = function () {
+        if (!geoflo.closestPoint || !geoflo.lastClick) return false;
+        var route = this.getRoute(geoflo.lastClick, geoflo.closestPoint);
+        if (!route || !route.path) return false;
+        var feature = turf.lineString(route.path);
+        feature.properties.routing = true;
+        return feature;
+    };
 
-                    listItem.appendChild(icon);
-                    listItem.appendChild(label);
-                    legendList.appendChild(listItem);
-                });
-            }
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getFeatures
+	 * @description Retrieves features of type 'LineString' from the mesh index.
+	 * @returns {Array} An array of features of type 'LineString'.
+	 */
+    this.getFeatures = function () {
+        var features = [geoflo.getSnapFeatures(), geoflo.getDrawnFeatures()].flat();
+        return features.filter(function(feature) { return feature.geometry.type === 'LineString' });
+    };
 
-            function logEvent(event) {
-                const eventLog = document.getElementById("event-log-content");
-                const timeStamp = new Date().toLocaleTimeString();
-                const logMessage = `[${timeStamp}] ${event.name}`;
-                const logEntry = document.createElement("div");
-                logEntry.textContent = logMessage;
-                eventLog.appendChild(logEntry);
-                while (eventLog.childNodes.length > 50) { eventLog.removeChild(eventLog.firstChild); }
-                eventLog.scrollTop = eventLog.scrollHeight;
-            }
-        });
-    </pre></div>
-            <div id="example-html" class="hidden"><pre class="prettyprint source">
-        &lt;div id="control-legend">
-            &lt;h3>Control Legend&lt;/h3>
-            &lt;ul id="legend-list" style="list-style: none; padding: 0;">&lt;/ul>
-        &lt;/div>
-
-        &lt;div id="map">&lt;/div>
-
-        &lt;div id="event-log">
-            &lt;h3>Event Log&lt;/h3>
-            &lt;div id="event-log-content">&lt;/div>
-        &lt;/div>
-    </pre></div>
-        </article>
     
-</section>
+    if (geoflo.options['routing'].enable) this.activate();
 
 
-    <script>
-        var exampleResult = document.getElementById('example-result');
-        var exampleJs = document.getElementById('example-js');
-        var exampleHtml = document.getElementById('example-html');
-        var exampleResultBtn = document.getElementById('example-result-btn');
-        var exampleJsBtn = document.getElementById('example-js-btn');
-        var exampleHtmlBtn = document.getElementById('example-html-btn');
+    function PathFinder(features, options) {
+        options = options || {};
+        
+        if (!features.compactedVertices) { features = preprocess(features, options); }
 
-        function setActive(el) {
-            el.className += ' active';
+        this._graph = features;
+        this._keyFn = options.keyFn || function(c) { return c.join(','); };
+        this._precision = options.precision || 1e-5;
+        this._options = options;
+    
+        if (Object.keys(this._graph.compactedVertices).filter(function(k) { return k !== 'edgeData'; }).length === 0) {
+            return null;
         }
 
-        function setInactive(el) {
-            el.className = el.className.replace(/\s*active\s*/g, '');
+        this.findPath = function(a, b) {
+            var start = this._keyFn(roundCoord(a.coords, this._precision)),
+                finish = this._keyFn(roundCoord(b.coords, this._precision));
+    
+            if (!this._graph.vertices[start] || !this._graph.vertices[finish]) {
+                return null;
+            }
+    
+            var phantomStart = this._createPhantom(start);
+            var phantomEnd = this._createPhantom(finish);
+    
+            var path = findPath(this._graph.compactedVertices, start, finish);
+    
+            if (path) {
+                var weight = path[0];
+                path = path[1];
+                return {
+                    fullPath: path,
+                    path: path.reduce(function buildPath(cs, v, i, vs) {
+                        if (i > 0) {
+                            cs = cs.concat(this._graph.compactedCoordinates[vs[i - 1]][v]);
+                        }
+    
+                        return cs;
+                    }.bind(this), []).concat([this._graph.sourceVertices[finish]]),
+                    weight: weight,
+                    edgeDatas: this._graph.compactedEdges 
+                        ? path.reduce(function buildEdgeData(eds, v, i, vs) {
+                            if (i > 0) {
+                                eds.push({
+                                    reducedEdge: this._graph.compactedEdges[vs[i - 1]][v]
+                                });
+                            }
+    
+                            return eds;
+                        }.bind(this), [])
+                        : undefined
+                };
+            } else {
+                return null;
+            }
+    
+            this._removePhantom(phantomStart);
+            this._removePhantom(phantomEnd);
         }
 
-        function show(el) {
-            el.className = el.className.replace(/\s*hidden\s*/g, '');
+        this.serialize = function() {
+            return this._graph;
         }
 
-        function hide(el) {
-            el.className += ' hidden';
+        this._createPhantom = function(n) {
+            if (this._graph.compactedVertices[n]) return null;
+    
+            var phantom = compactNode(n, this._graph.vertices, this._graph.compactedVertices, this._graph.sourceVertices, this._graph.edgeData, true, this._options);
+            this._graph.compactedVertices[n] = phantom.edges;
+            this._graph.compactedCoordinates[n] = phantom.coordinates;
+    
+            if (this._graph.compactedEdges) {
+                this._graph.compactedEdges[n] = phantom.reducedEdges;
+            }
+    
+            Object.keys(phantom.incomingEdges).forEach(function(neighbor) {
+                this._graph.compactedVertices[neighbor][n] = phantom.incomingEdges[neighbor];
+                this._graph.compactedCoordinates[neighbor][n] = [this._graph.sourceVertices[neighbor]].concat(phantom.incomingCoordinates[neighbor].slice(0, -1));
+                if (this._graph.compactedEdges) {
+                    this._graph.compactedEdges[neighbor][n] = phantom.reducedEdges[neighbor];
+                }
+            }.bind(this))
+    
+            return n;
         }
 
-        function showJs() {
-            hide(exampleHtml);
-            hide(exampleResult);
-            setInactive(exampleHtmlBtn);
-            setInactive(exampleResultBtn);
-
-            show(exampleJs);
-            setActive(exampleJsBtn);
+        this._removePhantom = function(n) {
+            if (!n) return;
+    
+            Object.keys(this._graph.compactedVertices[n]).forEach(function(neighbor) {
+                delete this._graph.compactedVertices[neighbor][n];
+            }.bind(this));
+            Object.keys(this._graph.compactedCoordinates[n]).forEach(function(neighbor) {
+                delete this._graph.compactedCoordinates[neighbor][n];
+            }.bind(this));
+            if (this._graph.compactedEdges) {
+                Object.keys(this._graph.compactedEdges[n]).forEach(function(neighbor) {
+                    delete this._graph.compactedEdges[neighbor][n];
+                }.bind(this));
+            }
+    
+            delete this._graph.compactedVertices[n];
+            delete this._graph.compactedCoordinates[n];
+    
+            if (this._graph.compactedEdges) {
+                delete this._graph.compactedEdges[n];
+            }
         }
+    };
 
-        function showHtml() {
-            hide(exampleJs);
-            hide(exampleResult);
-            setInactive(exampleJsBtn);
-            setInactive(exampleResultBtn);
+    function ShortestPath () {
+        var INFINITY = 1 / 0;
+        this.vertices = {};
+    
+        this.addVertex = function (name, edges) {
+            this.vertices[name] = edges;
+        };
+    
+        this.setVertices = function (graph) {
+            this.vertices = graph;
+        };
+    
+        this.shortestPath = function (start, finish) {
+            var nodes = new PriorityQueue(),
+                distances = {},
+                previous = {},
+                path = [],
+                smallest, vertex, neighbor, alt;
+        
+            for (vertex in this.vertices) {
+                if (vertex === start) {
+                    distances[vertex] = 0;
+                    nodes.enqueue(0, vertex);
+                } else {
+                    distances[vertex] = INFINITY;
+                    nodes.enqueue(INFINITY, vertex);
+                }
+        
+                previous[vertex] = null;
+            }
+        
+            while (!nodes.isEmpty()) {
+                smallest = nodes.dequeue();
+        
+                if (smallest === finish) {
+                    path = [];
+            
+                    while (previous[smallest]) {
+                        path.push(smallest);
+                        smallest = previous[smallest];
+                    }
+            
+                    break;
+                }
+        
+                if (!smallest || distances[smallest] === INFINITY) {
+                    continue;
+                }
+        
+                for (neighbor in this.vertices[smallest]) {
+                    alt = distances[smallest] + this.vertices[smallest][neighbor];
+        
+                    if (alt &lt; distances[neighbor]) {
+                        distances[neighbor] = alt;
+                        previous[neighbor] = smallest;
+            
+                        nodes.enqueue(alt, neighbor);
+                    }
+                }
+            }
+        
+            return path;
+        };
+    };
+    
+    function PriorityQueue() {
+        this._nodes = [];
+    
+        this.enqueue = function (priority, key) {
+            this._nodes.push({key: key, priority: priority});
+            this.sort();
+        };
+    
+        this.dequeue = function () {
+            return this._nodes.shift().key;
+        };
+    
+        this.sort = function () {
+            this._nodes.sort((a, b) => {
+                return a.priority - b.priority;
+            });
+        };
+    
+        this.isEmpty = function () {
+            return !this._nodes.length;
+        };
+    };
 
-            show(exampleHtml);
-            setActive(exampleHtmlBtn);
+    function TinyQueue(data, compare) {
+        if ( data === void 0 ) data = [];
+        if ( compare === void 0 ) compare = function (a, b) {
+            return a &lt; b ? -1 : a > b ? 1 : 0;
+        };
+    
+        this.data = data;
+        this.length = this.data.length;
+        this.compare = compare;
+    
+        if (this.length > 0) {
+            for (var i = (this.length >> 1) - 1; i >= 0; i--) { this._down(i); }
         }
+    
+        this.push = function push (item) {
+            this.data.push(item);
+            this.length++;
+            this._up(this.length - 1);
+        };
+        
+        this.pop = function pop () {
+            if (this.length === 0) { return undefined; }
+        
+            var top = this.data[0];
+            var bottom = this.data.pop();
+            this.length--;
+        
+            if (this.length > 0) {
+                this.data[0] = bottom;
+                this._down(0);
+            }
+        
+            return top;
+        };
+        
+        this.peek = function peek () {
+            return this.data[0];
+        };
+        
+        this._up = function _up (pos) {
+            var ref = this;
+                var data = ref.data;
+                var compare = ref.compare;
+            var item = data[pos];
+        
+            while (pos > 0) {
+                var parent = (pos - 1) >> 1;
+                var current = data[parent];
+                if (compare(item, current) >= 0) { break; }
+                data[pos] = current;
+                pos = parent;
+            }
+        
+            data[pos] = item;
+        };
+        
+        this._down = function _down (pos) {
+            var ref = this;
+                var data = ref.data;
+                var compare = ref.compare;
+            var halfLength = this.length >> 1;
+            var item = data[pos];
+        
+            while (pos &lt; halfLength) {
+                var left = (pos &lt;&lt; 1) + 1;
+                var best = data[left];
+                var right = left + 1;
+        
+                if (right &lt; this.length &amp;&amp; compare(data[right], best) &lt; 0) {
+                    left = right;
+                    best = data[right];
+                }
+                if (compare(best, item) >= 0) { break; }
+        
+                data[pos] = best;
+                pos = left;
+            }
+        
+            data[pos] = item;
+        };
+    };
 
-        function showResult() {
-            hide(exampleJs);
-            hide(exampleHtml);
-            setInactive(exampleJsBtn);
-            setInactive(exampleHtmlBtn);
-
-            show(exampleResult);
-            setActive(exampleResultBtn);
+    function findNextEnd(prev, v, vertices, ends, vertexCoords, edgeData, trackIncoming, options) {
+        var weight = vertices[prev][v],
+            reverseWeight = vertices[v][prev],
+            coordinates = [],
+            path = [],
+            reducedEdge = options.edgeDataSeed;
+            
+        if (options.edgeDataReduceFn) {
+            reducedEdge = options.edgeDataReduceFn(reducedEdge, edgeData[v][prev]);
         }
-    </script>
+    
+        while (!ends[v]) {
+            var edges = vertices[v];
+    
+            if (!edges) { break; }
+    
+            var next = Object.keys(edges).filter(function notPrevious(k) { return k !== prev; })[0];
+            weight += edges[next];
+    
+            if (trackIncoming) {
+                reverseWeight += vertices[next][v];
+    
+                if (path.indexOf(v) >= 0) {
+                    ends[v] = vertices[v];
+                    break;
+                }
+                path.push(v);
+            }
+    
+            if (options.edgeDataReduceFn) {
+                reducedEdge = options.edgeDataReduceFn(reducedEdge, edgeData[v][next]);
+            }
+    
+            coordinates.push(vertexCoords[v]);
+            prev = v;
+            v = next;
+        }
+    
+        return {
+            vertex: v,
+            weight: weight,
+            reverseWeight: reverseWeight,
+            coordinates: coordinates,
+            reducedEdge: reducedEdge
+        };
+    };
+    
+    function compactNode(k, vertices, ends, vertexCoords, edgeData, trackIncoming, options) {
+        options = options || {};
+        var neighbors = vertices[k];
+        return Object.keys(neighbors).reduce(function compactEdge(result, j) {
+            var neighbor = findNextEnd(k, j, vertices, ends, vertexCoords, edgeData, trackIncoming, options);
+            var weight = neighbor.weight;
+            var reverseWeight = neighbor.reverseWeight;
+            if (neighbor.vertex !== k) {
+                if (!result.edges[neighbor.vertex] || result.edges[neighbor.vertex] > weight) {
+                    result.edges[neighbor.vertex] = weight;
+                    result.coordinates[neighbor.vertex] = [vertexCoords[k]].concat(neighbor.coordinates);
+                    result.reducedEdges[neighbor.vertex] = neighbor.reducedEdge;
+                }
+                if (trackIncoming &amp;&amp; 
+                    !isNaN(reverseWeight) &amp;&amp; (!result.incomingEdges[neighbor.vertex] || result.incomingEdges[neighbor.vertex] > reverseWeight)) {
+                    result.incomingEdges[neighbor.vertex] = reverseWeight;
+                    var coordinates = [vertexCoords[k]].concat(neighbor.coordinates);
+                    coordinates.reverse();
+                    result.incomingCoordinates[neighbor.vertex] = coordinates;
+                }
+            }
+            return result;
+        }, {edges: {}, incomingEdges: {}, coordinates: {}, incomingCoordinates: {}, reducedEdges: {}});
+    };
+    
+    function compactGraph(vertices, vertexCoords, edgeData, options) {
+        options = options || {};
+        var progress = options.progress;
+        var ends = Object.keys(vertices).reduce(function findEnds(es, k, i, vs) {
+            var vertex = vertices[k];
+            var edges = Object.keys(vertex);
+            var numberEdges = edges.length;
+            var remove;
+    
+            if(options.compact === false)  {
+                remove = false;
+            } else if (numberEdges === 1) {
+                var other = vertices[edges[0]];
+                remove = !other[k];
+            } else if (numberEdges === 2) {
+                remove = edges.filter(function(n) {
+                    return vertices[n][k];
+                }).length === numberEdges;
+            } else {
+                remove = false;
+            }
+            
+            if (!remove) {
+                es[k] = vertex;
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; progress) {
+                progress('compact:ends', i, vs.length);
+            }
+    
+            return es;
+        }, {});
+    
+        return Object.keys(ends).reduce(function compactEnd(result, k, i, es) {
+            var compacted = compactNode(k, vertices, ends, vertexCoords, edgeData, false, options);
+            result.graph[k] = compacted.edges;
+            result.coordinates[k] = compacted.coordinates;
+    
+            if (options.edgeDataReduceFn) {
+                result.reducedEdges[k] = compacted.reducedEdges;
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; progress) {
+                progress('compact:nodes', i, es.length);
+            }
+    
+            return result;
+        }, {graph: {}, coordinates: {}, reducedEdges: {}});
+    };
+    
+    function findPath(graph, start, end) {
+        var costs = {};
+        costs[start] = 0;
+        var initialState = [0, [start], start];
+        var queue = new TinyQueue([initialState], function(a, b) { return a[0] - b[0]; });
+        var explored = {};
+    
+        while (queue.length) {
+            var state = queue.pop();
+            var cost = state[0];
+            var node = state[2];
+            if (node === end) {
+                return state.slice(0, 2);
+            }
+    
+            var neighbours = graph[node];
+            Object.keys(neighbours).forEach(function(n) {
+                var newCost = cost + neighbours[n];
+                if (!(n in costs) || newCost &lt; costs[n]) {
+                    costs[n] = newCost;
+                    var newState = [newCost, state[1].concat([n]), n];
+                    queue.push(newState);
+                }
+            });
+        }
+    
+        return null;
+    };
+    
+    function preprocess(graph, options) {
+        options = options || {};
+
+        var topo;
+
+        var weightFn = options.weightFn || function defaultWeightFn(a, b) {
+            return turf.distance(turf.point(a), turf.point(b));
+        }
+    
+        if (graph.type === 'FeatureCollection') {
+            // Graph is GeoJSON data, create a topology from it
+            topo = topology(graph, options);
+        } else if (graph.edges) {
+            // Graph is a preprocessed topology
+            topo = graph;
+        }
+    
+        var graph = topo.edges.reduce(function buildGraph(g, edge, i, es) {
+            var a = edge[0],
+                b = edge[1],
+                props = edge[2],
+                w = weightFn(topo.vertices[a], topo.vertices[b], props),
+                makeEdgeList = function makeEdgeList(node) {
+                    if (!g.vertices[node]) {
+                        g.vertices[node] = {};
+                        if (options.edgeDataReduceFn) {
+                            g.edgeData[node] = {};
+                        }
+                    }
+                },
+                concatEdge = function concatEdge(startNode, endNode, weight) {
+                    var v = g.vertices[startNode];
+                    v[endNode] = weight;
+                    if (options.edgeDataReduceFn) {
+                        g.edgeData[startNode][endNode] = options.edgeDataReduceFn(options.edgeDataSeed, props);
+                    }
+                };
+    
+            if (w) {
+                makeEdgeList(a);
+                makeEdgeList(b);
+                if (w instanceof Object) {
+                    if (w.forward) {
+                        concatEdge(a, b, w.forward);
+                    }
+                    if (w.backward) {
+                        concatEdge(b, a, w.backward);
+                    }
+                } else {
+                    concatEdge(a, b, w);
+                    concatEdge(b, a, w);
+                }
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; options.progress) {
+                options.progress('edgeweights', i,es.length);
+            }
+    
+            return g;
+        }, {edgeData: {}, vertices: {}});
+    
+        var compact = compactGraph(graph.vertices, topo.vertices, graph.edgeData, options);
+    
+        return {
+            vertices: graph.vertices,
+            edgeData: graph.edgeData,
+            sourceVertices: topo.vertices,
+            compactedVertices: compact.graph,
+            compactedCoordinates: compact.coordinates,
+            compactedEdges: options.edgeDataReduceFn ? compact.reducedEdges : null
+        };
+    };
+    
+    function roundCoord(c, precision) {
+        return [
+            Math.round(c[0] / precision) * precision,
+            Math.round(c[1] / precision) * precision,
+        ];
+    };
+    
+    function geoJsonReduce(geojson, fn, seed) {
+        if (geojson.type === 'FeatureCollection') {
+            return geojson.features.reduce(function reduceFeatures(a, f) {
+                return geoJsonReduce(f, fn, a);
+            }, seed);
+        } else {
+            return fn(seed, geojson);
+        }
+    };
+    
+    function geoJsonFilterFeatures(geojson, fn) {
+        var features = [];
+        if (geojson.type === 'FeatureCollection') {
+            features = features.concat(geojson.features.filter(fn));
+        }
+    
+        return {
+            type: 'FeatureCollection',
+            features: features
+        };
+    };
+    
+    function isLineString(f) {
+        return f.geometry.type === 'LineString';
+    };
+    
+    function topology(geojson, options) {
+        options = options || {};
+        var keyFn = options.keyFn || function defaultKeyFn(c) {
+                return c.join(',');
+            },
+            precision = options.precision || 1e-5;
+    
+        var lineStrings = geoJsonFilterFeatures(geojson, isLineString);
+        var explodedLineStrings = turf.explode(lineStrings);
+        var vertices = explodedLineStrings.features.reduce(function buildTopologyVertices(cs, f, i, fs) {
+                var rc = roundCoord(f.geometry.coordinates, precision);
+                cs[keyFn(rc)] = f.geometry.coordinates;
+    
+                if (i % 1000 === 0 &amp;&amp; options.progress) {
+                    options.progress('topo:vertices', i, fs.length);
+                }
+    
+                return cs;
+            }, {}),
+            edges = geoJsonReduce(lineStrings, function buildTopologyEdges(es, f, i, fs) {
+                f.geometry.coordinates.forEach(function buildLineStringEdges(c, i, cs) {
+                    if (i > 0) {
+                        var k1 = keyFn(roundCoord(cs[i - 1], precision)),
+                            k2 = keyFn(roundCoord(c, precision));
+                        es.push([k1, k2, f.properties]);
+                    }
+                });
+    
+                if (i % 1000 === 0 &amp;&amp; options.progress) {
+                    options.progress('topo:edges', i, fs.length);
+                }
+    
+                return es;
+            }, []);
+        return {
+            vertices: vertices,
+            edges: edges
+        };
+    };
+
+    function validatePath(fromPoint, toPoint, path) {
+        if (toPoint &amp;&amp; toPoint.type === 'linepoint') return false;
+        //if (precision > 0.0005) return false;
+        if (!path || !path.path || !path.path.length || path.path.length &lt; 2) return false;
+        return path;
+
+        precision = Number((Number(precision) + 0.000002).toFixed(7));
+        var pathfinder = new PathFinder(features, { precision: precision });
+        var newPath = pathfinder.findPath(fromPoint, toPoint);
+        return validatePath(fromPoint, toPoint, features, newPath);
+    };
+};
+
+export default Routing;</code></pre>
+        </article>
+    </section>
+
+
 
 
 </div>
@@ -243,7 +779,13 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        showLnbExamples();
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
     </script>
 
 </body>
