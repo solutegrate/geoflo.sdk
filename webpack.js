@@ -160,7 +160,6 @@ async function build(err, stats) {
 	try {
 
 		await fs.writeFile(path.join(options.output.path, options.output.filename), `${DISCLAIMER}\n${data}`);
-		await fs.writeFile(path.join(options.output.path, options.output.filename), `\n\n/*\n${license}\n*/`, { flag: 'a' });
 		await fs.writeFile(path.join(options.output.path, 'license.txt'), license);		
 		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
 	} catch (error) {
