@@ -150,6 +150,10 @@ body {
     background-color: var(--theme-primary-background);
 }
 
+.title p {
+    margin-top: 20px;
+}
+
 /* .tag:not(body) {
     background-color: var(--theme-primary-color);
 } */
