@@ -81,7 +81,8 @@ const GeoFlo = function () {
         this.setOptions(options);
         
         var container = await ready(id);
-        var style = this.options.styles.find(style => style.title === this.options.map.style).uri;
+        var style = this.options.styles.find(style => style.title === this.options.map.style);
+        style = style && style.uri ? style.uri : 'mapbox://styles/mapbox/dark-v11';
 
         this.isReady = container ? true : false;
         if (!this.isReady) throw new Error('Element id is required in the DOM for the map!');
@@ -293,7 +294,8 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated options object after merging.
 	 */
     this.setOptions = function(options={}) {
-        this.options = Object.assign(Options, this.options || {}, options);
+        const opts = this.Utilities.assignDeep(this.options, options);
+        this.options = this.Utilities.assignDeep(Options, opts);
         return this.options;
     }
 
