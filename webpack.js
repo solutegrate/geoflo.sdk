@@ -200,12 +200,12 @@ async function docs() {
 		for (const file of docsFolder) {
 			if (file.endsWith('.js.html')) {
 				const filePath = path.join(docsPath, file);
-				await fs.unlink(filePath); // Delete only .js.html files
+				await fs.unlink(filePath);
 				console.log(`Deleted file: ${filePath}`);
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
-				htmlContent = htmlContent.replace(`<nav class="lnb" id="lnb">`, `<nav class="lnb" id="lnb">${HEADER}`);
+				htmlContent = htmlContent.replace(`</title>`, `</title>\n<link rel="manifest" href="./${manifestFile}">`);	
+				htmlContent = htmlContent.replace(`<div class="main" id="main">`, `<div class="main" id="main">${HEADER}`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}
