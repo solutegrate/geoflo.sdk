@@ -563,6 +563,24 @@ const Layers = function () {
         },
         {
             'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-text-point-select',
+            'filter': ['==', ['get', 'type'], 'Text'],
+            'type': 'circle',
+            'layout': {
+                'visibility': 'visible',
+            },
+            'paint': {
+                'circle-radius': 4,
+                'circle-stroke-width': 1,
+                'circle-color': geoflo.options.colors.primaryColor,
+                'circle-stroke-color': geoflo.options.colors.primaryBackground,
+                'circle-stroke-opacity': 1,
+                'circle-opacity': 1
+            },
+            'metadata': { types: ['Text'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-text-select',
             'filter': ['==', ['get', 'type'], 'Text'],
             'type': 'symbol',
@@ -576,17 +594,17 @@ const Layers = function () {
                 'text-allow-overlap': true,
                 'text-size': 18,
                 'text-justify': ['get', 'justify'],
-                'text-letter-spacing': 0.12,
+                'text-letter-spacing': 0.13,
                 'text-line-height': 1.2,
                 'text-max-angle': 10,
-                'text-offset': [0,1.5],
+                'text-offset': [0, -1],
                 'text-padding': 2,
                 'text-rotate': 0,
                 'text-transform': ['get', 'transform']
             },
             'paint': {
-                'text-color': geoflo.options.colors.primaryBackground,
-                'text-halo-color': geoflo.options.colors.primaryColor,
+                'text-color': geoflo.options.colors.primaryColor,
+                'text-halo-color': geoflo.options.colors.primaryBackground,
                 'text-halo-width': 2,
                 'text-opacity': 1,
             },
