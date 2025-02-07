@@ -31,18 +31,6 @@
         
     </div>
     <div class="title">
-<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/license.txt" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/License-MPL-blue.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Demo-blue.svg?color=ff7676" alt="GeoFlo Demo" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-SDK-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
-  </a>
-</p>
-
         <h1><a href="index.html" class="link">Documentation</a></h1>
         
             <span class="version">v1.1.8</span>
@@ -94,16 +82,83 @@
             
             <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/basic.html></iframe>
             <div id="example-js" class="hidden"><pre class="prettyprint source">
-        // Replace with your Mapbox token
-        const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
+        document.addEventListener("DOMContentLoaded", function () {
+            // Replace with your Mapbox token
+            const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
 
-        (async function (token, key) {
-            await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
-            geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-        })();
+            (async function (token, key) {
+                await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
+                buildLegend();
+                geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
+            })();
+
+            function buildLegend () {
+                const legendList = document.getElementById("legend-list");
+
+                const buttons = [
+                    { class: "geoflo-select", label: "Select Feature" },
+                    { class: "geoflo-edit", label: "Edit Feature" },
+                    { class: "geoflo-finish", label: "Save Feature" },
+                    { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
+                    { class: "geoflo-repeat", label: "Repeat Draw Mode" },
+                    { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
+                    { class: "geoflo-export", label: "Export Features" },
+                    { class: "geoflo-import", label: "Import Features" },
+                    { class: "geoflo-delete-data", label: "Delete Features" },
+                    { class: "mapbox-gl-draw_line", label: "Draw Line" },
+                    { class: "mapbox-gl-draw_polygon", label: "Draw Polygon" },
+                    { class: "mapbox-gl-draw_rectangle", label: "Draw Rectangle" },
+                    { class: "mapbox-gl-draw_point", label: "Draw Point" },
+                    { class: "mapbox-gl-draw_text", label: "Draw Text" },
+                    { class: "mapbox-gl-draw_icon", label: "Draw Icon" },
+                    { class: "geoflo-snapping-enabled", label: "Snapping Enabled" },
+                    { class: "geoflo-pinning-enabled", label: "Pinning Enabled" },
+                    { class: "geoflo-routing-enabled", label: "Routing Enabled" },
+                    { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
+                    { class: "geoflo-painting-enabled", label: "Painting Enabled" },
+                    { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
+                    { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
+                    { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
+                    { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
+                    { class: "mapboxgl-style-switcher", label: "Map Styles" }
+                ];
+
+                buttons.forEach(button => {
+                    const listItem = document.createElement("li");
+
+                    const icon = document.createElement("div");
+                    icon.className = button.class;
+
+                    const label = document.createElement("span");
+                    label.textContent = button.label;
+
+                    listItem.appendChild(icon);
+                    listItem.appendChild(label);
+                    legendList.appendChild(listItem);
+                });
+            }
+
+            function logEvent(event) {
+                const eventLog = document.getElementById("event-log");
+                const timeStamp = new Date().toLocaleTimeString();
+                const logMessage = `[${timeStamp}] ${event.name}`;
+                const logEntry = document.createElement("div");
+                logEntry.textContent = logMessage;
+                eventLog.appendChild(logEntry);
+                while (eventLog.childNodes.length > maxEvents) { eventLog.removeChild(eventLog.firstChild); }
+                eventLog.scrollTop = eventLog.scrollHeight;
+            }
+        });
     </pre></div>
             <div id="example-html" class="hidden"><pre class="prettyprint source">
+        &lt;div id="control-legend">
+            &lt;h3>Control Legend&lt;/h3>
+            &lt;ul id="legend-list" style="list-style: none; padding: 0;">&lt;/ul>
+        &lt;/div>
+
         &lt;div id="map">&lt;/div>
+
+        &lt;div id="event-log">&lt;/div>
     </pre></div>
         </article>
     
