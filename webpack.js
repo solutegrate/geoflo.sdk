@@ -127,7 +127,7 @@ if (mode === 'production') {
 
 (async function () {
 	const license = await fs.readFile(path.resolve(__dirname, 'LICENSE'), 'utf8');
-	await fs.writeFile(path.join(options.output.path, 'license.txt'), license);
+	await fs.writeFile(path.join(path.resolve(__dirname, options.output.path), 'license.txt'), license);
 	options.plugins.push(new webpack.BannerPlugin({ banner: DISCLAIMER.trim() + `\n` + license.trim(), raw: true, entryOnly: true }));
 	webpack(options, build);
 })()
