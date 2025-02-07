@@ -125,9 +125,7 @@ if (mode === 'production') {
 	})); */
 }
 
-(async function () {
-	webpack(options, build);
-})()
+webpack(options, build);
 
 async function build(err, stats) {
 	if (err) return console.error('Error building:', err), process.exit(1);
@@ -140,11 +138,23 @@ async function build(err, stats) {
 	const license = await fs.readFile(path.resolve(__dirname, 'LICENSE'), 'utf8');
 	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
 
-	try {
-		await fs.writeFile(path.join(options.output.path, 'license.txt'), license);
-		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
-	} catch (error) {
-		console.error('Error handling CSS file:', error);
+	await fs.writeFile(path.join(options.output.path, 'license.txt'), license);
+	await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
+
+	const distPath = path.resolve(__dirname, options.output.path);
+	const distFolder = await fs.readdir(distPath);
+
+	for (const file of distFolder) {
+		if (file.endsWith('.js')) {
+			let content = await fs.readFile(path.join(distPath, file), 'utf8');
+			content = content.replace(`/*! For license information please see geoflo`, `/*! For license information please see https://sdk.geoflo.pro/geoflo`);
+			content = content.replace(`.txt */`, `.txt */\n${DISCLAIMER}`);
+			await fs.writeFile(path.join(distPath, file), content, 'utf8');
+		} else if (file.endsWith('.js.LICENSE.txt')) {
+			let content = await fs.readFile(path.join(distPath, file), 'utf8');
+			content = content + '\n' + license;
+			await fs.writeFile(path.join(distPath, file), content, 'utf8');
+		}
 	}
 
 	await docs();
