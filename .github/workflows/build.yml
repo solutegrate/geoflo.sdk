@@ -55,7 +55,7 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           if [[ -n "$(git status --porcelain)" ]]; then
-            git add ./dist ./dev ./docs
+            git add ./dist ./dev ./docs ./README.md ./LICENSE
             git commit -m "Deployed on $(date) [skip ci]"
             git push
           else

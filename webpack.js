@@ -33,8 +33,6 @@ const DISCLAIMER = `
 `;
 
 const HEADER = `
-${DISCLAIMER}\n
-
 <p align="center">
   <a href="https://projects.geoflo.pro?referer=docs.geoflo.pro">
     <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />
