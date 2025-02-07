@@ -3,7 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>Tutorial: Version 1.1.10 | Documentation</title>
-<link rel="manifest" href="./manifest.json">
+
+					<link rel="manifest" href="./manifest.json">
+
+					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
+
+					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
+
+					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
+
+				
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -137,7 +146,7 @@
             }
 
             function logEvent(event) {
-                const eventLog = document.getElementById("event-log");
+                const eventLog = document.getElementById("event-log-content");
                 const timeStamp = new Date().toLocaleTimeString();
                 const logMessage = `[${timeStamp}] ${event.name}`;
                 const logEntry = document.createElement("div");
@@ -156,7 +165,10 @@
 
         &lt;div id="map">&lt;/div>
 
-        &lt;div id="event-log">&lt;/div>
+        &lt;div id="event-log">
+            &lt;h3>Event Log&lt;/h3>
+            &lt;div id="event-log-content">&lt;/div>
+        &lt;/div>
     </pre></div>
         </article>
     
