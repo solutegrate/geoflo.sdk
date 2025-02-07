@@ -116,7 +116,7 @@ if (mode === 'production') {
 	/* plugins.push(new HtmlWebpackPlugin({
 		templateContent: ({ htmlWebpackPlugin }) => {
 			const templatePath = path.resolve(__dirname, "node_modules/tui-jsdoc-template/tmpl/layout.tmpl");
-			let template = fs.readFileSync(templatePath, "utf8");
+			let template = await fs.readFile(templatePath, "utf8");
 			template = template.replace("<body>", `<body>${HEADER}`);
 			return template;
 		},
@@ -141,7 +141,7 @@ if (mode === 'production') {
 }
 
 (async function () {
-	const readme = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
+	const readme = await fs.readFile(path.resolve(__dirname, 'README.md'), 'utf8');
 	await fs.writeFile(path.join(options.output.path, 'README.md'), `${HEADER}\n\n${readme}`);
 	webpack(options, build);
 })()
@@ -154,7 +154,7 @@ async function build(err, stats) {
 
 	if (mode === 'development') return true;
 
-	const license = fs.readFileSync(path.resolve(__dirname, 'LICENSE'), 'utf8');
+	const license = await fs.readFile(path.resolve(__dirname, 'LICENSE'), 'utf8');
 	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
 
 	try {
@@ -207,7 +207,7 @@ async function docs() {
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
 				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
-				htmlContent = htmlContent.replace("<body>", `<body>${HEADER}`);
+				htmlContent = htmlContent.replace(`<nav class="lnb" id="lnb">`, `<nav class="lnb" id="lnb">${HEADER}`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}
