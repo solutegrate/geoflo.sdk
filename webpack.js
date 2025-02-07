@@ -115,7 +115,7 @@ if (mode === 'production') {
 		})]
 	}
 
-	plugins.push(new HtmlWebpackPlugin({
+	/* plugins.push(new HtmlWebpackPlugin({
 		templateContent: ({ htmlWebpackPlugin }) => {
 			const templatePath = path.resolve(__dirname, "node_modules/tui-jsdoc-template/tmpl/layout.tmpl");
 			let template = fs.readFileSync(templatePath, "utf8");
@@ -124,7 +124,7 @@ if (mode === 'production') {
 		},
 		filename: "index.html",
 		inject: false
-	}));
+	})); */
 
 	/* options.plugins.push(new WebpackObfuscator({
 		target: 'browser',
@@ -206,9 +206,10 @@ async function docs() {
 				const filePath = path.join(docsPath, file);
 				await fs.unlink(filePath); // Delete only .js.html files
 				console.log(`Deleted file: ${filePath}`);
-			} else if (file.endsWith('index.html')) {
+			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
+				//htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
+				htmlContent = htmlContent.replace("<body>", `<body>${HEADER}`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}
