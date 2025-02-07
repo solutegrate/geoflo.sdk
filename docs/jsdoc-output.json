@@ -19865,7 +19865,7 @@
         "author": {
             "name": "Solutegrate",
             "email": "support@solutegrate.com",
-            "url": "https://github.com/solutegrate/geoflo.sdk"
+            "url": "https://docs.geoflo.pro"
         },
         "bugs": {
             "url": "https://github.com/solutegrate/geoflo.sdk/issues"
@@ -19880,6 +19880,7 @@
             "jsdoc": "^4.0.4",
             "jsdoc-to-markdown": "^9.1.1",
             "terser-webpack-plugin": "^5.3.11",
+            "html-webpack-plugin": "^5.6.3",
             "webpack": "^5.97.1",
             "webpack-cli": "^6.0.1",
             "webpack-obfuscator": "^3.5.1",
