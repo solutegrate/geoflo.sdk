@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mixin: Options | Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <a href="https://docs.geoflo.pro" rel="noopener noreferrer" target="_blank">
+                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Documentation</a></h1>
+        
+            <span class="version">v1.1.9</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>SDK</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-basic.html">Version 1.1.9</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="basic_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.html#.activateExploring">activateExploring</a></li><li><a href="module-geoflo.html#.activatePainting">activatePainting</a></li><li><a href="module-geoflo.html#.activatePinning">activatePinning</a></li><li><a href="module-geoflo.html#.activateRouting">activateRouting</a></li><li><a href="module-geoflo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-geoflo.html#.addControl">addControl</a></li><li><a href="module-geoflo.html#.addControls">addControls</a></li><li><a href="module-geoflo.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-geoflo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-geoflo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-geoflo.html#.createPolygon">createPolygon</a></li><li><a href="module-geoflo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-geoflo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-geoflo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-geoflo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-geoflo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-geoflo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-geoflo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-geoflo.html#.disable">disable</a></li><li><a href="module-geoflo.html#.editFeature">editFeature</a></li><li><a href="module-geoflo.html#.enable">enable</a></li><li><a href="module-geoflo.html#.fire">fire</a></li><li><a href="module-geoflo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-geoflo.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.html#.getColors">getColors</a></li><li><a href="module-geoflo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-geoflo.html#.getControlIds">getControlIds</a></li><li><a href="module-geoflo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-geoflo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-geoflo.html#.getHotFeature">getHotFeature</a></li><li><a href="module-geoflo.html#.getMap">getMap</a></li><li><a href="module-geoflo.html#.getMode">getMode</a></li><li><a href="module-geoflo.html#.getModes">getModes</a></li><li><a href="module-geoflo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-geoflo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-geoflo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-geoflo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-geoflo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-geoflo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-geoflo.html#.getSnapFeatures">getSnapFeatures</a></li><li><a href="module-geoflo.html#.hasControls">hasControls</a></li><li><a href="module-geoflo.html#.hasSelection">hasSelection</a></li><li><a href="module-geoflo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-geoflo.html#.hideFeatures">hideFeatures</a></li><li><a href="module-geoflo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-geoflo.html#.init">init</a></li><li><a href="module-geoflo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-geoflo.html#.moveFeature">moveFeature</a></li><li><a href="module-geoflo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-geoflo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-geoflo.html#.off">off</a></li><li><a href="module-geoflo.html#.on">on</a></li><li><a href="module-geoflo.html#.once">once</a></li><li><a href="module-geoflo.html#.redraw">redraw</a></li><li><a href="module-geoflo.html#.refresh">refresh</a></li><li><a href="module-geoflo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-geoflo.html#.removeControl">removeControl</a></li><li><a href="module-geoflo.html#.removeControls">removeControls</a></li><li><a href="module-geoflo.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.html#.removeSelection">removeSelection</a></li><li><a href="module-geoflo.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-geoflo.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-geoflo.html#.setButtons">setButtons</a></li><li><a href="module-geoflo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-geoflo.html#.setColors">setColors</a></li><li><a href="module-geoflo.html#.setIcon">setIcon</a></li><li><a href="module-geoflo.html#.setLayers">setLayers</a></li><li><a href="module-geoflo.html#.setMapClass">setMapClass</a></li><li><a href="module-geoflo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-geoflo.html#.setMode">setMode</a></li><li><a href="module-geoflo.html#.setOpacity">setOpacity</a></li><li><a href="module-geoflo.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-geoflo.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-geoflo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-geoflo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-geoflo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-geoflo.Options.html">Options</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Options_sub"></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Options</h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description">Options for the Geoflo map.</div>
+            
+
+            
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>theme</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The theme of the map. Default is 'dark'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showLineUnits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show line units. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showFeatureText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show feature text. Default is true.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>controls</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+|
+
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Controls for the map. Default is false. True shows all controls.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show options control. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>modes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show modes control. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>utils</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show utilities control. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>types</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show types control. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>actions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show actions control. Default is false.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map options. Any Mapbox GL JS map options can be used here.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>container</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map container. Default is 'map'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>center</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map center. Default is [-95.52816680236892, 39.56431143986035].</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>zoom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map zoom. Default is 3.5.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxPitch</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Maximum pitch of the map. Default is 50.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>projection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map projection. Default is 'mercator'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>style</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map style. Default is 'Standard'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opacity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map opacity. Default is 1.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>styles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Mapbox styles with title and uri.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Map bounding extent.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>keys</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Keyboard shortcuts.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>import</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Import key. Default is 'u'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Export key. Default is 'd'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>delete</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Delete key. Default is 'Delete'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cancel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Cancel key. Default is 'Escape'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>select</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Select key. Default is 'Escape'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>edit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Edit key. Default is 'Enter'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>refresh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Refresh key. Default is 'r'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>snapping</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Snapping key. Default is '!'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pinning</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pinning key. Default is '@'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>routing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Routing key. Default is '#'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exploring</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Exploring key. Default is '$'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>painting</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Painting key. Default is '%'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>polyline</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Polyline key. Default is '1'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>polygon</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Polygon key. Default is '2'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rectangle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Rectangle key. Default is '3'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>circle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Circle key. Default is '4'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Text key. Default is '5'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>units</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Measurement units for different geometries.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Polyline</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Polyline unit. Default is 'feet'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Polygon</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Polygon unit. Default is 'acres'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Rectangle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Rectangle unit. Default is 'acres'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Icon</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Icon unit. Default is 'feature'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Circle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Circle unit. Default is 'feature'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Marker</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Marker unit. Default is 'feature'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colors</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Color scheme settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Error color. Default is '#ff7676'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>primaryColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Primary color. Default is '#d7ef7e'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>primaryBackground</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Primary background color. Default is '#5a5a5a'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>primaryText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Primary text color. Default is '#c5c5c5'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>primaryBorder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Primary border color. Default is '#6fafdb'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secondaryColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Secondary color. Default is '#6fafdb'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secondaryBackground</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Secondary background color. Default is '#333333'.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secondaryText</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Secondary text color. Default is '#333333'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>select</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Selection options.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>popup</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable selection popups. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>multiple</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Allow multiple selection. Default is false.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>snapping</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Snapping settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable snapping to features. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pixels</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pixel-based snapping. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>distance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Snapping distance in kilometers.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tolerance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Snapping tolerance in kilometers.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>routing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Routing settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable routing functionality. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>precision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Routing coordinate precision.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pinning</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pinning settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable feature pinning. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buffer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pinning buffer distance in kilometers.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>idle</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Idle time before updating pinned features.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>exploring</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Exploring settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable feature exploration. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>minZoom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Minimum zoom level for exploration. Default is 9.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>buffer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Exploration buffer distance in kilometers.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tolerance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Exploration coordinate simplification tolerance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>painting</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Painting settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable painting mode. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tolerance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Painting coordinate simplification tolerance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>gamepad</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Gamepad configuration settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>enable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable gamepad support. Default is true.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>debug</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Enable gamepad debugging. Default is false.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>crosshairs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Show crosshairs on the map. Default is true.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>joystick</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Joystick settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Minimum joystick threshold. Default is 0.2.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Maximum joystick threshold. Default is 0.7.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pan</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pan settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>speed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pan speed. Default is 0.001.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>zoom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zoom settings.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>speed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Zoom speed. Default is 0.008.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
+    <div class="footer-text">Solutegrate/GeoFlo © 2025</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'module:geoflo.Options_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
