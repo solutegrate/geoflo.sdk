@@ -63,7 +63,5 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {
-    "terser": "^5.38.1"
-  }
+  "dependencies": {}
 }

@@ -53,6 +53,7 @@ For more information on creating and using Mapbox access tokens:
 ### NPM Import
 
 ```bash
+  npm config set registry "https://npm.pkg.github.com"
   npm install @solutegrate/geoflo
 ```
 
@@ -60,9 +61,7 @@ For more information on creating and using Mapbox access tokens:
 
 ```javascript
   <link rel="stylesheet" href="https://sdk.geoflo.pro/geoflo.css">
-
   <div id="map"></div>
-
   <script type="text/javascript" src="https://sdk.geoflo.pro/geoflo.min.js"></script>
 ```
 
