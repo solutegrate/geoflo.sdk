@@ -285,7 +285,7 @@ img.mapboxgl-ctrl-logo.geoflo-icon {
     display: none;
 } */
 
-.mapboxgl-ctrl-geolocate {
+#legend-list .mapboxgl-ctrl-geolocate {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' height='1.3em' viewBox='0 0 1280 1024' xml:space='preserve'%3E%3Cg transform='matrix(-2.916584514444807 0 0 -2.916584514444807 640.0453266787658 512.1813067150634)' id='logo-logo'%3E%3Cg style='' paint-order='stroke'%3E%3Cg transform='matrix(1.1261221187904051 0 0 -1.1261221187904051 -0.00011261221192171433 35.21930034685218)'%3E%3Cpath style='stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;' paint-order='stroke' transform=' translate(-51.6845, 5.2895)' d='M 0 0 L 12.127 -21.444 C 24.667 -17.7 37.943 -15.678999999999998 51.685 -15.678999999999998 C 65.426 -15.678999999999998 78.702 -17.7 91.242 -21.444 L 103.369 0 C 87.545 6.979 70.062 10.865 51.685 10.865 C 33.308 10.865 15.824 6.979 0 0' stroke-linecap='round'/%3E%3C/g%3E%3Cg transform='matrix(1.1261221187904051 0 0 -1.1261221187904051 0.000563061059381198 95.18203741829672)'%3E%3Cpath style='stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;' paint-order='stroke' transform=' translate(-34.5, 28.148000000000003)' d='M 0 0 L 34.5 -61.006 L 69 0 C 58.016 3.065 46.447 4.71 34.5 4.71 C 22.552 4.71 10.983 3.064 0 0' stroke-linecap='round'/%3E%3C/g%3E%3Cg transform='matrix(1.1261221187904051 0 0 -1.1261221187904051 0 -73.1027240962326)'%3E%3Cpath style='stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;' paint-order='stroke' transform=' translate(0, -36.0355)' d='M 0 0 C 26.243 0 51.131 -5.9 73.421 -16.429 L 132.76 88.5 L 0 31.5 L -132.76 88.5 L -73.421 -16.429 C -51.13 -5.9 -26.243 0 0 0' stroke-linecap='round'/%3E%3C/g%3E%3Cg transform='matrix(1.1261221187904051 0 0 -1.1261221187904051 0.0001126122118080275 -0.9253908511160489)'%3E%3Cpath style='stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(215,239,126); fill-rule: nonzero; opacity: 1;' paint-order='stroke' transform=' translate(-68.4845, 2.8999999999999986)' d='M 0 0 L 11.852 -20.958 C 29.15 -13.177 48.32000000000001 -8.841999999999999 68.484 -8.841999999999999 C 88.648 -8.841999999999999 107.81899999999999 -13.177 125.11699999999999 -20.958 L 136.969 0 C 116.145 9.718 92.939 15.158 68.484 15.158 C 44.029 15.158 20.824 9.718 0 0' stroke-linecap='round'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
@@ -499,19 +499,19 @@ img.mapboxgl-ctrl-logo.geoflo-icon {
     background-position: center;
 }
 
-.mapboxgl-ctrl-zoom-out {
+#legend-list .mapboxgl-ctrl-zoom-out {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 448 512'%3E%3Cpath d='M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z'/%3E%3C/svg%3E")
 }
 
-.mapboxgl-ctrl-zoom-in {
+#legend-list .mapboxgl-ctrl-zoom-in {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 448 512'%3E%3Cpath d='M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z'/%3E%3C/svg%3E")
 }
 
-.mapboxgl-ctrl-fullscreen {
+#legend-list .mapboxgl-ctrl-fullscreen {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 512 512'%3E%3Cpath d='M50.2 196.5l.6 .2c8.2 2 16.8-.4 22.8-6.3l47.1-47.1L233.4 256 120.7 368.7 73.6 321.6c-6-6-14.6-8.4-22.8-6.3l-.6 .2C39.5 318.1 32 327.7 32 338.7V456c0 13.3 10.7 24 24 24l117.3 0c11 0 20.6-7.5 23.3-18.2l.2-.6c2-8.2-.4-16.8-6.3-22.8l-47.1-47.1L256 278.6 368.7 391.3l-47.1 47.1c-6 6-8.4 14.6-6.3 22.8l.2 .6c2.7 10.7 12.3 18.2 23.3 18.2L456 480c13.3 0 24-10.7 24-24l0-117.3c0-11-7.5-20.6-18.2-23.3l-.6-.2c-8.2-2-16.8 .4-22.8 6.3l-47.1 47.1L278.6 256 391.3 143.3l47.1 47.1c6 6 14.6 8.4 22.8 6.3l.6-.2c10.7-2.7 18.2-12.3 18.2-23.3L480 56c0-13.3-10.7-24-24-24H338.7c-11 0-20.6 7.5-23.3 18.2l-.2 .6c-2 8.2 .4 16.8 6.3 22.8l47.1 47.1L256 233.4 143.3 120.7l47.1-47.1c6-6 8.4-14.6 6.3-22.8l-.2-.6C193.9 39.5 184.3 32 173.3 32H56C42.7 32 32 42.7 32 56V173.3c0 11 7.5 20.6 18.2 23.3zM64 154.7L64 64l90.7 0L64 154.7zM154.7 448L64 448l0-90.7L154.7 448zM448 154.7L357.3 64 448 64l0 90.7zM357.3 448L448 357.3l0 90.7-90.7 0z'/%3E%3C/svg%3E")
 }
 
-.mapboxgl-style-switcher {
+#legend-list .mapboxgl-style-switcher {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='1em' viewBox='0 0 576 512'%3E%3Cpath d='M266.2 4.7C273 1.6 280.5 0 288 0s15 1.6 21.8 4.7l217.4 97.5c10.2 4.6 16.8 14.7 16.8 25.9s-6.6 21.3-16.8 25.9L309.8 251.3c-6.9 3.1-14.3 4.7-21.8 4.7s-15-1.6-21.8-4.7L48.8 153.9C38.6 149.3 32 139.2 32 128s6.6-21.3 16.8-25.9L266.2 4.7zM288 32c-3 0-6 .6-8.8 1.9L69.3 128l210 94.1c2.8 1.2 5.7 1.9 8.8 1.9s6-.6 8.8-1.9l210-94.1-210-94.1C294 32.6 291 32 288 32zM48.8 358.1l45.9-20.6 39.1 17.5L69.3 384l210 94.1c2.8 1.2 5.7 1.9 8.8 1.9s6-.6 8.8-1.9l210-94.1-64.5-28.9 39.1-17.5 45.9 20.6c10.2 4.6 16.8 14.7 16.8 25.9s-6.6 21.3-16.8 25.9L309.8 507.3c-6.9 3.1-14.3 4.7-21.8 4.7s-15-1.6-21.8-4.7L48.8 409.9C38.6 405.3 32 395.2 32 384s6.6-21.3 16.8-25.9zM94.7 209.5l39.1 17.5L69.3 256l210 94.1c2.8 1.2 5.7 1.9 8.8 1.9s6-.6 8.8-1.9l210-94.1-64.5-28.9 39.1-17.5 45.9 20.6c10.2 4.6 16.8 14.7 16.8 25.9s-6.6 21.3-16.8 25.9L309.8 379.3c-6.9 3.1-14.3 4.7-21.8 4.7s-15-1.6-21.8-4.7L48.8 281.9C38.6 277.3 32 267.2 32 256s6.6-21.3 16.8-25.9l45.9-20.6z'/%3E%3C/svg%3E")
 }
 
@@ -975,8 +975,8 @@ div[style*="display: none;"] {
     bottom: 0px;
     margin-left: auto;
     right: 0;
-    width: 15%;
-    height: 100%;
+    width: 18%;
+    height: 98%;
     overflow-y: hidden;
     background: var(--geoflo-secondary-background);
     color: var(--geoflo-error);

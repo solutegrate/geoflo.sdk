@@ -97,8 +97,6 @@
 
                 const buttons = [
                     { class: "geoflo-select", label: "Select Feature" },
-                    { class: "geoflo-edit", label: "Edit Feature" },
-                    { class: "geoflo-finish", label: "Save Feature" },
                     { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
                     { class: "geoflo-repeat", label: "Repeat Draw Mode" },
                     { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
@@ -116,11 +114,11 @@
                     { class: "geoflo-routing-enabled", label: "Routing Enabled" },
                     { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
                     { class: "geoflo-painting-enabled", label: "Painting Enabled" },
-                    { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
+                    /* { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
                     { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
                     { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
                     { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
-                    { class: "mapboxgl-style-switcher", label: "Map Styles" }
+                    { class: "mapboxgl-style-switcher", label: "Map Styles" } */
                 ];
 
                 buttons.forEach(button => {
@@ -145,7 +143,7 @@
                 const logEntry = document.createElement("div");
                 logEntry.textContent = logMessage;
                 eventLog.appendChild(logEntry);
-                while (eventLog.childNodes.length > maxEvents) { eventLog.removeChild(eventLog.firstChild); }
+                while (eventLog.childNodes.length > 50) { eventLog.removeChild(eventLog.firstChild); }
                 eventLog.scrollTop = eventLog.scrollHeight;
             }
         });
