@@ -1,8 +1,8 @@
 /*!
  * /*!
  *  * GeoFlo SDK
- *  * Version 1.1.10
- *  * Generated on: 2025-02-07T19:52:21.080Z
+ *  * Version 1.1.11
+ *  * Generated on: 2025-02-07T19:57:01.145Z
  *  * Copyright (c) 2022 - present | @solutegrate/geoflo
  *  * /
  */
