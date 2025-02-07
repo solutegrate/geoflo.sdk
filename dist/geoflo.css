@@ -948,7 +948,7 @@ div[style*="display: none;"] {
 #control-legend h3 {
     margin: 0 0 5px 0;
     font-size: 25px;
-    color: var(--geoflo-secondary-text);
+    color: var(--geoflo-primary-text);
 }
 
 #control-legend #legend-list li {
@@ -984,4 +984,10 @@ div[style*="display: none;"] {
     font-family: monospace;
     font-size: 12px;
     white-space: pre-wrap;
+}
+
+#event-log h3 {
+    margin: 0 0 5px 0;
+    font-size: 25px;
+    color: var(--geoflo-primary-text);
 }
