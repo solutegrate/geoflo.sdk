@@ -1,16 +1,16 @@
-import Statics from './src/Statics.js';
-import Options from './src/Options.js';
-import Utilities from './src/Utilities.js';
-import Styles from './src/Styles.js';
-import Layers from './src/Layers.js';
-import Features from './src/Features.js';
-import Mesh from './src/Mesh.js';
-import Events from './src/Events.js';
-import Select from './src/Select.js';
-import Draw from './src/Draw.js';
-import Locate from './src/Locate.js';
-import Control from './src/Control.js';
-import Snapping from './src/Snapping.js';
+import Statics from './src/statics.js';
+import Options from './src/options.js';
+import Utilities from './src/utilities.js';
+import Styles from './src/styles.js';
+import Layers from './src/layers.js';
+import Features from './src/features.js';
+import Mesh from './src/mesh.js';
+import Events from './src/events.js';
+import Select from './src/select.js';
+import Draw from './src/draw.js';
+import Locate from './src/locate.js';
+import Control from './src/control.js';
+import Snapping from './src/snapping.js';
 
 
 /**
@@ -2438,11 +2438,11 @@ async function loadPremiumModules() {
     if (!this.license || !this.license.name) return false;
 
     const [Pinning, Routing, Exploring, Painting, Gaming] = await Promise.all([
-        import(/* webpackChunkName: "pinning" */ "./src/Pinning.js"),
-        import(/* webpackChunkName: "routing" */ "./src/Routing.js"),
-        import(/* webpackChunkName: "exploring" */ "./src/Exploring.js"),
-        import(/* webpackChunkName: "painting" */ "./src/Painting.js"),
-        import(/* webpackChunkName: "gaming" */ "./src/Gaming.js"),
+        import(/* webpackChunkName: "pinning" */ "./src/pinning.js"),
+        import(/* webpackChunkName: "routing" */ "./src/routing.js"),
+        import(/* webpackChunkName: "exploring" */ "./src/exploring.js"),
+        import(/* webpackChunkName: "painting" */ "./src/painting.js"),
+        import(/* webpackChunkName: "gaming" */ "./src/gaming.js"),
     ]);
 
     geoflo.premiumModules = {
