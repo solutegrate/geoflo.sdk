@@ -13,20 +13,20 @@
       <img src="https://img.shields.io/badge/License-MPL-blue.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
   </a>
   <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Demo-blue.svg?color=ff7676" alt="GeoFlo Demo" />
+    <img src="https://img.shields.io/badge/GeoFlo-Free_Demo-blue.svg?color=6fafdb" alt="GeoFlo Demo" />
   </a>
   <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-SDK-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
+    <img src="https://img.shields.io/badge/GeoFlo-SDK_Link-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
   </a>
 </p>
 
 ## 📖 Introduction
+
 GeoFlo is a comprehensive geospatial management library designed for Mapbox GL JS. It provides a wide range of features and tools to enhance your mapping applications, making it easier to work with geospatial data and create interactive maps. There is no need to install anything. Simply import the library, add your Mapbox token and start using it.
 
 ## 🚧 Contributing
-GeoFlo is an open-source project, and contributions are welcome.
-If you have suggestions for improvements, bugs detections or new features, please feel free to send an email to support@geoflo.pro
-Your feedback and contributions are valuable in making GeoFlo even better.
+
+GeoFlo is an open-source project, and contributions are welcome. Your feedback and contributions are valuable in making GeoFlo even better.
 
 ## 🌟 Key Features
 
@@ -50,6 +50,12 @@ For more information on creating and using Mapbox access tokens:
 
 ## 🛠️ Usage/Examples
 
+### NPM Import
+
+```bash
+  npm install @solutegrate/geoflo
+```
+
 ### CDN Import
 
 ```javascript
@@ -71,11 +77,10 @@ For more information on creating and using Mapbox access tokens:
 
 ## 🗺️ Roadmap
 
-Currently, GeoFlo is in its early stages of development. The GitHub repo will be private until the project reaches a more stable state. The goal is to make GeoFlo a powerful and versatile tool for geospatial management, and your support and feedback are crucial in achieving this. Once the project is ready for a wider audience, it will be made public on GitHub.
+This is my first open-source Github project. While I have looked deeply into the MapboxGL code/docs, please understand that bugs will creep their way in.
+Currently, GeoFlo is in its early stages of development. The goal is to make GeoFlo a powerful and versatile tool for geospatial management, and your support and feedback are crucial in achieving this.
 
 ## 🏁 Credits
-
-This is my first Open Source Github project. While I have looked deeply into the MapboxGL code/docs, please understand that bugs will creep their way in.
 
 This project utilizes the following libraries:
 

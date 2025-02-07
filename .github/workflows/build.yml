@@ -42,12 +42,12 @@ jobs:
 
       - name: Webpack Dev Build
         id: webpack-dev
-        run: node webpack.js development
+        run: node webpack.min.js development
         timeout-minutes: 10
 
       - name: Webpack Dist Build
         id: webpack-dist
-        run: node webpack.js production
+        run: node webpack.min.js production
         timeout-minutes: 20
 
       - name: Commit Changes

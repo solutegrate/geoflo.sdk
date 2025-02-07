@@ -3,3 +3,4 @@ node_modules/
 .npmrc
 *.ps1
 /index.html
+webpack.js
