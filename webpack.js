@@ -57,7 +57,7 @@ let options = {
 	output: {
 		path: path.resolve(__dirname, mode === 'development' ? './dev' : './dist'),
 		filename: mode === 'development' ? `${id}.js` : `${id}.min.js`,
-		chunkFilename: mode === 'development' ? `[name].${id}.js` : `[name].${id}.min.js`,
+		chunkFilename: mode === 'development' ? `${id}.[name].js` : `${id}.[name].min.js`,
 		publicPath: mode === 'development' ? `/` : `https://${domain}/`
 	},
 	module: {
@@ -75,7 +75,7 @@ let options = {
 		]
 	},
 	resolve: { extensions: ['.json', '.js', '.jsx'] },
-	plugins: [new webpack.BannerPlugin({ banner: DISCLAIMER.trim() })]
+	plugins: []
 }
 
 if (mode === 'production') {
@@ -126,6 +126,9 @@ if (mode === 'production') {
 }
 
 (async function () {
+	const license = await fs.readFile(path.resolve(__dirname, 'LICENSE'), 'utf8');
+	await fs.writeFile(path.join(options.output.path, 'license.txt'), license);
+	options.plugins.push(new webpack.BannerPlugin({ banner: DISCLAIMER.trim() + `\n` + license.trim(), raw: true, entryOnly: true }));
 	webpack(options, build);
 })()
 
@@ -137,15 +140,18 @@ async function build(err, stats) {
 
 	if (mode === 'development') return true;
 
-	const license = await fs.readFile(path.resolve(__dirname, 'LICENSE'), 'utf8');
-	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
+	const distPath = path.resolve(__dirname, options.output.path);
+	const distFolder = await fs.readdir(distPath);
 
-	try {
-		await fs.writeFile(path.join(options.output.path, options.output.filename), `${DISCLAIMER}\n${data}`);
-		await fs.writeFile(path.join(options.output.path, 'license.txt'), license);		
-		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
-	} catch (error) {
-		console.error('Error handling CSS file:', error);
+	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
+	await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
+
+	for (const file of distFolder) {
+		if (file.endsWith('.js')) {
+			let content = await fs.readFile(path.join(distPath, file), 'utf8');
+			content = content.replace(`/*! For license information please see geoflo`, `/*! For license information please see https://sdk.geoflo.pro/${file}`);
+			await fs.writeFile(path.join(docsPath, file), content, 'utf8');
+		}
 	}
 
 	await docs();
