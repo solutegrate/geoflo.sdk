@@ -38,23 +38,16 @@ const HEADER = `
     <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />
   </a>
 </p>
-
-<h3 align="center">
-  Professional Geospatial Management Library for Mapbox GL JS
-</h3>
 </br>
 <p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
   <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/license.txt" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/License-MPL.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://projects.geoflo.pro?referer=docs.geoflo.pro" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Projects.svg?color=6fafdb" alt="GeoFlo Projects" />
+      <img src="https://img.shields.io/badge/License-MPL-blue.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
   </a>
   <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Demo.svg?color=ff7676" alt="GeoFlo Demo" />
+    <img src="https://img.shields.io/badge/GeoFlo-Demo-blue.svg?color=ff7676" alt="GeoFlo Demo" />
   </a>
   <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-v${packageJson.version}.svg?color=d7ef7e" alt="GeoFlo v${packageJson.version}" />
+    <img src="https://img.shields.io/badge/GeoFlo-SDK-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
   </a>
 </p>
 `
@@ -139,8 +132,6 @@ if (mode === 'production') {
 }
 
 (async function () {
-	const readme = await fs.readFile(path.resolve(__dirname, 'README.md'), 'utf8');
-	await fs.writeFile(path.join(options.output.path, 'README.md'), `${HEADER}\n\n${readme}`);
 	webpack(options, build);
 })()
 
@@ -205,7 +196,7 @@ async function docs() {
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
 				htmlContent = htmlContent.replace(`</title>`, `</title>\n<link rel="manifest" href="./${manifestFile}">`);	
-				htmlContent = htmlContent.replace(`<div class="main" id="main">`, `<div class="main" id="main">${HEADER}`);
+				htmlContent = htmlContent.replace(`<div class="title">`, `<div class="title">${HEADER}`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}
