@@ -150,7 +150,7 @@ async function build(err, stats) {
 		if (file.endsWith('.js')) {
 			let content = await fs.readFile(path.join(distPath, file), 'utf8');
 			content = content.replace(`/*! For license information please see geoflo`, `/*! For license information please see https://sdk.geoflo.pro/${file}`);
-			await fs.writeFile(path.join(docsPath, file), content, 'utf8');
+			await fs.writeFile(path.join(distPath, file), content, 'utf8');
 		}
 	}
 
