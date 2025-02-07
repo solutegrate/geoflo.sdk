@@ -40,13 +40,8 @@ jobs:
       - name: Install Root Node Modules
         run: npm install
 
-      - name: Webpack Dev Build
-        id: webpack-dev
-        run: node webpack.min.js development
-        timeout-minutes: 10
-
-      - name: Webpack Dist Build
-        id: webpack-dist
+      - name: Webpack Build
+        id: webpack
         run: node webpack.min.js production
         timeout-minutes: 20
 
@@ -55,7 +50,7 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           if [[ -n "$(git status --porcelain)" ]]; then
-            git add ./dist ./dev ./docs ./README.md ./LICENSE
+            git add ./dist ./docs
             git commit -m "Deployed on $(date) [skip ci]"
             git push
           else
