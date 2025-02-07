@@ -9,8 +9,6 @@ const WebpackObfuscator = require('webpack-obfuscator');
 const jsdoc2md = require("jsdoc-to-markdown");
 
 const packageJson = require('./package.json');
-const license = require('./LICENSE');
-const readme = require('./README.md');
 
 const domain = 'sdk.geoflo.pro';
 const id = 'geoflo';
@@ -143,6 +141,7 @@ if (mode === 'production') {
 }
 
 (async function () {
+	const readme = fs.readFileSync(path.resolve(__dirname, 'README.md'), 'utf8');
 	await fs.writeFile(path.join(options.output.path, 'README.md'), `${HEADER}\n\n${readme}`);
 	webpack(options, build);
 })()
@@ -155,10 +154,10 @@ async function build(err, stats) {
 
 	if (mode === 'development') return true;
 
+	const license = fs.readFileSync(path.resolve(__dirname, 'LICENSE'), 'utf8');
 	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
 
 	try {
-
 		await fs.writeFile(path.join(options.output.path, options.output.filename), `${DISCLAIMER}\n${data}`);
 		await fs.writeFile(path.join(options.output.path, 'license.txt'), license);		
 		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
@@ -207,7 +206,7 @@ async function docs() {
 				console.log(`Deleted file: ${filePath}`);
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				//htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
+				htmlContent = htmlContent.replace(/<title>.*<\/title>/, `<title>GeoFlo SDK</title>\n<link rel="manifest" href="./${manifestFile}">`);	
 				htmlContent = htmlContent.replace("<body>", `<body>${HEADER}`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
