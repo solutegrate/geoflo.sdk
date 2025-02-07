@@ -30,6 +30,7 @@ const GeoFlo = function () {
     this.modes = [];
     this.plugins = {};
     this.gamepads = {};
+    this.controls = [];
     this.enabled = false;
     this.mobile = isMobile();
 
@@ -113,6 +114,8 @@ const GeoFlo = function () {
         await loaded(this);
         await this.redraw();
 
+        this.statics.controls.forEach(function (control) { this.controls.push(new Control(control)) }, this);
+
         this.setViewport();
         this.setOpacity(this.options.map.opacity);
 
@@ -152,11 +155,6 @@ const GeoFlo = function () {
         this.type = type;
 
         this.setOptions(options);
-
-        if (this.options.controls) {
-            this.controls = [];
-            this.statics.controls.forEach(function (control) { this.controls.push(new Control(control)) }, this);
-        }
 
         this.Select = new Select(this);
         this.Draw = new Draw(this);
@@ -295,7 +293,7 @@ const GeoFlo = function () {
 	 * @returns {Object} The updated options object after merging.
 	 */
     this.setOptions = function(options={}) {
-        this.options = this.Utilities.assignDeep(Options, this.options || {}, options);
+        this.options = Object.assign(Options, this.options || {}, options);
         return this.options;
     }
 
@@ -1309,6 +1307,18 @@ const GeoFlo = function () {
         }
     }
 
+    /**
+     * @function
+     * @name getControlIds
+     * @memberof module:geoflo
+     * @description Retrieves the control IDs from the controls array.
+     * @returns {Array} An array of control IDs.
+     */
+    this.getControlIds = function () {
+        if (!this.controls) return [];
+        return this.controls.map((control) => { return control.controls.map((c) => { return c.type; }) }).flat();
+    }
+
 
 
     /**
@@ -1468,15 +1478,29 @@ const GeoFlo = function () {
 
     /**
      * @function
-     * @memberOf module:geoflo
      * @name addControls
-     * @description This function is responsible for adding controls.
-     * @params {none} No parameters needed.
-     * @returns {boolean} Returns false if no controls are available.
+     * @memberof module:geoflo
+     * @description Adds the controls to the map.
+     * @returns {void}
      */
     this.addControls = function () {
-        if (!this.controls || !this.controls.length) return false;
-        this.controls.forEach(function (control) { control.enable(); });
+        const controls = this.getControlIds();
+        controls.forEach((id) => { this.addControl(id); });
+    }
+
+    /**
+     * @function
+     * @name addControl
+     * @memberof module:geoflo
+     * @description Adds a control to the map.
+     * @param {string} id - The ID of the control to add.
+     * @returns {void}
+     */
+    this.addControl = function (id) {
+        if (!id) return false;
+        const controls = this.getControlIds();
+        if (!controls.includes(id)) throw new Error(`Control ${id} not found`, `Controls: ${controls.join(', ')}`);
+        this.controls.forEach(function (c) { if (c.getControl(id)) c.showControl(id); });
     }
 
 
@@ -1503,18 +1527,6 @@ const GeoFlo = function () {
         if (options.extent) this.setViewport(), this.setExtent();
         if (options.removeText) this.Layers.removeTextLayer();
         return features.length;
-    }
-
-	/**
-	 * @function
-     * @memberOf module:geoflo
-	 * @name removeControls
-	 * @description This function is responsible for removing controls.
-	 * @params {none} No parameters needed.
-	 */
-    this.removeControls = function () {
-        if (!this.controls || !this.controls.length) return false;
-        this.controls.forEach(function (control) { control.disable(); });
     }
 
 	/**
@@ -1556,9 +1568,43 @@ const GeoFlo = function () {
         return this.popup && this.popup.remove ? this.popup.remove() : this.currentMode.popup && this.currentMode.popup.remove ? this.currentMode.popup.remove() : false;
     }
 
+    /**
+     * @function
+     * @name removeControls
+     * @memberof module:geoflo
+     * @description Removes the controls from the map.
+     * @returns {void}
+     */
+    this.removeControls = function () {
+        const controls = this.getControlIds();
+        controls.forEach((id) => { this.removeControl(id); });
+    }
+
+    /**
+     * @function
+     * @name removeControl
+     * @memberof module:geoflo
+     * @description Removes a control from the map.
+     * @param {string} id - The ID of the control to remove.
+     * @returns {void}
+     */
+    this.removeControl = function (id) {
+        if (!id) return false;
+        const controls = this.getControlIds();
+        if (!controls.includes(id)) throw new Error(`Control ${id} not found`, `Controls: ${controls.join(', ')}`);
+        this.controls.forEach(function (c) { if (c.getControl(id)) c.hideControl(id); });
+    }
 
 
 
+    /**
+     * @function
+     * @name hideFeatures
+     * @memberof module:geoflo
+     * @description Hides features by setting their state to hidden and firing a 'features.hide' event.
+     * @param {Array} ids - An array of feature IDs to be hidden.
+     * @returns {Array} The features that were hidden.
+     */
     this.hideFeatures = function (ids=[]) {
         if (!ids.length) return false;
         const features = this.Features.getFeaturesById(ids);
@@ -1567,8 +1613,7 @@ const GeoFlo = function () {
         return features;
     }
 
-
-
+    
 
 	/**
 	 * @function

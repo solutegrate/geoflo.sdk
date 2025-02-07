@@ -6,13 +6,13 @@
  * @property {string} theme - The theme of the map. Default is 'dark'.
  * @property {boolean} showLineUnits - Show line units. Default is false.
  * @property {boolean} showFeatureText - Show feature text. Default is true.
- * @property {object} controls - Controls for the map.
- * @property {boolean} controls.options - Show options control. Default is true.
- * @property {boolean} controls.modes - Show modes control. Default is true.
- * @property {boolean} controls.utils - Show utilities control. Default is true.
- * @property {boolean} controls.types - Show types control. Default is true.
- * @property {boolean} controls.actions - Show actions control. Default is true.
- * @property {object} map - Map options.
+ * @property {object|boolean} controls - Controls for the map. Default is false. True shows all controls.
+ * @property {boolean} controls.options - Show options control. Default is false.
+ * @property {boolean} controls.modes - Show modes control. Default is false.
+ * @property {boolean} controls.utils - Show utilities control. Default is false.
+ * @property {boolean} controls.types - Show types control. Default is false.
+ * @property {boolean} controls.actions - Show actions control. Default is false.
+ * @property {object} map - Map options. Any Mapbox GL JS map options can be used here.
  * @property {string} map.container - Map container. Default is 'map'.
  * @property {array} map.center - Map center. Default is [-95.52816680236892, 39.56431143986035].
  * @property {number} map.zoom - Map zoom. Default is 3.5.
@@ -21,7 +21,6 @@
  * @property {string} map.style - Map style. Default is 'Standard'.
  * @property {number} map.opacity - Map opacity. Default is 1.
  * @property {array} map.styles - Mapbox styles with title and uri.
- * @property {boolean} map.hash - Enable map hash navigation. Default is true.
  * @property {array} map.extent - Map bounding extent.
  * @property {object} keys - Keyboard shortcuts.
  * @property {string} keys.import - Import key. Default is 'u'.
@@ -92,25 +91,17 @@
  * @property {object} gamepad.zoom - Zoom settings.
  * @property {number} gamepad.zoom.speed - Zoom speed. Default is 0.008.
  */
-
-
 const Options = {
     theme: 'dark',
     showLineUnits: false,
     showFeatureText: true,
-    controls: {
-        options: true,
-        modes: true,
-        utils: true,
-        types: true,
-        actions: true
-    },
+    controls: false,
     map: {
         container: 'map',
         center: [-95.52816680236892, 39.56431143986035],
         zoom: 3.5,
         opacity: 1,
-        maxPitch: 70,
+        maxPitch: 60,
         projection: 'mercator',
         style: 'Dark',
         hash: true,
@@ -121,8 +112,8 @@ const Options = {
         { title: "Light", uri: "mapbox://styles/mapbox/light-v11" },
         { title: "Outdoors", uri: "mapbox://styles/mapbox/outdoors-v12" },
         { title: "Streets", uri: "mapbox://styles/mapbox/navigation-night-v1" },
-        { title: "Standard", uri: "mapbox://styles/mapbox/standard" },
-        { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" }
+        { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
+        { title: "Standard", uri: "mapbox://styles/mapbox/standard" }
     ],
     keys: {
         import: 'u',

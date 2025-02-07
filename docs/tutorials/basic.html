@@ -38,7 +38,7 @@
             const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
 
             (async function (token, key) {
-                await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
+                await geoflo.init(MAPBOX_TOKEN, { container: 'map', controls: true });
                 buildLegend();
                 geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
             })();
