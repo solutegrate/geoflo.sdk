@@ -47,7 +47,7 @@ const Features = function () {
 	 * @param {Array} ids - An array of feature IDs to retrieve.
 	 * @returns {Array} - An array of features corresponding to the provided IDs.
 	 */
-    this.getFeaturesById = function (ids) {
+    this.getFeaturesById = function (ids=[]) {
         const addedIds = [];
         const result = [];
 
@@ -115,6 +115,11 @@ const Features = function () {
         return units;
     };
 
+    this.getFeatureState = function (id) {
+        if (!id) return false;
+        return geoflo.map.getFeatureState({ source: geoflo.statics.constants.sources.COLD, id: id });
+    }
+
 
 
 	/**
@@ -154,7 +159,6 @@ const Features = function () {
         
         features.forEach(function(feature) {
             var id = feature.id || feature.properties.id;
-            console.log(feature, state)
             geoflo.map.setFeatureState({ source: feature.source, id: id }, state);
         })
 
@@ -205,6 +209,14 @@ const Features = function () {
 
         delete this.textFeatures;
         delete this.currentType;
+    }
+
+
+
+    this.isFeatureHidden = function (id) {
+        if (!id) return false;
+        var state = this.getFeatureState(id);
+        return state.hidden;
     }
 
 
@@ -304,6 +316,7 @@ const Features = function () {
     };
 
 
+
 	/**
 	 * @function
      * @memberof module:geoflo.Features
@@ -317,7 +330,6 @@ const Features = function () {
 
         var sources = [];
         var selectedFeatures = geoflo.getSelectedFeatures();
-        var coords = options.coords || null;
 
         this.updatingFeatures = true;
 
@@ -341,16 +353,8 @@ const Features = function () {
                 sources.push(originalFeature.source);
             }
             
-            if (options.type === 'pinning' && coords) {
-                originalFeature.geometry.type === 'Point' ? originalFeature.geometry.coordinates = coords :
-                originalFeature.geometry.type === 'Polygon' && coords ? originalFeature.geometry.coordinates[0][feature.index] = coords :
-                originalFeature.geometry.type === 'LineString' && coords ? originalFeature.geometry.coordinates[feature.index] = coords :
-                false;
-            } else {
-                originalFeature.geometry.coordinates = feature.geometry.coordinates;
-                originalFeature.properties = feature.properties;
-            }
-
+            originalFeature.geometry.coordinates = feature.geometry.coordinates;
+            originalFeature.properties = feature.properties;
             options.addUnits ? this.addUnits(originalFeature) : false;
         }, this);
 
@@ -359,8 +363,6 @@ const Features = function () {
         if (!sources.length) return false;
         return this.updateSource(sources);
     };
-
-    
 
 	/**
 	 * @function
@@ -380,46 +382,31 @@ const Features = function () {
 	 * @function
      * @memberof module:geoflo.Features
 	 * @name removeFeatures
-	 * @description This function removes features from the map based on the provided ID or array of IDs. It updates the map source after removing the features.
-	 * @param {string|string[]} id - The ID or array of IDs of the features to be removed.
-	 * @param {boolean} remove - A flag indicating whether to remove the features or not.
-	 * @returns {Object[]} An array containing the removed features.
+	 * @description This function permenantly removes a feature from the map based on the provided ID. It updates the map source after removing the features.
+	 * @param {string|string[]} id - The ID of the features to be removed.
+	 * @returns {Object[]} An array containing the removed feature.
 	 */
-    this.removeFeatures = function (id, remove) {
+    this.removeFeature = function (id) {
         const removedFeatures = [];
-
-        var feature;
-        var sources;
-
-        if (Array.isArray(id) && remove) {
-            sources = id.map(function(layer) { return layer.details ? layer.details.id : layer.id ? layer.id : layer });
-
-            coldFeatures.forEach((feature) => {
-                if (!sources.includes(feature.source)) return;
-                var index = coldFeatures.findIndex((f) => { return feature.id === f.id || feature.properties.id === f.id });
-                if (index > -1) removedFeatures.push(...coldFeatures.splice(index, 1));
-            })
-
-            this.updateSource(sources);
-        } else {
-            feature = remove ? coldFeatures.findIndex((feature) => { return feature.id === id || feature.properties.id === id }) :
-            coldFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
-
-            if (remove) {
-                if (feature > -1) {
-                    removedFeatures.push(...coldFeatures.splice(feature, 1));
-                    sources = removedFeatures.map((feature) => { return feature.source });
-                }
-                
-                this.updateSource(sources);
-            } else {
-                removedFeatures.push(feature);
-                this.setFeatureState(id, { hidden: true });
-            }
-        }
-
+        var feature = coldFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+        var index = coldFeatures.findIndex((feature) => { return feature.id === id || feature.properties.id === id });        
+        if (index < 0) return removedFeatures;
+        removedFeatures.push(...coldFeatures.splice(feature, 1));
+        this.updateSource(removedFeatures.map((feature) => { return feature.source }));
         return removedFeatures;
     };
+
+    this.removeLayers = function (layers=[]) {
+        const sources = layers.map(function (layer) { return layer.source ? layer.source : layer.details ? layer.details.id : layer.id ? layer.id : layer });
+
+        coldFeatures.forEach((feature) => {
+            if (!sources.includes(feature.source)) return;
+            var index = coldFeatures.findIndex((f) => { return feature.id === f.id || feature.properties.id === f.id });
+            if (index > -1) removedFeatures.push(...coldFeatures.splice(index, 1));
+        })
+
+        if (sources.length) this.updateSource(sources);
+    }
 
 	/**
 	 * @function

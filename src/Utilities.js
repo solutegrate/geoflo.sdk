@@ -25,7 +25,7 @@ const Utilities = function () {
     }
 
     this.getFeatureId = function (feature) {
-        return feature.id || feature.properties.id;
+        return feature.parent || feature.properties.parent || feature.id || feature.properties.id;
     }
 
 	/**

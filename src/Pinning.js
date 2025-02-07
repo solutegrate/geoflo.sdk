@@ -10,7 +10,9 @@ const Pinning = function (mode) {
     const geoflo = this.geoflo;
 
     this.type = mode.type;
-    this.updatedFeatures = [];
+    this.coldFeatures = [];
+    this.pinableFeatures = [];
+    this.pinnedFeatures = [];
 
 	/**
 	 * @function
@@ -29,25 +31,28 @@ const Pinning = function (mode) {
     *
     */
     this.activate = function () {
-        this.updatedFeatures = [];
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
         this.enabled = true;
         geoflo.options['pinning'].enable = true;
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
     }
 
 	/**
 	 * @function
      * @memberof module:geoflo.Pinning
 	 * @name deactivate
-	 * @description This function deactivates pinning by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting updatedFeatures.
+	 * @description This function deactivates pinning by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting coldFeatures.
 	 */
     this.deactivate = function () {
         this.enabled = false;
         geoflo.options['pinning'].enable = false;
         this.resetFeatures();
         delete this.buffer;
-        delete geoflo.pinableFeatures;
-        delete geoflo.pinningFeatures;
-        this.updatedFeatures = [];
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
     }
 
 	/**
@@ -58,7 +63,16 @@ const Pinning = function (mode) {
 	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
 	 */
     this.getFeatures = function () {
-        var features = geoflo.pinnedFeatures && geoflo.pinnedFeatures.length ? geoflo.pinnedFeatures.map(function (feature) { return feature.feature }) : [];
+        return this.pinnedFeatures.map(function (feature) { return geoflo.Utilities.cloneDeep(feature) });
+    }
+
+    this.saveFeatures = function () {
+        const features = this.pinnedFeatures.map(function (feature) { return geoflo.Utilities.cloneDeep(feature) });
+        geoflo.addFeatures(features, true);
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
         return features;
     }
 
@@ -97,11 +111,10 @@ const Pinning = function (mode) {
 	 * @returns {Array} - An array of pinable features.
 	 */
     this.setFeatures = function (coords) {
-        geoflo.pinableFeatures = [];
         if (!this.enabled || !coords) return false;
-        geoflo.pinableFeatures = this.getNearByFeatures(coords);
-        geoflo.fire('pinning.add', { features: geoflo.pinableFeatures, buffer: this.buffer });
-        return geoflo.pinableFeatures;
+        this.pinableFeatures = this.getNearByFeatures(coords);
+        geoflo.fire('pinning.add', { features: this.pinableFeatures, buffer: this.buffer });
+        return this.pinableFeatures;
     }
 
 	/**
@@ -112,8 +125,9 @@ const Pinning = function (mode) {
 	 * @returns {boolean} Returns false if there are no updated features to reset.
 	 */
     this.resetFeatures = function () {
-        if (!this.updatedFeatures.length) return false;
-        geoflo.addFeatures(this.updatedFeatures, true);
+        if (!this.coldFeatures.length) return false;
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
+        geoflo.addFeatures(this.coldFeatures, true);
     }
 
 	/**
@@ -123,14 +137,14 @@ const Pinning = function (mode) {
 	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
 	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
 	 */
-    this.updateFeatures = function () {
-        if (!this.enabled) return false;
-        if (!geoflo.pinableFeatures || !geoflo.pinableFeatures.length) return delete geoflo.pinningFeatures, false;
-        updateFeatures.call(this, geoflo.pinableFeatures);
-        geoflo.Features.updateFeatures(geoflo.pinableFeatures, { type: 'pinning', coords: geoflo.snappedVertex, addUnits: true });
-        geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(geoflo.pinableFeatures);
-        geoflo.fire('pinning.update', { feature: geoflo.hotFeature, vertex: turf.point(geoflo.snappedVertex), features: geoflo.pinnedFeatures });
-        return geoflo.pinningFeatures;
+    this.updateFeatures = function (point) {
+        if (!this.enabled || !point || !this.pinableFeatures.length) return false;
+        updateFeatures.call(this, this.pinableFeatures, point.geometry.coordinates);
+        geoflo.hideFeatures(this.coldFeatures.map(function (feature) { return feature.id }));
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection(this.pinnedFeatures));
+        geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(this.pinableFeatures);
+        geoflo.fire('pinning.update', { feature: geoflo.hotFeature, point: point, pinned: this.pinnedFeatures });
+        return this.pinnedFeatures;
     }
 
 	/**
@@ -144,46 +158,84 @@ const Pinning = function (mode) {
     this.getNearByFeatures = function (coords) {
         if (!this.enabled || !coords) return false;
 
-        var hotFeature = geoflo.hotFeature;
-        var calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
-        var radiusInKm = calculatedRadius / 100000;
-        var buffer = this.setBuffer(coords);
-        var features = geoflo.getRenderedDrawnFeatures({lng: coords[0], lat: coords[1]}, radiusInKm);
-        var nearby = [];
+        const hotFeatureId = geoflo.hotFeature ? geoflo.hotFeature.id : null;
+        const calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
+        const radiusInKm = calculatedRadius / 100000;
+        const buffer = this.setBuffer(coords);
 
-        features.forEach(function (feature) {
-            turf.coordEach(feature, function (coord, index) {
-                var isNearby = false;
-    
-                if (buffer.radius && turf.booleanWithin(turf.point(coord), buffer.radius)) isNearby = true;
-                if (!isNearby && buffer.coords && geoflo.Utilities.isPointEqual(coord, buffer.coords)) isNearby = true;
-                if (!isNearby) return;
-                if (hotFeature && hotFeature.id === feature.id) return;
-                    
-                nearby.push({
-                    id: feature.id || feature.properties.id,
-                    type: feature.properties.type,
-                    index: index,
-                    feature: feature
-                })
-            });
+        if (!buffer) return false;
+
+        const features = geoflo.getRenderedDrawnFeatures({ lng: coords[0], lat: coords[1] }, radiusInKm);
+        const nearby = [];
+
+        // Precompute point for faster comparisons
+        const point = turf.point(coords);
+
+        features.forEach((feature) => {
+            if (hotFeatureId === feature.id) return; // Skip if it's the active feature
+
+            // Check all coordinates in one loop instead of using `turf.coordEach`
+            const coordsArray = feature.geometry.coordinates.flat(Infinity); // Flattens to avoid nested looping
+
+            for (let index = 0; index < coordsArray.length; index += 2) {
+                const coord = [coordsArray[index], coordsArray[index + 1]];
+
+                // Fast checks for nearby conditions
+                if (
+                    (buffer.radius && turf.booleanWithin(turf.point(coord), buffer.radius)) ||
+                    (buffer.coords && geoflo.Utilities.isPointEqual(coord, buffer.coords))
+                ) {
+                    nearby.push({
+                        id: feature.id || feature.properties.id,
+                        type: feature.properties.type,
+                        index: Math.floor(index / 2), // Convert flattened index back to original index
+                        feature: feature
+                    });
+                    break; // Stop checking once a valid nearby point is found
+                }
+            }
         });
 
         return nearby;
-    }
+    };
+
     
     if (geoflo.options['pinning'].enable) this.activate();
 
 
-    function updateFeatures(features) {
-        if (!features || !features.length) return false;
+    function updateFeatures(features, coords) {
+        if (!features || !features.length || !coords) return false;
 
-        features.forEach(function (feature) {
-            var pinned = this.updatedFeatures.find(function (f) { return f.id === feature.id });
-            if (pinned) return;
-            this.updatedFeatures.push(geoflo.Utilities.cloneDeep(feature.feature));
-        }, this);
+        const coldFeatureIds = new Set(this.coldFeatures.map(f => f.id));
+        const updatedFeatureIds = new Set(this.pinnedFeatures.map(f => f.id));
+
+        features.forEach((feature) => {
+            const id = feature.id;
+            const feat = feature.feature;
+            const index = feature.index;
+
+            if (!coldFeatureIds.has(id)) {
+                this.coldFeatures.push(geoflo.Utilities.cloneDeep(feat));
+                coldFeatureIds.add(id);
+            }
+
+            const updated = updatedFeatureIds.has(id) ? this.pinnedFeatures.find(f => f.id === id) : feat;
+
+            if (updated.geometry.type === 'Point') {
+                updated.geometry.coordinates = coords;
+            } else if (updated.geometry.type === 'Polygon') {
+                updated.geometry.coordinates[0][index] = coords;
+            } else if (updated.geometry.type === 'LineString') {
+                updated.geometry.coordinates[index] = coords;
+            }
+
+            if (!updatedFeatureIds.has(id)) {
+                this.pinnedFeatures.push(geoflo.Utilities.cloneDeep(updated));
+                updatedFeatureIds.add(id);
+            }
+        });
     }
+
 };
 
 export default Pinning;

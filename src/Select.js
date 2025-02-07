@@ -87,7 +87,7 @@ const Select = function () {
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
         //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
-        removedFeatures = geoflo.Features.removeFeatures(id);
+        removedFeatures = geoflo.hideFeatures([id]);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
 

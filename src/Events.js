@@ -16,13 +16,14 @@ const events = [
     'control.remove',
     'features.zoom',
     'features.add',
-    'features.delete',
+    'features.remove',
     'features.update',
     'features.import',
     'features.export',
     'features.offset',
+    'features.hide',
     'feature.add',
-    'feature.delete',
+    'feature.remove',
     'feature.select',
     'feature.deselect',
     'feature.update',
@@ -229,6 +230,7 @@ const Events = function (geoflo) {
      * @param {Object} event - The event object containing mouse movement details.
      */
     const mouseleave = function (event) {
+        if (!geoflo.currentMode) return;
         geoflo.currentMode.handleOffMap ? geoflo.currentMode.handleOffMap(event) : false;
     };
 
@@ -240,6 +242,7 @@ const Events = function (geoflo) {
      * @param {Object} event - The event object containing mouse movement details.
      */
     const mouseover = function (event) {
+        if (!geoflo.currentMode) return;
         geoflo.currentMode.handleOnMap ? geoflo.currentMode.handleOnMap(event) : false;
     };
 
@@ -396,8 +399,8 @@ const Events = function (geoflo) {
      */
     const gamepadconnected = function (event) {
         const gamepad = event.gamepad || event.detail.gamepad;
-        if (!geoflo._Gamepad) throw new Error('GeoFlo Premium Required!');
-        geoflo.gamepads[gamepad.index] = new geoflo._Gamepad(gamepad);
+        if (!geoflo.license || !geoflo.license.enabled || !geoflo.premiumModules) throw new Error('GeoFlo Premium Required!');
+        geoflo.gamepads[gamepad.index] = new geoflo.premiumModules.Gaming(gamepad);
         geoflo.fire('gamepad.add', { gamepad: gamepad });
     };
 
@@ -412,7 +415,6 @@ const Events = function (geoflo) {
      */
     const gamepaddisconnected = function (event) {
         const gamepad = event.gamepad || event.detail.gamepad;
-        if (!geoflo._Gamepad) return false;
         if (!geoflo.gamepads[gamepad.index]) return false;
         geoflo.gamepads[gamepad.index].onDisconnect(gamepad);
         delete geoflo.gamepads[gamepad.index]

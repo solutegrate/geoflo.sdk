@@ -75,11 +75,18 @@ const Snapping = function (mode) {
 	 * @returns {Object} The snapped feature based on the calculated closest point or line.
 	 */
     this.setClosest = function (coords, isPoint, isVertex) {
+        if (!coords || isNaN(coords[0]) || isNaN(coords[1])) return false;
+
         var snapFeature = null;
         var calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
         var radiusInKm = calculatedRadius / 100000;
         var pixelDistance = geoflo.options.snapping.pixels ? geoflo.options.snapping.pixels * metersPerPixel(coords[1], geoflo.map.getZoom()) : false;
-        var filter = geoflo.pinableFeatures && geoflo.pinableFeatures.length ? ['case', ['any', ...geoflo.pinableFeatures.map(e => ["==", ["get", "id"], e.id || e.properties.id])], false, true] : false;
+        var filter = false;
+
+        if (geoflo.Pinning && geoflo.Pinning.pinnedFeatures.length) {
+            filter = ['case', ['any', ...geoflo.Pinning.pinnedFeatures.map(e => ["==", ["get", "id"], e.id || e.properties.id])], false, true];
+        }
+
         var nearFeatures = geoflo.getRenderedFeatures({ lng: coords[0], lat: coords[1] }, radiusInKm, filter);
         var closestPoint = nearFeatures && nearFeatures.length ? findClosestPoint(nearFeatures, coords, radiusInKm, pixelDistance) : false;
         var lastClickDistance, lastClickArray, lastClickEqual;
@@ -163,9 +170,12 @@ const Snapping = function (mode) {
         var calculateRoute = geoflo.Routing && geoflo.Routing.enabled;
         if (geoflo.bypassRouting) calculateRoute = false;
 
-        if (!snapToFeature || !geoflo.snappedVertex) return false;
+        if (!snapToFeature) return false;
 
-        geoflo.snapFeature = this.setClosest(geoflo.snappedVertex, true, true);
+        const coords = geoflo.snappedVertex;
+        if (!coords || isNaN(coords[0]) || isNaN(coords[1])) return false;
+
+        geoflo.snapFeature = this.setClosest(coords, true, true);
 
         if (calculateRoute) geoflo.snapFeature = geoflo.Routing.getClosest() || geoflo.snapFeature;
         if (!geoflo.snapFeature) return geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
@@ -175,7 +185,7 @@ const Snapping = function (mode) {
 
         geoflo.hotFeature.geometry.coordinates[geoflo.dragIndex] = geoflo.snapFeature.geometry.coordinates;
         geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
-        geoflo.fire('vertex.dragsnap', { feature: geoflo.hotFeature, vertex: turf.point(geoflo.snappedVertex) });
+        geoflo.fire('vertex.dragsnap', { feature: geoflo.hotFeature, vertex: turf.point(coords) });
     }
 
 
@@ -208,10 +218,13 @@ const Snapping = function (mode) {
 	 */
     this.updateFeature = function (evtCoords) {
         geoflo.closestPoint = null;
+
         if (!geoflo.lastClick) return null;
         if (!geoflo.firstClick || geoflo.mouseIsDown) return null;
     
         var type = geoflo.Features.getType(geoflo.hotFeature) || geoflo.currentMode.type;
+        if (geoflo.hotFeature && geoflo.hotFeature.geometry.type === 'Point') return null;
+
         var coords = geoflo.hotFeature ? geoflo.Utilities.getLastIndexCoords(geoflo.hotFeature) : geoflo.lastClick.coords;
         var vertex = turf.point(evtCoords);
         var hintCoords = type && type === "Polygon" && geoflo.hotFeature ? [coords, evtCoords, geoflo.firstClick.coords] : [coords, evtCoords];

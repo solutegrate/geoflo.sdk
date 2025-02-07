@@ -795,7 +795,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.geoflo.getButtons('Polygon').button.click();
+                        event.geoflo.getButtons('polygon').button.click();
                     }
                 }
             },
@@ -834,7 +834,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.geoflo.getButtons('Circle').button.click();
+                        event.geoflo.getButtons('circle').button.click();
                     }
                 }
             },
@@ -871,7 +871,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.geoflo.getButtons('Polyline').button.click();
+                        event.geoflo.getButtons('polyline').button.click();
                     }
                 }
             },
@@ -908,7 +908,7 @@ const Options = {
                     }
                 } else if (event.type === 'release') {
                     if (event.gamepad.hasJoysticks) {
-                        event.geoflo.getButtons('Rectangle').button.click();
+                        event.geoflo.getButtons('rectangle').button.click();
                     }
                 }
             }

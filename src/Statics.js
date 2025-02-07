@@ -143,6 +143,7 @@ const Statics = {
         sources: {
             SELECT: Id + "-select",
             SNAP: Id + "-snap",
+            PIN: Id + "-pin",
             ROUTE: Id + "-route",
             HOT: Id + "-hot",
             COLD: Id + "-cold",

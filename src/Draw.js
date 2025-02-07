@@ -293,7 +293,6 @@ const Draw = function () {
             if (isLastIndex) setTimeout(function() { geoflo.lastClick = { coords: coords } }, 100)
         }
         
-        geoflo.pinableFeatures = [];
         geoflo.mouseIsIdle = false;
         addText.call(this, this.type, geoflo.snapFeature);
         geoflo.refreshMeshData();
@@ -537,7 +536,7 @@ const Draw = function () {
         geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
         geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([vertex]));
         geoflo.fire('vertex.drag', { type: this.type, coords: [event.lngLat.lng, event.lngLat.lat], feature: geoflo.hotFeature, vertex: vertex });
-        if (geoflo.Pinning) geoflo.Pinning.updateFeatures();
+        if (geoflo.Pinning) geoflo.Pinning.updateFeatures(vertex);
     }
 
 	/**
@@ -809,7 +808,7 @@ const Draw = function () {
         geoflo.lastClick = { coords: coords };
         geoflo.firstClick = { coords: coords };
 
-        setTimeout(function () { geoflo.Features.removeFeatures(id); }, 100);
+        setTimeout(function () { geoflo.hideFeatures([id]); }, 100);
         return geoflo.currentMode.type;
     }
 
@@ -883,10 +882,18 @@ const Draw = function () {
         feature = exploreFeature || feature || geoflo.hotFeature;
         if (!feature || !geoflo.currentMode.activated) return geoflo.currentMode.deactivate();
 
+        geoflo.map.getSource(geoflo.statics.constants.sources.ROUTE).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+
         feature = geoflo.Features.addFeature(feature, geoflo.currentMode.source, geoflo.currentMode.properties);
 
         var pinnedFeatures = [];
-        if (geoflo.Pinning) pinnedFeatures = geoflo.Pinning.getFeatures();
+        if (geoflo.Pinning && geoflo.Pinning.enabled) pinnedFeatures = geoflo.Pinning.saveFeatures();
+
         geoflo.fire('draw.finish', { feature: feature, pinned: pinnedFeatures, type: type, editing: geoflo.editMode });
         return geoflo.currentMode.deactivate();
     }
@@ -954,8 +961,6 @@ const Draw = function () {
         delete geoflo.textInput;
         delete geoflo.touchMoving;
         delete geoflo.touchDown;
-        delete geoflo.pinningFeatures;
-        delete geoflo.pinnedFeatures;
         delete geoflo.canDragMove;
         delete geoflo.canAddVertex;
         delete geoflo.dragIndex;
@@ -1039,7 +1044,7 @@ const Draw = function () {
         dragIndex = index ? vertex.properties.index : geoflo.currentMode.type === 'Circle' || geoflo.currentMode.type === 'Icon' || geoflo.currentMode.type === 'Image' ? 0 : false;
     
         geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([vertex]));
-        geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([geoflo.hotFeature]));
+        geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([hotFeature]));
     
         if (type === 'linepoint') return addVertex(vertex);
     
@@ -1049,8 +1054,10 @@ const Draw = function () {
         geoflo.canAddVertex = false;
         geoflo.canDragMove = true;
         geoflo.snappedVertex = vertex.geometry.coordinates;
+        
         if (geoflo.Pinning) geoflo.Pinning.setFeatures(geoflo.snappedVertex);
-        geoflo.fire('vertex.on', { vertex: vertex, index: dragIndex, feature: geoflo.hotFeature });
+
+        geoflo.fire('vertex.on', { vertex: vertex, index: dragIndex, feature: hotFeature });
     }
     
     function offVertex () {
@@ -1067,7 +1074,6 @@ const Draw = function () {
         geoflo.snappedVertex = null;
         geoflo.dragIndex = -1;
         geoflo.mouseIsDown = geoflo.touchDown || false;
-        geoflo.pinableFeatures = [];
         geoflo.lastIndex = false;
         geoflo.canAddVertex = false;
         geoflo.addedVertexOnLine = false
@@ -1205,7 +1211,9 @@ const Draw = function () {
         if (geoflo.lastDragMove < geoflo.options.pinning.idle) return geoflo.mouseIsIdle = false, false;
         geoflo.mouseIsIdle = true;
         if (geoflo.Snapping) geoflo.Snapping.setVertex();
-        if (geoflo.Pinning) geoflo.Pinning.updateFeatures();
+        if (!geoflo.snappedVertex) return false;
+        var vertex = turf.point(geoflo.snappedVertex);
+        if (geoflo.Pinning) geoflo.Pinning.updateFeatures(vertex);
         return true;
     }
 

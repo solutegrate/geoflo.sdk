@@ -501,7 +501,7 @@ const GeoFlo = function () {
      * @copyright 2025
      */
     this.setLayers = async function (layers=[], options={}) {
-        if (options.reset) this.removeFeatures(layers, options);
+        if (options.reset) this.Features.removeLayers(layers, options);
         return await this.Layers.setCustomLayers(layers, options);
     }
 
@@ -1093,6 +1093,7 @@ const GeoFlo = function () {
 	 */
     this.getRenderedFeatures = function (lngLat, radiusInKm, filter) {
         var features = [this.getRenderedDrawnFeatures(lngLat, radiusInKm, filter), this.getRenderedSnapFeatures(lngLat, radiusInKm, filter)].flat();
+        features = features.filter(function (f) { return !this.Features.isFeatureHidden(this.Utilities.getFeatureId(f))  }, this);
         return features;
     }
 
@@ -1523,10 +1524,10 @@ const GeoFlo = function () {
 	 * @description Removes specified features from the map. If no layers are provided, all features are removed. If the layers parameter is not an array, the function returns false.
 	 * @param {Array} layers - An array of layers to remove features from.
 	 */
-    this.removeFeatures = function (layers) {
-        if (!layers) return this.Features.deleteFeatures();
-        if (!Array.isArray(layers)) return false;
-        this.Features.removeFeatures(layers, true);
+    this.removeFeatures = function (ids=[]) {
+        if (!ids.length) return false;
+        ids.forEach((id) => { this.removeFeature(id); }, this);
+        this.fire('features.remove', { ids: ids });
     }
 
 	/**
@@ -1538,8 +1539,9 @@ const GeoFlo = function () {
 	 * @returns {boolean} - Returns true if the feature was successfully removed, otherwise false.
 	 */
     this.removeFeature = function (id) {
-        var removed = id ? this.Features.removeFeatures(id, true) : false;
-        this.fire('feature.delete', { id: id, feature: removed })
+        if (!id) return false;
+        var removed = this.Features.removeFeature(id);
+        this.fire('feature.remove', { id: id });
         return removed;
     }
 
@@ -1555,6 +1557,15 @@ const GeoFlo = function () {
     }
 
 
+
+
+    this.hideFeatures = function (ids=[]) {
+        if (!ids.length) return false;
+        const features = this.Features.getFeaturesById(ids);
+        ids.forEach((id) => { this.Features.setFeatureState(id, { hidden: true }); }, this);
+        this.fire('features.hide', { ids: ids, features: features });
+        return features;
+    }
 
 
 
@@ -1929,7 +1940,7 @@ const GeoFlo = function () {
                 var feature = this.getSelectedFeatures()[0];
                 id = feature.parent || feature.properties.parent || feature.id || feature.properties.id;
                 this.removeSelection(id);
-                this.Features.removeFeatures(id, true);
+                this.Features.removeFeature(id);
                 this.Mesh ? this.Mesh.removeFeature(id) : false;
                 this.fire('feature.delete', { features: this.getDrawnFeatures(), id: id, feature: feature })
             } else {
