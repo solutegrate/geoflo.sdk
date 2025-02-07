@@ -11,34 +11,34 @@
   "publicPath": "./",
   "icons": [
     {
-      "src": "https://geoflo.s3.amazonaws.com/logos/apple-touch-icon.png",
+      "src": "https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
     },
     {
-      "src": "https://geoflo.s3.amazonaws.com/logos/favicon-32x32.png",
+      "src": "https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "https://geoflo.s3.amazonaws.com/logos/favicon-16x16.png",
+      "src": "https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png",
       "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "https://geoflo.s3.amazonaws.com/logos/logo_profile.png",
-      "sizes": "1000x1000",
+      "src": "https://geoflo.s3.us-east-1.amazonaws.com/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://geoflo.s3.us-east-1.amazonaws.com/android-chrome-512x512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "screenshots": [
     {
       "src": "https://geoflo.s3.amazonaws.com/screenshots/loading.png",
-      "sizes": "1080x1920",
-      "type": "image/png"
-    },
-    {
-      "src": "https://geoflo.s3.amazonaws.com/screenshots/events.png",
       "sizes": "1080x1920",
       "type": "image/png"
     }
