@@ -198,8 +198,7 @@ async function docs() {
 				console.log(`Deleted file: ${filePath}`);
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				htmlContent = htmlContent.replace(`</title>`, `</title>\n<link rel="manifest" href="./${manifestFile}">`);	
-				htmlContent = htmlContent.replace(`<div class="title">`, `<div class="title">${HEADER}`);
+				htmlContent = htmlContent.replace(`</title>`, `</title>\n<link rel="manifest" href="./${manifestFile}">`);
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}

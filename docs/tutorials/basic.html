@@ -13,7 +13,14 @@
 
 <body>
     <div class="code-html" style="height: 100%;width: 100%;">
+        <div id="control-legend">
+            <h3>Control Legend</h3>
+            <ul id="legend-list" style="list-style: none; padding: 0;"></ul>
+        </div>
+
         <div id="map"></div>
+
+        <div id="event-log"></div>
     </div>
 
     <script src='//cdn.rawgit.com/markdown-it/markdown-it/8.1.0/dist/markdown-it.min.js'></script>
@@ -26,13 +33,73 @@
     <script src="https://sdk.geoflo.pro/geoflo.min.js"></script>
 
     <script class="code-js">
-        // Replace with your Mapbox token
-        const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
+        document.addEventListener("DOMContentLoaded", function () {
+            // Replace with your Mapbox token
+            const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
 
-        (async function (token, key) {
-            await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
-            geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-        })();
+            (async function (token, key) {
+                await geoflo.init(MAPBOX_TOKEN, { container: 'map' });
+                buildLegend();
+                geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
+            })();
+
+            function buildLegend () {
+                const legendList = document.getElementById("legend-list");
+
+                const buttons = [
+                    { class: "geoflo-select", label: "Select Feature" },
+                    { class: "geoflo-edit", label: "Edit Feature" },
+                    { class: "geoflo-finish", label: "Save Feature" },
+                    { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
+                    { class: "geoflo-repeat", label: "Repeat Draw Mode" },
+                    { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
+                    { class: "geoflo-export", label: "Export Features" },
+                    { class: "geoflo-import", label: "Import Features" },
+                    { class: "geoflo-delete-data", label: "Delete Features" },
+                    { class: "mapbox-gl-draw_line", label: "Draw Line" },
+                    { class: "mapbox-gl-draw_polygon", label: "Draw Polygon" },
+                    { class: "mapbox-gl-draw_rectangle", label: "Draw Rectangle" },
+                    { class: "mapbox-gl-draw_point", label: "Draw Point" },
+                    { class: "mapbox-gl-draw_text", label: "Draw Text" },
+                    { class: "mapbox-gl-draw_icon", label: "Draw Icon" },
+                    { class: "geoflo-snapping-enabled", label: "Snapping Enabled" },
+                    { class: "geoflo-pinning-enabled", label: "Pinning Enabled" },
+                    { class: "geoflo-routing-enabled", label: "Routing Enabled" },
+                    { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
+                    { class: "geoflo-painting-enabled", label: "Painting Enabled" },
+                    { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
+                    { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
+                    { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
+                    { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
+                    { class: "mapboxgl-style-switcher", label: "Map Styles" }
+                ];
+
+                buttons.forEach(button => {
+                    const listItem = document.createElement("li");
+
+                    const icon = document.createElement("div");
+                    icon.className = button.class;
+
+                    const label = document.createElement("span");
+                    label.textContent = button.label;
+
+                    listItem.appendChild(icon);
+                    listItem.appendChild(label);
+                    legendList.appendChild(listItem);
+                });
+            }
+
+            function logEvent(event) {
+                const eventLog = document.getElementById("event-log");
+                const timeStamp = new Date().toLocaleTimeString();
+                const logMessage = `[${timeStamp}] ${event.name}`;
+                const logEntry = document.createElement("div");
+                logEntry.textContent = logMessage;
+                eventLog.appendChild(logEntry);
+                while (eventLog.childNodes.length > maxEvents) { eventLog.removeChild(eventLog.firstChild); }
+                eventLog.scrollTop = eventLog.scrollHeight;
+            }
+        });
     </script>
 </body>
 
