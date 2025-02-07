@@ -198,7 +198,15 @@ async function docs() {
 				console.log(`Deleted file: ${filePath}`);
 			} else if (file.endsWith('.html')) {
 				let htmlContent = await fs.readFile(path.join(docsPath, file), 'utf8');
-				htmlContent = htmlContent.replace(`</title>`, `</title>\n<link rel="manifest" href="./${manifestFile}">`);
+				
+				htmlContent = htmlContent.replace(`</title>`,
+					`</title>\n
+					<link rel="manifest" href="./${manifestFile}">\n
+					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">\n
+					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">\n
+					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">\n
+				`);
+
 				await fs.writeFile(path.join(docsPath, file), htmlContent, 'utf8');			
 			}
 		}

@@ -305,7 +305,7 @@ const Draw = function () {
 	 * @returns {Object} The updated event object or the result of the drawing action.
 	 */
     this.handleClick = function (event) {
-        if (event.finish) return geoflo.editMode ? this.saveEdit(null, [event.lngLat.lng, event.lngLat.lat]) : finishDraw(this.type);
+        if (event.finish) return geoflo.editMode ? this.saveEdit() : finishDraw(this.type);
 
         if (event.touch && geoflo.touchMoving) {
             geoflo.touchMoving = false

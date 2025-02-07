@@ -24,7 +24,10 @@
 
         <div id="map"></div>
 
-        <div id="event-log"></div>
+        <div id="event-log">
+            <h3>Event Log</h3>
+            <div id="event-log-content"></div>
+        </div>
     </div>
 
     <script src='//cdn.rawgit.com/markdown-it/markdown-it/8.1.0/dist/markdown-it.min.js'></script>
@@ -92,7 +95,7 @@
             }
 
             function logEvent(event) {
-                const eventLog = document.getElementById("event-log");
+                const eventLog = document.getElementById("event-log-content");
                 const timeStamp = new Date().toLocaleTimeString();
                 const logMessage = `[${timeStamp}] ${event.name}`;
                 const logEntry = document.createElement("div");
