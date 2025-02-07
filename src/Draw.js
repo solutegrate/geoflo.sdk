@@ -203,13 +203,11 @@ const Draw = function () {
 	 * @param {Object} feature - The feature to be saved.
 	 * @returns {boolean} - Returns true if the feature is successfully saved, false otherwise.
 	 */
-    this.saveEdit = function (feature) {
-        var hot = geoflo.hotFeature;
-        if (!hot) return false;
-
-        var type = hot.properties.type || feature.properties.type || this.type;
-        feature = feature || hot;
-
+    this.saveEdit = function (feature, coords) {
+        if (!feature) feature = geoflo.hotFeature;
+        if (!feature) return false;
+        var type = this.type;
+        if (type === 'Text' && coords) feature.geometry.coordinates = coords;
         this.savingEdit = true;
         return finishDraw(type, feature);
     }
@@ -278,7 +276,7 @@ const Draw = function () {
         if (geoflo.addedVertexOnLine && !geoflo.dragMoving) return;
         if (event.touch && geoflo.touchMoving) return geoflo.dragMoving = false;
 
-        if (geoflo.Utilities.isPoint(geoflo.hotFeature) && geoflo.snappedVertex) return geoflo.editMode ? this.saveEdit() : finishDraw(this.type);
+        if (geoflo.Utilities.isPoint(geoflo.hotFeature) && geoflo.snappedVertex) return geoflo.editMode ? this.saveEdit(null, [event.lngLat.lng, event.lngLat.lat]) : finishDraw(this.type);
 
         if (geoflo.snappedVertex && geoflo.dragMoving && !geoflo.mapMoving && this.type !== 'Rectangle') {
             geoflo.gamepadDrag = event.gamepad;
@@ -294,7 +292,7 @@ const Draw = function () {
         }
         
         geoflo.mouseIsIdle = false;
-        addText.call(this, this.type, geoflo.snapFeature);
+        addText.call(this, this.type, geoflo.snapFeature, [event.lngLat.lng, event.lngLat.lat]);
         geoflo.refreshMeshData();
     }
 
@@ -307,7 +305,7 @@ const Draw = function () {
 	 * @returns {Object} The updated event object or the result of the drawing action.
 	 */
     this.handleClick = function (event) {
-        if (event.finish) return geoflo.editMode ? this.saveEdit() : finishDraw(this.type);
+        if (event.finish) return geoflo.editMode ? this.saveEdit(null, [event.lngLat.lng, event.lngLat.lat]) : finishDraw(this.type);
 
         if (event.touch && geoflo.touchMoving) {
             geoflo.touchMoving = false
@@ -433,8 +431,8 @@ const Draw = function () {
         if (editPolygon && calculateRoute) geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
 
         if (this.type === 'Rectangle' /* && !geoflo.editMode */) return this.handleRectangle(event);
-        if (this.type === 'Icon') return this.handleIcon(event, geoflo.snapFeature);
-        if (this.type === 'Text') return this.handleText(event, geoflo.snapFeature);
+        if (this.type === 'Icon') return this.handleIcon(event, snapFeature);
+        if (this.type === 'Text') return this.handleText(event, snapFeature);
     }
 
 	/**
@@ -674,7 +672,11 @@ const Draw = function () {
 	 * @param {string} feature - The feature to be handled.
 	 */
     this.handleText = function (event, feature) {
-        console.log('handleText', this.properties, geoflo.snapFeature);
+        if (!feature || !feature.geometry || !geoflo.hotFeature) return;
+        const coords = feature.geometry.coordinates[1];
+        const point = turf.point(coords);
+        point.properties = this.properties;
+        geoflo.map.getSource(geoflo.statics.constants.sources.HOTTEXT).setData(turf.featureCollection([point]));
     }
 
 	/**
@@ -819,7 +821,10 @@ const Draw = function () {
         if (geoflo.editMode && !geoflo.currentMode.savingEdit && !cancelled) return geoflo.currentMode.saveEdit(point);
     
         if (cancelled || !type) {
-            finishText();
+            if (geoflo.textMarker) {
+                geoflo.textMarker.remove();
+                geoflo.textInput = false;
+            }
 
             if (geoflo.hotFeature) {
                 geoflo.removeSelection();
@@ -829,7 +834,7 @@ const Draw = function () {
             if (geoflo.Pinning) geoflo.Pinning.resetFeatures();
             if (!geoflo.editMode) geoflo.fire('draw.cancel', { cancel: true, feature: geoflo.hotFeature });
             return false;
-        } else if (type === 'Text' && !text) {
+        } else if (type === 'Text' && !text && !geoflo.currentMode.savingEdit) {
             return addText.call(geoflo.currentMode, type, point);
         } else if (geoflo.hotFeature) {
             if (geoflo.Utilities.isPoint(geoflo.hotFeature)) {
@@ -837,7 +842,7 @@ const Draw = function () {
                 geoflo.hotFeature.geometry.coordinates[0] :
                 [geoflo.hotFeature.geometry.coordinates[0], geoflo.hotFeature.geometry.coordinates[1]]
     
-                point = (geoflo.Painting && geoflo.Painting.enabled) || geoflo.currentMode.savingEdit ? point : turf.point(coords);
+                point = (geoflo.Painting && geoflo.Painting.enabled) || geoflo.currentMode.savingEdit || type === 'Text' ? point : turf.point(coords);
                 feature = point;
             } else if (geoflo.Utilities.isPolygon(geoflo.hotFeature, type)) {
                 geoflo.hotFeature.geometry.type = "Polygon";
@@ -898,16 +903,20 @@ const Draw = function () {
         return geoflo.currentMode.deactivate();
     }
 
-    function finishText (e, type, feature) {
+    function finishText (e, type, feature, coords) {
+        if (geoflo.finishingText) return false;
+
         var marker = geoflo.textMarker;
         if (!marker) return false;
 
         var element = marker.getElement();
         var text = element.value;
     
-        if (!text.length || geoflo.currentMode.cancelled) return marker.remove(), geoflo.textInput = false, addText.call(this, type, feature);
+        if (!text.length) return marker.remove(),
+        geoflo.textInput = false,
+        addText.call(this, type, feature);
     
-        var coords = [element.getAttribute('lng'), element.getAttribute('lat')];
+        coords = coords || [element.getAttribute('lng'), element.getAttribute('lat')];
         type = type || element.getAttribute('type');
 
         geoflo.currentMode.properties.text = text;
@@ -923,8 +932,9 @@ const Draw = function () {
               "coordinates": coords
             }
         }
-        
+      
         marker.remove();
+        geoflo.finishingText = true;  
         finishDraw(type, feature, text);
     }
 
@@ -966,6 +976,8 @@ const Draw = function () {
         delete geoflo.dragIndex;
         delete geoflo.addedVertexOnLine;
         delete geoflo.snappedVertex;
+        delete geoflo.drawClickCoords;
+        delete geoflo.finishingText;
     }
 
     function getVertex (point) {
@@ -1079,7 +1091,7 @@ const Draw = function () {
         geoflo.addedVertexOnLine = false
     }
 
-    function addText (type, feature) {
+    function addText (type, feature, coords) {
         feature = feature || geoflo.hotFeature;
         if (!feature) return false;
 
@@ -1087,7 +1099,7 @@ const Draw = function () {
         feature.properties.type = type;
 
         if (type !== 'Text') return //geoflo.Features.setText(feature);
-        if (geoflo.textInput) return finishText(false, type, feature);
+        if (geoflo.textInput) return finishText(false, type, feature, coords);
         
         var lngLat = { lng: feature.geometry.coordinates[0], lat: feature.geometry.coordinates[1] }
         var el = geoflo.textInput = document.createElement('input');
