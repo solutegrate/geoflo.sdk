@@ -4,10 +4,13 @@ const { exec } = require('child_process');
 
 const webpack = require('webpack');
 const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackObfuscator = require('webpack-obfuscator');
 const jsdoc2md = require("jsdoc-to-markdown");
 
 const packageJson = require('./package.json');
+const license = require('./LICENSE');
+const readme = require('./README.md');
 
 const domain = 'sdk.geoflo.pro';
 const id = 'geoflo';
@@ -16,19 +19,49 @@ const args = process.argv;
 const mode = args[2];
 const entry = path.resolve(__dirname, input);
 
-const DISCLAIMER = `
-/*! 
- * GeoFlo SDK
- * Version ${packageJson.version}
- * Generated on: ${new Date().toISOString()}
- */
-`;
-
 const tutorials = {
 	"basic": {
 		"title": `Version ${packageJson.version}`
 	}
 };
+
+const DISCLAIMER = `
+/*! 
+ * GeoFlo SDK
+ * Version ${packageJson.version}
+ * Generated on: ${new Date().toISOString()}
+ * Copyright (c) 2022 - present | @solutegrate/geoflo
+ */
+`;
+
+const HEADER = `
+${DISCLAIMER}\n
+
+<p align="center">
+  <a href="https://projects.geoflo.pro?referer=docs.geoflo.pro">
+    <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />
+  </a>
+</p>
+
+<h3 align="center">
+  Professional Geospatial Management Library for Mapbox GL JS
+</h3>
+</br>
+<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
+  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/license.txt" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/License-MPL.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
+  </a>
+  <a style="margin:2px;color:transparent;" href="https://projects.geoflo.pro?referer=docs.geoflo.pro" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/GeoFlo-Projects.svg?color=6fafdb" alt="GeoFlo Projects" />
+  </a>
+  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/GeoFlo-Demo.svg?color=ff7676" alt="GeoFlo Demo" />
+  </a>
+  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/GeoFlo-v${packageJson.version}.svg?color=d7ef7e" alt="GeoFlo v${packageJson.version}" />
+  </a>
+</p>
+`
 
 console.log(`Building ${id} in ${mode} mode...`);
 
@@ -82,6 +115,17 @@ if (mode === 'production') {
 		})]
 	}
 
+	plugins.push(new HtmlWebpackPlugin({
+		templateContent: ({ htmlWebpackPlugin }) => {
+			const templatePath = path.resolve(__dirname, "node_modules/tui-jsdoc-template/tmpl/layout.tmpl");
+			let template = fs.readFileSync(templatePath, "utf8");
+			template = template.replace("<body>", `<body>${HEADER}`);
+			return template;
+		},
+		filename: "index.html",
+		inject: false
+	}));
+
 	/* options.plugins.push(new WebpackObfuscator({
 		target: 'browser',
 		compact: true,
@@ -98,7 +142,10 @@ if (mode === 'production') {
 	})); */
 }
 
-webpack(options, build);
+(async function () {
+	await fs.writeFile(path.join(options.output.path, 'README.md'), `${HEADER}\n\n${readme}`);
+	webpack(options, build);
+})()
 
 async function build(err, stats) {
 	if (err) return console.error('Error building:', err), process.exit(1);
@@ -108,8 +155,13 @@ async function build(err, stats) {
 
 	if (mode === 'development') return true;
 
+	const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
+
 	try {
-		const css = await fs.readFile(path.resolve(__dirname, './index.css'), 'utf8');
+
+		await fs.writeFile(path.join(options.output.path, options.output.filename), `${DISCLAIMER}\n${data}`);
+		await fs.writeFile(path.join(options.output.path, options.output.filename), `\n\n/*\n${license}\n*/`, { flag: 'a' });
+		await fs.writeFile(path.join(options.output.path, 'license.txt'), license);		
 		await fs.writeFile(path.resolve(__dirname, options.output.path + '/' + id + '.css'), css);
 	} catch (error) {
 		console.error('Error handling CSS file:', error);
