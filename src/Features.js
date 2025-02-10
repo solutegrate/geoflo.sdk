@@ -398,6 +398,7 @@ const Features = function () {
 
     this.removeLayers = function (layers=[]) {
         const sources = layers.map(function (layer) { return layer.source ? layer.source : layer.details ? layer.details.id : layer.id ? layer.id : layer });
+        const removedFeatures = [];
 
         coldFeatures.forEach((feature) => {
             if (!sources.includes(feature.source)) return;
@@ -406,6 +407,7 @@ const Features = function () {
         })
 
         if (sources.length) this.updateSource(sources);
+        return removedFeatures;
     }
 
 	/**
