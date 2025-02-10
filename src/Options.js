@@ -115,6 +115,9 @@ const Options = {
         { title: "Satellite", uri: "mapbox://styles/mapbox/standard-satellite" },
         { title: "Standard", uri: "mapbox://styles/mapbox/standard" }
     ],
+    layers: {
+        custom: []
+    },
     keys: {
         import: 'u',
         export: 'd',
