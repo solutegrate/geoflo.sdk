@@ -131523,9 +131523,7 @@
         "bugs": {
             "url": "https://github.com/solutegrate/geoflo.sdk/issues"
         },
-        "dependencies": {
-            "terser": "^5.38.1"
-        },
+        "dependencies": {},
         "description": "MapboxGL Wrapper for Professional Geospatial Management",
         "devDependencies": {
             "@babel/core": "^7.26.7",

@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Painting.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -69,104 +61,200 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p align="center">
-  <a href="https://projects.geoflo.pro?referer=docs.geoflo.pro">
-    <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />
-  </a>
-</p>
-<h3 align="center">
-  Professional Geospatial Management Library for Mapbox GL JS
-</h3>
-</br>
-<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/license.txt" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/License-MPL-blue.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Free_Demo-blue.svg?color=6fafdb" alt="GeoFlo Demo" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-SDK_Link-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
-  </a>
-</p>
-<h2>📖 Introduction</h2>
-<p>GeoFlo is a comprehensive geospatial management library designed for Mapbox GL JS. It provides a wide range of features and tools to enhance your mapping applications, making it easier to work with geospatial data and create interactive maps. There is no need to install anything. Simply import the library, add your Mapbox token and start using it.</p>
-<h2>🚧 Contributing</h2>
-<p>GeoFlo is an open-source project, and contributions are welcome. Your feedback and contributions are valuable in making GeoFlo even better.</p>
-<h2>🌟 Key Features</h2>
-<ul>
-<li><strong>Advanced Editing:</strong> Draw, edit, snap, pin, route, paint, explore and much more.</li>
-<li><strong>Versatile Features:</strong> Work with circles, icons, images, polylines, polygons, rectangles, text, and continuously expanding element types.</li>
-<li><strong>Robust Import/Export:</strong> Seamlessly import and export your data.</li>
-<li><strong>Customizable Color Schemes:</strong> Tailor your map's look and feel with custom colors.</li>
-<li><strong>Integrated APIs:</strong> Fully embedded Overpass API and OSRM Router for enhanced geospatial data and routing.</li>
-<li><strong>Comprehensive Gamepad Support:</strong> Compatible with controllers including XBOX, PlayStation, Nintendo, iBuffalo, Logitech, and others.</li>
-<li><strong>Smart Location Services:</strong> Enable user location tracking and follow mode for dynamic navigation.</li>
-<li><strong>Intuitive Base Map Control:</strong> Easily manage and customize your base map settings.</li>
-<li><strong>Dynamic Layer Management:</strong> Create, edit, and delete layers with ease.</li>
-<li><strong>Interactive Feature Management:</strong> Select, move, rotate, scale, and delete features with simple gestures.</li>
-<li><strong>Effortless Undo/Redo:</strong> Quickly undo and redo your actions with a single click. (In Development)</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo, you need to have a Mapbox access token.
-For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="./img/mapbox-logo-blue.png"></a></p>
-<h2>🛠️ Usage/Examples</h2>
-<h3>NPM Import</h3>
-<pre class="prettyprint source lang-bash"><code>  npm config set registry &quot;https://npm.pkg.github.com&quot;
-  npm install @solutegrate/geoflo
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/geoflo.css&quot;>
-  &lt;div id=&quot;map&quot;>&lt;/div>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  (async function() {
-      await geoflo.init('YOUR_MAPBOX_TOKEN', { container: 'map' });
-      geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-  })();
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<p>This is my first open-source Github project. While I have looked deeply into the MapboxGL code/docs, please understand that bugs will creep their way in.
-Currently, GeoFlo is in its early stages of development. The goal is to make GeoFlo a powerful and versatile tool for geospatial management, and your support and feedback are crucial in achieving this.</p>
-<h2>🏁 Credits</h2>
-<p>This project utilizes the following libraries:</p>
-<ul>
-<li><strong>Mapbox GL JS</strong>: A powerful mapping platform that provides geospatial services and tools.</li>
-<li><strong>Turf.js</strong>: A modular geospatial engine written in JavaScript and TypeScript. Turf.js offers traditional spatial operations, helper functions for creating GeoJSON data, and data classification and statistics tools.</li>
-</ul>
-<h3>About Mapbox GL JS</h3>
-<p>Mapbox GL JS is a client-side JavaScript library for building web maps and web applications with Mapbox's modern mapping technology. You can use Mapbox GL JS to:</p>
-<ul>
-<li>Display Mapbox maps in a web browser or client.</li>
-<li>Add user interactivity to your maps.</li>
-<li>Customize the map experience in your application.</li>
-</ul>
-<p>The &quot;GL&quot; in Mapbox GL JS refers to Mapbox GL, a graphics library that renders 2D and 3D Mapbox maps as dynamic visual graphics with OpenGL in any compatible web browser, without using additional plugins.</p>
-<h3>About Turf.js</h3>
-<p>Turf.js is a JavaScript library for spatial analysis. It includes:</p>
-<ul>
-<li>Traditional spatial operations</li>
-<li>Helper functions for creating GeoJSON data</li>
-<li>Data classification and statistics tools</li>
-</ul></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Painting
+ * @description This module provides the painting functionality for the Geoflo application. It allows users to free-draw on the map.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Painting object.
+ */
+const Painting = function (mode) {
+    const geoflo = this.geoflo;
+
+    this.type = mode.type;
+    this.feature = false;
+    this.currentCoords = [];
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name activate
+	 * @description Activates the painting functionality by enabling painting mode and clearing the source data.
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.deactivate();
+        this.enabled = true;
+        geoflo.options['painting'].enable = true;
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name deactivate
+	 * @description This function deactivates the current feature by setting the 'enabled' property to false, disabling the painting tool, enabling drag pan on the map, and deleting the feature.
+	 * @returns {void}
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['painting'].enable = false;
+        geoflo.map.dragPan.enable();
+        delete this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting getFeature
+	 * @name getFeature
+	 * @description This function retrieves the current painted feature.
+	 * @returns {any} The painted feature.
+	 */
+    this.getFeature = function () {
+        return this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name setFeature
+	 * @description This function creates a feature based on the given type and coordinates. It updates the currentCoords array, sets the feature, and triggers a 'painting.start' event.
+	 * @param {Array} coords - The coordinates to set the feature at.
+	 * @returns {Object} The created feature.
+	 */
+    this.setFeature = function (coords) {
+        if (!this.type || !coords) return false;
+        if (!geoflo.mouseIsDown) return geoflo.hotFeature;
+        
+        var type = this.type;
+        var feature = setFeature(type, coords);
+
+        if (!this.feature) {
+            this.currentCoords = [];
+            geoflo.startPoint = coords;
+            geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([feature]));
+            geoflo.fire('painting.start', { type: type, coords: coords, feature: feature });
+        }
+
+        this.currentCoords.push(coords);
+        this.feature = feature;
+        return this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name updateFeature
+	 * @description This function updates the feature based on the provided coordinates. It handles different types of features like Rectangle, Circle, and others.
+	 * @param {Array} coords - The coordinates to update the feature with.
+	 * @returns {Object} The updated feature object.
+	 */
+    this.updateFeature = function (coords) {
+        if (!this.enabled) return geoflo.hotFeature;
+        if (!this.feature) return this.setFeature(coords);
+
+        var feature = this.feature;
+        var type = this.type;
+
+        this.currentCoords.push(coords);
+
+        if (type === 'Rectangle') {
+            updateCoordinate(feature, "0.1", coords[0], geoflo.mouseIsDown[1]);
+            updateCoordinate(feature, "0.2", coords[0], coords[1]);
+            updateCoordinate(feature, "0.3", geoflo.mouseIsDown[0], coords[1]);
+            updateCoordinate(feature, "0.4", geoflo.mouseIsDown[0], geoflo.mouseIsDown[1] );
+        } else if (type === 'Circle') {
+            var center = feature.properties.center;
+            if (!center || !center.length) return feature;
+
+            const distanceInKm = turf.distance(turf.point(center), turf.point(coords), { units : 'kilometers'});
+            const circleFeature = turf.circle(center, distanceInKm);
+
+            feature.geometry.coordinates = circleFeature.geometry.coordinates;
+            geoflo.Utilities.setProperty(feature, 'radiusInKm', distanceInKm);
+        } else {
+            feature.geometry.coordinates.push(coords);
+        }
+
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([this.feature]));
+        geoflo.fire('painting.update', { type: type, coords: coords, feature: feature });
+        return feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name handleUp
+	 * @description This function updates the feature based on the 'mouse up' event. It retrieves the current feature, updates the hot source, clones the updated feature, and sets the last click coordinates.
+	 * @param {Event} event - The event triggering the function.
+	 * @returns {Promise&lt;Object>} The updated feature object.
+	 */
+	
+    this.handleUp = async function (event) {
+        if (!this.feature) return false;
+
+        var feature;
+
+        if (geoflo.Exploring &amp;&amp; geoflo.Exploring.enabled) this.feature = await geoflo.Exploring.getMatch(this.currentCoords, { set: true, start: geoflo.startPoint });
+
+        feature = mode.updateHotSource(this.feature);
+        feature = geoflo.Utilities.cloneDeep(feature);
+
+        geoflo.lastClick = { coords: feature.geometry.coordinates[feature.geometry.coordinates.length - 1] };
+        this.currentCoords = [];
+        this.feature = feature;
+        return feature;
+    }
+
+
+
+    if (geoflo.options['painting'].enable) this.activate();
+
+
+
+    function setFeature (type, coords) {
+        var feature;
+
+        if (type === 'Rectangle') {
+            feature = turf.polygon([[
+                geoflo.mouseIsDown,
+                coords,
+                coords,
+                geoflo.mouseIsDown
+            ]]);
+        } else if (type === 'Circle') {
+            feature = turf.polygon([[
+                geoflo.mouseIsDown,
+                coords,
+                coords,
+                geoflo.mouseIsDown
+            ]]);
+
+            geoflo.Utilities.setProperty(feature, 'center', geoflo.mouseIsDown);
+        } else {
+            feature = turf.lineString([geoflo.mouseIsDown, coords]);
+        }
+
+        geoflo.Utilities.setProperty(feature, 'type', type);
+        geoflo.Utilities.setProperty(feature, 'painting', 1);
+        return feature;
+    }
+
+    function updateCoordinate (f, t, e, n) {
+        var o = t.split(".")
+            , r = parseInt(o[0], 10)
+            , i = parseInt(o[1], 10);
+        void 0 === f.geometry.coordinates[r] &amp;&amp; (f.geometry.coordinates[r] = []),
+        f.geometry.coordinates[r][i] = [e, n]
+    }
+};
+
+export default Painting;</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -183,7 +271,7 @@ Currently, GeoFlo is in its early stages of development. The goal is to make Geo
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:@solutegrate/geoflo_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
