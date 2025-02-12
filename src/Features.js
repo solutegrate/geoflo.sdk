@@ -396,17 +396,26 @@ const Features = function () {
         return removedFeatures;
     };
 
-    this.removeLayers = function (layers=[]) {
-        const sources = layers.map(function (layer) { return layer.source ? layer.source : layer.details ? layer.details.id : layer.id ? layer.id : layer });
+    /**
+     * @function
+     * @memberof module:geoflo.Features
+     * @name removeLayers
+     * @description Removes layers from the map based on the provided layer IDs. It updates the map source after removing the layers.
+     * @param {string[]} layerSources - An array of layer source IDs to be removed.
+     * @param {Object} options - Additional options to be passed to the removeLayers function.
+     * @param {boolean} options.reset - A flag indicating whether to reset. This will delete all features and layers from the map.
+     * @returns {Object[]} An array containing the removed features.
+     */
+    this.removeLayers = function (layerSources =[], options={}) {
         const removedFeatures = [];
 
         coldFeatures.forEach((feature) => {
-            if (!sources.includes(feature.source)) return;
+            if (!options.reset && !layerSources.includes(feature.source)) return;
             var index = coldFeatures.findIndex((f) => { return feature.id === f.id || feature.properties.id === f.id });
             if (index > -1) removedFeatures.push(...coldFeatures.splice(index, 1));
         })
 
-        if (sources.length) this.updateSource(sources);
+        if (layerSources.length) this.updateSource(layerSources);
         return removedFeatures;
     }
 

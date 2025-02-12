@@ -501,7 +501,9 @@ const GeoFlo = function () {
      * @copyright 2025
      */
     this.setLayers = async function (layers=[], options={}) {
-        if (options.reset) this.Features.removeLayers(layers, options);
+        const ids = layers.map(layer => layer.source || layer.id || layer.details?.source || layer.details?.id);
+        if (!ids.length) options.reset = true;
+        if (options.reset) this.Features.removeLayers(ids, options);
         return await this.Layers.setCustomLayers(layers, options);
     }
 
