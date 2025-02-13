@@ -404,19 +404,20 @@ const Features = function () {
      * @param {string[]} layerSources - An array of layer source IDs to be removed.
      * @param {Object} options - Additional options to be passed to the removeLayers function.
      * @param {boolean} options.reset - A flag indicating whether to reset. This will delete all features and layers from the map.
-     * @returns {Object[]} An array containing the removed features.
+     * @returns {void}
      */
     this.removeLayers = function (layerSources =[], options={}) {
+        if (options.reset) return this.deleteFeatures();
+
         const removedFeatures = [];
 
         coldFeatures.forEach((feature) => {
-            if (!options.reset && !layerSources.includes(feature.source)) return;
+            if (!layerSources.includes(feature.source)) return;
             var index = coldFeatures.findIndex((f) => { return feature.id === f.id || feature.properties.id === f.id });
             if (index > -1) removedFeatures.push(...coldFeatures.splice(index, 1));
         })
 
-        if (layerSources.length) this.updateSource(layerSources);
-        return removedFeatures;
+        this.updateSource(layerSources);
     }
 
 	/**
