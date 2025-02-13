@@ -1,4 +1,5 @@
 const events = [
+    'contextmenu',
     'map.enable',
     'map.disable',
     'map.ready',
@@ -504,6 +505,7 @@ const Events = function (geoflo) {
      */
     const contextMenu = function (event) {
         geoflo.currentMode.handleContext ? geoflo.currentMode.handleContext(event) : false;
+        geoflo.fire('contextmenu', event);
     }
 
     /**
