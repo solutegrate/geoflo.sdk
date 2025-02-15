@@ -883,7 +883,7 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers that have been added to the map.
 	 */
     this.addLayers = function (layers=[], options={}) {
-        layers.forEach(function(layer, index) { this.addLayer(layer, options, index) }, this);
+        layers.forEach(function(layer, index) { this.addLayer(layer, options) }, this);
         geoflo.fire('layers.add', { layers: this.getLayers() });
         buildEvents.call(this);
         return this.getLayers();
@@ -898,7 +898,7 @@ const Layers = function () {
 	 * @param {Object} [options={}] - Additional options for the layer.
 	 * @returns {Object} The added layer.
 	 */
-    this.addLayer = function (layer, options={}, index) {
+    this.addLayer = function (layer, options={}) {
         if (!layer || !layer.id) return false;        
         layer.metadata = layer.metadata || options;
 
@@ -1331,6 +1331,8 @@ const Layers = function () {
             }
 
             if (!style) continue;
+            if (settings.style.minzoom) style.minzoom = settings.style.minzoom;
+            if (settings.style.maxzoom) style.maxzoom = settings.style.maxzoom;
             layers.push(style)
         }
 
@@ -1391,6 +1393,8 @@ const Layers = function () {
             }
 
             if (!style) continue;
+            if (settings.style.minzoom) style.minzoom = settings.style.minzoom;
+            if (settings.style.maxzoom) style.maxzoom = settings.style.maxzoom;
             layers.push(style)
         }
 
@@ -1436,6 +1440,8 @@ const Layers = function () {
             }
 
             if (!style) continue;
+            if (settings.style.minzoom) style.minzoom = settings.style.minzoom;
+            if (settings.style.maxzoom) style.maxzoom = settings.style.maxzoom;
             layers.push(style)
         }
 
@@ -1593,6 +1599,8 @@ const Layers = function () {
             }
 
             if (!style) continue;
+            if (settings.style.minzoom) style.minzoom = settings.style.minzoom;
+            if (settings.style.maxzoom) style.maxzoom = settings.style.maxzoom;
             layers.push(style)
         }
 
