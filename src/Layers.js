@@ -488,6 +488,21 @@ const Layers = function () {
     
         this.selectLayers = [{
             'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-line-select-background',
+            'type': 'line',
+            'layout': {
+                'visibility': 'visible',
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': geoflo.options.colors.primarySelect,
+                'line-width': 6,
+                'line-opacity': 0.4
+            },
+            'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
+        }, {
+            'source': geoflo.statics.constants.sources.SELECT,
             'id': id + '-line-select',
             'type': 'line',
             'layout': {
@@ -497,7 +512,8 @@ const Layers = function () {
             },
             'paint': {
                 'line-color': geoflo.options.colors.secondarySelect,
-                'line-width': 4,
+                'line-width': 6,
+                'line-dasharray': [0, 4, 3]
             },
             'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
         },

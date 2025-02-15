@@ -11,9 +11,28 @@ const Select = function () {
     var lastKnownSelectIds = [];
     var removedFeatures = [];
     var nearFeatures = [];
+    let animationRunning = false;
+    let step = 0;
     var clickCoords;
     var multipleSelect;
     var selectedId;
+
+    const dashArraySequence = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+    ];
 
     this.id = 'select';
 
@@ -90,8 +109,7 @@ const Select = function () {
         removedFeatures = geoflo.hideFeatures([id]);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
-
-
+        startDashAnimation();
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
@@ -107,6 +125,8 @@ const Select = function () {
     this.deselectCurrentFeature = function () {
         const ids = geoflo.getSelectedFeatureIds();
         const features = geoflo.getSelectedFeatures();
+        this.removePopup();
+        stopDashAnimation();
         geoflo.removeSelection();
         geoflo.fire('feature.deselect', { ids: ids, features: features });
     };
@@ -324,6 +344,34 @@ const Select = function () {
         geoflo.wantingToEdit = false;
         geoflo.setMode('edit', feature.properties.type, feature);
     }
+
+    function animateDashArray(timestamp=0) {
+        if (!animationRunning || !selectedId) return; // Stop if no selected feature
+
+        const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
+
+        if (newStep !== step) {
+            map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', dashArraySequence[step]);
+            step = newStep;
+        }
+
+        requestAnimationFrame(animateDashArray);
+    }
+
+    // Call this when a feature is selected
+    function startDashAnimation() {
+        if (!animationRunning) {
+            animationRunning = true;
+            requestAnimationFrame(animateDashArray);
+        }
+    }
+
+    // Call this when a feature is deselected
+    function stopDashAnimation() {
+        animationRunning = false;
+        map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', [0, 0]); // Reset line to solid
+    }
+
 };
 
 export default Select;
