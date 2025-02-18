@@ -186,7 +186,7 @@ const Select = function () {
 	 */
     this.handleClick = function (event) {
         if (geoflo.noSelect) return false;
-        
+
         var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
         clickCoords = [event.lngLat.lng, event.lngLat.lat];
@@ -371,7 +371,7 @@ const Select = function () {
     // Call this when a feature is deselected
     function stopDashAnimation() {
         animationRunning = false;
-        map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', [0, 0]); // Reset line to solid
+        geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', [0, 0]); // Reset line to solid
     }
 
 };
