@@ -900,7 +900,7 @@ const Draw = function () {
         if (geoflo.Pinning && geoflo.Pinning.enabled) pinnedFeatures = geoflo.Pinning.saveFeatures();
 
         geoflo.fire('draw.finish', { feature: feature, pinned: pinnedFeatures, type: type, editing: geoflo.editMode });
-        return geoflo.currentMode.deactivate();
+        return geoflo.currentMode.deactivate(), { feature: feature, type: type, pinned: pinnedFeatures };
     }
 
     function finishText (e, type, feature, coords) {
