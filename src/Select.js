@@ -185,6 +185,8 @@ const Select = function () {
 	 * @returns {boolean} Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
 	 */
     this.handleClick = function (event) {
+        if (geoflo.noSelect) return false;
+        
         var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
         clickCoords = [event.lngLat.lng, event.lngLat.lat];
