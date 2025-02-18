@@ -79,17 +79,17 @@
  * @property {object} painting - Painting settings.
  * @property {boolean} painting.enable - Enable painting mode. Default is false.
  * @property {number} painting.tolerance - Painting coordinate simplification tolerance.
- * @property {object} gamepad - Gamepad configuration settings.
- * @property {boolean} gamepad.enable - Enable gamepad support. Default is true.
- * @property {boolean} gamepad.debug - Enable gamepad debugging. Default is false.
- * @property {boolean} gamepad.crosshairs - Show crosshairs on the map. Default is true.
- * @property {object} gamepad.joystick - Joystick settings.
- * @property {number} gamepad.joystick.min - Minimum joystick threshold. Default is 0.2.
- * @property {number} gamepad.joystick.max - Maximum joystick threshold. Default is 0.7.
- * @property {object} gamepad.pan - Pan settings.
- * @property {number} gamepad.pan.speed - Pan speed. Default is 0.001.
- * @property {object} gamepad.zoom - Zoom settings.
- * @property {number} gamepad.zoom.speed - Zoom speed. Default is 0.008.
+ * @property {object} gaming - Gamepad configuration settings.
+ * @property {boolean} gaming.enable - Enable gaming support. Default is true.
+ * @property {boolean} gaming.debug - Enable gaming debugging. Default is false.
+ * @property {boolean} gaming.crosshairs - Show centerMarker on the map. Default is true.
+ * @property {object} gaming.joystick - Joystick settings.
+ * @property {number} gaming.joystick.min - Minimum joystick threshold. Default is 0.2.
+ * @property {number} gaming.joystick.max - Maximum joystick threshold. Default is 0.7.
+ * @property {object} gaming.pan - Pan settings.
+ * @property {number} gaming.pan.speed - Pan speed. Default is 0.001.
+ * @property {object} gaming.zoom - Zoom settings.
+ * @property {number} gaming.zoom.speed - Zoom speed. Default is 0.008.
  */
 const Options = {
     theme: 'dark',
@@ -234,7 +234,7 @@ const Options = {
         enable: false, // Enables painting drawing for linestrings and polygons
         tolerance: 0.000005 // How much tolerance to simplify coordinates. Can be a function with map argument.
     },
-    gamepad: {
+    gaming: {
         enable: true,
         debug: false,
         crosshairs: true,

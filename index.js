@@ -411,7 +411,7 @@ const GeoFlo = function () {
 	 * @return {Object|boolean} Returns the center marker object if successfully added or updated, or false if not applicable.
 	 */
     this.setCenterMarker = function (options={}) {
-        if (!this.mobile || this.noCenterMarker) return false;
+        if (this.noCenterMarker || !this.mobile || !options.gamepad) return false;
         
         var following = this.Locate && this.Locate.following;
         var icon = options.icon || this.statics.logo.icon;
@@ -433,7 +433,7 @@ const GeoFlo = function () {
         if (!this.centerMarkerIcon) {
             el = document.createElement('div');
             el.className = this.id + '-center-marker';
-            setIcon(el, icon);
+            el.style.backgroundImage = `url("${icon}")`;
         }
         
         this.centerMarkerIcon = el;
@@ -442,11 +442,6 @@ const GeoFlo = function () {
         this.centerMarker.noRemove = options.noRemove;
 
         if (following) this.centerMarker.setOffset([0,-20]);
-
-        function setIcon(marker, icon) {
-            marker.style.backgroundImage = `url("${icon}")`;
-        }
-
         return this.centerMarker;
     }
 

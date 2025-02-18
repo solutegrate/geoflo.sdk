@@ -4,7 +4,7 @@
  * @name Gaming
  * @description This module provides the gamepad functionality for the Geoflo application. It allows users to interact with the map using a gamepad controller.
  * @param {Object} gamepad - The gamepad object to be initialized.
- * @param {Object} options - The options for gamepad initialization. Comes from geoFlo.options.gamepad.
+ * @param {Object} options - The options for gamepad initialization. Comes from geoFlo.options.gaming.
  * @returns {Object} The current object instance.
  */
 const Gaming = function (gamepad) {
@@ -14,7 +14,7 @@ const Gaming = function (gamepad) {
     
     const control = this;
 
-    this.options = geoflo.options.gamepad;
+    this.options = geoflo.options.gaming;
 
     const layout = {
         "select": 'Select',
@@ -377,7 +377,7 @@ const Gaming = function (gamepad) {
 
         map._update();
 
-        if (this.options.crosshairs && geoflo.centerMarker) this.setMarker();
+        if (this.options.centerMarker && geoflo.centerMarker) this.setMarker();
         if (handleMove) geoflo.currentMode.handleMove({ lngLat: !this.options.camera.free ? this.map.center : map.getCenter(), gamepad: this })
         return this.map;
     }
