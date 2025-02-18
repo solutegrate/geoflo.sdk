@@ -1334,10 +1334,8 @@ const GeoFlo = function () {
      * @param {string} id - The ID of the feature to be selected.
      * @returns {boolean|Object} Returns false if the feature is not found, otherwise returns the result of the selection.
      */
-    this.selectFeature = function (id) {
-        var feature = this.getFeatureById(id);
-        if (!feature) return false;
-        var selected = this.addFeaturesToSelected([feature]);        
+    this.selectFeature = function (id, options) {
+        var selected = this.currentMode.selectFeature(id, options);       
         return selected;
     }
 
