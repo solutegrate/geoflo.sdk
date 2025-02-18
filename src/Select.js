@@ -348,12 +348,15 @@ const Select = function () {
     }
 
     function animateDashArray(timestamp=0) {
-        if (!animationRunning || !selectedId) return; // Stop if no selected feature
+        if (!animationRunning || !selectedId) return stopDashAnimation();
+        const selectedFeatures = geoflo.getSelectedFeatures();
+        const selectedFeature = selectedFeatures.find(feature => feature.id === selectedId);
+        if (!selectedFeature || selectedFeature.geometry.type !== 'LineString') return stopDashAnimation();
 
         const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
 
         if (newStep !== step) {
-            map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', dashArraySequence[step]);
+            geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', dashArraySequence[step]);
             step = newStep;
         }
 
@@ -361,7 +364,7 @@ const Select = function () {
     }
 
     // Call this when a feature is selected
-    function startDashAnimation() {
+    function startDashAnimation(stop) {
         if (!animationRunning) {
             animationRunning = true;
             requestAnimationFrame(animateDashArray);
