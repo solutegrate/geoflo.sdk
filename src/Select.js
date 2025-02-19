@@ -99,13 +99,15 @@ const Select = function () {
 	 */
     this.selectFeature = function (id, options={}) {
         const popup = geoflo.options.select.popup;
+        const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
         
-        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
         
         if (!id) return false;
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
         //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
+        selectedId = id;
         removedFeatures = geoflo.hideFeatures([id]);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
@@ -189,20 +191,19 @@ const Select = function () {
 
         var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
+        let multipleSelect = event.originalEvent && event.originalEvent.shiftKey;
         clickCoords = [event.lngLat.lng, event.lngLat.lat];
-        multipleSelect = event.originalEvent && event.originalEvent.shiftKey && geoflo.options.select.multiple;
 
         if (features.length > 0) {
             if (!geoflo.Layers.getSelection(features, clickCoords)) return;
 
-            // If a different feature stack is clicked, reset the cycling order
             let newFeatureSet = JSON.stringify(features);
             if (newFeatureSet !== JSON.stringify(nearFeatures)) {
                 nearFeatures = features;
                 selectedId = null; // Reset selection tracking
             }
-
-            selectFeature.call(this, nearFeatures);
+            
+            selectFeature.call(this, nearFeatures, multipleSelect);
         } else if (!multipleSelect) {
             lastKnownSelectIds = [];
             nearFeatures = [];
@@ -306,15 +307,14 @@ const Select = function () {
         return tr;
     }
 
-    function selectFeature(features) {
-        multipleSelect = geoflo.options.select.multiple;
+    function selectFeature(features, multipleSelect) {
         nearFeatures = features;
 
         if (!nearFeatures.length) return;
 
         // Find index of currently selected feature
         let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
-
+        let currentId = selectedId;
         let nextIndex = currentIndex;
         let loopCount = 0;  // Prevents infinite loops
 
@@ -331,15 +331,10 @@ const Select = function () {
 
         } while (nearFeatures[nextIndex].properties['_selected']); // Skip selected features
 
-        selectedId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
+        currentId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
 
-        console.log("Selecting Feature:", selectedId);
-
-        if (!multipleSelect) {
-            geoflo.currentMode.deselectCurrentFeature();
-        }
-
-        geoflo.currentMode.selectFeature(selectedId);
+        console.log("Selecting Feature:", currentId);
+        geoflo.currentMode.selectFeature(currentId, { multipleSelect: multipleSelect });
     }
     
     function editFeature (feature) {

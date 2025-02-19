@@ -1433,6 +1433,10 @@ const GeoFlo = function () {
     this.addFeaturesToSelected = function (features, options={}) {
         if (!features || !features.length) return [];
 
+        const seleceted = this.getSelectedFeatures();
+
+        features = features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) });
+        
         this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
