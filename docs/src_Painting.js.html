@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mixin: Select | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Painting.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -68,1669 +60,201 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Select</h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Painting
+ * @description This module provides the painting functionality for the Geoflo application. It allows users to free-draw on the map.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Painting object.
+ */
+const Painting = function (mode) {
+    const geoflo = this.geoflo;
+
+    this.type = mode.type;
+    this.feature = false;
+    this.currentCoords = [];
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name activate
+	 * @description Activates the painting functionality by enabling painting mode and clearing the source data.
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.deactivate();
+        this.enabled = true;
+        geoflo.options['painting'].enable = true;
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([]));
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name deactivate
+	 * @description This function deactivates the current feature by setting the 'enabled' property to false, disabling the painting tool, enabling drag pan on the map, and deleting the feature.
+	 * @returns {void}
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['painting'].enable = false;
+        geoflo.map.dragPan.enable();
+        delete this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting getFeature
+	 * @name getFeature
+	 * @description This function retrieves the current painted feature.
+	 * @returns {any} The painted feature.
+	 */
+    this.getFeature = function () {
+        return this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name setFeature
+	 * @description This function creates a feature based on the given type and coordinates. It updates the currentCoords array, sets the feature, and triggers a 'painting.start' event.
+	 * @param {Array} coords - The coordinates to set the feature at.
+	 * @returns {Object} The created feature.
+	 */
+    this.setFeature = function (coords) {
+        if (!this.type || !coords) return false;
+        if (!geoflo.mouseIsDown) return geoflo.hotFeature;
         
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">This module provides the select functionality for the Geoflo application. It allows users to select features on the map by clicking on them.</div>
-            
-
-            
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id=".activate">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>activate<span class="signature">(options)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line39">line 39</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The options object for activation.
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The ID of the feature to select.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>feature</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The feature object to select.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if already activated.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".addPopup">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>addPopup<span class="signature">(features)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line136">line 136</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function creates a popup element with the specified features and adds it to the map at the click coordinates.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>features</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The features to be displayed in the popup.
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The title of the popup.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>description</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The description of the popup.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>latitude</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The latitude coordinate for the popup location.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>longitude</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The longitude coordinate for the popup location.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".canHandle">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>canHandle<span class="signature">(modeName)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line80">line 80</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function determines if the given mode name is equal to the SELECT mode.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>modeName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The mode name to be checked.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true if the mode name is SELECT, false otherwise.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".deactivate">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>deactivate<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line63">line 63</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if the feature is not activated.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".deselectCurrentFeature">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>deselectCurrentFeature<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line121">line 121</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Deselects the current feature by removing its selection.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleClick">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleClick<span class="signature">(event)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line181">line 181</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the click event on the map and selects features based on the event.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object containing information about the click event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleDrag">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleDrag<span class="signature">(event)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line216">line 216</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Event</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object representing the drag event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleMove">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleMove<span class="signature">(event)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line170">line 170</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the mouse move event.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Event</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object representing the mouse move event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".removePopup">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>removePopup<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line159">line 159</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Removes the popup element from the DOM if it exists.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true if the popup element was successfully removed, otherwise false.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".selectFeature">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>selectFeature<span class="signature">(id)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line92">line 92</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the feature to be selected.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+        var type = this.type;
+        var feature = setFeature(type, coords);
+
+        if (!this.feature) {
+            this.currentCoords = [];
+            geoflo.startPoint = coords;
+            geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([feature]));
+            geoflo.fire('painting.start', { type: type, coords: coords, feature: feature });
+        }
+
+        this.currentCoords.push(coords);
+        this.feature = feature;
+        return this.feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name updateFeature
+	 * @description This function updates the feature based on the provided coordinates. It handles different types of features like Rectangle, Circle, and others.
+	 * @param {Array} coords - The coordinates to update the feature with.
+	 * @returns {Object} The updated feature object.
+	 */
+    this.updateFeature = function (coords) {
+        if (!this.enabled) return geoflo.hotFeature;
+        if (!this.feature) return this.setFeature(coords);
+
+        var feature = this.feature;
+        var type = this.type;
+
+        this.currentCoords.push(coords);
+
+        if (type === 'Rectangle') {
+            updateCoordinate(feature, "0.1", coords[0], geoflo.mouseIsDown[1]);
+            updateCoordinate(feature, "0.2", coords[0], coords[1]);
+            updateCoordinate(feature, "0.3", geoflo.mouseIsDown[0], coords[1]);
+            updateCoordinate(feature, "0.4", geoflo.mouseIsDown[0], geoflo.mouseIsDown[1] );
+        } else if (type === 'Circle') {
+            var center = feature.properties.center;
+            if (!center || !center.length) return feature;
+
+            const distanceInKm = turf.distance(turf.point(center), turf.point(coords), { units : 'kilometers'});
+            const circleFeature = turf.circle(center, distanceInKm);
+
+            feature.geometry.coordinates = circleFeature.geometry.coordinates;
+            geoflo.Utilities.setProperty(feature, 'radiusInKm', distanceInKm);
+        } else {
+            feature.geometry.coordinates.push(coords);
+        }
+
+        geoflo.map.getSource(geoflo.statics.constants.sources.SNAP).setData(turf.featureCollection([this.feature]));
+        geoflo.fire('painting.update', { type: type, coords: coords, feature: feature });
+        return feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Painting
+	 * @name handleUp
+	 * @description This function updates the feature based on the 'mouse up' event. It retrieves the current feature, updates the hot source, clones the updated feature, and sets the last click coordinates.
+	 * @param {Event} event - The event triggering the function.
+	 * @returns {Promise&lt;Object>} The updated feature object.
+	 */
+	
+    this.handleUp = async function (event) {
+        if (!this.feature) return false;
+
+        var feature;
+
+        if (geoflo.Exploring &amp;&amp; geoflo.Exploring.enabled) this.feature = await geoflo.Exploring.getMatch(this.currentCoords, { set: true, start: geoflo.startPoint });
+
+        feature = mode.updateHotSource(this.feature);
+        feature = geoflo.Utilities.cloneDeep(feature);
+
+        geoflo.lastClick = { coords: feature.geometry.coordinates[feature.geometry.coordinates.length - 1] };
+        this.currentCoords = [];
+        this.feature = feature;
+        return feature;
+    }
+
+
+
+    if (geoflo.options['painting'].enable) this.activate();
+
+
+
+    function setFeature (type, coords) {
+        var feature;
+
+        if (type === 'Rectangle') {
+            feature = turf.polygon([[
+                geoflo.mouseIsDown,
+                coords,
+                coords,
+                geoflo.mouseIsDown
+            ]]);
+        } else if (type === 'Circle') {
+            feature = turf.polygon([[
+                geoflo.mouseIsDown,
+                coords,
+                coords,
+                geoflo.mouseIsDown
+            ]]);
+
+            geoflo.Utilities.setProperty(feature, 'center', geoflo.mouseIsDown);
+        } else {
+            feature = turf.lineString([geoflo.mouseIsDown, coords]);
+        }
+
+        geoflo.Utilities.setProperty(feature, 'type', type);
+        geoflo.Utilities.setProperty(feature, 'painting', 1);
+        return feature;
+    }
+
+    function updateCoordinate (f, t, e, n) {
+        var o = t.split(".")
+            , r = parseInt(o[0], 10)
+            , i = parseInt(o[1], 10);
+        void 0 === f.geometry.coordinates[r] &amp;&amp; (f.geometry.coordinates[r] = []),
+        f.geometry.coordinates[r][i] = [e, n]
+    }
+};
+
+export default Painting;</code></pre>
+        </article>
+    </section>
 
 
 
@@ -1747,7 +271,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:geoflo.Select_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
