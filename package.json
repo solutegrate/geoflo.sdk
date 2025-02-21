@@ -1,6 +1,6 @@
 {
   "name": "@solutegrate/geoflo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "MapboxGL Wrapper for Professional Geospatial Management",
   "main": "dist/geoflo.min.js",
   "scripts": {},
