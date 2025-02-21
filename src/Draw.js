@@ -53,8 +53,11 @@ const Draw = function () {
         var newType = this.type = options.type;
         var properties = options.feature ? options.feature.properties : options;
         
+        this.source = properties.source || this.source;
         this.properties = Object.assign({}, properties);
+        
         delete this.properties.mode;
+        delete this.properties.source;
         delete this.properties.location;
 
         const id = options.id || properties.id || URL.createObjectURL(new Blob([])).slice(-36);
@@ -341,7 +344,7 @@ const Draw = function () {
         var point = turf.point(lastPoint.coords);
 
         point.properties = this.properties;
-        point.source = this.source;
+        point.source = this.source || point.properties.source;
 
         geoflo.lastMove = lastPoint.coords.length > 1 ? { lat: lastPoint.coords[lastPoint.coords.length-1][1], lng: lastPoint.coords[lastPoint.coords.length-1][0] } : false;        
 
