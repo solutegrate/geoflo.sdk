@@ -350,6 +350,7 @@ const Features = function () {
                 geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selectedFeatures));
                 return true;
             } else if (!sources.includes(originalFeature.source)) {
+                originalFeature.properties._selected = false;
                 sources.push(originalFeature.source);
             }
             
