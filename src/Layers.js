@@ -653,7 +653,13 @@ const Layers = function () {
 	 * @returns {Array} - An array of layers after the refresh operation.
 	 */
     this.refresh = async function (options={}) {
-        if (options.select) return geoflo.Layers.moveLayers(this.selectLayers);
+        if (options.select) {
+            this.removeLayers(this.selectLayers);
+            this.addLayers(this.selectLayers, options);
+            this.moveLayers(this.selectLayers);
+            return this.selectLayers;
+        }
+        
         if (!options.init) return this.init(options);
         
         var layers = geoflo.Utilities.cloneDeep(this._layers);
