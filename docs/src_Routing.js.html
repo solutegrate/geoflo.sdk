@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mixin: Mesh | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Routing.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -68,1165 +60,709 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Mesh</h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Routing
+ * @description This module provides the routing functionality for the Geoflo application. It allows users to calculate routes between two points on the map using a PathFinder object.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Routing object.
+ */
+const Routing = function (mode) {
+    const geoflo = this.geoflo;
+
+    this.type = mode.type;
+    this.graphData = {};
+    this.features = geoflo.getDrawnFeatures();
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name activate
+	 * @description Activates the functionality by setting the 'enabled' property to true and enabling routing in the options.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    this.activate = function () {
+        this.enabled = true;
+        geoflo.options['routing'].enable = true;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name deactivate
+	 * @description This function deactivates the routing feature by setting the enabled flag to false, disabling routing in the options, and clearing the route data on the map.
+	 * @returns {void}
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['routing'].enable = false;
+        geoflo.map.getSource(geoflo.statics.constants.sources['ROUTE']).setData(turf.featureCollection([]));
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getRoute
+	 * @description This function calculates a route between two points on a map using a PathFinder object. It checks if the routing feature is enabled and if the map is not currently moving. It then creates a feature collection from the existing features, initializes a PathFinder object, and finds a path between the two points. The path is validated and then added to the map with a 'routing.add' event.
+	 * @param {Object} fromPoint - The starting point for the route.
+	 * @param {Object} toPoint - The destination point for the route.
+	 * @returns {Array|boolean} The calculated route path as an array of points, or false if the route could not be calculated.
+	 */
+    this.getRoute = function (fromPoint, toPoint) {
+        if (!this.enabled || geoflo.mapMoving) return false;
+        var features = turf.featureCollection(this.getFeatures());
+        var pathfinder = new PathFinder(features, geoflo.options.routing);
+        var path = pathfinder.findPath ? pathfinder.findPath(fromPoint, toPoint) : false;
+        path = validatePath(fromPoint, toPoint, path);
+        geoflo.fire('routing.add', { from: fromPoint, to: toPoint, path: path });
+        return path;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getMatch
+	 * @description Retrieves a match for the given coordinates using the Exploring service. Sets the match as a starting point for routing.
+	 * @param {Object} coords - The coordinates for which to find a match.
+	 * @returns {Promise&lt;Object>} The matched feature with routing property set to true.
+	 */
+    this.getMatch = async function (coords) {
+        if (!geoflo.Exploring) return {};
+        var feature = await geoflo.Exploring.getMatch(coords, { set: true, start: geoflo.startPoint });
+        feature.properties.routing = true;
+        return feature;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getClosest
+	 * @description Calculates the closest point on a route based on the last click and the closest point to it.
+	 * @returns {Object|boolean} Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
+	 */
+    this.getClosest = function () {
+        if (!geoflo.closestPoint || !geoflo.lastClick) return false;
+        var route = this.getRoute(geoflo.lastClick, geoflo.closestPoint);
+        if (!route || !route.path) return false;
+        var feature = turf.lineString(route.path);
+        feature.properties.routing = true;
+        return feature;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Routing
+	 * @name getFeatures
+	 * @description Retrieves features of type 'LineString' from the mesh index.
+	 * @returns {Array} An array of features of type 'LineString'.
+	 */
+    this.getFeatures = function () {
+        var features = [geoflo.getSnapFeatures(), geoflo.getDrawnFeatures()].flat();
+        return features.filter(function(feature) { return feature.geometry.type === 'LineString' });
+    };
+
+    
+    if (geoflo.options['routing'].enable) this.activate();
+
+
+    function PathFinder(features, options) {
+        options = options || {};
         
-    
-</header>
+        if (!features.compactedVertices) { features = preprocess(features, options); }
 
-<article>
+        this._graph = features;
+        this._keyFn = options.keyFn || function(c) { return c.join(','); };
+        this._precision = options.precision || 1e-5;
+        this._options = options;
     
-        <div class="container-overview">
+        if (Object.keys(this._graph.compactedVertices).filter(function(k) { return k !== 'edgeData'; }).length === 0) {
+            return null;
+        }
+
+        this.findPath = function(a, b) {
+            var start = this._keyFn(roundCoord(a.coords, this._precision)),
+                finish = this._keyFn(roundCoord(b.coords, this._precision));
+    
+            if (!this._graph.vertices[start] || !this._graph.vertices[finish]) {
+                return null;
+            }
+    
+            var phantomStart = this._createPhantom(start);
+            var phantomEnd = this._createPhantom(finish);
+    
+            var path = findPath(this._graph.compactedVertices, start, finish);
+    
+            if (path) {
+                var weight = path[0];
+                path = path[1];
+                return {
+                    fullPath: path,
+                    path: path.reduce(function buildPath(cs, v, i, vs) {
+                        if (i > 0) {
+                            cs = cs.concat(this._graph.compactedCoordinates[vs[i - 1]][v]);
+                        }
+    
+                        return cs;
+                    }.bind(this), []).concat([this._graph.sourceVertices[finish]]),
+                    weight: weight,
+                    edgeDatas: this._graph.compactedEdges 
+                        ? path.reduce(function buildEdgeData(eds, v, i, vs) {
+                            if (i > 0) {
+                                eds.push({
+                                    reducedEdge: this._graph.compactedEdges[vs[i - 1]][v]
+                                });
+                            }
+    
+                            return eds;
+                        }.bind(this), [])
+                        : undefined
+                };
+            } else {
+                return null;
+            }
+    
+            this._removePhantom(phantomStart);
+            this._removePhantom(phantomEnd);
+        }
+
+        this.serialize = function() {
+            return this._graph;
+        }
+
+        this._createPhantom = function(n) {
+            if (this._graph.compactedVertices[n]) return null;
+    
+            var phantom = compactNode(n, this._graph.vertices, this._graph.compactedVertices, this._graph.sourceVertices, this._graph.edgeData, true, this._options);
+            this._graph.compactedVertices[n] = phantom.edges;
+            this._graph.compactedCoordinates[n] = phantom.coordinates;
+    
+            if (this._graph.compactedEdges) {
+                this._graph.compactedEdges[n] = phantom.reducedEdges;
+            }
+    
+            Object.keys(phantom.incomingEdges).forEach(function(neighbor) {
+                this._graph.compactedVertices[neighbor][n] = phantom.incomingEdges[neighbor];
+                this._graph.compactedCoordinates[neighbor][n] = [this._graph.sourceVertices[neighbor]].concat(phantom.incomingCoordinates[neighbor].slice(0, -1));
+                if (this._graph.compactedEdges) {
+                    this._graph.compactedEdges[neighbor][n] = phantom.reducedEdges[neighbor];
+                }
+            }.bind(this))
+    
+            return n;
+        }
+
+        this._removePhantom = function(n) {
+            if (!n) return;
+    
+            Object.keys(this._graph.compactedVertices[n]).forEach(function(neighbor) {
+                delete this._graph.compactedVertices[neighbor][n];
+            }.bind(this));
+            Object.keys(this._graph.compactedCoordinates[n]).forEach(function(neighbor) {
+                delete this._graph.compactedCoordinates[neighbor][n];
+            }.bind(this));
+            if (this._graph.compactedEdges) {
+                Object.keys(this._graph.compactedEdges[n]).forEach(function(neighbor) {
+                    delete this._graph.compactedEdges[neighbor][n];
+                }.bind(this));
+            }
+    
+            delete this._graph.compactedVertices[n];
+            delete this._graph.compactedCoordinates[n];
+    
+            if (this._graph.compactedEdges) {
+                delete this._graph.compactedEdges[n];
+            }
+        }
+    };
+
+    function ShortestPath () {
+        var INFINITY = 1 / 0;
+        this.vertices = {};
+    
+        this.addVertex = function (name, edges) {
+            this.vertices[name] = edges;
+        };
+    
+        this.setVertices = function (graph) {
+            this.vertices = graph;
+        };
+    
+        this.shortestPath = function (start, finish) {
+            var nodes = new PriorityQueue(),
+                distances = {},
+                previous = {},
+                path = [],
+                smallest, vertex, neighbor, alt;
         
-            
-                <div class="description">This module provides the mesh functionality for the Geoflo application. It allows users to create a mesh of features by splitting them into segments and checking for intersections.</div>
-            
-
-            
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-            
+            for (vertex in this.vertices) {
+                if (vertex === start) {
+                    distances[vertex] = 0;
+                    nodes.enqueue(0, vertex);
+                } else {
+                    distances[vertex] = INFINITY;
+                    nodes.enqueue(INFINITY, vertex);
+                }
         
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id=".addNewFeatures">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>addNewFeatures<span class="signature">(features)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line17">line 17</a></code>
-            </div>
-            
-        </h4>
-
+                previous[vertex] = null;
+            }
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function takes new features, splits them into segments, checks for intersections, and updates the existing segments accordingly.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
+            while (!nodes.isEmpty()) {
+                smallest = nodes.dequeue();
         
-<table class="params">
-    <thead>
-    <tr>
+                if (smallest === finish) {
+                    path = [];
+            
+                    while (previous[smallest]) {
+                        path.push(smallest);
+                        smallest = previous[smallest];
+                    }
+            
+                    break;
+                }
         
-        <th>Name</th>
+                if (!smallest || distances[smallest] === INFINITY) {
+                    continue;
+                }
         
-
-        <th>Type</th>
-
+                for (neighbor in this.vertices[smallest]) {
+                    alt = distances[smallest] + this.vertices[smallest][neighbor];
         
-
+                    if (alt &lt; distances[neighbor]) {
+                        distances[neighbor] = alt;
+                        previous[neighbor] = smallest;
+            
+                        nodes.enqueue(alt, neighbor);
+                    }
+                }
+            }
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
+            return path;
+        };
+    };
     
-
-        <tr>
-            
-                <td class="name"><code>features</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">An array of new features to be added.</td>
-        </tr>
-
+    function PriorityQueue() {
+        this._nodes = [];
     
-    </tbody>
-</table>
-
-    </div>
+        this.enqueue = function (priority, key) {
+            this._nodes.push({key: key, priority: priority});
+            this.sort();
+        };
     
-
+        this.dequeue = function () {
+            return this._nodes.shift().key;
+        };
     
-
+        this.sort = function () {
+            this._nodes.sort((a, b) => {
+                return a.priority - b.priority;
+            });
+        };
     
+        this.isEmpty = function () {
+            return !this._nodes.length;
+        };
+    };
 
+    function TinyQueue(data, compare) {
+        if ( data === void 0 ) data = [];
+        if ( compare === void 0 ) compare = function (a, b) {
+            return a &lt; b ? -1 : a > b ? 1 : 0;
+        };
     
-
+        this.data = data;
+        this.length = this.data.length;
+        this.compare = compare;
     
-
+        if (this.length > 0) {
+            for (var i = (this.length >> 1) - 1; i >= 0; i--) { this._down(i); }
+        }
     
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        this.push = function push (item) {
+            this.data.push(item);
+            this.length++;
+            this._up(this.length - 1);
+        };
         
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- Returns an array containing all mesh segments.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getFeatureById">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getFeatureById<span class="signature">(id)</span><span class="type-signature"> &rarr; {object}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line87">line 87</a></code>
-            </div>
-            
-        </h4>
-
+        this.pop = function pop () {
+            if (this.length === 0) { return undefined; }
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Retrieves a feature by its ID.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
+            var top = this.data[0];
+            var bottom = this.data.pop();
+            this.length--;
         
-<table class="params">
-    <thead>
-    <tr>
+            if (this.length > 0) {
+                this.data[0] = bottom;
+                this._down(0);
+            }
         
-        <th>Name</th>
+            return top;
+        };
         
-
-        <th>Type</th>
-
+        this.peek = function peek () {
+            return this.data[0];
+        };
         
-
+        this._up = function _up (pos) {
+            var ref = this;
+                var data = ref.data;
+                var compare = ref.compare;
+            var item = data[pos];
         
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the feature to retrieve.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+            while (pos > 0) {
+                var parent = (pos - 1) >> 1;
+                var current = data[parent];
+                if (compare(item, current) >= 0) { break; }
+                data[pos] = current;
+                pos = parent;
+            }
         
-                
-
-
-
-<span class="param-type">object</span>
-
-
-
-
-
-- The feature object corresponding to the provided ID.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getFeatures">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getFeatures<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line33">line 33</a></code>
-            </div>
-            
-        </h4>
-
+            data[pos] = item;
+        };
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Returns all of the features in the mesh.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        this._down = function _down (pos) {
+            var ref = this;
+                var data = ref.data;
+                var compare = ref.compare;
+            var halfLength = this.length >> 1;
+            var item = data[pos];
         
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- Returns an array containing all feature segments.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getFeaturesByParentId">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getFeaturesByParentId<span class="signature">(id)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line99">line 99</a></code>
-            </div>
-            
-        </h4>
-
+            while (pos &lt; halfLength) {
+                var left = (pos &lt;&lt; 1) + 1;
+                var best = data[left];
+                var right = left + 1;
         
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Retrieves features based on the parent ID. The parent ID is used to retrieve cold features associated with the segment.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
+                if (right &lt; this.length &amp;&amp; compare(data[right], best) &lt; 0) {
+                    left = right;
+                    best = data[right];
+                }
+                if (compare(best, item) >= 0) { break; }
         
-<table class="params">
-    <thead>
-    <tr>
+                data[pos] = best;
+                pos = left;
+            }
         
-        <th>Name</th>
-        
+            data[pos] = item;
+        };
+    };
 
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
+    function findNextEnd(prev, v, vertices, ends, vertexCoords, edgeData, trackIncoming, options) {
+        var weight = vertices[prev][v],
+            reverseWeight = vertices[v][prev],
+            coordinates = [],
+            path = [],
+            reducedEdge = options.edgeDataSeed;
             
-                <td class="name"><code>id</code></td>
+        if (options.edgeDataReduceFn) {
+            reducedEdge = options.edgeDataReduceFn(reducedEdge, edgeData[v][prev]);
+        }
+    
+        while (!ends[v]) {
+            var edges = vertices[v];
+    
+            if (!edges) { break; }
+    
+            var next = Object.keys(edges).filter(function notPrevious(k) { return k !== prev; })[0];
+            weight += edges[next];
+    
+            if (trackIncoming) {
+                reverseWeight += vertices[next][v];
+    
+                if (path.indexOf(v) >= 0) {
+                    ends[v] = vertices[v];
+                    break;
+                }
+                path.push(v);
+            }
+    
+            if (options.edgeDataReduceFn) {
+                reducedEdge = options.edgeDataReduceFn(reducedEdge, edgeData[v][next]);
+            }
+    
+            coordinates.push(vertexCoords[v]);
+            prev = v;
+            v = next;
+        }
+    
+        return {
+            vertex: v,
+            weight: weight,
+            reverseWeight: reverseWeight,
+            coordinates: coordinates,
+            reducedEdge: reducedEdge
+        };
+    };
+    
+    function compactNode(k, vertices, ends, vertexCoords, edgeData, trackIncoming, options) {
+        options = options || {};
+        var neighbors = vertices[k];
+        return Object.keys(neighbors).reduce(function compactEdge(result, j) {
+            var neighbor = findNextEnd(k, j, vertices, ends, vertexCoords, edgeData, trackIncoming, options);
+            var weight = neighbor.weight;
+            var reverseWeight = neighbor.reverseWeight;
+            if (neighbor.vertex !== k) {
+                if (!result.edges[neighbor.vertex] || result.edges[neighbor.vertex] > weight) {
+                    result.edges[neighbor.vertex] = weight;
+                    result.coordinates[neighbor.vertex] = [vertexCoords[k]].concat(neighbor.coordinates);
+                    result.reducedEdges[neighbor.vertex] = neighbor.reducedEdge;
+                }
+                if (trackIncoming &amp;&amp; 
+                    !isNaN(reverseWeight) &amp;&amp; (!result.incomingEdges[neighbor.vertex] || result.incomingEdges[neighbor.vertex] > reverseWeight)) {
+                    result.incomingEdges[neighbor.vertex] = reverseWeight;
+                    var coordinates = [vertexCoords[k]].concat(neighbor.coordinates);
+                    coordinates.reverse();
+                    result.incomingCoordinates[neighbor.vertex] = coordinates;
+                }
+            }
+            return result;
+        }, {edges: {}, incomingEdges: {}, coordinates: {}, incomingCoordinates: {}, reducedEdges: {}});
+    };
+    
+    function compactGraph(vertices, vertexCoords, edgeData, options) {
+        options = options || {};
+        var progress = options.progress;
+        var ends = Object.keys(vertices).reduce(function findEnds(es, k, i, vs) {
+            var vertex = vertices[k];
+            var edges = Object.keys(vertex);
+            var numberEdges = edges.length;
+            var remove;
+    
+            if(options.compact === false)  {
+                remove = false;
+            } else if (numberEdges === 1) {
+                var other = vertices[edges[0]];
+                remove = !other[k];
+            } else if (numberEdges === 2) {
+                remove = edges.filter(function(n) {
+                    return vertices[n][k];
+                }).length === numberEdges;
+            } else {
+                remove = false;
+            }
             
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The parent ID to retrieve features for.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- - An array of features associated with the parent ID.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getFeaturesFromIndex">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getFeaturesFromIndex<span class="signature">(features)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line67">line 67</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function takes an array of features and retrieves the corresponding features from an index based on their IDs.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>features</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The array of features to retrieve from the index.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- The array of features retrieved from the index.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".removeFeature">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>removeFeature<span class="signature">(id)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line111">line 111</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Removes a feature with the specified ID.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the feature to be removed.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- - Returns true if the feature was successfully removed, false otherwise.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".splitSegmentAtPoint">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>splitSegmentAtPoint<span class="signature">(segmentId, pointCoords)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Mesh.js.html">src/Mesh.js</a></code>,
-                <code><a href="src_Mesh.js.html#line44">line 44</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function takes a segment ID and coordinates of a point to split the segment. It creates two new segments by splitting the original segment at the specified point and updates the feature index.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>segmentId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the segment to be split.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>pointCoords</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;number></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The coordinates of the point where the segment should be split.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+            if (!remove) {
+                es[k] = vertex;
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; progress) {
+                progress('compact:ends', i, vs.length);
+            }
+    
+            return es;
+        }, {});
+    
+        return Object.keys(ends).reduce(function compactEnd(result, k, i, es) {
+            var compacted = compactNode(k, vertices, ends, vertexCoords, edgeData, false, options);
+            result.graph[k] = compacted.edges;
+            result.coordinates[k] = compacted.coordinates;
+    
+            if (options.edgeDataReduceFn) {
+                result.reducedEdges[k] = compacted.reducedEdges;
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; progress) {
+                progress('compact:nodes', i, es.length);
+            }
+    
+            return result;
+        }, {graph: {}, coordinates: {}, reducedEdges: {}});
+    };
+    
+    function findPath(graph, start, end) {
+        var costs = {};
+        costs[start] = 0;
+        var initialState = [0, [start], start];
+        var queue = new TinyQueue([initialState], function(a, b) { return a[0] - b[0]; });
+        var explored = {};
+    
+        while (queue.length) {
+            var state = queue.pop();
+            var cost = state[0];
+            var node = state[2];
+            if (node === end) {
+                return state.slice(0, 2);
+            }
+    
+            var neighbours = graph[node];
+            Object.keys(neighbours).forEach(function(n) {
+                var newCost = cost + neighbours[n];
+                if (!(n in costs) || newCost &lt; costs[n]) {
+                    costs[n] = newCost;
+                    var newState = [newCost, state[1].concat([n]), n];
+                    queue.push(newState);
+                }
+            });
+        }
+    
+        return null;
+    };
+    
+    function preprocess(graph, options) {
+        options = options || {};
+
+        var topo;
+
+        var weightFn = options.weightFn || function defaultWeightFn(a, b) {
+            return turf.distance(turf.point(a), turf.point(b));
+        }
+    
+        if (graph.type === 'FeatureCollection') {
+            // Graph is GeoJSON data, create a topology from it
+            topo = topology(graph, options);
+        } else if (graph.edges) {
+            // Graph is a preprocessed topology
+            topo = graph;
+        }
+    
+        var graph = topo.edges.reduce(function buildGraph(g, edge, i, es) {
+            var a = edge[0],
+                b = edge[1],
+                props = edge[2],
+                w = weightFn(topo.vertices[a], topo.vertices[b], props),
+                makeEdgeList = function makeEdgeList(node) {
+                    if (!g.vertices[node]) {
+                        g.vertices[node] = {};
+                        if (options.edgeDataReduceFn) {
+                            g.edgeData[node] = {};
+                        }
+                    }
+                },
+                concatEdge = function concatEdge(startNode, endNode, weight) {
+                    var v = g.vertices[startNode];
+                    v[endNode] = weight;
+                    if (options.edgeDataReduceFn) {
+                        g.edgeData[startNode][endNode] = options.edgeDataReduceFn(options.edgeDataSeed, props);
+                    }
+                };
+    
+            if (w) {
+                makeEdgeList(a);
+                makeEdgeList(b);
+                if (w instanceof Object) {
+                    if (w.forward) {
+                        concatEdge(a, b, w.forward);
+                    }
+                    if (w.backward) {
+                        concatEdge(b, a, w.backward);
+                    }
+                } else {
+                    concatEdge(a, b, w);
+                    concatEdge(b, a, w);
+                }
+            }
+    
+            if (i % 1000 === 0 &amp;&amp; options.progress) {
+                options.progress('edgeweights', i,es.length);
+            }
+    
+            return g;
+        }, {edgeData: {}, vertices: {}});
+    
+        var compact = compactGraph(graph.vertices, topo.vertices, graph.edgeData, options);
+    
+        return {
+            vertices: graph.vertices,
+            edgeData: graph.edgeData,
+            sourceVertices: topo.vertices,
+            compactedVertices: compact.graph,
+            compactedCoordinates: compact.coordinates,
+            compactedEdges: options.edgeDataReduceFn ? compact.reducedEdges : null
+        };
+    };
+    
+    function roundCoord(c, precision) {
+        return [
+            Math.round(c[0] / precision) * precision,
+            Math.round(c[1] / precision) * precision,
+        ];
+    };
+    
+    function geoJsonReduce(geojson, fn, seed) {
+        if (geojson.type === 'FeatureCollection') {
+            return geojson.features.reduce(function reduceFeatures(a, f) {
+                return geoJsonReduce(f, fn, a);
+            }, seed);
+        } else {
+            return fn(seed, geojson);
+        }
+    };
+    
+    function geoJsonFilterFeatures(geojson, fn) {
+        var features = [];
+        if (geojson.type === 'FeatureCollection') {
+            features = features.concat(geojson.features.filter(fn));
+        }
+    
+        return {
+            type: 'FeatureCollection',
+            features: features
+        };
+    };
+    
+    function isLineString(f) {
+        return f.geometry.type === 'LineString';
+    };
+    
+    function topology(geojson, options) {
+        options = options || {};
+        var keyFn = options.keyFn || function defaultKeyFn(c) {
+                return c.join(',');
+            },
+            precision = options.precision || 1e-5;
+    
+        var lineStrings = geoJsonFilterFeatures(geojson, isLineString);
+        var explodedLineStrings = turf.explode(lineStrings);
+        var vertices = explodedLineStrings.features.reduce(function buildTopologyVertices(cs, f, i, fs) {
+                var rc = roundCoord(f.geometry.coordinates, precision);
+                cs[keyFn(rc)] = f.geometry.coordinates;
+    
+                if (i % 1000 === 0 &amp;&amp; options.progress) {
+                    options.progress('topo:vertices', i, fs.length);
+                }
+    
+                return cs;
+            }, {}),
+            edges = geoJsonReduce(lineStrings, function buildTopologyEdges(es, f, i, fs) {
+                f.geometry.coordinates.forEach(function buildLineStringEdges(c, i, cs) {
+                    if (i > 0) {
+                        var k1 = keyFn(roundCoord(cs[i - 1], precision)),
+                            k2 = keyFn(roundCoord(c, precision));
+                        es.push([k1, k2, f.properties]);
+                    }
+                });
+    
+                if (i % 1000 === 0 &amp;&amp; options.progress) {
+                    options.progress('topo:edges', i, fs.length);
+                }
+    
+                return es;
+            }, []);
+        return {
+            vertices: vertices,
+            edges: edges
+        };
+    };
+
+    function validatePath(fromPoint, toPoint, path) {
+        if (toPoint &amp;&amp; toPoint.type === 'linepoint') return false;
+        //if (precision > 0.0005) return false;
+        if (!path || !path.path || !path.path.length || path.path.length &lt; 2) return false;
+        return path;
+
+        precision = Number((Number(precision) + 0.000002).toFixed(7));
+        var pathfinder = new PathFinder(features, { precision: precision });
+        var newPath = pathfinder.findPath(fromPoint, toPoint);
+        return validatePath(fromPoint, toPoint, features, newPath);
+    };
+};
+
+export default Routing;</code></pre>
+        </article>
+    </section>
 
 
 
@@ -1243,7 +779,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:geoflo.Mesh_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
