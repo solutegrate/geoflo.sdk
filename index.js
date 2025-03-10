@@ -1530,6 +1530,16 @@ const GeoFlo = function () {
         return features.length;
     }
 
+    this.removeAllFeatures = function () {
+        this.removeSelection();
+        this.Features.deleteFeatures();
+        this.map.getSource(this.statics.constants.sources.MESH).setData(turf.featureCollection([]));
+        this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+        this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+        this.Layers.refresh({ select: true });
+        this.fire('features.removeAll');
+    }
+
 	/**
 	 * @function
      * @memberOf module:geoflo

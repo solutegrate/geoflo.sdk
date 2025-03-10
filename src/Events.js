@@ -17,6 +17,7 @@ const events = [
     'control.remove',
     'features.zoom',
     'features.add',
+    'features.removeAll',
     'features.remove',
     'features.update',
     'features.import',
