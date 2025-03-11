@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Styles.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -69,104 +61,211 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p align="center">
-  <a href="https://projects.geoflo.pro?referer=docs.geoflo.pro">
-    <img width="500" alt="GeoFlo Logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" />
-  </a>
-</p>
-<h3 align="center">
-  Professional Geospatial Management Library for Mapbox GL JS
-</h3>
-</br>
-<p style="align-items: center; display: flex; flex-direction: row; justify-content: center;">
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/license.txt" target="_blank" rel="noopener noreferrer">
-      <img src="https://img.shields.io/badge/License-MPL-blue.svg?style=flat&label=License&color=333333" alt="MPL 2.0 License" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://docs.geoflo.pro/tutorial-basic.html" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-Free_Demo-blue.svg?color=6fafdb" alt="GeoFlo Demo" />
-  </a>
-  <a style="margin:2px;color:transparent;" href="https://sdk.geoflo.pro/geoflo.min.js" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/GeoFlo-SDK_Link-blue.svg?color=d7ef7e" alt="GeoFlo SDK" />
-  </a>
-</p>
-<h2>📖 Introduction</h2>
-<p>GeoFlo is a comprehensive geospatial management library designed for Mapbox GL JS. It provides a wide range of features and tools to enhance your mapping applications, making it easier to work with geospatial data and create interactive maps. There is no need to install anything. Simply import the library, add your Mapbox token and start using it.</p>
-<h2>🚧 Contributing</h2>
-<p>GeoFlo is an open-source project, and contributions are welcome. Your feedback and contributions are valuable in making GeoFlo even better.</p>
-<h2>🌟 Key Features</h2>
-<ul>
-<li><strong>Advanced Editing:</strong> Draw, edit, snap, pin, route, paint, explore and much more.</li>
-<li><strong>Versatile Features:</strong> Work with circles, icons, images, polylines, polygons, rectangles, text, and continuously expanding element types.</li>
-<li><strong>Robust Import/Export:</strong> Seamlessly import and export your data.</li>
-<li><strong>Customizable Color Schemes:</strong> Tailor your map's look and feel with custom colors.</li>
-<li><strong>Integrated APIs:</strong> Fully embedded Overpass API and OSRM Router for enhanced geospatial data and routing.</li>
-<li><strong>Comprehensive Gamepad Support:</strong> Compatible with controllers including XBOX, PlayStation, Nintendo, iBuffalo, Logitech, and others.</li>
-<li><strong>Smart Location Services:</strong> Enable user location tracking and follow mode for dynamic navigation.</li>
-<li><strong>Intuitive Base Map Control:</strong> Easily manage and customize your base map settings.</li>
-<li><strong>Dynamic Layer Management:</strong> Create, edit, and delete layers with ease.</li>
-<li><strong>Interactive Feature Management:</strong> Select, move, rotate, scale, and delete features with simple gestures.</li>
-<li><strong>Effortless Undo/Redo:</strong> Quickly undo and redo your actions with a single click. (In Development)</li>
-</ul>
-<h2>⚡ Deployment</h2>
-<p>Before you get started with GeoFlo, you need to have a Mapbox access token.
-For more information on creating and using Mapbox access tokens:
-<a href="https://docs.mapbox.com/accounts/guides/tokens/"><img width="100" alt="Mapbox logo" src="./img/mapbox-logo-blue.png"></a></p>
-<h2>🛠️ Usage/Examples</h2>
-<h3>NPM Import</h3>
-<pre class="prettyprint source lang-bash"><code>  npm config set registry &quot;https://npm.pkg.github.com&quot;
-  npm install @solutegrate/geoflo
-</code></pre>
-<h3>CDN Import</h3>
-<pre class="prettyprint source lang-javascript"><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://sdk.geoflo.pro/geoflo.css&quot;>
-  &lt;div id=&quot;map&quot;>&lt;/div>
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://sdk.geoflo.pro/geoflo.min.js&quot;>&lt;/script>
-</code></pre>
-<h3>Initialization</h3>
-<pre class="prettyprint source lang-javascript"><code>  (async function() {
-      await geoflo.init('YOUR_MAPBOX_TOKEN', { container: 'map' });
-      geoflo.map.on(geoflo.id, function onGeoFloEvent(event) { console.log(event); });
-  })();
-</code></pre>
-<h2>🗺️ Roadmap</h2>
-<p>This is my first open-source Github project. While I have looked deeply into the MapboxGL code/docs, please understand that bugs will creep their way in.
-Currently, GeoFlo is in its early stages of development. The goal is to make GeoFlo a powerful and versatile tool for geospatial management, and your support and feedback are crucial in achieving this.</p>
-<h2>🏁 Credits</h2>
-<p>This project utilizes the following libraries:</p>
-<ul>
-<li><strong>Mapbox GL JS</strong>: A powerful mapping platform that provides geospatial services and tools.</li>
-<li><strong>Turf.js</strong>: A modular geospatial engine written in JavaScript and TypeScript. Turf.js offers traditional spatial operations, helper functions for creating GeoJSON data, and data classification and statistics tools.</li>
-</ul>
-<h3>About Mapbox GL JS</h3>
-<p>Mapbox GL JS is a client-side JavaScript library for building web maps and web applications with Mapbox's modern mapping technology. You can use Mapbox GL JS to:</p>
-<ul>
-<li>Display Mapbox maps in a web browser or client.</li>
-<li>Add user interactivity to your maps.</li>
-<li>Customize the map experience in your application.</li>
-</ul>
-<p>The &quot;GL&quot; in Mapbox GL JS refers to Mapbox GL, a graphics library that renders 2D and 3D Mapbox maps as dynamic visual graphics with OpenGL in any compatible web browser, without using additional plugins.</p>
-<h3>About Turf.js</h3>
-<p>Turf.js is a JavaScript library for spatial analysis. It includes:</p>
-<ul>
-<li>Traditional spatial operations</li>
-<li>Helper functions for creating GeoJSON data</li>
-<li>Data classification and statistics tools</li>
-</ul></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Styles
+ * @description This module provides the styling functionality for the Geoflo application. It allows users to change the map style by selecting from a list of predefined styles.
+ * @param {Object} options - The options object containing the styles and selected style.
+ * @returns {Object} Returns the Styles object.
+ */
+const Styles = function (options={}) {
+    const geoflo = this.geoflo;
+    this.options = options;
+    
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name init
+     * @description Initializes the Styles object by extending the options object with the provided options, setting the styles, defaultStyle, and event listeners.
+     * @param {Object} options - The options object containing the styles and selected style.
+     * @returns {Object} Returns the Styles object.
+     */
+    this.init = function (options={}) {
+        this.options = Object.assign(this.options, options);
+        this.selected = this.options.selected || "Dark";
+        this.onDocumentClick = this.onDocumentClick.bind(this);
+        this.events = this.options.eventListeners;
+        return this;
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name select
+     * @description Selects the style with the provided name by setting the map style to the style's uri.
+     * @param {String} name - The name of the style to select.
+     * @returns {void}
+     */
+    this.select = function (name) {
+        if (!this.mapStyleContainer || !this.mapStyleContainer.checkVisibility()) {
+            var style = this.options.styles.find(style => style.title === name);
+            if (style) this.map.setStyle(style.uri), this.selected = name;
+            if (this.events &amp;&amp; this.events.onChange &amp;&amp; this.events.onChange({ style: style }, style))
+            return;
+        }
+
+        const elms = this.mapStyleContainer.getElementsByClassName(name);
+        if (elms.length > 0) elms[0].click();
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name hide
+     * @description Hides the style control container.
+     * @returns {void}
+     */
+    this.hide = function () {
+        if (this.controlContainer) this.controlContainer.style.display = "none";
+    }
+
+    /**
+     * @function
+     * @memberof module:geoflo.Styles
+     * @name show
+     * @description Shows the style control container.
+     * @returns {void}
+     */
+    this.show = function () {
+        if (this.controlContainer) this.controlContainer.style.display = "block";
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name getDefaultPosition
+     * @description Returns the default position for the style control container.
+     * @returns {String} The default position for the style control container.
+     */
+    this.getDefaultPosition = function () {
+        const defaultPosition = "top-right";
+        return defaultPosition;
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name onAdd
+     * @description Adds the style control container to the map.
+     * @param {Object} map - The map object to add the style control container to.
+     * @returns {Object} The style control container.
+     * @throws {Error} Throws an error if the map object is not provided.
+     */
+    this.onAdd = function (map) {
+        this.map = map;
+        this.controlContainer = document.createElement("div");
+        this.controlContainer.classList.add("mapboxgl-ctrl");
+        this.controlContainer.classList.add("mapboxgl-ctrl-group");
+        this.mapStyleContainer = document.createElement("div");
+        this.styleButton = document.createElement("button");
+        this.styleButton.type = "button";
+        this.mapStyleContainer.classList.add("mapboxgl-style-list");
+
+        for (const style of this.options.styles) {
+            const styleElement = document.createElement("button");
+
+            styleElement.type = "button";
+            styleElement.classList.add(style.title.replace(/[^a-z0-9-]/gi, '_'));
+            styleElement.dataset.uri = JSON.stringify(style.uri);
+
+            styleElement.addEventListener("click", event => {
+                const srcElement = event.target || event.srcElement;
+                this.closeModal();
+                if (srcElement.classList.contains("active")) return;
+                if (this.events &amp;&amp; this.events.onOpen &amp;&amp; this.events.onOpen(event)) return;
+                const style = JSON.parse(srcElement.dataset.uri);
+                this.map.setStyle(style);
+                const elms = this.mapStyleContainer.getElementsByClassName("active");
+                while (elms[0]) elms[0].classList.remove("active");
+                srcElement.classList.add("active");
+                if (this.events &amp;&amp; this.events.onChange &amp;&amp; this.events.onChange(event, style)) return;
+            });
+
+            if (style.title === this.selected) {
+                styleElement.classList.add("active");
+            }
+
+            this.mapStyleContainer.appendChild(styleElement);
+        }
+
+        this.styleButton.classList.add("mapboxgl-ctrl-icon");
+        this.styleButton.classList.add("mapboxgl-style-switcher");
+
+        this.styleButton.addEventListener("click", event => {
+            if (this.events &amp;&amp; this.events.onSelect &amp;&amp; this.events.onSelect(event)) return;
+            this.openModal();
+        });
+
+        document.addEventListener("click", this.onDocumentClick);
+
+        this.controlContainer.appendChild(this.styleButton);
+        this.controlContainer.appendChild(this.mapStyleContainer);
+        
+        this.closeModal();
+        return this.controlContainer;
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name onRemove
+     * @description Removes the style control container from the map.
+     * @returns {void}
+     * @throws {Error} Throws an error if the control container, control container parent node, map, or style button is not provided.
+     * @throws {Error} Throws an error if the style button event listener is not removed.
+     * @throws {Error} Throws an error if the document event listener is not removed.
+     */
+    this.onRemove = function () {
+        if (!this.controlContainer || !this.controlContainer.parentNode || !this.map || !this.styleButton) {
+            return;
+        }
+        this.styleButton.removeEventListener("click", this.onDocumentClick);
+        this.controlContainer.parentNode.removeChild(this.controlContainer);
+        document.removeEventListener("click", this.onDocumentClick);
+        this.map = undefined;
+    }
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Styles
+     * @name closeModal
+     * @description Closes the style control container.
+     * @returns {void}
+     */
+    this.closeModal = function () {
+        if (this.mapStyleContainer &amp;&amp; this.styleButton) {
+            this.mapStyleContainer.style.display = "none";
+            this.styleButton.style.display = "block";
+        }
+    }
+
+    /**
+     * @function
+     * @memberof module:geoflo.Styles
+     * @name openModal
+     * @description Opens the style control container.
+     * @returns {void}
+     */
+    this.openModal = function () {
+        if (this.mapStyleContainer &amp;&amp; this.styleButton) {
+            this.mapStyleContainer.style.display = "block";
+            this.styleButton.style.display = "none";
+        }
+    }
+
+    this.onDocumentClick = function (event) {
+        if (this.controlContainer &amp;&amp; !this.controlContainer.contains(event.target)) this.closeModal();
+    }
+
+    this.init();
+};
+
+export default Styles;</code></pre>
+        </article>
     </section>
-
-
 
 
 
@@ -183,7 +282,7 @@ Currently, GeoFlo is in its early stages of development. The goal is to make Geo
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:@solutegrate/geoflo_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
