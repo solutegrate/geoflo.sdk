@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Source: src/Features.js | Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+        
+            <link type="text/css" rel="stylesheet" href="./styles/custom.css">
+        
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <a href="https://docs.geoflo.pro" rel="noopener noreferrer" target="_blank">
+                <img src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" width="100%" height="100%">
+            </a>
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Documentation</a></h1>
+        
+            <span class="version">v1.0.6</span>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+        <ol class="lnb-tab">
+            <li id="api-tab">
+                <a href="#"><h4>SDK</h4></a>
+            </li>
+            <li id="examples-tab">
+                <a href="#"><h4>Examples</h4></a>
+            </li>
+        </ol>
+    
+    <div class="lnb-examples hidden"><h3>Examples</h3><ul><li><a href="tutorial-basic.html">Version 1.0.6</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="basic_sub"></div></li></ul></div><div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-geoflo.html">geoflo</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.html#.activateExploring">activateExploring</a></li><li><a href="module-geoflo.html#.activatePainting">activatePainting</a></li><li><a href="module-geoflo.html#.activatePinning">activatePinning</a></li><li><a href="module-geoflo.html#.activateRouting">activateRouting</a></li><li><a href="module-geoflo.html#.activateSnapping">activateSnapping</a></li><li><a href="module-geoflo.html#.addControl">addControl</a></li><li><a href="module-geoflo.html#.addControls">addControls</a></li><li><a href="module-geoflo.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.html#.addFeaturesToMesh">addFeaturesToMesh</a></li><li><a href="module-geoflo.html#.addFeaturesToSelected">addFeaturesToSelected</a></li><li><a href="module-geoflo.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.html#.combineSelectedFeatures">combineSelectedFeatures</a></li><li><a href="module-geoflo.html#.createPolygon">createPolygon</a></li><li><a href="module-geoflo.html#.deactivateExploring">deactivateExploring</a></li><li><a href="module-geoflo.html#.deactivatePainting">deactivatePainting</a></li><li><a href="module-geoflo.html#.deactivatePinning">deactivatePinning</a></li><li><a href="module-geoflo.html#.deactivateRouting">deactivateRouting</a></li><li><a href="module-geoflo.html#.deactivateSnapping">deactivateSnapping</a></li><li><a href="module-geoflo.html#.deleteMeshData">deleteMeshData</a></li><li><a href="module-geoflo.html#.deleteUserData">deleteUserData</a></li><li><a href="module-geoflo.html#.disable">disable</a></li><li><a href="module-geoflo.html#.editFeature">editFeature</a></li><li><a href="module-geoflo.html#.enable">enable</a></li><li><a href="module-geoflo.html#.fire">fire</a></li><li><a href="module-geoflo.html#.forEachSelectedFeature">forEachSelectedFeature</a></li><li><a href="module-geoflo.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.html#.getColors">getColors</a></li><li><a href="module-geoflo.html#.getCommonGeometryType">getCommonGeometryType</a></li><li><a href="module-geoflo.html#.getControlIds">getControlIds</a></li><li><a href="module-geoflo.html#.getDrawnFeatures">getDrawnFeatures</a></li><li><a href="module-geoflo.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.html#.getFeaturesByLayer">getFeaturesByLayer</a></li><li><a href="module-geoflo.html#.getHotFeature">getHotFeature</a></li><li><a href="module-geoflo.html#.getMap">getMap</a></li><li><a href="module-geoflo.html#.getMode">getMode</a></li><li><a href="module-geoflo.html#.getModes">getModes</a></li><li><a href="module-geoflo.html#.getRenderedDrawnFeatures">getRenderedDrawnFeatures</a></li><li><a href="module-geoflo.html#.getRenderedFeatures">getRenderedFeatures</a></li><li><a href="module-geoflo.html#.getRenderedSnapFeatures">getRenderedSnapFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeatureIds">getSelectedFeatureIds</a></li><li><a href="module-geoflo.html#.getSelectedFeatures">getSelectedFeatures</a></li><li><a href="module-geoflo.html#.getSelectedFeaturesBbox">getSelectedFeaturesBbox</a></li><li><a href="module-geoflo.html#.getSelectedPropertyNames">getSelectedPropertyNames</a></li><li><a href="module-geoflo.html#.getSelectedPropertyValues">getSelectedPropertyValues</a></li><li><a href="module-geoflo.html#.getSnapFeatures">getSnapFeatures</a></li><li><a href="module-geoflo.html#.hasControls">hasControls</a></li><li><a href="module-geoflo.html#.hasSelection">hasSelection</a></li><li><a href="module-geoflo.html#.hasSingleSelection">hasSingleSelection</a></li><li><a href="module-geoflo.html#.hideFeatures">hideFeatures</a></li><li><a href="module-geoflo.html#.hideSelectedFeatures">hideSelectedFeatures</a></li><li><a href="module-geoflo.html#.init">init</a></li><li><a href="module-geoflo.html#.loadFeatures">loadFeatures</a></li><li><a href="module-geoflo.html#.moveFeature">moveFeature</a></li><li><a href="module-geoflo.html#.moveMapAlongLine">moveMapAlongLine</a></li><li><a href="module-geoflo.html#.moveSelectedFeatures">moveSelectedFeatures</a></li><li><a href="module-geoflo.html#.off">off</a></li><li><a href="module-geoflo.html#.on">on</a></li><li><a href="module-geoflo.html#.once">once</a></li><li><a href="module-geoflo.html#.redraw">redraw</a></li><li><a href="module-geoflo.html#.refresh">refresh</a></li><li><a href="module-geoflo.html#.refreshMeshData">refreshMeshData</a></li><li><a href="module-geoflo.html#.removeControl">removeControl</a></li><li><a href="module-geoflo.html#.removeControls">removeControls</a></li><li><a href="module-geoflo.html#.removeEventListeners-Removeseventlistenersfromthemapandotherelements.">removeEventListeners - Removes event listeners from the map and other elements.</a></li><li><a href="module-geoflo.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.html#.removeSelection">removeSelection</a></li><li><a href="module-geoflo.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.html#.saveFeatures">saveFeatures</a></li><li><a href="module-geoflo.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.html#.setActiveButton">setActiveButton</a></li><li><a href="module-geoflo.html#.setButtons">setButtons</a></li><li><a href="module-geoflo.html#.setCenterMarker">setCenterMarker</a></li><li><a href="module-geoflo.html#.setColors">setColors</a></li><li><a href="module-geoflo.html#.setIcon">setIcon</a></li><li><a href="module-geoflo.html#.setLayers">setLayers</a></li><li><a href="module-geoflo.html#.setMapClass">setMapClass</a></li><li><a href="module-geoflo.html#.setMeshFeatures">setMeshFeatures</a></li><li><a href="module-geoflo.html#.setMode">setMode</a></li><li><a href="module-geoflo.html#.setOpacity">setOpacity</a></li><li><a href="module-geoflo.html#.setOptions">setOptions</a></li><li><a href="module-geoflo.html#.setSelectedFeatures">setSelectedFeatures</a></li><li><a href="module-geoflo.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.html#.updateMeshData">updateMeshData</a></li><li><a href="module-geoflo.html#.updateOrientation">updateOrientation</a></li><li><a href="module-geoflo.html#.updateSelectedProperties">updateSelectedProperties</a></li><li><a href="module-geoflo.html#.zoomToFeatures">zoomToFeatures</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Mixins</h3><ul><li><a href="module-geoflo.Control.html">Control</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Control_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Control.html#.disable">disable</a></li><li><a href="module-geoflo.Control.html#.enable">enable</a></li><li><a href="module-geoflo.Control.html#.getButtons">getButtons</a></li><li><a href="module-geoflo.Control.html#.getControl">getControl</a></li><li><a href="module-geoflo.Control.html#.getTheme">getTheme</a></li><li><a href="module-geoflo.Control.html#.hideControl">hideControl</a></li><li><a href="module-geoflo.Control.html#.onAdd">onAdd</a></li><li><a href="module-geoflo.Control.html#.onRemove">onRemove</a></li><li><a href="module-geoflo.Control.html#.setAttribution">setAttribution</a></li><li><a href="module-geoflo.Control.html#.setControl">setControl</a></li><li><a href="module-geoflo.Control.html#.setMode">setMode</a></li><li><a href="module-geoflo.Control.html#.setTheme">setTheme</a></li><li><a href="module-geoflo.Control.html#.showControl">showControl</a></li></ul></div></li><li><a href="module-geoflo.Draw.html">Draw</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Draw_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Draw.html#.activate">activate</a></li><li><a href="module-geoflo.Draw.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Draw.html#.cancelEdit">cancelEdit</a></li><li><a href="module-geoflo.Draw.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Draw.html#.deleteVertex">deleteVertex</a></li><li><a href="module-geoflo.Draw.html#.getFeature">getFeature</a></li><li><a href="module-geoflo.Draw.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Draw.html#.handleContext">handleContext</a></li><li><a href="module-geoflo.Draw.html#.handleDown">handleDown</a></li><li><a href="module-geoflo.Draw.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Draw.html#.handleHistory">handleHistory</a></li><li><a href="module-geoflo.Draw.html#.handleIcon">handleIcon</a></li><li><a href="module-geoflo.Draw.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Draw.html#.handleOffMap">handleOffMap</a></li><li><a href="module-geoflo.Draw.html#.handleOnMap">handleOnMap</a></li><li><a href="module-geoflo.Draw.html#.handlePainting">handlePainting</a></li><li><a href="module-geoflo.Draw.html#.handleRectangle">handleRectangle</a></li><li><a href="module-geoflo.Draw.html#.handleRedo">handleRedo</a></li><li><a href="module-geoflo.Draw.html#.handleText">handleText</a></li><li><a href="module-geoflo.Draw.html#.handleTouch">handleTouch</a></li><li><a href="module-geoflo.Draw.html#.handleUndo">handleUndo</a></li><li><a href="module-geoflo.Draw.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Draw.html#.saveEdit">saveEdit</a></li><li><a href="module-geoflo.Draw.html#.selectFeature">selectFeature</a></li><li><a href="module-geoflo.Draw.html#.updateHotSource">updateHotSource</a></li></ul></div></li><li><a href="module-geoflo.Exploring.html">Exploring</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Exploring_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Exploring.html#.activate">activate</a></li><li><a href="module-geoflo.Exploring.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Exploring.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Exploring.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Exploring.html#.getRoute">getRoute</a></li><li><a href="module-geoflo.Exploring.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Exploring.html#.setFeatures">setFeatures</a></li></ul></div></li><li><a href="module-geoflo.Features.html">Features</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Features_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Features.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Features.html#.addFeatures">addFeatures</a></li><li><a href="module-geoflo.Features.html#.addUnits">addUnits</a></li><li><a href="module-geoflo.Features.html#.convertUnits">convertUnits</a></li><li><a href="module-geoflo.Features.html#.deleteFeatures">deleteFeatures</a></li><li><a href="module-geoflo.Features.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Features.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Features.html#.getFeaturesById">getFeaturesById</a></li><li><a href="module-geoflo.Features.html#.getType">getType</a></li><li><a href="module-geoflo.Features.html#.getUnits">getUnits</a></li><li><a href="module-geoflo.Features.html#.removeFeatures">removeFeatures</a></li><li><a href="module-geoflo.Features.html#.removeLayers">removeLayers</a></li><li><a href="module-geoflo.Features.html#.setFeatureState">setFeatureState</a></li><li><a href="module-geoflo.Features.html#.setFeaturesState">setFeaturesState</a></li><li><a href="module-geoflo.Features.html#.setText">setText</a></li><li><a href="module-geoflo.Features.html#.updateFeatures">updateFeatures</a></li><li><a href="module-geoflo.Features.html#.updateSource">updateSource</a></li></ul></div></li><li><a href="module-geoflo.Gaming.html">Gaming</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Gaming_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Gaming.html#.init">init</a></li><li><a href="module-geoflo.Gaming.html#.refresh">refresh</a></li><li><a href="module-geoflo.Gaming.html#.remove">remove</a></li><li><a href="module-geoflo.Gaming.html#.setBearing">setBearing</a></li><li><a href="module-geoflo.Gaming.html#.setCenter">setCenter</a></li><li><a href="module-geoflo.Gaming.html#.setContainer">setContainer</a></li><li><a href="module-geoflo.Gaming.html#.setGamepad">setGamepad</a></li><li><a href="module-geoflo.Gaming.html#.setLocation">setLocation</a></li><li><a href="module-geoflo.Gaming.html#.setMap">setMap</a></li><li><a href="module-geoflo.Gaming.html#.setMarker">setMarker</a></li><li><a href="module-geoflo.Gaming.html#.setPitch">setPitch</a></li><li><a href="module-geoflo.Gaming.html#.setSpeed">setSpeed</a></li><li><a href="module-geoflo.Gaming.html#.setZoom">setZoom</a></li><li><a href="module-geoflo.Gaming.html#.trigger">trigger</a></li></ul></div></li><li><a href="module-geoflo.Layers.html">Layers</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Layers_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Layers.html#.addEventListeners">addEventListeners</a></li><li><a href="module-geoflo.Layers.html#.addLayer">addLayer</a></li><li><a href="module-geoflo.Layers.html#.addLayers">addLayers</a></li><li><a href="module-geoflo.Layers.html#.addSource">addSource</a></li><li><a href="module-geoflo.Layers.html#.addSources">addSources</a></li><li><a href="module-geoflo.Layers.html#.getCustomLayers">getCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Layers.html#.getLayer">getLayer</a></li><li><a href="module-geoflo.Layers.html#.getLayerIds">getLayerIds</a></li><li><a href="module-geoflo.Layers.html#.getLayers">getLayers</a></li><li><a href="module-geoflo.Layers.html#.getSelection">getSelection</a></li><li><a href="module-geoflo.Layers.html#.getSource">getSource</a></li><li><a href="module-geoflo.Layers.html#.getSourceIds">getSourceIds</a></li><li><a href="module-geoflo.Layers.html#.getSources">getSources</a></li><li><a href="module-geoflo.Layers.html#.getType">getType</a></li><li><a href="module-geoflo.Layers.html#.hasCustomLayers">hasCustomLayers</a></li><li><a href="module-geoflo.Layers.html#.init">init</a></li><li><a href="module-geoflo.Layers.html#.moveLayers">moveLayers</a></li><li><a href="module-geoflo.Layers.html#.onClusterClick">onClusterClick</a></li><li><a href="module-geoflo.Layers.html#.onLayerMouseout">onLayerMouseout</a></li><li><a href="module-geoflo.Layers.html#.onLayerMouseover">onLayerMouseover</a></li><li><a href="module-geoflo.Layers.html#.refresh">refresh</a></li><li><a href="module-geoflo.Layers.html#.removeEventListeners">removeEventListeners</a></li><li><a href="module-geoflo.Layers.html#.removeLayer">removeLayer</a></li><li><a href="module-geoflo.Layers.html#.removeLayers">removeLayers</a></li><li><a href="module-geoflo.Layers.html#.removeSource">removeSource</a></li><li><a href="module-geoflo.Layers.html#.removeSources">removeSources</a></li><li><a href="module-geoflo.Layers.html#.setCustomLayers">setCustomLayers</a></li></ul></div></li><li><a href="module-geoflo.Locate.html">Locate</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Locate_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Locate.html#.bearing">bearing</a></li><li><a href="module-geoflo.Locate.html#.build">build</a></li><li><a href="module-geoflo.Locate.html#.follow">follow</a></li><li><a href="module-geoflo.Locate.html#.getButton">getButton</a></li><li><a href="module-geoflo.Locate.html#.heading">heading</a></li><li><a href="module-geoflo.Locate.html#.init">init</a></li><li><a href="module-geoflo.Locate.html#.locate">locate</a></li><li><a href="module-geoflo.Locate.html#.onAdd">onAdd</a></li><li><a href="module-geoflo.Locate.html#.onControlEvent">onControlEvent</a></li><li><a href="module-geoflo.Locate.html#.onLocate">onLocate</a></li><li><a href="module-geoflo.Locate.html#.onMapMove">onMapMove</a></li><li><a href="module-geoflo.Locate.html#.ready">ready</a></li><li><a href="module-geoflo.Locate.html#.relocate">relocate</a></li><li><a href="module-geoflo.Locate.html#.removeClasses">removeClasses</a></li><li><a href="module-geoflo.Locate.html#.state">state</a></li><li><a href="module-geoflo.Locate.html#.unlocate">unlocate</a></li><li><a href="module-geoflo.Locate.html#.update">update</a></li></ul></div></li><li><a href="module-geoflo.Mesh.html">Mesh</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Mesh_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Mesh.html#.addNewFeatures">addNewFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeatureById">getFeatureById</a></li><li><a href="module-geoflo.Mesh.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesByParentId">getFeaturesByParentId</a></li><li><a href="module-geoflo.Mesh.html#.getFeaturesFromIndex">getFeaturesFromIndex</a></li><li><a href="module-geoflo.Mesh.html#.removeFeature">removeFeature</a></li><li><a href="module-geoflo.Mesh.html#.splitSegmentAtPoint">splitSegmentAtPoint</a></li></ul></div></li><li><a href="module-geoflo.Options.html">Options</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Options_sub"></div></li><li><a href="module-geoflo.Painting.html">Painting</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Painting_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Painting.html#.activate">activate</a></li><li><a href="module-geoflo.Painting.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Painting.html#.handleUp">handleUp</a></li><li><a href="module-geoflo.Painting.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Painting.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Pinning.html">Pinning</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Pinning_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Pinning.html#.activate">activate</a></li><li><a href="module-geoflo.Pinning.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Pinning.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Pinning.html#.getNearByFeatures">getNearByFeatures</a></li><li><a href="module-geoflo.Pinning.html#.resetFeatures">resetFeatures</a></li><li><a href="module-geoflo.Pinning.html#.setBuffer">setBuffer</a></li><li><a href="module-geoflo.Pinning.html#.setFeatures">setFeatures</a></li><li><a href="module-geoflo.Pinning.html#.updateFeatures">updateFeatures</a></li></ul></div></li><li><a href="module-geoflo.Routing.html">Routing</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Routing_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Routing.html#.activate">activate</a></li><li><a href="module-geoflo.Routing.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Routing.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Routing.html#.getFeatures">getFeatures</a></li><li><a href="module-geoflo.Routing.html#.getMatch">getMatch</a></li><li><a href="module-geoflo.Routing.html#.getRoute">getRoute</a></li></ul></div></li><li><a href="module-geoflo.Select.html">Select</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Select_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Select.html#.activate">activate</a></li><li><a href="module-geoflo.Select.html#.addPopup">addPopup</a></li><li><a href="module-geoflo.Select.html#.canHandle">canHandle</a></li><li><a href="module-geoflo.Select.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Select.html#.deselectCurrentFeature">deselectCurrentFeature</a></li><li><a href="module-geoflo.Select.html#.handleClick">handleClick</a></li><li><a href="module-geoflo.Select.html#.handleDrag">handleDrag</a></li><li><a href="module-geoflo.Select.html#.handleMove">handleMove</a></li><li><a href="module-geoflo.Select.html#.removePopup">removePopup</a></li><li><a href="module-geoflo.Select.html#.selectFeature">selectFeature</a></li></ul></div></li><li><a href="module-geoflo.Snapping.html">Snapping</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Snapping_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Snapping.html#.activate">activate</a></li><li><a href="module-geoflo.Snapping.html#.addFeature">addFeature</a></li><li><a href="module-geoflo.Snapping.html#.deactivate">deactivate</a></li><li><a href="module-geoflo.Snapping.html#.getClosest">getClosest</a></li><li><a href="module-geoflo.Snapping.html#.setClosest">setClosest</a></li><li><a href="module-geoflo.Snapping.html#.setFeature">setFeature</a></li><li><a href="module-geoflo.Snapping.html#.setVertex">setVertex</a></li><li><a href="module-geoflo.Snapping.html#.updateFeature">updateFeature</a></li></ul></div></li><li><a href="module-geoflo.Styles.html">Styles</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Styles_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Styles.html#.closeModal">closeModal</a></li><li><a href="module-geoflo.Styles.html#.getDefaultPosition">getDefaultPosition</a></li><li><a href="module-geoflo.Styles.html#.hide">hide</a></li><li><a href="module-geoflo.Styles.html#.init">init</a></li><li><a href="module-geoflo.Styles.html#.onAdd">onAdd</a></li><li><a href="module-geoflo.Styles.html#.onRemove">onRemove</a></li><li><a href="module-geoflo.Styles.html#.openModal">openModal</a></li><li><a href="module-geoflo.Styles.html#.select">select</a></li><li><a href="module-geoflo.Styles.html#.show">show</a></li></ul></div></li><li><a href="module-geoflo.Utilities.html">Utilities</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:geoflo.Utilities_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-geoflo.Utilities.html#.assignDeep">assignDeep</a></li><li><a href="module-geoflo.Utilities.html#.clone">clone</a></li><li><a href="module-geoflo.Utilities.html#.cloneDeep">cloneDeep</a></li><li><a href="module-geoflo.Utilities.html#.combineSameTypeFeatures">combineSameTypeFeatures</a></li><li><a href="module-geoflo.Utilities.html#.compareDeep">compareDeep</a></li><li><a href="module-geoflo.Utilities.html#.consumableArray">consumableArray</a></li><li><a href="module-geoflo.Utilities.html#.degrees2meters">degrees2meters</a></li><li><a href="module-geoflo.Utilities.html#.extend">extend</a></li><li><a href="module-geoflo.Utilities.html#.getLastIndexCoords">getLastIndexCoords</a></li><li><a href="module-geoflo.Utilities.html#.getRandomColor">getRandomColor</a></li><li><a href="module-geoflo.Utilities.html#.isEmptyLineString">isEmptyLineString</a></li><li><a href="module-geoflo.Utilities.html#.isLastIndex">isLastIndex</a></li><li><a href="module-geoflo.Utilities.html#.isLineString">isLineString</a></li><li><a href="module-geoflo.Utilities.html#.isPoint">isPoint</a></li><li><a href="module-geoflo.Utilities.html#.isPointEqual">isPointEqual</a></li><li><a href="module-geoflo.Utilities.html#.isPolygon">isPolygon</a></li><li><a href="module-geoflo.Utilities.html#.isValidLineString">isValidLineString</a></li><li><a href="module-geoflo.Utilities.html#.meters2degrees">meters2degrees</a></li><li><a href="module-geoflo.Utilities.html#.reducePrecision">reducePrecision</a></li><li><a href="module-geoflo.Utilities.html#.setProperties">setProperties</a></li><li><a href="module-geoflo.Utilities.html#.setProperty">setProperty</a></li><li><a href="module-geoflo.Utilities.html#.stringToDOM">stringToDOM</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Features
+ * @description This module provides the features functionality for the Geoflo application. It allows users to add, remove, update, and retrieve features from the map.
+ * @returns {Object} Returns the Features object.
+ * @throws {Error} Throws an error if no map object is provided.
+ */
+const Features = function () {
+    const geoflo = this.geoflo;
+    if (!geoflo.map) { throw new Error('No map object provided!') }
+
+    const coldFeatures = [];
+    this.offsetLines = false;
+
+    
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name getFeatures
+	 * @description This function returns an array of cold features.
+	 * @return {Array} An array of cold features.
+	 */
+    this.getFeatures = function () {
+        return coldFeatures;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name getFeatureById
+	 * @description Retrieves a feature by its ID from a given source. If the ID is an array with multiple IDs, it retrieves multiple features. If the ID is an object, it tries to extract the ID from the object's parent, properties, or id fields.
+	 * @param {string|number|Array} id - The ID or array of IDs of the feature(s) to retrieve.
+	 * @returns {Object|Array} The feature or array of features corresponding to the provided ID(s).
+	 */
+    this.getFeatureById = function (id) {
+        if (Array.isArray(id) &amp;&amp; id.length > 1) return this.getFeaturesById(id);
+        if (typeof id === 'object') id = id.parent || id.properties.parent || id.id || id.properties.id;
+        return getFeatureById(id);
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name getFeaturesById
+	 * @description Retrieves features by their IDs.
+	 * @param {Array} ids - An array of feature IDs to retrieve.
+	 * @returns {Array} - An array of features corresponding to the provided IDs.
+	 */
+    this.getFeaturesById = function (ids=[]) {
+        const addedIds = [];
+        const result = [];
+
+        ids.forEach((id) => {
+            const feature = this.getFeatureById(id);
+            if (feature &amp;&amp; !addedIds.includes(id)) addedIds.push(id), result.push(feature);
+        }, this);
+
+        return result;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name getType
+	 * @description This function returns the type of the input feature.
+	 * @param {any} feature - The feature whose type needs to be determined.
+	 * @returns {string} The type of the input feature.
+	 */
+    this.getType = function (feature) {
+        return getType(feature);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features getUnit
+	 * @name getUnit
+	 * @description Retrieves the unit associated with a given feature type from the context options.
+	 * @param {Object} feature - The feature object for which the unit needs to be retrieved.
+	 * @returns {string|boolean} The unit associated with the feature type if found, otherwise false.
+	 */
+    this.getUnit = function (feature) {
+        if (!feature) return false;
+
+        var type = feature.properties.type;
+        if (!type) return false;
+
+        if (!geoflo.options.units || !geoflo.options.units[type]) return false;
+
+        return geoflo.options.units[type];
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name getUnits
+	 * @param {Object} feature - The feature for which units need to be calculated.
+	 * @returns {number} - The calculated units (length or area) of the feature.
+	 */
+    this.getUnits = function (feature) {
+        var unit = this.getUnit(feature);
+        if (!unit || !feature) return false;
+
+        var units = 1;
+        var type = feature.properties.type;
+
+        if (type === "Polyline") {
+            units = turf.length(feature, { units: 'meters' });
+        } else if (type === 'Polygon') {
+            units = turf.area(feature);
+        } else if (type === 'Rectangle') {
+            units = turf.area(feature);
+        }
+
+        return units;
+    };
+
+    this.getFeatureState = function (id) {
+        if (!id) return false;
+        return geoflo.map.getFeatureState({ source: geoflo.statics.constants.sources.COLD, id: id });
+    }
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name setFeaturesState
+	 * @description Sets the state of multiple features in a map.
+	 * @param {Array} features - An array of features to set the state for.
+	 * @param {boolean} state - The state to set for the features.
+	 * @returns {Array} - The updated array of features with the new state.
+	 */
+    this.setFeaturesState = function (features=[], state) {
+        if (!state || !features.length) return [];
+        
+        features.forEach(function(feature) {
+            var id = feature.id || feature.properties.id;
+            if (geoflo.hotFeature &amp;&amp; geoflo.hotFeature.id === id) return;
+            this.setFeatureState(id, state);
+        }, this)
+
+        return features;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name setFeatureState
+	 * @description This function sets the state of a feature and its children in the map by updating their feature state.
+	 * @param {string} id - The ID of the parent feature.
+	 * @param {object} state - The state object to set for the features.
+	 * @returns {array} - An array of features whose state was updated.
+	 */
+    this.setFeatureState = function (id, state) {
+        if (!state || !id) return false;
+
+        var features = getFeaturesByParent(id);
+        
+        features.forEach(function(feature) {
+            var id = feature.id || feature.properties.id;
+            geoflo.map.setFeatureState({ source: feature.source, id: id }, state);
+        })
+
+        return features;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name setText
+	 * @description Sets text features on the map based on the provided features.
+	 * @param {Object} features - The features to set text on.
+	 * @returns {boolean} Returns false if no features are provided or if the features array is empty.
+	 */
+    this.setText = function (features=[]) {
+        if (!geoflo.options.showFeatureText) return false;
+
+        var source = geoflo.statics.constants.sources.HOTTEXT;
+
+        this.textFeatures = [];
+
+        if (features.features) features = features.features;
+        if (!Array.isArray(features)) features = [features];
+
+        features.forEach(function (feature) {
+            var type = feature.properties.type;
+            if (!type) return;
+
+            this.currentType = type;
+
+            if (type === 'Polyline' &amp;&amp; geoflo.Utilities.isValidLineString(feature) &amp;&amp; geoflo.options.showLineUnits) {
+                turf.segmentEach(feature, setLineText.bind(this));
+            } else {
+                source = geoflo.statics.constants.sources.SELECT;
+                var feat = geoflo.Utilities.cloneDeep(feature);
+                
+                feat.properties = {
+                    type: 'Text',
+                    text: feature.properties.text,
+                    style: feature.properties.style
+                }
+                
+                this.textFeatures.push(feat);
+            }
+        }, this)
+        
+        geoflo.map.getSource(source).setData(turf.featureCollection(this.textFeatures));
+
+        delete this.textFeatures;
+        delete this.currentType;
+    }
+
+
+
+    this.isFeatureHidden = function (id) {
+        if (!id) return false;
+        var state = this.getFeatureState(id);
+        return state.hidden;
+    }
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name addFeature
+	 * @description This function adds a feature to the map with the given properties. It cleans the coordinates, truncates them, assigns deep properties, sets the source, and removes unnecessary properties before adding the feature to the map.
+	 * @param {Object} feature - The feature object to be added to the map.
+	 * @param {Object} [properties={}] - Additional properties to be assigned to the feature.
+	 * @returns {Object} The feature object that was added to the map.
+	 */
+    this.addFeature = function (feature, source, properties={}) {
+        if (!feature || !feature.properties) return false;
+        
+        feature = turf.cleanCoords(feature);
+        feature = turf.truncate(feature, { precision: 6, coordinates: 3, mutate: true });
+
+        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties);
+        feature.source = source || feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+        
+        delete feature.properties.source;
+        delete feature.properties.painting;
+        delete feature.properties.edit;
+        delete feature.properties.new;
+        delete feature.properties._selected;
+        delete feature.properties.hidden;
+        delete feature.properties.offset;
+        
+        feature.properties.style = feature.properties.style || {};
+
+        this.addUnits(feature);
+        this.addFeatures([feature]);
+        return feature;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name addFeatures
+	 * @description This function takes an array of features and adds them to the map. It also updates the source if any changes are made.
+	 * @param {Array} features - An array of features to be added to the map.
+	 * @param {boolean} unselect - A flag indicating whether to unselect the features.
+	 * @returns {Array} The array of features that were added to the map.
+	 */
+    this.addFeatures = function (features, unselect, id) {
+        var update;
+        var sources = [];
+
+        features.forEach((feature) => {
+            feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            if (id &amp;&amp; feature.id !== id) return false;
+
+            feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+            feature.properties.id = feature.id;
+            feature.properties.type = this.getType(feature);
+
+            var index = coldFeatures.findIndex(function(f) { if (f.id === feature.id || f.properties.id === feature.id) return f; });
+
+            if (index > -1) {
+                this.setFeatureState(feature.id, { hidden: !unselect });
+                coldFeatures[index] = feature;
+                update = !unselect;
+                if (unselect) delete coldFeatures[index].properties._selected;
+            } else {
+                update = !this.updatingFeatures;
+                coldFeatures.push(feature);
+            }
+
+            if (unselect) delete feature.properties._selected;
+            if (update &amp;&amp; !sources.includes(feature.source)) sources.push(feature.source);
+        }, this);
+
+        if (update) this.updateSource(sources);
+        return features;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name addUnits
+	 * @description Adds units to a feature's geometry based on the specified conversion or default unit.
+	 * @param {Object} feature - The feature object to which units will be added.
+	 * @param {String} convertTo - The unit to which the feature's units will be converted. If not provided, the default unit will be used.
+	 * @returns {Object} The feature object with added units.
+	 */
+    this.addUnits = function (feature, convertTo) {
+        var unit = convertTo || this.getUnit(feature);
+        if (!unit) return false;
+
+        var units = this.convertUnits(feature, null, convertTo);
+
+        feature.geometry.units = units;
+        feature.geometry.unit = unit;
+        return feature;
+    };
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name updateFeatures
+	 * @description This function updates the coordinates of features in a map based on the provided coordinates. It iterates through the features array, retrieves the original feature by ID, and updates its geometry coordinates based on the feature type. It then adds units to the updated feature and updates the source of the map.
+	 * @param {Array} features - An array of features to update.
+	 * @param {Array} coords - The new coordinates to set for the features.
+	 */
+    this.updateFeatures = function(features, options={}) {
+        features = features || [geoflo.getDrawnFeatures(), geoflo.getSelectedFeatures()].flat();
+
+        var sources = [];
+        var selectedFeatures = geoflo.getSelectedFeatures();
+
+        this.updatingFeatures = true;
+
+        features.forEach(function(feature) {
+            var id = feature.id || feature.properties.id;
+            if (!id) return false;
+
+            var originalFeature = this.getFeatureById(id);
+            if (!originalFeature || originalFeature === undefined) return this.addFeature(feature);
+
+            var selected = selectedFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+
+            if (selected &amp;&amp; !geoflo.noSelect) {
+                selected.geometry.coordinates = feature.geometry.coordinates;
+                selected.properties = feature.properties;
+                selected.properties._selected = true;
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selectedFeatures));
+                return true;
+            } else if (!sources.includes(originalFeature.source)) {
+                originalFeature.properties._selected = false;
+                sources.push(originalFeature.source);
+            }
+            
+            originalFeature.geometry.coordinates = feature.geometry.coordinates;
+            originalFeature.properties = feature.properties;
+            options.addUnits ? this.addUnits(originalFeature) : false;
+        }, this);
+
+        this.updatingFeatures = false;
+
+        if (!sources.length) return false;
+        return this.updateSource(sources);
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name updateSource
+	 * @description Updates the source of the current object with the provided sources.
+	 * @param {Array} sources - An array of sources to update the current object with.
+	 * @returns {any} The result of calling the updateSource function with the provided sources.
+	 */
+    this.updateSource = function (sources) {
+        return updateSource.call(this, sources);
+    };
+
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name removeFeatures
+	 * @description This function permenantly removes a feature from the map based on the provided ID. It updates the map source after removing the features.
+	 * @param {string|string[]} id - The ID of the features to be removed.
+	 * @returns {Object[]} An array containing the removed feature.
+	 */
+    this.removeFeature = function (id) {
+        const removedFeatures = [];
+        var feature = coldFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+        var index = coldFeatures.findIndex((feature) => { return feature.id === id || feature.properties.id === id });        
+        if (index &lt; 0) return removedFeatures;
+        removedFeatures.push(...coldFeatures.splice(feature, 1));
+        this.updateSource(removedFeatures.map((feature) => { return feature.source }));
+        return removedFeatures;
+    };
+
+    /**
+     * @function
+     * @memberof module:geoflo.Features
+     * @name removeLayers
+     * @description Removes layers from the map based on the provided layer IDs. It updates the map source after removing the layers.
+     * @param {string[]} layerSources - An array of layer source IDs to be removed.
+     * @param {Object} options - Additional options to be passed to the removeLayers function.
+     * @param {boolean} options.reset - A flag indicating whether to reset. This will delete all features and layers from the map.
+     * @returns {void}
+     */
+    this.removeLayers = function (layerSources =[], options={}) {
+        if (options.reset) return this.deleteFeatures();
+
+        const removedFeatures = [];
+
+        coldFeatures.forEach((feature) => {
+            if (!layerSources.includes(feature.source)) return;
+            var index = coldFeatures.findIndex((f) => { return feature.id === f.id || feature.properties.id === f.id });
+            if (index > -1) removedFeatures.push(...coldFeatures.splice(index, 1));
+        })
+
+        this.updateSource(layerSources);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name deleteFeatures
+	 * @description Deletes all features from the coldFeatures array and updates the source.
+	 * @params {Array} coldFeatures - The array of features to be deleted.
+	 * @returns {void}
+	 */
+    this.deleteFeatures = function () {
+        coldFeatures.splice(0, coldFeatures.length);
+        this.updateSource();
+    };
+    
+
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Features
+	 * @name convertUnits
+	 * @description Converts the given units of a feature to the specified target units based on the feature type (Polyline, Polygon, or Rectangle).
+	 * @param {Object} feature - The feature object containing properties like type.
+	 * @param {number} units - The units to be converted.
+	 * @param {string} convertTo - The target units to convert to (optional).
+	 * @returns {number} The converted units in the target unit format.
+	 */
+    this.convertUnits = function (feature, units, convertTo) {
+        if (!feature) return 0;
+        
+        var type = feature.properties.type;
+        var unit = convertTo || this.getUnit(feature);
+
+        units = units || this.getUnits(feature);
+        
+        if (type === "Polyline") {
+            units = Math.round(turf.convertLength(units, 'meters', unit));
+        } else if (type === 'Polygon') {
+            units = Math.round(turf.convertArea(units, 'meters', unit));
+        } else if (type === 'Rectangle') {
+            units = Math.round(turf.convertArea(units, 'meters', unit));
+        }
+
+        units = units ? Number(units.toFixed(2)) : 0;
+        return units;
+    };
+
+    
+
+
+    function getFeatureById(id) {
+        var feature = coldFeatures.find((feature) => { return feature.id === id || feature.properties.id === id });
+        feature = feature || geoflo.getSelectedFeatures().find((feature) => { return feature.id === id || feature.properties.id === id });
+        return feature;
+    };
+
+    function getFeaturesByParent (id) {
+        var feature = typeof id === 'object' &amp;&amp; id.id ? id : getFeatureById(id);
+        if (!feature || !feature.source || !geoflo.map.getSource(feature.source) || !geoflo.map.getSource(feature.source)._data) return [];
+        var field = geoflo.options.offsetOverlappingLines ? 'parent' : 'id';
+        var features = geoflo.map.getSource(feature.source)._data.features.filter(function(f) { return f[field] === id || f.properties[field] === id });
+        return features;
+    };
+
+    function createTextFeatures (feature) {
+        var isLine = geoflo.Utilities.isValidLineString(feature);
+        var segments = [];
+
+        if (isLine) {
+            turf.segmentEach(feature, function (currentSegment) {
+                var segment = geoflo.Utilities.cloneDeep(currentSegment);
+                var footage = Math.round(turf.length(segment, { units: 'miles' }) * 5280);
+                var mileage = Number(turf.length(segment, { units: 'miles' }).toFixed(3));
+                footage = Number(footage.toFixed(2));
+                mileage = Number(mileage.toFixed(2));
+
+                segment.properties.footage = footage;
+                segment.properties.mileage = mileage;
+                segment.properties.text = `${mileage} miles`;;
+                segments.push(segment);
+            });
+        }
+
+        return segments;
+    };
+
+    function updateSource (sources=[]) {
+        var sourceFeatures = {};
+        var unsourceFeatures = [];
+        var textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
+        var coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
+
+        geoflo.updatingSource = true;
+
+        textSource ? textSource.setData(turf.featureCollection([])) : false;
+        coldSource ? coldSource.setData(turf.featureCollection([])) : false;
+
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+
+        coldFeatures.forEach((feature) => {
+            delete feature.properties.new;
+            delete feature.properties.offset;
+
+            var source = feature.source;
+            if (sources.length &amp;&amp; !sources.includes(source)) return;
+            if (!source) return unsourceFeatures.push(feature);
+            if (!sourceFeatures[source]) sourceFeatures[source] = [];
+            sourceFeatures[source].push(feature);
+        })
+
+        if (!coldFeatures.length) {
+            geoflo.Layers.getCustomLayers().forEach((layer) => {
+                if (!layer.details || !layer.details.source) return;
+                var source = layer.details.source;
+                if (!geoflo.map.getSource(source)) return false;
+                geoflo.map.getSource(source).setData(turf.featureCollection([]));
+            })
+        }
+
+        Object.entries(sourceFeatures).forEach((entry) => {
+            var source = entry[0];
+            var features = entry[1];
+            if (!geoflo.map.getSource(source)) return unsourceFeatures.push(features);
+            setLineOffset(features, source);
+        })
+
+        setLineOffset(unsourceFeatures.flat(), geoflo.statics.constants.sources.COLD);
+        setTimeout(() => {this.setFeaturesState(coldFeatures, { hidden: false }); }, 100);
+        geoflo.fire('features.update', { features: coldFeatures });
+        sourceFeatures = null;
+        unsourceFeatures = null;
+        geoflo.updatingSource = false;
+        return coldFeatures;
+    };
+
+    function setLineText (segment) {
+        segment = geoflo.Utilities.cloneDeep(segment);
+        segment.properties.type = this.currentType;
+        
+        var text = turf.point(segment.geometry.coordinates[1]);
+        var units = this.getUnits(segment);
+        var unit = 'feet';
+
+        units = this.convertUnits(segment, units, unit);
+
+        text.properties.units = units;
+        text.properties.unit = unit;
+        text.properties.text = `${units} ${unit}`;
+        text.properties.transform = 'uppercase';
+        text.properties.anchor = 'bottom-left';
+
+        this.textFeatures.push(text);
+        return text;
+    }
+
+    function setLineOffset (features, source) {
+        if (!features || !features.length || !source || !geoflo.map.getSource(source)) return false;
+        if (!geoflo.options.offsetOverlappingLines) return geoflo.map.getSource(source).setData(turf.featureCollection(features));
+
+        var mesh = new geoflo.Mesh(features, true);
+        var offset = mesh.getFeatures();
+
+        offset.forEach(function (feature) {
+            var f = features.find(function (fe) { return fe.id === feature.parent });
+            if (!f) return;
+            feature.source = source;
+            feature.properties.style = f.properties.style || feature.properties.style;
+            setOverlapOffset(offset, feature)
+        });
+
+        geoflo.map.getSource(source).setData(turf.featureCollection(offset));
+        geoflo.fire('features.offset', { features: features, offset: offset, source: source });
+
+        mesh = null;
+        offset = null;
+    };
+
+    function setOverlapOffset (features, feature) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+        if (!isPolyline(feature)) return false;
+        if (feature.properties.offset) return false;
+
+        var offset = 6;
+        var overlaps = [];
+
+        features.forEach(function (f) {
+            if (!isPolyline(f)) return false;
+            if (f.parent === feature.parent) return false;
+            if (f.properties.offset) return false;
+
+            var overlap = turf.booleanOverlap(f, feature) || turf.booleanWithin(f, feature);
+            if (!overlap) return false;
+
+            overlaps.push(f)
+        }, this)
+
+        overlaps.forEach(function (f) {
+            f.properties.offset = offset;
+            offset = offset * 2;
+        }, this)
+    };
+
+    function setWithinOffset (features) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+
+        const adder = 4;
+        const miles = 0.00189394; // 10 Feet
+        const explode = turf.explode(turf.featureCollection(features))
+        
+        if (!explode || !explode.features.length) return;
+
+        explode.features.forEach(function(feature) {
+            if (feature.properties.offset) return false;
+
+            var buffer = turf.buffer(feature, miles, {units: 'miles'});
+            var within = turf.pointsWithinPolygon(explode, buffer);
+
+            if (!within || !within.features.length) return;
+
+            var offset = adder;
+
+            within.features.forEach(function (f) {
+                if (f.properties.id === feature.properties.id || f.properties.offset) return;
+                f.properties.offset = offset;
+                offset = offset + adder;
+            })            
+        })
+    };
+
+    function isPolyline (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'LineString';
+    };
+
+    function isPolygon (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' || feature.properties.type === 'Polygon' || type === 'Polygon';
+    };
+
+    function isRectangle (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' &amp;&amp; feature.properties.type === 'Rectangle' || type === 'Rectangle';
+    };
+
+    function isPoint (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (turf.getType(feature) === 'Point' &amp;&amp; (!feature.properties.type || feature.properties.type === 'Circle')) return true;
+        if (turf.getType(feature) === 'Point' &amp;&amp; (type === 'Point' || type === 'Circle')) return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; (feature.properties.type !== 'Text' &amp;&amp; feature.properties.type !== 'Icon' &amp;&amp; feature.properties.type !== 'Image');
+    };
+
+    function isText (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Text') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Text';
+    };
+
+    function isIcon (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Icon') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Icon';
+    };
+
+    function isImage (feature) {
+        if (!feature) return false;
+        let type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Image') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Image';
+    };
+
+    function getType (feature) {
+        if (!feature) return null;
+        
+        return isRectangle(feature) ? 'Rectangle' :
+        isPolygon(feature) ? 'Polygon' :
+        isPolyline(feature) ? 'Polyline' :
+        isText(feature) ? 'Text' :
+        isIcon(feature) ? 'Icon' :
+        isImage(feature) ? 'Image' :
+        isPoint(feature) ? 'Circle' :
+        null;
+    };
+};
+
+export default Features;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="https://geoflo.s3.amazonaws.com/logos/logo_full_white.png" style="">
+    <div class="footer-text">Solutegrate/GeoFlo © 2025</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
