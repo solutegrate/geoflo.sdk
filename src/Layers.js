@@ -654,8 +654,8 @@ const Layers = function () {
 	 */
     this.refresh = async function (options={}) {
         if (options.select) {
-            this.removeLayers(this.selectLayers);
-            this.addLayers(this.selectLayers, options);
+            //this.removeLayers(this.selectLayers);
+            //this.addLayers(this.selectLayers, options);
             this.moveLayers(this.selectLayers);
             return this.selectLayers;
         }
