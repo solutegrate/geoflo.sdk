@@ -1229,6 +1229,8 @@ const Layers = function () {
             layers: layers
         }
 
+        if (settings.images) await addImages(settings.images);
+
         if (type === 'ALL') {
             const promises = Object.keys(layerTypes).filter(key => key !== 'All').map(async key => {
                 const layerConfig = { ...settings, type: key, types: layerTypes[key] };
@@ -1313,20 +1315,6 @@ const Layers = function () {
             var style = settings.style;
             var id = settings.id + type;
             var layout, paint;
-
-            if (!settings.images || !settings.images.length) continue;
-
-            for (var j = 0; j < settings.images.length; j++) {
-                var image = settings.images[j];
-                if (!image) continue;
-
-                var img = await loadImage(image);
-                if (!img) continue;
-                
-                map.hasImage(image.id) ?
-                map.updateImage(image.id, img, {pixelRatio: 2}) :
-                map.addImage(image.id, img, {pixelRatio: 2});
-            }
 
             layout = Object.assign({}, {
                 'visibility': options.visibility || 'visible',
@@ -1651,6 +1639,16 @@ const Layers = function () {
         var source = this._sources.findIndex((e) => { return e.id === options.source });
         if (layer !== -1) this._layers.splice(layer, 1);
         if (source !== -1) this._sources.splice(source, 1);
+    }
+
+    async function addImages (images=[]) {
+        for (var j = 0; j < images.length; j++) {
+            var image = images[j];
+            if (!image) continue;
+            var img = await loadImage(image);
+            if (!img) continue;
+            map.hasImage(image.id) ? map.updateImage(image.id, img, { pixelRatio: 2 }) : map.addImage(image.id, img, { pixelRatio: 2 });
+        }
     }
 
     async function loadImage (options={}) {
