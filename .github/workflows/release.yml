@@ -28,14 +28,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Upload Production to S3
-        uses: tpaschalis/s3-sync-action@master
-        with:
-          args: --acl public-read --recursive
+      - name: Upload Production to S3 with Cache-Control
+        run: |
+          aws s3 sync ./dist/ s3://${{ secrets.AWS_BUCKET }}/sdk/ \
+            --acl public-read \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --metadata-directive REPLACE \
+            --region us-east-1
         env:
-          FILE: ./dist/
-          AWS_REGION: "us-east-1"
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}/sdk/
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
 
