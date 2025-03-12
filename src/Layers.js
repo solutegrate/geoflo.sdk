@@ -1263,15 +1263,15 @@ const Layers = function () {
         this.addSource(source, type, options);
         this.addLayers(layers, metadata, settings);
 
-        if (hasFeatures) geoflo.Features.addFeatures(features);
+        if (hasFeatures) geoflo.Features.addFeatures(features.map(function (feature) { feature.source = source; return feature }));
         
         return new Promise((resolve, reject) => {
             if (error) return resolve(error);
 
             const ready = setInterval(() => {
-                const feats = geoflo.Layers.getFeatures(metadata.source);
+                const feats = geoflo.Layers.getFeatures(source);
                 if (hasFeatures && !feats.length) return;
-                if (!map.getSource(metadata.source)) return;
+                if (!map.getSource(source)) return;
                 clearInterval(ready);
                 resolve({ layer: settings, features: feats });
             }, 1);
