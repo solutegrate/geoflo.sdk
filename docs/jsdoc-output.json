@@ -75127,15 +75127,15 @@
         "comment": "",
         "meta": {
             "range": [
-                28434,
-                28446
+                28400,
+                28412
             ],
             "filename": "Layers.js",
-            "lineno": 676,
+            "lineno": 675,
             "columnno": 23,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100034677",
+                "id": "astnode100034672",
                 "name": "select",
                 "type": "Literal",
                 "value": true
