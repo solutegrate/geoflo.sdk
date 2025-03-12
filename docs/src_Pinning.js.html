@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Tutorial: Version 1.0.11 | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Pinning.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -66,169 +58,256 @@
 <div class="main" id="main">
     
 
-<section>
-    <header>
-        
 
-        <h2>Version 1.0.11</h2>
-    </header>
 
     
-        
-
-        <ul id="example-nav" class="nav nav-tabs">
-            <li role="presentation" id="example-result-btn" class="active" onclick="showResult()">
-                <a href="#">Result</a>
-            </li>
-            <li role="presentation" id="example-js-btn" class="" onclick="showJs()">
-                <a href="#">JS</a>
-            </li>
-            <li role="presentation" id="example-html-btn" class="" onclick="showHtml()">
-                <a href="#">HTML</a>
-            </li>
-        </ul>
+    <section>
         <article>
-            
-            <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/basic.html></iframe>
-            <div id="example-js" class="hidden"><pre class="prettyprint source">
-        document.addEventListener("DOMContentLoaded", function () {
-            // Replace with your Mapbox token
-            const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Pinning
+ * @description This module provides the pinning functionality for the Geoflo application. It allows users to pin features to the map by creating a buffer around the feature and snapping to nearby features.
+ * @param {Object} mode - The mode object containing the type of mode.
+ * @returns {Object} Returns the Pinning object.
+ */
+const Pinning = function (mode) {
+    const geoflo = this.geoflo;
 
-            (async function (token, key) {
-                await geoflo.init(MAPBOX_TOKEN, { container: 'map', controls: true });
-                buildLegend();
-                geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
-            })();
+    this.type = mode.type;
+    this.coldFeatures = [];
+    this.pinableFeatures = [];
+    this.pinnedFeatures = [];
 
-            function buildLegend () {
-                const legendList = document.getElementById("legend-list");
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name activate
+	 * @description Activates the feature by setting the enabled flag to true and enabling pinning in the options.
+	 * @params {void} None
+	 * @returns {void}
+	 */
+    /**
+    * @function activate
+    * @memberof _MEMBER_OF_
+    * @description - This function activates the pinning functionality by setting the enabled flag to true and enabling pinning in the options.
+    *
+    * @returns {void} No return value.
+    *
+    */
+    this.activate = function () {
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
+        this.enabled = true;
+        geoflo.options['pinning'].enable = true;
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
+    }
 
-                const buttons = [
-                    { class: "geoflo-select", label: "Select Feature" },
-                    { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
-                    { class: "geoflo-repeat", label: "Repeat Draw Mode" },
-                    { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
-                    { class: "geoflo-export", label: "Export Features" },
-                    { class: "geoflo-import", label: "Import Features" },
-                    { class: "geoflo-delete-data", label: "Delete Features" },
-                    { class: "mapbox-gl-draw_line", label: "Draw Line" },
-                    { class: "mapbox-gl-draw_polygon", label: "Draw Polygon" },
-                    { class: "mapbox-gl-draw_rectangle", label: "Draw Rectangle" },
-                    { class: "mapbox-gl-draw_point", label: "Draw Point" },
-                    { class: "mapbox-gl-draw_text", label: "Draw Text" },
-                    { class: "mapbox-gl-draw_icon", label: "Draw Icon" },
-                    { class: "geoflo-snapping-enabled", label: "Snapping Enabled" },
-                    { class: "geoflo-pinning-enabled", label: "Pinning Enabled" },
-                    { class: "geoflo-routing-enabled", label: "Routing Enabled" },
-                    { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
-                    { class: "geoflo-painting-enabled", label: "Painting Enabled" },
-                    /* { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
-                    { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
-                    { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
-                    { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
-                    { class: "mapboxgl-style-switcher", label: "Map Styles" } */
-                ];
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name deactivate
+	 * @description This function deactivates pinning by setting enabled to false, disabling pinning in options, clearing buffer, pinableFeatures, and pinningFeatures, and resetting coldFeatures.
+	 */
+    this.deactivate = function () {
+        this.enabled = false;
+        geoflo.options['pinning'].enable = false;
+        this.resetFeatures();
+        delete this.buffer;
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
+    }
 
-                buttons.forEach(button => {
-                    const listItem = document.createElement("li");
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getFeatures
+	 * @description Retrieves the features from the pinnedFeatures array in the context object.
+	 * @returns {Array} An array of features extracted from the pinnedFeatures array.
+	 */
+    this.getFeatures = function () {
+        return this.pinnedFeatures.map(function (feature) { return geoflo.Utilities.cloneDeep(feature) });
+    }
 
-                    const icon = document.createElement("div");
-                    icon.className = button.class;
+    this.saveFeatures = function () {
+        const features = this.pinnedFeatures.map(function (feature) { return geoflo.Utilities.cloneDeep(feature) });
+        geoflo.addFeatures(features, true);
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
+        this.coldFeatures = [];
+        this.pinableFeatures = [];
+        this.pinnedFeatures = [];
+        return features;
+    }
 
-                    const label = document.createElement("span");
-                    label.textContent = button.label;
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setBuffer
+	 * @description This function creates a buffer around the provided coordinates based on the pinning buffer option.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to create the buffer around.
+	 * @returns {Object|boolean} Returns the buffer object containing the feature, radius, and coordinates if successful, otherwise false.
+	 */
+    this.setBuffer = function (coords) {
+        delete this.buffer;
 
-                    listItem.appendChild(icon);
-                    listItem.appendChild(label);
-                    legendList.appendChild(listItem);
-                });
-            }
+        if (!this.enabled) return false;
+        if (!coords || !geoflo.options.pinning.buffer) return false;
 
-            function logEvent(event) {
-                const eventLog = document.getElementById("event-log-content");
-                const timeStamp = new Date().toLocaleTimeString();
-                const logMessage = `[${timeStamp}] ${event.name}`;
-                const logEntry = document.createElement("div");
-                logEntry.textContent = logMessage;
-                eventLog.appendChild(logEntry);
-                while (eventLog.childNodes.length > 50) { eventLog.removeChild(eventLog.firstChild); }
-                eventLog.scrollTop = eventLog.scrollHeight;
+        var buffer = turf.buffer(turf.point(coords), geoflo.options.pinning.buffer);
+        var radius = turf.polygon(buffer.geometry.coordinates);
+
+        this.buffer = {
+            feature: buffer,
+            radius: radius,
+            coords: coords
+        }
+
+        return this.buffer;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name setFeatures
+	 * @description Sets the pinable features based on the provided coordinates and fires an event.
+	 * @param {Object} coords - The coordinates to determine nearby features.
+	 * @returns {Array} - An array of pinable features.
+	 */
+    this.setFeatures = function (coords) {
+        if (!this.enabled || !coords) return false;
+        this.pinableFeatures = this.getNearByFeatures(coords);
+        geoflo.fire('pinning.add', { features: this.pinableFeatures, buffer: this.buffer });
+        return this.pinableFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name resetFeatures
+	 * @description Resets the updated features by adding them to the canvas context.
+	 * @returns {boolean} Returns false if there are no updated features to reset.
+	 */
+    this.resetFeatures = function () {
+        if (!this.coldFeatures.length) return false;
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
+        geoflo.addFeatures(this.coldFeatures, true);
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name updateFeatures
+	 * @description This function updates the features if the pinning functionality is enabled. It updates the pinable features, pinned features, and triggers events accordingly.
+	 * @returns {boolean} Returns false if the pinning functionality is not enabled, otherwise returns the updated pinning features.
+	 */
+    this.updateFeatures = function (point) {
+        if (!this.enabled || !point || !this.pinableFeatures.length) return false;
+        updateFeatures.call(this, this.pinableFeatures, point.geometry.coordinates);
+        geoflo.hideFeatures(this.coldFeatures.map(function (feature) { return feature.id }));
+        geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection(this.pinnedFeatures));
+        geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(this.pinableFeatures);
+        geoflo.fire('pinning.update', { feature: geoflo.hotFeature, point: point, pinned: this.pinnedFeatures });
+        return this.pinnedFeatures;
+    }
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Pinning
+	 * @name getNearByFeatures
+	 * @description This function calculates the radius based on the map zoom level and retrieves nearby features within that radius.
+	 * @param {Array&lt;number>} coords - The coordinates [longitude, latitude] to find nearby features.
+	 * @returns {Array&lt;Object>} An array of nearby features with their IDs, types, indices, and feature objects.
+	 */
+    this.getNearByFeatures = function (coords) {
+        if (!this.enabled || !coords) return false;
+
+        const hotFeatureId = geoflo.hotFeature ? geoflo.hotFeature.id : null;
+        const calculatedRadius = geoflo.options.snapping.distance * Math.pow(2, Math.max(1, 19 - geoflo.map.getZoom()));
+        const radiusInKm = calculatedRadius / 100000;
+        const buffer = this.setBuffer(coords);
+
+        if (!buffer) return false;
+
+        const features = geoflo.getRenderedDrawnFeatures({ lng: coords[0], lat: coords[1] }, radiusInKm);
+        const nearby = [];
+
+        // Precompute point for faster comparisons
+        const point = turf.point(coords);
+
+        features.forEach((feature) => {
+            if (hotFeatureId === feature.id) return; // Skip if it's the active feature
+
+            // Check all coordinates in one loop instead of using `turf.coordEach`
+            const coordsArray = feature.geometry.coordinates.flat(Infinity); // Flattens to avoid nested looping
+
+            for (let index = 0; index &lt; coordsArray.length; index += 2) {
+                const coord = [coordsArray[index], coordsArray[index + 1]];
+
+                // Fast checks for nearby conditions
+                if (
+                    (buffer.radius &amp;&amp; turf.booleanWithin(turf.point(coord), buffer.radius)) ||
+                    (buffer.coords &amp;&amp; geoflo.Utilities.isPointEqual(coord, buffer.coords))
+                ) {
+                    nearby.push({
+                        id: feature.id || feature.properties.id,
+                        type: feature.properties.type,
+                        index: Math.floor(index / 2), // Convert flattened index back to original index
+                        feature: feature
+                    });
+                    break; // Stop checking once a valid nearby point is found
+                }
             }
         });
-    </pre></div>
-            <div id="example-html" class="hidden"><pre class="prettyprint source">
-        &lt;div id="control-legend">
-            &lt;h3>Control Legend&lt;/h3>
-            &lt;ul id="legend-list" style="list-style: none; padding: 0;">&lt;/ul>
-        &lt;/div>
 
-        &lt;div id="map">&lt;/div>
+        return nearby;
+    };
 
-        &lt;div id="event-log">
-            &lt;h3>Event Log&lt;/h3>
-            &lt;div id="event-log-content">&lt;/div>
-        &lt;/div>
-    </pre></div>
-        </article>
     
-</section>
+    if (geoflo.options['pinning'].enable) this.activate();
 
 
-    <script>
-        var exampleResult = document.getElementById('example-result');
-        var exampleJs = document.getElementById('example-js');
-        var exampleHtml = document.getElementById('example-html');
-        var exampleResultBtn = document.getElementById('example-result-btn');
-        var exampleJsBtn = document.getElementById('example-js-btn');
-        var exampleHtmlBtn = document.getElementById('example-html-btn');
+    function updateFeatures(features, coords) {
+        if (!features || !features.length || !coords) return false;
 
-        function setActive(el) {
-            el.className += ' active';
-        }
+        const coldFeatureIds = new Set(this.coldFeatures.map(f => f.id));
+        const updatedFeatureIds = new Set(this.pinnedFeatures.map(f => f.id));
 
-        function setInactive(el) {
-            el.className = el.className.replace(/\s*active\s*/g, '');
-        }
+        features.forEach((feature) => {
+            const id = feature.id;
+            const feat = feature.feature;
+            const index = feature.index;
 
-        function show(el) {
-            el.className = el.className.replace(/\s*hidden\s*/g, '');
-        }
+            if (!coldFeatureIds.has(id)) {
+                this.coldFeatures.push(geoflo.Utilities.cloneDeep(feat));
+                coldFeatureIds.add(id);
+            }
 
-        function hide(el) {
-            el.className += ' hidden';
-        }
+            const updated = updatedFeatureIds.has(id) ? this.pinnedFeatures.find(f => f.id === id) : feat;
 
-        function showJs() {
-            hide(exampleHtml);
-            hide(exampleResult);
-            setInactive(exampleHtmlBtn);
-            setInactive(exampleResultBtn);
+            if (updated.geometry.type === 'Point') {
+                updated.geometry.coordinates = coords;
+            } else if (updated.geometry.type === 'Polygon') {
+                updated.geometry.coordinates[0][index] = coords;
+            } else if (updated.geometry.type === 'LineString') {
+                updated.geometry.coordinates[index] = coords;
+            }
 
-            show(exampleJs);
-            setActive(exampleJsBtn);
-        }
+            if (!updatedFeatureIds.has(id)) {
+                this.pinnedFeatures.push(geoflo.Utilities.cloneDeep(updated));
+                updatedFeatureIds.add(id);
+            }
+        });
+    }
 
-        function showHtml() {
-            hide(exampleJs);
-            hide(exampleResult);
-            setInactive(exampleJsBtn);
-            setInactive(exampleResultBtn);
+};
 
-            show(exampleHtml);
-            setActive(exampleHtmlBtn);
-        }
+export default Pinning;</code></pre>
+        </article>
+    </section>
 
-        function showResult() {
-            hide(exampleJs);
-            hide(exampleHtml);
-            setInactive(exampleJsBtn);
-            setInactive(exampleHtmlBtn);
 
-            show(exampleResult);
-            setActive(exampleResultBtn);
-        }
-    </script>
 
 
 </div>
@@ -243,7 +322,13 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        showLnbExamples();
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
     </script>
 
 </body>
