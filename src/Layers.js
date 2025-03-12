@@ -668,12 +668,12 @@ const Layers = function () {
         this.removeLayers(this.defaultLayers);
         this.removeLayers(this.selectLayers);
         this.removeSources(Object.values(geoflo.statics.constants.sources));
-        this.addEventListeners();
         this.addSources(Object.values(geoflo.statics.constants.sources));
         this.addLayers(this.defaultLayers, this.options);
         await this.setCustomLayers(layers, this.options);
         this.addLayers(this.selectLayers, this.options);
         this.refresh({ select: true });
+        this.addEventListeners();
         return this.getLayers();
     }
 
