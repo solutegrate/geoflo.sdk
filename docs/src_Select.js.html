@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mixin: Routing | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Select.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -68,878 +60,388 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Routing</h2>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Select
+ * @description This module provides the select functionality for the Geoflo application. It allows users to select features on the map by clicking on them.
+ * @returns {Object} Returns the Select object.
+ */
+const Select = function () {
+    const geoflo = this.geoflo;
+
+    var lastKnownSelectIds = [];
+    var removedFeatures = [];
+    var nearFeatures = [];
+    let animationRunning = false;
+    let step = 0;
+    var clickCoords;
+    var multipleSelect;
+    var selectedId;
+
+    const dashArraySequence = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+    ];
+
+    this.id = 'select';
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name activate
+	 * @description This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
+	 * @param {Object} options - The options object for activation.
+	 * @param {string} [options.id] - The ID of the feature to select.
+	 * @param {Object} [options.feature] - The feature object to select.
+	 * @returns {boolean} Returns false if already activated.
+	 */
+    this.activate = function (options={}) {
+        if (this.activated) return false;
+        if (geoflo.currentMode.id !== this.id) return options.mode = this.id, geoflo.setMode(options);
+
+        this.activated = true;
+        geoflo.map.dragPan.enable();
+        geoflo.setButtons();
+        geoflo.setActiveButton('select');
+        geoflo.fire('select.activate', { activated: true, options: options })
+        if (this.gamepad) {}
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+        setTimeout(function(e) { e.selectFeature(options.id ? options.id : options.feature ? options.feature.id : false) }, 5, this)
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deactivate
+	 * @description This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
+	 * @returns {boolean} Returns false if the feature is not activated.
+	 */
+    this.deactivate = function () {
+        if (!this.activated) return false;
+
+        this.activated = false;
+        this.deselectCurrentFeature();
         
-    
-</header>
+        geoflo.setButtons();
+        geoflo.fire('select.deactivate', { activated: true });
+    };
 
-<article>
-    
-        <div class="container-overview">
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name canHandle
+	 * @description This function determines if the given mode name is equal to the SELECT mode.
+	 * @param {string} modeName - The mode name to be checked.
+	 * @returns {boolean} Returns true if the mode name is SELECT, false otherwise.
+	 */
+    this.canHandle = function (modeName) {
+        return geoflo.statics.constants.modes.SELECT === modeName;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name selectFeature
+	 * @description Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
+	 * @param {string} id - The ID of the feature to be selected.
+	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
+	 */
+    this.selectFeature = function (id, options={}) {
+        const popup = geoflo.options.select.popup;
+        const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
         
-            
-                <div class="description">This module provides the routing functionality for the Geoflo application. It allows users to calculate routes between two points on the map using a PathFinder object.</div>
-            
-
-            
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-            
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
         
-        </div>
-    
+        if (!id) return false;
+        if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
+        //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
-    
+        selectedId = id;
+        removedFeatures = geoflo.hideFeatures([id]);
+        geoflo.addFeaturesToSelected(removedFeatures, options);
+        popup ? this.addPopup(removedFeatures) : false;
+        startDashAnimation();
+        geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
+        if (!geoflo.wantingToEdit) return removedFeatures;
+        if (removedFeatures.length == 1 &amp;&amp; id === removedFeatures[0].id) editFeature(removedFeatures[0]);
+        return removedFeatures;
+    };
 
-    
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deselectCurrentFeature
+	 * @description Deselects the current feature by removing its selection.
+	 */
+    this.deselectCurrentFeature = function () {
+        const ids = geoflo.getSelectedFeatureIds();
+        const features = geoflo.getSelectedFeatures();
+        this.removePopup();
+        stopDashAnimation();
+        geoflo.removeSelection();
+        geoflo.fire('feature.deselect', { ids: ids, features: features });
+    };
 
-    
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name addPopup
+	 * @description This function creates a popup element with the specified features and adds it to the map at the click coordinates.
+	 * @param {Object} features - The features to be displayed in the popup.
+	 * @param {string} features.title - The title of the popup.
+	 * @param {string} features.description - The description of the popup.
+	 * @param {number} features.latitude - The latitude coordinate for the popup location.
+	 * @param {number} features.longitude - The longitude coordinate for the popup location.
+	 */
+    this.addPopup = function (features) {
+        this.popupElement = buildPopup(features);
 
-    
+        this.popup = new mapboxgl.Popup({ closeOnClick: false })
+            .setLngLat(clickCoords)
+            .setDOMContent(this.popupElement)
+            .addTo(geoflo.map)
+            .setOffset(12);
 
-    
+        this.popup._container.style['margin-bottom'] = '10px'
+    };
 
-    
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name removePopup
+	 * @description Removes the popup element from the DOM if it exists.
+	 * @return {boolean} Returns true if the popup element was successfully removed, otherwise false.
+	 */
+    this.removePopup = function () {
+        return this.popup &amp;&amp; this.popup.remove ? this.popup.remove() : false;
+    };
 
-    
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleMove
+	 * @description Handles the mouse move event.
+	 * @param {Event} event - The event object representing the mouse move event.
+	 */
+    this.handleMove = function (event) {
+        //geoflo.setMapClass('pointer');
+    };
 
-    
-        <h3 class="subsection-title">Methods</h3>
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleClick
+	 * @description Handles the click event on the map and selects features based on the event.
+	 * @param {Object} event - The event object containing information about the click event.
+	 * @returns {boolean} Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
+	 */
+    this.handleClick = function (event) {
+        if (geoflo.noSelect) return false;
 
-        <dl>
-                
+        var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
 
-<dt>
-    
-        <h4 class="name" id=".activate">
+        let multipleSelect = event.originalEvent &amp;&amp; event.originalEvent.shiftKey;
+        clickCoords = [event.lngLat.lng, event.lngLat.lat];
+
+        if (features.length > 0) {
+            if (!geoflo.Layers.getSelection(features, clickCoords)) return;
+
+            let newFeatureSet = JSON.stringify(features);
+            if (newFeatureSet !== JSON.stringify(nearFeatures)) {
+                nearFeatures = features;
+                selectedId = null; // Reset selection tracking
+            }
             
-                <span class="type-signature"><span class="icon green">static</span> </span>activate<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line16">line 16</a></code>
-            </div>
-            
-        </h4>
+            selectFeature.call(this, nearFeatures, multipleSelect);
+        } else if (!multipleSelect) {
+            lastKnownSelectIds = [];
+            nearFeatures = [];
+            clickCoords = false;
+            selectedId = false;
+            this.deselectCurrentFeature();
+        }
+    };
 
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleDrag
+	 * @description Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
+	 * @param {Event} event - The event object representing the drag event.
+	 */
+    this.handleDrag = function (event) {
+        //geoflo.setMapClass('grabbing');
+    }
+
+
+
+    function buildPopup (features) {
+        const element = document.createElement('div');
+        element.classList.add('popup-table-holder');
+
+        const table = buildTable(features);
+
+        element.appendChild(table);
+
+        if (nearFeatures.length > 1) {
+            var button = document.createElement('div');
+            button.classList.add('popup-table-button');
+            button.innerHTML = `&lt;button> Next &lt;/button>`;
+            button.addEventListener('click', selectFeature.bind(this));
+            element.appendChild(button);
+        }
+
+        return element;
         
-    
-</dt>
-<dd>
+        /* const button = document.createElement('div');
+        button.innerHTML = `&lt;button class="btn btn-success btn-simple text-white" > Assign&lt;/button>`;
+        element.appendChild(button);
+        button.addEventListener('click', (e) => { console.log('Button clicked' + name); }); */
+    };
 
-    
-    <div class="description">
-        Activates the functionality by setting the 'enabled' property to true and enabling routing in the options.
-    </div>
-    
+    function buildTable (features) {
+        var table = document.createElement('table');
+        var properties = ['id', 'type'];
 
-    
+        table.style.width = '100%';
+        table.style.height = '100%';
+        table.setAttribute('border', '1');
+        table.classList.add('popup-table');
 
-    
+        var tableBody = document.createElement('tbody');
 
-    
+        features.forEach(function(feature, index) {
+            var type = feature.properties.type;
 
-    
+            properties.forEach(function(prop) {
+                tableBody.appendChild(buildRow(prop, feature.properties[prop]));
+            })
 
-    
+            tableBody.appendChild(buildRow('geometry', feature.geometry.type));
 
-    
+            if (feature.geometry.type === 'LineString') {
+                geoflo.Features.addUnits(feature, 'feet');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            } else if (type === 'Text') {
+                tableBody.appendChild(buildRow('content', feature.properties.text));
+            } else if (feature.geometry.type === 'Polygon') {
+                geoflo.Features.addUnits(feature, 'acres');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            }
+        })
 
-    
+        table.appendChild(tableBody);
+        return table;
+    };
 
-    
+    function buildRow (header, data) {
+        var tr = document.createElement('tr');
+        tr.classList.add('popup-table-row');
 
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
+        if (header) {
+            var th = document.createElement('th');
+            th.classList.add('popup-table-header');
+            th.appendChild(document.createTextNode(header));
+            tr.appendChild(th);
+        }
         
-                
-
-
-
-<span class="param-type">void</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".deactivate">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>deactivate<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line29">line 29</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function deactivates the routing feature by setting the enabled flag to false, disabling routing in the options, and clearing the route data on the map.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">void</span>
-
-
-
-
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getClosest">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getClosest<span class="signature">()</span><span class="type-signature"> &rarr; {Object|boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line76">line 76</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Calculates the closest point on a route based on the last click and the closest point to it.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Object</span>
-|
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns a GeoJSON LineString feature with routing property set to true if successful, otherwise false.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getFeatures">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getFeatures<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line92">line 92</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Retrieves features of type 'LineString' from the mesh index.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- An array of features of type 'LineString'.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getMatch">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getMatch<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line61">line 61</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Retrieves a match for the given coordinates using the Exploring service. Sets the match as a starting point for routing.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>coords</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The coordinates for which to find a match.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Promise.&lt;Object></span>
-
-
-
-
-
-- The matched feature with routing property set to true.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".getRoute">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>getRoute<span class="signature">(fromPoint, toPoint)</span><span class="type-signature"> &rarr; {Array|boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Routing.js.html">src/Routing.js</a></code>,
-                <code><a href="src_Routing.js.html#line42">line 42</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function calculates a route between two points on a map using a PathFinder object. It checks if the routing feature is enabled and if the map is not currently moving. It then creates a feature collection from the existing features, initializes a PathFinder object, and finds a path between the two points. The path is validated and then added to the map with a 'routing.add' event.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>fromPoint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The starting point for the route.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>toPoint</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The destination point for the route.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-|
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- The calculated route path as an array of points, or false if the route could not be calculated.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+        var td = document.createElement('td');
+        td.classList.add('popup-table-data');
+        td.classList.add(header);
+        td.appendChild(document.createTextNode(data));
+        tr.appendChild(td);
+
+        return tr;
+    }
+
+    function selectFeature(features, multipleSelect) {
+        nearFeatures = features;
+
+        if (!nearFeatures.length) return;
+
+        // Find index of currently selected feature
+        let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
+        let currentId = selectedId;
+        let nextIndex = currentIndex;
+        let loopCount = 0;  // Prevents infinite loops
+
+        // Find the next feature that is *not* already selected
+        do {
+            nextIndex = (nextIndex + 1) % nearFeatures.length;
+            loopCount++;
+
+            // If we've looped through all options, break (prevents infinite loops)
+            if (loopCount > nearFeatures.length) {
+                console.warn("Looped through all features, no new selection available.");
+                return;
+            }
+
+        } while (nearFeatures[nextIndex].properties['_selected']); // Skip selected features
+
+        currentId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
+
+        console.log("Selecting Feature:", currentId);
+        geoflo.currentMode.selectFeature(currentId, { multipleSelect: multipleSelect });
+    }
+    
+    function editFeature (feature) {
+        geoflo.wantingToEdit = false;
+        geoflo.setMode('edit', feature.properties.type, feature);
+    }
+
+    function animateDashArray(timestamp=0) {
+        if (!animationRunning || !selectedId) return stopDashAnimation();
+        const selectedFeatures = geoflo.getSelectedFeatures();
+        const selectedFeature = selectedFeatures.find(feature => feature.id === selectedId);
+        if (!selectedFeature || selectedFeature.geometry.type !== 'LineString') return stopDashAnimation();
+
+        const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
+
+        if (newStep !== step) {
+            geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', dashArraySequence[step]);
+            step = newStep;
+        }
+
+        requestAnimationFrame(animateDashArray);
+    }
+
+    // Call this when a feature is selected
+    function startDashAnimation(stop) {
+        if (!animationRunning) {
+            animationRunning = true;
+            requestAnimationFrame(animateDashArray);
+        }
+    }
+
+    // Call this when a feature is deselected
+    function stopDashAnimation() {
+        animationRunning = false;
+        geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', [0, 0]); // Reset line to solid
+    }
+
+};
+
+export default Select;</code></pre>
+        </article>
+    </section>
 
 
 
@@ -956,7 +458,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:geoflo.Routing_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
