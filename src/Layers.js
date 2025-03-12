@@ -661,7 +661,6 @@ const Layers = function () {
         if (!options.init) return this.init(options);
         
         var layers = geoflo.Utilities.cloneDeep(this._layers);
-
         this._layers = [];
         this._sources = [];
 
@@ -669,14 +668,12 @@ const Layers = function () {
         this.removeLayers(this.defaultLayers);
         this.removeLayers(this.selectLayers);
         this.removeSources(Object.values(geoflo.statics.constants.sources));
-
         this.addEventListeners();
         this.addSources(Object.values(geoflo.statics.constants.sources));
         this.addLayers(this.defaultLayers, this.options);
-        await buildLayers.call(this, layers);
+        await this.setCustomLayers(layers, this.options);
         this.addLayers(this.selectLayers, this.options);
-
-        setTimeout(function() { geoflo.Layers.moveLayers(this.selectLayers); }, 250);
+        this.refresh({ select: true });
         return this.getLayers();
     }
 
@@ -814,7 +811,7 @@ const Layers = function () {
 	 * @returns {Array} The layers array.
 	 */
     this.getLayers = function () {
-        return this.layers;
+        return this.layers || [];
     }
 
 	/**
@@ -1031,13 +1028,14 @@ const Layers = function () {
 	 */
     this.removeSource = function (id) {
         if (!id) return false;
-        if (map.getSource(id)) map.removeSource(id);
+        const hasSource = map.getSource(id);
+        if (hasSource) map.removeSource(id);
 
         var index = -1;
         index = this.sources.findIndex(function(l) { return l.id === id });
         if (index > -1) this.sources.splice(index, 1);
         
-        geoflo.fire('source.remove', { removed: id });
+        if (hasSource) geoflo.fire('source.remove', { removed: id });
         return id;
     }
 
@@ -1085,9 +1083,9 @@ const Layers = function () {
     }
 
     this.removeCustomLayers = function () {
-        var layers = this.getCustomLayers();
-        this.removeLayers(layers);
-        this.removeSources(layers.map(function(layer) { return layer.source || layer.details?.source || layer.id }));
+        var layers = this.getLayers().filter(function(layer) { return layer.metadata && layer.metadata.custom });
+        layers.forEach(function(layer) { this.removeLayer(layer.id); }, this);
+        layers.forEach(function (layer) { this.removeSource(layer.source); }, this);
     }
 
 
@@ -1262,8 +1260,6 @@ const Layers = function () {
 
         settings.metadata = metadata;
         
-        this.removeLayers(layers);
-        this.removeSource(source);
         this.addSource(source, type, options);
         this.addLayers(layers, metadata, settings);
 
