@@ -654,8 +654,6 @@ const Layers = function () {
 	 */
     this.refresh = async function (options={}) {
         if (options.select) {
-            //this.removeLayers(this.selectLayers);
-            //this.addLayers(this.selectLayers, options);
             this.moveLayers(this.selectLayers);
             return this.selectLayers;
         }
@@ -696,6 +694,7 @@ const Layers = function () {
 	 */
     this.setCustomLayers = async function (layers, options) {
         if (!layers) return [];
+        this.removeCustomLayers();
         return await buildLayers.call(this, layers, options);
     }
 
@@ -904,10 +903,14 @@ const Layers = function () {
 	 * @param {Object} options - Additional options for adding the layers.
 	 * @returns {Array} - An array of layers that have been added to the map.
 	 */
-    this.addLayers = function (layers=[], options={}) {
+    this.addLayers = function (layers=[], options={}, settings) {
         layers.forEach(function(layer, index) { this.addLayer(layer, options) }, this);
         geoflo.fire('layers.add', { layers: this.getLayers() });
         buildEvents.call(this);
+        if (options.custom && settings) {
+            this._layers.push(settings);
+            this._sources.push({ id: settings.source, type: settings.type, options: settings.options });
+        }
         return this.getLayers();
     }
 
@@ -1012,9 +1015,9 @@ const Layers = function () {
 	 * @param {Array} sources - An array of source IDs to be removed. If not provided, it defaults to all source IDs.
 	 * @returns {void}
 	 */
-    this.removeSources = function (sources) {
-        sources = sources || this.getSourceIds();
-        sources.forEach(function(id) { this.removeSource(id) }, this);
+    this.removeSources = function (ids) {
+        ids = ids || this.getSourceIds();
+        ids.forEach(function(id) { this.removeSource(id) }, this);
         geoflo.fire('sources.remove', { removed: true })
     }
 
@@ -1070,6 +1073,7 @@ const Layers = function () {
         index = this.layers.findIndex(function(l) { return l.id === id });
         if (index > -1) this.layers.splice(index, 1);
 
+        removeLayer.call(this, id);
         geoflo.fire('layer.remove', { removed: id });
         return id;
     }
@@ -1078,6 +1082,12 @@ const Layers = function () {
         var layers = this.getLayers();
         layers.forEach(function(layer) { if (layer.metadata.text && map.getLayer(layer.id)) map.removeLayer(layer.id) }, this);
         this.showTextLayers = false;
+    }
+
+    this.removeCustomLayers = function () {
+        var layers = this.getCustomLayers();
+        this.removeLayers(layers);
+        this.removeSources(layers.map(function(layer) { return layer.source || layer.details?.source || layer.id }));
     }
 
 
@@ -1249,20 +1259,13 @@ const Layers = function () {
             type === 'Polyline' ? await buildPolyline.call(this, settings, options) :
             type === 'Point' ? await buildPoint.call(this, settings, options) : [];
         }
+
+        settings.metadata = metadata;
         
         this.removeLayers(layers);
         this.removeSource(source);
         this.addSource(source, type, options);
-        this.addLayers(layers, metadata);
-
-        removeLayer.call(this, { layer: details.id, source: source });
-
-        settings.metadata = metadata;
-
-        if (metadata.custom) {
-            this._layers.push(settings);
-            this._sources.push({ id: source, type: type, options: options });
-        }
+        this.addLayers(layers, metadata, settings);
 
         if (hasFeatures) geoflo.Features.addFeatures(features);
         
@@ -1633,12 +1636,18 @@ const Layers = function () {
         }
     }
 
-    function removeLayer (options) {
-        if (!options) return false;
-        var layer = this._layers.findIndex((e) => { return e.id === options.layer });
-        var source = this._sources.findIndex((e) => { return e.id === options.source });
-        if (layer !== -1) this._layers.splice(layer, 1);
-        if (source !== -1) this._sources.splice(source, 1);
+    function removeLayer (id) {
+        if (!id) return false;
+        var source = null;
+
+        var layerIndex = this._layers.findIndex((e) => { return e.id === id });
+        if (layerIndex !== -1) {
+            source = this._layers[layerIndex].source;
+            this._layers.splice(layerIndex, 1);
+        }
+
+        var sourceIndex = this._sources.findIndex((e) => { return e.id === source });
+        if (sourceIndex !== -1) this._sources.splice(sourceIndex, 1);
     }
 
     async function addImages (images=[]) {
