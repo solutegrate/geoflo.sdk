@@ -1084,8 +1084,9 @@ const Layers = function () {
 
     this.removeCustomLayers = function () {
         var layers = this.getLayers().filter(function(layer) { return layer.metadata && layer.metadata.custom });
-        layers.forEach(function(layer) { this.removeLayer(layer.id); }, this);
-        layers.forEach(function (layer) { this.removeSource(layer.source); }, this);
+        for (var i=0; i<layers.length; i++) { this.removeLayer(layers[i].id); }
+        for (var i = 0; i < layers.length; i++) { this.removeSource(layers[i].source); }
+        return true;
     }
 
 
