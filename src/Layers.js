@@ -26,8 +26,7 @@ const Layers = function () {
     this.options = {};
     this.sources = [];
     this.layers = [];
-    this._layers = [];
-    this._sources = [];
+    this.customLayers = [];
 
 	/** 
 	 * @function
@@ -660,11 +659,11 @@ const Layers = function () {
         
         if (!options.init) return this.init(options);
         
-        var layers = geoflo.Utilities.cloneDeep(this._layers);
-        this._layers = [];
-        this._sources = [];
+        var layers = geoflo.Utilities.cloneDeep(this.getCustomLayers());
+        this.customLayers = [];
 
         this.removeEventListeners();
+        this.removeCustomLayers();
         this.removeLayers(this.defaultLayers);
         this.removeLayers(this.selectLayers);
         this.removeSources(Object.values(geoflo.statics.constants.sources));
@@ -690,8 +689,8 @@ const Layers = function () {
 	 * @returns {Promise<Array>} The processed custom layers.
 	 */
     this.setCustomLayers = async function (layers, options) {
-        if (!layers) return [];
         this.removeCustomLayers();
+        if (!layers) return [];
         return await buildLayers.call(this, layers, options);
     }
 
@@ -704,7 +703,9 @@ const Layers = function () {
 	 * @returns {Array} An array containing the custom layers.
 	 */
     this.getCustomLayers = function () {
-        return this._layers;
+        const layers =  this.customLayers || [];
+        this.customLayers = layers;
+        return layers;
     }
 
 	/**
@@ -811,7 +812,9 @@ const Layers = function () {
 	 * @returns {Array} The layers array.
 	 */
     this.getLayers = function () {
-        return this.layers || [];
+        const layers = this.layers || [];
+        this.layers = layers;
+        return layers;
     }
 
 	/**
@@ -839,8 +842,8 @@ const Layers = function () {
 	 * @returns {Array} An array of layer IDs.
 	 */
     this.getLayerIds = function (layers) {
-        var _layers = layers || this.getCustomLayers();
-        return _layers.map(function (l) { return l.id });
+        var customLayers = layers || this.getCustomLayers();
+        return customLayers.map(function (l) { return l.id });
     }
 
     this.getLayerType = function (id) {
@@ -881,11 +884,12 @@ const Layers = function () {
 	 */
     this.addSource = function (id, type, options={}) {
         if (!id) throw new Error('No source was provided!');
+        const hasSource = map.getSource(id);
         
         var opts = { type: options.type || "geojson", data: turf.featureCollection(options.features || []), promoteId: options.promoteId || 'id' };
         if (type && type === 'Point' && !options.noCluster) { opts = Object.assign(opts, { cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 }) }
 
-        map.addSource(id, opts);
+        if (!hasSource) map.addSource(id, opts);
         this.sources.push(map.getSource(id));
         geoflo.fire('source.add', { id: id, source: this.getSource(id) })
         return this.getSource(id);
@@ -900,14 +904,11 @@ const Layers = function () {
 	 * @param {Object} options - Additional options for adding the layers.
 	 * @returns {Array} - An array of layers that have been added to the map.
 	 */
-    this.addLayers = function (layers=[], options={}, settings) {
-        layers.forEach(function(layer, index) { this.addLayer(layer, options) }, this);
+    this.addLayers = function (layers=[], options={}, customLayer) {
+        layers.forEach(function(layer) { this.addLayer(layer, options) }, this);
+        if (customLayer) this.getCustomLayers().push(customLayer);
         geoflo.fire('layers.add', { layers: this.getLayers() });
         buildEvents.call(this);
-        if (options.custom && settings) {
-            this._layers.push(settings);
-            this._sources.push({ id: settings.source, type: settings.type, options: settings.options });
-        }
         return this.getLayers();
     }
 
@@ -925,7 +926,7 @@ const Layers = function () {
         layer.metadata = layer.metadata || options;
 
         if (map.getLayer(layer.id)) {
-            if (!this.layers.find(function(l) { return l.id === layer.id })) this.layers.push(layer);
+            if (!this.getLayers().find(function (l) { return l.id === layer.id })) this.getLayers().push(layer);
             return this.getLayer(layer.id);
         }
 
@@ -934,7 +935,7 @@ const Layers = function () {
         layer = map.getLayer(layer.id);
         if (!layer) return console.error(id, 'Layer Not Added!');
 
-        this.layers.push(layer);
+        this.getLayers().push(layer);
         geoflo.fire('layer.add', { id: layer.id, layer: this.getLayer(layer.id) });
         return this.getLayer(layer.id);
     }
@@ -994,7 +995,7 @@ const Layers = function () {
             }
             
             if (!map.getLayer(id)) map.addLayer(style);
-            this.layers.push(map.getLayer(id));
+            this.getLayers().push(map.getLayer(id));
         }, this);
 
         this.showTextLayers = true;
@@ -1068,10 +1069,12 @@ const Layers = function () {
         if (map.getLayer(id)) map.removeLayer(id);
 
         var index = -1;
-        index = this.layers.findIndex(function(l) { return l.id === id });
-        if (index > -1) this.layers.splice(index, 1);
+        index = this.getLayers().findIndex(function(l) { return l.id === id });
+        if (index > -1) this.getLayers().splice(index, 1);
 
-        removeLayer.call(this, id);
+        var index = this.getCustomLayers().findIndex((e) => { return e.id === id });
+        if (index > -1) this.getCustomLayers().splice(layerIndex, 1);
+
         geoflo.fire('layer.remove', { removed: id });
         return id;
     }
@@ -1631,20 +1634,6 @@ const Layers = function () {
             buildEvents({ off: true });
             buildEvents({ on: true })
         }
-    }
-
-    function removeLayer (id) {
-        if (!id) return false;
-        var source = null;
-
-        var layerIndex = this._layers.findIndex((e) => { return e.id === id });
-        if (layerIndex !== -1) {
-            source = this._layers[layerIndex].source;
-            this._layers.splice(layerIndex, 1);
-        }
-
-        var sourceIndex = this._sources.findIndex((e) => { return e.id === source });
-        if (sourceIndex !== -1) this._sources.splice(sourceIndex, 1);
     }
 
     async function addImages (images=[]) {
