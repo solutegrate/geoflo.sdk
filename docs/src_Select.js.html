@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Tutorial: Version 1.0.11 | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Select.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -66,169 +58,392 @@
 <div class="main" id="main">
     
 
-<section>
-    <header>
-        
 
-        <h2>Version 1.0.11</h2>
-    </header>
 
     
-        
-
-        <ul id="example-nav" class="nav nav-tabs">
-            <li role="presentation" id="example-result-btn" class="active" onclick="showResult()">
-                <a href="#">Result</a>
-            </li>
-            <li role="presentation" id="example-js-btn" class="" onclick="showJs()">
-                <a href="#">JS</a>
-            </li>
-            <li role="presentation" id="example-html-btn" class="" onclick="showHtml()">
-                <a href="#">HTML</a>
-            </li>
-        </ul>
+    <section>
         <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Select
+ * @description This module provides the select functionality for the Geoflo application. It allows users to select features on the map by clicking on them.
+ * @returns {Object} Returns the Select object.
+ */
+const Select = function () {
+    const geoflo = this.geoflo;
+
+    var lastKnownSelectIds = [];
+    var removedFeatures = [];
+    var nearFeatures = [];
+    let animationRunning = false;
+    let step = 0;
+    var clickCoords;
+    var multipleSelect;
+    var selectedId;
+
+    const dashArraySequence = [
+        [0, 4, 3],
+        [0.5, 4, 2.5],
+        [1, 4, 2],
+        [1.5, 4, 1.5],
+        [2, 4, 1],
+        [2.5, 4, 0.5],
+        [3, 4, 0],
+        [0, 0.5, 3, 3.5],
+        [0, 1, 3, 3],
+        [0, 1.5, 3, 2.5],
+        [0, 2, 3, 2],
+        [0, 2.5, 3, 1.5],
+        [0, 3, 3, 1],
+        [0, 3.5, 3, 0.5]
+    ];
+
+    this.id = 'select';
+
+    /**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name activate
+	 * @description This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
+	 * @param {Object} options - The options object for activation.
+	 * @param {string} [options.id] - The ID of the feature to select.
+	 * @param {Object} [options.feature] - The feature object to select.
+	 * @returns {boolean} Returns false if already activated.
+	 */
+    this.activate = function (options={}) {
+        if (this.activated) return false;
+        if (geoflo.currentMode.id !== this.id) return options.mode = this.id, geoflo.setMode(options);
+
+        this.activated = true;
+        geoflo.map.dragPan.enable();
+        geoflo.setButtons();
+        geoflo.setActiveButton('select');
+        geoflo.fire('select.activate', { activated: true, options: options })
+        if (this.gamepad) {}
+        geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+        setTimeout(function(e) { e.selectFeature(options.id ? options.id : options.feature ? options.feature.id : false) }, 5, this)
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deactivate
+	 * @description This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
+	 * @returns {boolean} Returns false if the feature is not activated.
+	 */
+    this.deactivate = function () {
+        if (!this.activated) return false;
+
+        this.activated = false;
+        this.deselectCurrentFeature();
+        
+        geoflo.setButtons();
+        geoflo.fire('select.deactivate', { activated: true });
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name canHandle
+	 * @description This function determines if the given mode name is equal to the SELECT mode.
+	 * @param {string} modeName - The mode name to be checked.
+	 * @returns {boolean} Returns true if the mode name is SELECT, false otherwise.
+	 */
+    this.canHandle = function (modeName) {
+        return geoflo.statics.constants.modes.SELECT === modeName;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name selectFeature
+	 * @description Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
+	 * @param {string} id - The ID of the feature to be selected.
+	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
+	 */
+    this.selectFeature = function (id, options={}) {
+        const popup = geoflo.options.select.popup;
+        const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
+        
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
+        
+        if (!id) return false;
+        if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
+        //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
+
+        selectedId = id;
+        removedFeatures = geoflo.hideFeatures([id]);
+        geoflo.addFeaturesToSelected(removedFeatures, options);
+        popup ? this.addPopup(removedFeatures) : false;
+        startDashAnimation();
+        geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
+        if (!geoflo.wantingToEdit) return removedFeatures;
+        if (removedFeatures.length == 1 &amp;&amp; id === removedFeatures[0].id) editFeature(removedFeatures[0]);
+        return removedFeatures;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name deselectCurrentFeature
+	 * @description Deselects the current feature by removing its selection.
+	 */
+    this.deselectCurrentFeature = function () {
+        const ids = geoflo.getSelectedFeatureIds();
+        const features = geoflo.getSelectedFeatures();
+        this.removePopup();
+        stopDashAnimation();
+        geoflo.removeSelection();
+        geoflo.fire('feature.deselect', { ids: ids, features: features });
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name addPopup
+	 * @description This function creates a popup element with the specified features and adds it to the map at the click coordinates.
+	 * @param {Object} features - The features to be displayed in the popup.
+	 * @param {string} features.title - The title of the popup.
+	 * @param {string} features.description - The description of the popup.
+	 * @param {number} features.latitude - The latitude coordinate for the popup location.
+	 * @param {number} features.longitude - The longitude coordinate for the popup location.
+	 */
+    this.addPopup = function (features) {
+        this.popupElement = buildPopup(features);
+
+        this.popup = new mapboxgl.Popup({ closeOnClick: false })
+            .setLngLat(clickCoords)
+            .setDOMContent(this.popupElement)
+            .addTo(geoflo.map)
+            .setOffset(12);
+
+        this.popup._container.style['margin-bottom'] = '10px'
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name removePopup
+	 * @description Removes the popup element from the DOM if it exists.
+	 * @return {boolean} Returns true if the popup element was successfully removed, otherwise false.
+	 */
+    this.removePopup = function () {
+        return this.popup &amp;&amp; this.popup.remove ? this.popup.remove() : false;
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleMove
+	 * @description Handles the mouse move event.
+	 * @param {Event} event - The event object representing the mouse move event.
+	 */
+    this.handleMove = function (event) {
+        //geoflo.setMapClass('pointer');
+    };
+
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleClick
+	 * @description Handles the click event on the map and selects features based on the event.
+	 * @param {Object} event - The event object containing information about the click event.
+	 * @returns {boolean} Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
+	 */
+    this.handleClick = function (event) {
+        if (geoflo.noSelect) return false;
+
+        var features = geoflo.getRenderedDrawnFeatures(event.lngLat);
+
+        let multipleSelect = event.originalEvent &amp;&amp; event.originalEvent.shiftKey;
+        clickCoords = [event.lngLat.lng, event.lngLat.lat];
+
+        if (features.length > 0) {
+            if (!geoflo.Layers.getSelection(features, clickCoords)) return;
+
+            let newFeatureSet = JSON.stringify(features);
+            if (newFeatureSet !== JSON.stringify(nearFeatures)) {
+                nearFeatures = features;
+                selectedId = null; // Reset selection tracking
+            }
             
-            <iframe id="example-result" width="100%" height="800" frameborder="0" src=tutorials/basic.html></iframe>
-            <div id="example-js" class="hidden"><pre class="prettyprint source">
-        document.addEventListener("DOMContentLoaded", function () {
-            // Replace with your Mapbox token
-            const MAPBOX_TOKEN = 'pk.eyJ1Ijoic29sdXRlZ3JhdGUiLCJhIjoiY202OGR2ZTR0MDJybDJub2ZnYWdkc2Z1OCJ9._nBtOlEV03qvmEcvZY2iRQ';
+            selectFeature.call(this, nearFeatures, multipleSelect);
+        } else if (!multipleSelect) {
+            lastKnownSelectIds = [];
+            nearFeatures = [];
+            clickCoords = false;
+            selectedId = false;
+            this.deselectCurrentFeature();
+        }
+    };
 
-            (async function (token, key) {
-                await geoflo.init(MAPBOX_TOKEN, { container: 'map', controls: true });
-                buildLegend();
-                geoflo.map.on(geoflo.id, function (event) { logEvent(event); });
-            })();
+	/**
+	 * @function
+     * @memberof module:geoflo.Select
+	 * @name handleDrag
+	 * @description Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
+	 * @param {Event} event - The event object representing the drag event.
+	 */
+    this.handleDrag = function (event) {
+        //geoflo.setMapClass('grabbing');
+    }
 
-            function buildLegend () {
-                const legendList = document.getElementById("legend-list");
 
-                const buttons = [
-                    { class: "geoflo-select", label: "Select Feature" },
-                    { class: "geoflo-refresh", label: "Refresh/Redraw Map" },
-                    { class: "geoflo-repeat", label: "Repeat Draw Mode" },
-                    { class: "geoflo-zoom-in-features", label: "Zoom To Features" },
-                    { class: "geoflo-export", label: "Export Features" },
-                    { class: "geoflo-import", label: "Import Features" },
-                    { class: "geoflo-delete-data", label: "Delete Features" },
-                    { class: "mapbox-gl-draw_line", label: "Draw Line" },
-                    { class: "mapbox-gl-draw_polygon", label: "Draw Polygon" },
-                    { class: "mapbox-gl-draw_rectangle", label: "Draw Rectangle" },
-                    { class: "mapbox-gl-draw_point", label: "Draw Point" },
-                    { class: "mapbox-gl-draw_text", label: "Draw Text" },
-                    { class: "mapbox-gl-draw_icon", label: "Draw Icon" },
-                    { class: "geoflo-snapping-enabled", label: "Snapping Enabled" },
-                    { class: "geoflo-pinning-enabled", label: "Pinning Enabled" },
-                    { class: "geoflo-routing-enabled", label: "Routing Enabled" },
-                    { class: "geoflo-exploring-enabled", label: "Exploring Enabled" },
-                    { class: "geoflo-painting-enabled", label: "Painting Enabled" },
-                    /* { class: "mapboxgl-ctrl-fullscreen", label: "Fullscreen" },
-                    { class: "mapboxgl-ctrl-geolocate", label: "Locate User" },
-                    { class: "mapboxgl-ctrl-zoom-in", label: "Zoom In" },
-                    { class: "mapboxgl-ctrl-zoom-out", label: "Zoom Out" },
-                    { class: "mapboxgl-style-switcher", label: "Map Styles" } */
-                ];
 
-                buttons.forEach(button => {
-                    const listItem = document.createElement("li");
+    function buildPopup (features) {
+        const element = document.createElement('div');
+        element.classList.add('popup-table-holder');
 
-                    const icon = document.createElement("div");
-                    icon.className = button.class;
+        const table = buildTable(features);
 
-                    const label = document.createElement("span");
-                    label.textContent = button.label;
+        element.appendChild(table);
 
-                    listItem.appendChild(icon);
-                    listItem.appendChild(label);
-                    legendList.appendChild(listItem);
-                });
+        if (nearFeatures.length > 1) {
+            var button = document.createElement('div');
+            button.classList.add('popup-table-button');
+            button.innerHTML = `&lt;button> Next &lt;/button>`;
+            button.addEventListener('click', selectFeature.bind(this));
+            element.appendChild(button);
+        }
+
+        return element;
+        
+        /* const button = document.createElement('div');
+        button.innerHTML = `&lt;button class="btn btn-success btn-simple text-white" > Assign&lt;/button>`;
+        element.appendChild(button);
+        button.addEventListener('click', (e) => { console.log('Button clicked' + name); }); */
+    };
+
+    function buildTable (features) {
+        var table = document.createElement('table');
+        var properties = ['id', 'type'];
+
+        table.style.width = '100%';
+        table.style.height = '100%';
+        table.setAttribute('border', '1');
+        table.classList.add('popup-table');
+
+        var tableBody = document.createElement('tbody');
+
+        features.forEach(function(feature, index) {
+            var type = feature.properties.type;
+
+            properties.forEach(function(prop) {
+                tableBody.appendChild(buildRow(prop, feature.properties[prop]));
+            })
+
+            tableBody.appendChild(buildRow('geometry', feature.geometry.type));
+
+            if (feature.geometry.type === 'LineString') {
+                geoflo.Features.addUnits(feature, 'feet');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            } else if (type === 'Text') {
+                tableBody.appendChild(buildRow('content', feature.properties.text));
+            } else if (feature.geometry.type === 'Polygon') {
+                geoflo.Features.addUnits(feature, 'acres');
+                tableBody.appendChild(buildRow('unit', feature.geometry.unit));
+                tableBody.appendChild(buildRow('units', feature.geometry.units));
+            }
+        })
+
+        table.appendChild(tableBody);
+        return table;
+    };
+
+    function buildRow (header, data) {
+        var tr = document.createElement('tr');
+        tr.classList.add('popup-table-row');
+
+        if (header) {
+            var th = document.createElement('th');
+            th.classList.add('popup-table-header');
+            th.appendChild(document.createTextNode(header));
+            tr.appendChild(th);
+        }
+        
+        var td = document.createElement('td');
+        td.classList.add('popup-table-data');
+        td.classList.add(header);
+        td.appendChild(document.createTextNode(data));
+        tr.appendChild(td);
+
+        return tr;
+    }
+
+    function selectFeature(features, multipleSelect) {
+        nearFeatures = features;
+
+        if (!nearFeatures.length) return;
+
+        // Find index of currently selected feature
+        let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
+        let currentId = selectedId;
+        let nextIndex = currentIndex;
+        let loopCount = 0;  // Prevents infinite loops
+
+        // Find the next feature that is *not* already selected
+        do {
+            nextIndex = (nextIndex + 1) % nearFeatures.length;
+            loopCount++;
+
+            // If we've looped through all options, break (prevents infinite loops)
+            if (loopCount > nearFeatures.length) {
+                console.warn("Looped through all features, no new selection available.");
+                return;
             }
 
-            function logEvent(event) {
-                const eventLog = document.getElementById("event-log-content");
-                const timeStamp = new Date().toLocaleTimeString();
-                const logMessage = `[${timeStamp}] ${event.name}`;
-                const logEntry = document.createElement("div");
-                logEntry.textContent = logMessage;
-                eventLog.appendChild(logEntry);
-                while (eventLog.childNodes.length > 50) { eventLog.removeChild(eventLog.firstChild); }
-                eventLog.scrollTop = eventLog.scrollHeight;
-            }
-        });
-    </pre></div>
-            <div id="example-html" class="hidden"><pre class="prettyprint source">
-        &lt;div id="control-legend">
-            &lt;h3>Control Legend&lt;/h3>
-            &lt;ul id="legend-list" style="list-style: none; padding: 0;">&lt;/ul>
-        &lt;/div>
+        } while (nearFeatures[nextIndex].properties['_selected']); // Skip selected features
 
-        &lt;div id="map">&lt;/div>
+        currentId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
 
-        &lt;div id="event-log">
-            &lt;h3>Event Log&lt;/h3>
-            &lt;div id="event-log-content">&lt;/div>
-        &lt;/div>
-    </pre></div>
-        </article>
+        console.log("Selecting Feature:", currentId);
+        geoflo.currentMode.selectFeature(currentId, { multipleSelect: multipleSelect });
+    }
     
-</section>
+    function editFeature (feature) {
+        geoflo.wantingToEdit = false;
+        geoflo.setMode('edit', feature.properties.type, feature);
+    }
 
+    function animateDashArray(timestamp=0) {
+        if (!animationRunning || !selectedId) return stopDashAnimation();
+        const selectedFeatures = geoflo.getSelectedFeatures();
+        const selectedFeature = selectedFeatures.find(feature => feature.id === selectedId);
+        if (!selectedFeature || selectedFeature.geometry.type !== 'LineString') return stopDashAnimation();
 
-    <script>
-        var exampleResult = document.getElementById('example-result');
-        var exampleJs = document.getElementById('example-js');
-        var exampleHtml = document.getElementById('example-html');
-        var exampleResultBtn = document.getElementById('example-result-btn');
-        var exampleJsBtn = document.getElementById('example-js-btn');
-        var exampleHtmlBtn = document.getElementById('example-html-btn');
+        const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
 
-        function setActive(el) {
-            el.className += ' active';
+        if (newStep !== step) {
+            geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', dashArraySequence[step]);
+            step = newStep;
         }
 
-        function setInactive(el) {
-            el.className = el.className.replace(/\s*active\s*/g, '');
+        requestAnimationFrame(animateDashArray);
+    }
+
+    // Call this when a feature is selected
+    function startDashAnimation(stop) {
+        if (!animationRunning) {
+            animationRunning = true;
+            requestAnimationFrame(animateDashArray);
         }
+    }
 
-        function show(el) {
-            el.className = el.className.replace(/\s*hidden\s*/g, '');
-        }
+    // Call this when a feature is deselected
+    function stopDashAnimation() {
+        animationRunning = false;
+        geoflo.map.setPaintProperty(geoflo.id + '-line-select', 'line-dasharray', [0, 0]); // Reset line to solid
+    }
 
-        function hide(el) {
-            el.className += ' hidden';
-        }
+};
 
-        function showJs() {
-            hide(exampleHtml);
-            hide(exampleResult);
-            setInactive(exampleHtmlBtn);
-            setInactive(exampleResultBtn);
+export default Select;</code></pre>
+        </article>
+    </section>
 
-            show(exampleJs);
-            setActive(exampleJsBtn);
-        }
 
-        function showHtml() {
-            hide(exampleJs);
-            hide(exampleResult);
-            setInactive(exampleJsBtn);
-            setInactive(exampleResultBtn);
-
-            show(exampleHtml);
-            setActive(exampleHtmlBtn);
-        }
-
-        function showResult() {
-            hide(exampleJs);
-            hide(exampleHtml);
-            setInactive(exampleJsBtn);
-            setInactive(exampleHtmlBtn);
-
-            show(exampleResult);
-            setActive(exampleResultBtn);
-        }
-    </script>
 
 
 </div>
@@ -243,7 +458,13 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        showLnbExamples();
+        var id = '_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
     </script>
 
 </body>
