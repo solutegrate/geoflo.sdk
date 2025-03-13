@@ -486,7 +486,7 @@ const GeoFlo = function () {
 
         Object.keys(colors).forEach((key) => {
             if (colors[key]) {
-                let colorValue = this.Utils.rgba(colors[key]); // Ensure conversion to rgba
+                let colorValue = this.Utilities.rgba(colors[key]); // Ensure conversion to rgba
                 document.documentElement.style.setProperty(`--geoflo-${key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, colorValue);
             }
         });
@@ -1040,7 +1040,7 @@ const GeoFlo = function () {
             let rgbaValue = computedStyle.getPropertyValue(cssVar).trim();
 
             // Convert rgba() to hex
-            colors[key] = this.Utils.hex(rgbaValue);
+            colors[key] = this.Utilities.hex(rgbaValue);
         });
 
         return { colors };
