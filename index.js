@@ -280,7 +280,7 @@ const GeoFlo = function () {
 	 */
     this.fire = function (type, detail) {
         if (!type) throw new Error('Type is required to fire an event!');
-        if (type === 'feature.select' || type === 'feature.deselect') this.setTimeout(() => { this.currentMode.animate ? this.currentMode.animate() : false }, 500, this);
+        if (type === 'feature.select' || type === 'feature.deselect') setTimeout(() => { this.currentMode.animate ? this.currentMode.animate() : false }, 500, this);
         this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
     }
 
