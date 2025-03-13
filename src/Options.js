@@ -101,7 +101,7 @@ const Options = {
         center: [-95.52816680236892, 39.56431143986035],
         zoom: 3.5,
         opacity: 1,
-        maxPitch: 60,
+        maxPitch: 70,
         projection: 'mercator',
         style: 'Dark',
         hash: true,

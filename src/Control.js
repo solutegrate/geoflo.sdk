@@ -93,7 +93,7 @@ const Control = function (controls, options={}) {
     this.onAdd = function(map) {
         if (!this.options) return false;
         if (this.options.attribution) return this.setAttribution(map);
-        this.setTheme(options.colors || geoflo.options.colors);
+        geoflo.setTheme(this.options.colors || geoflo.options.colors);
         geoflo.fire('control.add', { control: this, element: this.element });
         return this.element;
     }
@@ -119,10 +119,10 @@ const Control = function (controls, options={}) {
      * @returns {Object} Returns the control object.
      */
     this.setAttribution = function () {
-        var attr = Attr(geoflo, this.control, options);
+        var attr = Attr(geoflo, this.control, this.options);
         Object.assign(this, attr)
 
-        this.setTheme(options.colors || geoflo.options.colors);
+        geoflo.setTheme(this.options.colors || geoflo.options.colors);
         geoflo.fire('control.add', { control: this, element: this.element });
         return this.element;
     }
@@ -137,31 +137,6 @@ const Control = function (controls, options={}) {
      */
     this.setMode = function (mode) {
         geoflo.setActiveButton(!mode ? 'select' : mode === 'draw' ? mode : mode)
-    }
-
-    /**
-	 * @function
-     * @memberof module:geoflo.Control
-	 * @name setTheme
-     * @description Sets the theme for the control buttons.
-     * @param {Object} colors - The colors to set the theme to.
-     * @returns {Object} Returns the control object.
-     */
-    this.setTheme = function(colors) {
-        if (!colors) { return console.error('Control colors not provided!') };
-
-        colors.primaryColor ? document.documentElement.style.setProperty('--' + geoflo.id + '-primary-color', rgba(colors.primaryColor)) : false;
-        colors.primaryBackground ? document.documentElement.style.setProperty('--' + geoflo.id + '-primary-background', rgba(colors.primaryBackground)) : false;
-        colors.primaryText ? document.documentElement.style.setProperty('--' + geoflo.id + '-primary-text', rgba(colors.primaryText)) : false;
-        colors.primaryBorder ? document.documentElement.style.setProperty('--' + geoflo.id + '-primary-border', rgba(colors.primaryBorder)) : false;
-
-        colors.secondaryColor ? document.documentElement.style.setProperty('--' + geoflo.id + '-secondary-color', rgba(colors.secondaryColor)) : false;
-        colors.secondaryBackground ? document.documentElement.style.setProperty('--' + geoflo.id + '-secondary-background', rgba(colors.secondaryBackground)) : false;
-        colors.secondaryText ? document.documentElement.style.setProperty('--' + geoflo.id + '-secondary-text', rgba(colors.secondaryText)) : false;
-        colors.secondaryBorder ? document.documentElement.style.setProperty('--' + geoflo.id + '-secondary-border', rgba(colors.secondaryBorder)) : false;
-
-        geoflo.fire('theme.change', { colors: colors });
-        return this.getTheme();
     }
 
     /**
@@ -191,18 +166,6 @@ const Control = function (controls, options={}) {
         }
         
         this.enable(buttons.position);
-    }
-
-
-    /**
-	 * @function
-     * @memberof module:geoflo.Control
-	 * @name getTheme
-     * @description Gets the theme for the control buttons.
-     * @returns {Object} Returns the theme for the control buttons.
-     */
-    this.getTheme = function() {
-        return geoflo.options.colors;
     }
 
     /**

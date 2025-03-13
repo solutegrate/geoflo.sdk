@@ -279,7 +279,9 @@ const GeoFlo = function () {
 	 * @returns {boolean} Returns true if the event was successfully fired, false otherwise.
 	 */
     this.fire = function (type, detail) {
-        return this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
+        if (!type) throw new Error('Type is required to fire an event!');
+        if (type === 'feature.select' || type === 'feature.deselect') this.setTimeout(() => { this.currentMode.animate ? this.currentMode.animate() : false }, 500, this);
+        this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
     }
 
 
@@ -473,14 +475,42 @@ const GeoFlo = function () {
 	 * @function
      * @memberOf module:geoflo
 	 * @name setTheme
-	 * @description Sets the theme colors for the control.
+	 * @description Sets the theme colors for GeoFlo.
 	 * @param {Object} colors - An object containing the theme colors.
 	 * @returns {void}
 	 */
-    this.setTheme = function (colors={}) {
-        this.Control ? this.Control.setTheme(colors) : false;
+    this.setTheme = async function (colors) {
+        if (!colors || typeof colors !== "object") return false;
+
+        this.options.colors = Object.assign(this.options.colors, colors);
+
+        Object.keys(colors).forEach((key) => {
+            if (colors[key]) {
+                let colorValue = this.Utils.rgba(colors[key]); // Ensure conversion to rgba
+                document.documentElement.style.setProperty(`--geoflo-${key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`, colorValue);
+            }
+        });
+
+        await this.Layers.refresh();
+        this.Features.updateSource();
+
+        this.fire('theme.change', { colors: colors });
+        return this.getTheme();
     }
-	
+
+    /**
+     * @memberof module:geoflo
+     * @function
+     * @name setColors
+     * @description This function sets the colors for the map based on the provided object. It merges the provided colors with the existing colors and updates the theme.
+     * @param {Object} colors - The colors object to set for the map.
+     * @returns {Object} The updated colors object after setting the colors.
+     */
+    this.setColors = async function (colors={}) {
+        const themee = await this.setTheme(colors);
+        return this.getColors();
+    }
+
     /**
      * @function
      * @name setLayers
@@ -719,22 +749,6 @@ const GeoFlo = function () {
                 }
             }
         })
-    }
-
-    /**
-     * @memberof module:geoflo
-     * @function
-     * @name setColors
-     * @description This function sets the colors for the map based on the provided object. It merges the provided colors with the existing colors and updates the theme.
-     * @param {Object} colors - The colors object to set for the map.
-     * @returns {Object} The updated colors object after setting the colors.
-     */
-    this.setColors = async function (colors={}) {
-        this.options.colors = Object.assign(this.options.colors, colors);
-        this.setTheme(this.options.colors);
-        await this.Layers.refresh();
-        this.Features.updateSource();
-        return this.getColors();
     }
 
 
@@ -1010,6 +1024,27 @@ const GeoFlo = function () {
     this.getColors = function () {
         return this.options.colors;
     }
+
+    this.getTheme = function () {
+        const computedStyle = getComputedStyle(document.documentElement);
+
+        const colorKeys = [
+            "primaryColor", "primaryBackground", "primaryText", "primaryBorder",
+            "secondaryColor", "secondaryBackground", "secondaryText", "secondaryBorder"
+        ];
+
+        let colors = {};
+
+        colorKeys.forEach((key) => {
+            let cssVar = `--geoflo-${key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`)}`;
+            let rgbaValue = computedStyle.getPropertyValue(cssVar).trim();
+
+            // Convert rgba() to hex
+            colors[key] = this.Utils.hex(rgbaValue);
+        });
+
+        return { colors };
+    };
 
 	/**
 	 * @description Retrieves the buttons associated with a specific control or all buttons from the controls.
@@ -2366,13 +2401,6 @@ function onLoad(geoflo, event) {
     if (geoflo.options.map.minPitch) geoflo.map.setMinPitch(geoflo.options.map.minPitch);
     if (geoflo.options.map.minZoom) geoflo.map.setMinZoom(geoflo.options.map.minZoom);
 
-    if (!geoflo.mobile) {
-        geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
-        geoflo.fullscreen.hide = function () { geoflo._controlContainer.style.display = 'none' }.bind(geoflo.fullscreen);
-        geoflo.fullscreen.show = function () { geoflo._controlContainer.style.display = 'block' }.bind(geoflo.fullscreen);
-        geoflo.map.addControl(geoflo.fullscreen, 'top-right');
-    }
-
     geoflo.styles = new Styles({ styles: geoflo.options.styles, selected: geoflo.options.map.style });
     geoflo.Layers = new Layers();
     geoflo.Features = new Features();
@@ -2382,6 +2410,14 @@ function onLoad(geoflo, event) {
     geoflo.navigation.hide = function () { geoflo._container.style.display = 'none' }.bind(geoflo.navigation);
     geoflo.navigation.show = function () { geoflo._container.style.display = 'block' }.bind(geoflo.navigation);
     geoflo.map.addControl(geoflo.navigation, 'top-right');
+
+    if (!geoflo.mobile) {
+        geoflo.fullscreen = new mapboxgl.FullscreenControl({ container: document.querySelector('body') });
+        geoflo.fullscreen.hide = function () { geoflo._controlContainer.style.display = 'none' }.bind(geoflo.fullscreen);
+        geoflo.fullscreen.show = function () { geoflo._controlContainer.style.display = 'block' }.bind(geoflo.fullscreen);
+        geoflo.map.addControl(geoflo.fullscreen, 'top-right');
+    }
+
     geoflo.map.addControl(geoflo.styles);
     geoflo.Events = Events(geoflo);
     geoflo.Events.removeEventListeners();
