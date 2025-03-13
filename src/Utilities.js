@@ -778,6 +778,71 @@ const Utilities = function () {
             return Array.from(arr);
         }
     }
+
+    this.rgba = function (color, alpha) {
+        if (!color) return false;
+        color = color.trim();
+
+        // If color is already in rgba() or rgb() format, return it as-is
+        if (/^rgba?\(/.test(color)) return color;
+
+        // Check for valid hex input
+        let hexMatch = color.match(/^#([\da-f]{3,8})$/i);
+        if (!hexMatch) return false;
+
+        let hex = hexMatch[1];
+        let r, g, b, a = 255; // Default alpha 255 (1.0 in rgba)
+
+        if (hex.length === 3) {
+            // #RGB -> Expand to #RRGGBB
+            r = parseInt(hex[0] + hex[0], 16);
+            g = parseInt(hex[1] + hex[1], 16);
+            b = parseInt(hex[2] + hex[2], 16);
+        } else if (hex.length === 4) {
+            // #RGBA -> Expand to #RRGGBBAA
+            r = parseInt(hex[0] + hex[0], 16);
+            g = parseInt(hex[1] + hex[1], 16);
+            b = parseInt(hex[2] + hex[2], 16);
+            a = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 6) {
+            // #RRGGBB
+            r = parseInt(hex.slice(0, 2), 16);
+            g = parseInt(hex.slice(2, 4), 16);
+            b = parseInt(hex.slice(4, 6), 16);
+        } else if (hex.length === 8) {
+            // #RRGGBBAA
+            r = parseInt(hex.slice(0, 2), 16);
+            g = parseInt(hex.slice(2, 4), 16);
+            b = parseInt(hex.slice(4, 6), 16);
+            a = parseInt(hex.slice(6, 8), 16);
+        } else {
+            return false; // Invalid hex
+        }
+
+        // Normalize alpha: if `alpha` is provided, override the extracted one
+        let finalAlpha = alpha !== undefined ? alpha / 100 : a / 255;
+
+        return `rgba(${r}, ${g}, ${b}, ${finalAlpha.toFixed(2)})`;
+    };
+
+    this.hex = function (color, alpha) {
+        if (!color) return false;
+        color = color.trim();
+
+        // If already a valid hex code, return as-is
+        if (/^#([\da-f]{3,8})$/i.test(color)) return color;
+
+        // Match rgb/rgba format
+        let match = color.match(/^rgba?\(\s*(\d+),\s*(\d+),\s*(\d+),?\s*([\d.]+)?\s*\)$/i);
+        if (!match) return false; // Invalid input
+
+        let r = parseInt(match[1]).toString(16).padStart(2, '0'),
+            g = parseInt(match[2]).toString(16).padStart(2, '0'),
+            b = parseInt(match[3]).toString(16).padStart(2, '0'),
+            a = alpha !== undefined ? Math.round(alpha * 255).toString(16).padStart(2, '0') : '';
+
+        return `#${r}${g}${b}${a}`;
+    };
 }
 
 function _toConsumableArray(arr) {
