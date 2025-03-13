@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mixin: Layers | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Features.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -68,90 +60,495 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Layers</h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Features
+ * @description This module provides the features functionality for the Geoflo application. It allows users to add, remove, update, and retrieve features from the map.
+ * @returns {Object} Returns the Features object.
+ * @throws {Error} Throws an error if no map object is provided.
+ */
+const Features = function () {
+    const geoflo = this.geoflo;
+    if (!geoflo.map) { throw new Error('No map object provided!') }
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">This module provides the layer functionality for the Geoflo application.
-             Refactored to use ES6 Maps for caching and optimized for performance.</div>
-            
+    this.featuresMap = new Map();
 
-            
+    this.getFeatures = function () {
+        return Array.from(this.featuresMap.values());
+    };
+
+    this.getFeatureById = function (id) {
+        if (Array.isArray(id) &amp;&amp; id.length > 1) return this.getFeaturesById(id);
+        if (typeof id === 'object') id = id.parent || id.properties.parent || id.id || id.properties.id;
+        return getFeatureByIdHelper.call(this, id);
+    };
+
+    this.getFeaturesById = function (ids = []) {
+        const addedIds = new Set();
+        const result = [];
+        ids.forEach((id) => {
+            const feature = this.getFeatureById(id);
+            if (feature &amp;&amp; !addedIds.has(id)) {
+                addedIds.add(id);
+                result.push(feature);
+            }
+        });
+        return result;
+    };
+
+    this.getType = function (feature) {
+        return getType(feature);
+    };
+
+    this.getUnit = function (feature) {
+        if (!feature) return false;
+        const type = feature.properties.type;
+        if (!type) return false;
+        if (!geoflo.options.units || !geoflo.options.units[type]) return false;
+        return geoflo.options.units[type];
+    };
+
+    this.getUnits = function (feature) {
+        const unit = this.getUnit(feature);
+        if (!unit || !feature) return false;
+        let units = 1;
+        const type = feature.properties.type;
+        if (type === "Polyline") {
+            units = turf.length(feature, { units: 'meters' });
+        } else if (type === 'Polygon' || type === 'Rectangle') {
+            units = turf.area(feature);
+        }
+        return units;
+    };
+
+    this.getFeatureState = function (id) {
+        if (!id) return false;
+        return geoflo.map.getFeatureState({ source: geoflo.statics.constants.sources.COLD, id: id });
+    };
 
 
-<dl class="details">
 
-    
+    this.setFeaturesState = function (features = [], state) {
+        if (!state || features.length === 0) return [];
+        features.forEach((feature) => {
+            const id = feature.id || feature.properties.id;
+            if (geoflo.hotFeature &amp;&amp; geoflo.hotFeature.id === id) return;
+            this.setFeatureState(id, state);
+        });
+        return features;
+    };
 
-    
+    this.setFeatureState = function (id, state) {
+        if (!state || !id) return false;
+        const features = getFeaturesByParentHelper.call(this, id);
+        features.forEach((feature) => {
+            const fid = feature.id || feature.properties.id;
+            geoflo.map.setFeatureState({ source: feature.source, id: fid }, state);
+        });
+        return features;
+    };
 
-    
+    this.setText = function (features = []) {
+        if (!geoflo.options.showFeatureText) return false;
+        let source = geoflo.statics.constants.sources.HOTTEXT;
+        let textFeaturesArr = [];
+        if (features.features) features = features.features;
+        if (!Array.isArray(features)) features = [features];
+        features.forEach((feature) => {
+            const type = feature.properties.type;
+            if (!type) return;
+            this.currentType = type;
+            if (type === 'Polyline' &amp;&amp; geoflo.Utilities.isValidLineString(feature) &amp;&amp; geoflo.options.showLineUnits) {
+                turf.segmentEach(feature, setLineText.bind(this));
+            } else {
+                source = geoflo.statics.constants.sources.SELECT;
+                const feat = geoflo.Utilities.cloneDeep(feature);
+                feat.properties = {
+                    type: 'Text',
+                    text: feature.properties.text,
+                    style: feature.properties.style
+                };
+                textFeaturesArr.push(feat);
+            }
+        });
+        geoflo.map.getSource(source).setData(turf.featureCollection(textFeaturesArr));
+        delete this.currentType;
+        return true;
+    };
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
 
 
-            
-        
-        </div>
-    
+    this.addFeature = function (feature, source, properties = {}) {
+        if (!feature || !feature.properties) return false;
+        feature = turf.cleanCoords(feature);
+        feature = turf.truncate(feature, { precision: 6, coordinates: 3, mutate: true });
+        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties);
+        feature.source = source || feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+        delete feature.properties.source;
+        delete feature.properties.painting;
+        delete feature.properties.edit;
+        delete feature.properties.new;
+        delete feature.properties._selected;
+        delete feature.properties.hidden;
+        delete feature.properties.offset;
+        feature.properties.style = feature.properties.style || {};
+        this.addUnits(feature);
+        this.addFeatures([feature]);
+        return feature;
+    };
 
-    
+    this.addFeatures = function (features, unselect, id) {
+        let update = false;
+        const sources = new Set();
+        features.forEach((feature) => {
+            feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            if (id &amp;&amp; feature.id !== id) return;
+            feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+            feature.properties.id = feature.id;
+            feature.properties.type = this.getType(feature);
+            if (this.featuresMap.has(feature.id)) {
+                this.setFeatureState(feature.id, { hidden: !unselect });
+                this.featuresMap.set(feature.id, feature);
+                update = !unselect;
+                if (unselect) delete feature.properties._selected;
+            } else {
+                update = !this.updatingFeatures;
+                this.featuresMap.set(feature.id, feature);
+            }
+            if (unselect) delete feature.properties._selected;
+            sources.add(feature.source);
+        });
+        if (update) this.updateSource(Array.from(sources));
+        return features;
+    };
 
-    
+    this.addUnits = function (feature, convertTo) {
+        const unit = convertTo || this.getUnit(feature);
+        if (!unit) return false;
+        const units = this.convertUnits(feature, null, convertTo);
+        feature.geometry.units = units;
+        feature.geometry.unit = unit;
+        return feature;
+    };
 
-    
 
-    
 
-    
+    this.isFeatureHidden = function (id) {
+        if (!id) return false;
+        var state = this.getFeatureState(id);
+        return state.hidden;
+    }
 
-    
 
-    
 
-    
+    this.updateFeatures = function (features, options = {}) {
+        features = features || [].concat(geoflo.getDrawnFeatures(), geoflo.getSelectedFeatures());
+        const sources = new Set();
+        const selectedFeatures = geoflo.getSelectedFeatures();
 
-    
+        this.updatingFeatures = true;
 
-    
-</article>
+        features.forEach((feature) => {
+            const id = feature.id || feature.properties.id;
+            if (!id) return;
+            const originalFeature = this.getFeatureById(id);
+            if (!originalFeature) return this.addFeature(feature);
+            const selected = selectedFeatures.find((f) => f.id === id || f.properties.id === id);
+            if (selected &amp;&amp; !geoflo.noSelect) {
+                selected.geometry.coordinates = feature.geometry.coordinates;
+                selected.properties = feature.properties;
+                selected.properties._selected = true;
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT)
+                    .setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX)
+                    .setData(turf.featureCollection(selectedFeatures));
+                return;
+            } else if (!sources.has(originalFeature.source)) {
+                originalFeature.properties._selected = false;
+                sources.add(originalFeature.source);
+            }
+            originalFeature.geometry.coordinates = feature.geometry.coordinates;
+            originalFeature.properties = feature.properties;
+            if (options.addUnits) this.addUnits(originalFeature);
+        });
 
-</section>
+        this.updatingFeatures = false;
+        if (sources.size === 0) return false;
+        requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
+    };
+
+    this.updateSource = function (sources) {
+        if (this._updateSourceTimeout) clearTimeout(this._updateSourceTimeout);
+
+        this._updateSourceTimeout = setTimeout(() => {
+            const sourceFeatures = {};
+            const unsourceFeatures = [];
+            const textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
+            const coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
+
+            geoflo.updatingSource = true;
+
+            if (textSource) textSource.setData(turf.featureCollection([]));
+            if (coldSource) coldSource.setData(turf.featureCollection([]));
+            geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+
+            // Group features by source from the featuresMap
+            Array.from(this.featuresMap.values()).forEach((feature) => {
+                delete feature.properties.new;
+                delete feature.properties.offset;
+                const src = feature.source;
+                if (sources.length &amp;&amp; !sources.includes(src)) return;
+                if (!src) return unsourceFeatures.push(feature);
+                if (!sourceFeatures[src]) sourceFeatures[src] = [];
+                sourceFeatures[src].push(feature);
+            });
+
+            if (this.featuresMap.size === 0) {
+                geoflo.Layers.getCustomLayers().forEach((layer) => {
+                    if (!layer.details || !layer.details.source) return;
+                    const src = layer.details.source;
+                    if (!geoflo.map.getSource(src)) return;
+                    geoflo.map.getSource(src).setData(turf.featureCollection([]));
+                });
+            }
+
+            Object.entries(sourceFeatures).forEach(([src, features]) => {
+                if (!geoflo.map.getSource(src)) return unsourceFeatures.push(features);
+                setLineOffsetHelper(features, src);
+            });
+
+            setLineOffsetHelper(unsourceFeatures.flat(), geoflo.statics.constants.sources.COLD);
+            setTimeout(() => { this.setFeaturesState(Array.from(this.featuresMap.values()), { hidden: false }); }, 100);
+            geoflo.fire('features.update', { features: Array.from(this.featuresMap.values()) });
+            geoflo.updatingSource = false;
+        }, 50);
+
+        return Array.from(this.featuresMap.values());
+    }
+
+
+
+    this.removeFeature = function (id) {
+        const removedFeatures = [];
+        if (!this.featuresMap.has(id)) return removedFeatures;
+        const feature = this.featuresMap.get(id);
+        this.featuresMap.delete(id);
+        removedFeatures.push(feature);
+        this.updateSource([feature.source]);
+        return removedFeatures;
+    };
+
+    this.removeLayers = function (layerSources = [], options = {}) {
+        if (options.reset) return this.deleteFeatures();
+        const removedFeatures = [];
+        this.featuresMap.forEach((feature, fid) => {
+            if (layerSources.includes(feature.source)) {
+                removedFeatures.push(feature);
+                this.featuresMap.delete(fid);
+            }
+        });
+        this.updateSource(Array.from(new Set(removedFeatures.map(f => f.source))));
+    };
+
+
+
+    this.deleteFeatures = function () {
+        this.featuresMap.clear();
+        this.updateSource();
+    };
+
+    this.convertUnits = function (feature, units, convertTo) {
+        if (!feature) return 0;
+        const type = feature.properties.type;
+        const unit = convertTo || this.getUnit(feature);
+        units = units || this.getUnits(feature);
+        if (type === "Polyline") {
+            units = Math.round(turf.convertLength(units, 'meters', unit));
+        } else if (type === 'Polygon' || type === 'Rectangle') {
+            units = Math.round(turf.convertArea(units, 'meters', unit));
+        }
+        units = units ? Number(units.toFixed(2)) : 0;
+        return units;
+    };
+
+
+
+    function getFeatureByIdHelper(id) {
+        let feature = this.featuresMap.get(id);
+        if (!feature) {
+            feature = geoflo.getSelectedFeatures().find(f => f.id === id || f.properties.id === id);
+        }
+        return feature;
+    }
+
+    function getFeaturesByParentHelper(id) {
+        const feature = (typeof id === 'object' &amp;&amp; id.id) ? id : getFeatureByIdHelper.call(this, id);
+        if (!feature || !feature.source) return [];
+        const sourceData = geoflo.map.getSource(feature.source)?._data;
+        if (!sourceData) return [];
+        const field = geoflo.options.offsetOverlappingLines ? 'parent' : 'id';
+        return sourceData.features.filter(f => f[field] === id || f.properties[field] === id);
+    }
+
+    function createTextFeatures(feature) {
+        const isLine = geoflo.Utilities.isValidLineString(feature);
+        const segments = [];
+        if (isLine) {
+            turf.segmentEach(feature, function (currentSegment) {
+                const segment = geoflo.Utilities.cloneDeep(currentSegment);
+                let footage = Math.round(turf.length(segment, { units: 'miles' }) * 5280);
+                let mileage = Number(turf.length(segment, { units: 'miles' }).toFixed(3));
+                footage = Number(footage.toFixed(2));
+                mileage = Number(mileage.toFixed(2));
+                segment.properties.footage = footage;
+                segment.properties.mileage = mileage;
+                segment.properties.text = `${mileage} miles`;
+                segments.push(segment);
+            });
+        }
+        return segments;
+    }
+
+    function setLineText(segment) {
+        const seg = geoflo.Utilities.cloneDeep(segment);
+        seg.properties.type = this.currentType;
+        const text = turf.point(seg.geometry.coordinates[1]);
+        let units = this.getUnits(seg);
+        const unit = 'feet';
+        units = this.convertUnits(seg, units, unit);
+        text.properties.units = units;
+        text.properties.unit = unit;
+        text.properties.text = `${units} ${unit}`;
+        text.properties.transform = 'uppercase';
+        text.properties.anchor = 'bottom-left';
+        this.textFeatures.push(text);
+        return text;
+    }
+
+    function setLineOffsetHelper(features, src) {
+        if (!features || !features.length || !src || !geoflo.map.getSource(src)) return false;
+        if (!geoflo.options.offsetOverlappingLines)
+            return geoflo.map.getSource(src).setData(turf.featureCollection(features));
+        const mesh = new geoflo.Mesh(features, true);
+        const offsetFeatures = mesh.getFeatures();
+        offsetFeatures.forEach((feature) => {
+            const f = features.find((fe) => fe.id === feature.parent);
+            if (!f) return;
+            feature.source = src;
+            feature.properties.style = f.properties.style || feature.properties.style;
+            setOverlapOffsetHelper(offsetFeatures, feature);
+        });
+        geoflo.map.getSource(src).setData(turf.featureCollection(offsetFeatures));
+        geoflo.fire('features.offset', { features: features, offset: offsetFeatures, source: src });
+    }
+
+    function setOverlapOffsetHelper(features, feature) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+        if (!isPolylineHelper(feature)) return false;
+        if (feature.properties.offset) return false;
+        let offset = 6;
+        const overlaps = [];
+        features.forEach((f) => {
+            if (!isPolylineHelper(f)) return false;
+            if (f.parent === feature.parent) return false;
+            if (f.properties.offset) return false;
+            const overlap = turf.booleanOverlap(f, feature) || turf.booleanWithin(f, feature);
+            if (!overlap) return false;
+            overlaps.push(f);
+        });
+        overlaps.forEach((f) => {
+            f.properties.offset = offset;
+            offset = offset * 2;
+        });
+    }
+
+    function setWithinOffsetHelper(features) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+        const adder = 4;
+        const miles = 0.00189394; // 10 Feet
+        const explode = turf.explode(turf.featureCollection(features));
+        if (!explode || !explode.features.length) return;
+        explode.features.forEach((feature) => {
+            if (feature.properties.offset) return false;
+            const buffer = turf.buffer(feature, miles, { units: 'miles' });
+            const within = turf.pointsWithinPolygon(explode, buffer);
+            if (!within || !within.features.length) return;
+            let offset = adder;
+            within.features.forEach((f) => {
+                if (f.properties.id === feature.properties.id || f.properties.offset) return;
+                f.properties.offset = offset;
+                offset = offset + adder;
+            });
+        });
+    }
+
+    function isPolylineHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'LineString';
+    }
+
+    function isPolygonHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' || feature.properties.type === 'Polygon' || type === 'Polygon';
+    }
+
+    function isRectangleHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return (turf.getType(feature) === 'Polygon' &amp;&amp; feature.properties.type === 'Rectangle') || type === 'Rectangle';
+    }
+
+    function isPointHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (turf.getType(feature) === 'Point' &amp;&amp; (!feature.properties.type || feature.properties.type === 'Circle')) return true;
+        if (turf.getType(feature) === 'Point' &amp;&amp; (type === 'Point' || type === 'Circle')) return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; (feature.properties.type !== 'Text' &amp;&amp; feature.properties.type !== 'Icon' &amp;&amp; feature.properties.type !== 'Image');
+    }
+
+    function isTextHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Text') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Text';
+    }
+
+    function isIconHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Icon') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Icon';
+    }
+
+    function isImageHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Image') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Image';
+    }
+
+    function getType(feature) {
+        if (!feature) return null;
+        return isRectangleHelper(feature) ? 'Rectangle' :
+            isPolygonHelper(feature) ? 'Polygon' :
+                isPolylineHelper(feature) ? 'Polyline' :
+                    isTextHelper(feature) ? 'Text' :
+                        isIconHelper(feature) ? 'Icon' :
+                            isImageHelper(feature) ? 'Image' :
+                                isPointHelper(feature) ? 'Circle' :
+                                    null;
+    }
+};
+
+export default Features;</code></pre>
+        </article>
+    </section>
 
 
 
@@ -168,7 +565,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:geoflo.Layers_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
