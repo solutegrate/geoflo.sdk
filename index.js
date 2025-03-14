@@ -280,7 +280,6 @@ const GeoFlo = function () {
 	 */
     this.fire = function (type, detail) {
         if (!type) throw new Error('Type is required to fire an event!');
-        if (type === 'feature.select' || type === 'feature.deselect') setTimeout(() => { this.currentMode.animate ? this.currentMode.animate() : false }, 500, this);
         this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
     }
 
@@ -1653,10 +1652,10 @@ const GeoFlo = function () {
      */
     this.hideFeatures = function (ids=[]) {
         if (!ids.length) return false;
-        const features = this.Features.getFeaturesById(ids);
         ids.forEach((id) => { this.Features.setFeatureState(id, { hidden: true }); }, this);
-        this.fire('features.hide', { ids: ids, features: features });
-        return features;
+        const fire = { ids: ids, features: this.Features.getFeaturesById(ids) };
+        this.fire('features.hide', fire);
+        return fire.features;
     }
 
     
