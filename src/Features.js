@@ -89,27 +89,24 @@ const Features = function () {
 
     this.setText = function (features = []) {
         if (!geoflo.options.showFeatureText) return false;
+
         let source = geoflo.statics.constants.sources.HOTTEXT;
         let textFeaturesArr = [];
+
         if (features.features) features = features.features;
         if (!Array.isArray(features)) features = [features];
+
         features.forEach((feature) => {
             const type = feature.properties.type;
             if (!type) return;
+
             this.currentType = type;
+
             if (type === 'Polyline' && geoflo.Utilities.isValidLineString(feature) && geoflo.options.showLineUnits) {
                 turf.segmentEach(feature, setLineText.bind(this));
-            } else {
-                source = geoflo.statics.constants.sources.SELECT;
-                const feat = geoflo.Utilities.cloneDeep(feature);
-                feat.properties = {
-                    type: 'Text',
-                    text: feature.properties.text,
-                    style: feature.properties.style
-                };
-                textFeaturesArr.push(feat);
             }
         });
+
         geoflo.map.getSource(source).setData(turf.featureCollection(textFeaturesArr));
         delete this.currentType;
         return true;

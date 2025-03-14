@@ -1492,7 +1492,7 @@ const GeoFlo = function () {
                 }
             });
         } else {
-            this.Features.setText(features);
+            //this.Features.setText(features);
         }
 
         return this.getSelectedFeatures();
