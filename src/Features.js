@@ -190,29 +190,32 @@ const Features = function () {
         features.forEach((feature) => {
             const id = feature.id || feature.properties.id;
             if (!id) return;
+
             const originalFeature = this.getFeatureById(id);
             if (!originalFeature) return this.addFeature(feature);
+
             const selected = selectedFeatures.find((f) => f.id === id || f.properties.id === id);
+
             if (selected && !geoflo.noSelect) {
                 selected.geometry.coordinates = feature.geometry.coordinates;
                 selected.properties = feature.properties;
                 selected.properties._selected = true;
-                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT)
-                    .setData(turf.featureCollection(selectedFeatures));
-                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX)
-                    .setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selectedFeatures));
                 return;
             } else if (!sources.has(originalFeature.source)) {
                 originalFeature.properties._selected = false;
                 sources.add(originalFeature.source);
             }
+
             originalFeature.geometry.coordinates = feature.geometry.coordinates;
             originalFeature.properties = feature.properties;
+
             if (options.addUnits) this.addUnits(originalFeature);
         });
 
         this.updatingFeatures = false;
-        if (sources.size === 0) return false;
+        if (sources.size === 0) return features;
         requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
     };
 

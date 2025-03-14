@@ -1477,7 +1477,6 @@ const GeoFlo = function () {
         this.setButtons();
         
         this.Layers.refresh({ select: true });
-        this.Features.setText(features);
         this.updateFeatures(features);
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
@@ -1493,6 +1492,8 @@ const GeoFlo = function () {
                     'text-offset': [0, 0.5]
                 }
             });
+        } else {
+            this.Features.setText(features);
         }
 
         return this.getSelectedFeatures();
