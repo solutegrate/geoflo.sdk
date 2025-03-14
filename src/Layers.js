@@ -333,7 +333,6 @@ const Layers = function () {
 
         // Backup current custom layers and then clear them.
         const customLayersBackup = Array.from(this.customLayersMap.values());
-        this.customLayersMap.clear();
 
         this.removeEventListeners();
         this.removeCustomLayers();
@@ -360,11 +359,15 @@ const Layers = function () {
         return this.getLayers();
     };
 
+
+
     this.addEventListeners = (options = {}) => buildEvents.call(this, { on: true, ...options });
 
     this.removeEventListeners = (options = {}) => buildEvents.call(this, { off: true, ...options });
 
     this.hasCustomLayers = () => this.customLayersMap.size;
+
+
 
     this.getCustomLayers = () => Array.from(this.customLayersMap.values());
 
@@ -398,7 +401,13 @@ const Layers = function () {
 
     this.getFeature = (id) => this.getSource(id)?._data?.features?.find(f => f.id === id) || false;
 
-    this.getSelection = (features = [], coords) => features[0]?.properties?.cluster ? this.onClusterClick(features[0], coords) : true;
+    this.getSelection = (features = [], coords) => {
+        if (features[0]?.properties?.cluster) {
+            this.onClusterClick(features[0], coords);
+            return false;
+        }
+        return true;
+    };
 
     this.getType = (type) => {
         if (['Polygon', 'Rectangle'].includes(type)) return 'Polygon';
@@ -408,11 +417,17 @@ const Layers = function () {
         return false;
     };
 
+
+
+
     this.setCustomLayers = async (layers, options = {}) => {
         this.removeCustomLayers();
         if (!layers || layers.length === 0) return [];
         return await buildLayers.call(this, layers, options);
     };
+
+
+
 
     /**
      * Adds multiple sources to the map.
@@ -432,18 +447,23 @@ const Layers = function () {
     this.addSource = (id, type, options = {}) => {
         if (!id) throw new Error('No source was provided!');
         const existingSource = map.getSource(id);
+
         if (existingSource) {
             this.sourcesMap.set(id, this.getSource(id) || existingSource);
             return this.getSource(id);
         }
+        
         let opts = {
             type: options.type || 'geojson',
             data: turf.featureCollection(options.features || []),
-            promoteId: options.promoteId || 'id'
+            promoteId: options.promoteId || 'id',
+            cluster: false
         };
-        if (type === 'Point' && !options.noCluster) {
+
+        if ((type === 'Point' || type === 'Image') && !options.noCluster) {
             opts = { ...opts, cluster: true, clusterMaxZoom: options.clusterMaxZoom || 14, clusterRadius: options.clusterRadius || 50 };
         }
+
         map.addSource(id, opts);
         const newSource = map.getSource(id);
         this.sourcesMap.set(id, newSource);
@@ -551,6 +571,9 @@ const Layers = function () {
         this.showTextLayers = true;
     };
 
+
+
+
     /**
      * Removes sources from the map.
      */
@@ -620,6 +643,8 @@ const Layers = function () {
         return true;
     };
 
+
+
     /**
      * Moves the specified layers on the map.
      */
@@ -638,6 +663,7 @@ const Layers = function () {
     this.onClusterClick = (feature) => {
         if (!feature.source) return false;
         const source = map.getSource(feature.source);
+        if (!source) return false;
         source.getClusterExpansionZoom(feature.properties.cluster_id, (err, zoom) => { if (!err) map.easeTo({ center: feature.geometry.coordinates, zoom: zoom + 2 }); });
         return false;
     };
@@ -913,10 +939,12 @@ const Layers = function () {
         const layersArr = [];
         const source = settings.source;
         const dontRender = false;
+
         for (const type of settings.types) {
             let style = settings.style;
             const id = settings.id + type;
             let layout, paint;
+
             if (type.includes('circle')) {
                 if (options.noCircle) continue;
                 layout = { visibility: options.visibility || 'visible', ...((style.circle && style.circle.layout) || {}) };
@@ -1044,11 +1072,13 @@ const Layers = function () {
                     };
                 }
             }
+
             if (!style) continue;
             if (settings.style.minzoom) style.minzoom = settings.style.minzoom;
             if (settings.style.maxzoom) style.maxzoom = settings.style.maxzoom;
             layersArr.push(style);
         }
+
         return layersArr;
     }
 
