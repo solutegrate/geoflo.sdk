@@ -216,7 +216,7 @@ const Features = function () {
         requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
     };
 
-    this.updateSource = function (sources) {
+    this.updateSource = function (sources = []) {
         if (this._updateSourceTimeout) clearTimeout(this._updateSourceTimeout);
 
         this._updateSourceTimeout = setTimeout(() => {

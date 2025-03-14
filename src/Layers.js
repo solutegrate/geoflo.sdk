@@ -768,7 +768,7 @@ const Layers = function () {
         }
 
         settings.metadata = metadata;
-        this.addSource(source, type, opts);
+        this.addSource(source, type, layerOptions);
         this.addLayers(layersArr, metadata, settings);
 
         if (hasFeatures) {
