@@ -91,7 +91,7 @@ const Select = function () {
 
     this.animate = function (feature) {
         feature = feature || geoflo.getSelectedFeatures()[0];
-        if (!feature) return stopDashAnimation();
+        if (!feature || feature.geometry.type !== 'LineString') return stopDashAnimation();
         startDashAnimation(feature);
     }
 
@@ -109,7 +109,7 @@ const Select = function () {
         
         if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
         
-        if (!id) return false;
+        if (!id) return stopDashAnimation(), false;
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
         //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
@@ -117,6 +117,7 @@ const Select = function () {
         removedFeatures = geoflo.hideFeatures([id]);
         geoflo.addFeaturesToSelected(removedFeatures, options);
         popup ? this.addPopup(removedFeatures) : false;
+        if (removedFeatures[0]?.geometry.type !== 'LineString') stopDashAnimation();
         geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return removedFeatures;
         if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
@@ -346,9 +347,8 @@ const Select = function () {
         geoflo.setMode('edit', feature.properties.type, feature);
     }
 
-    function animateDashArray(timestamp=0, feature) {
-        if (!animationRunning || !selectedId) return stopDashAnimation();
-        if (!feature || feature.geometry.type !== 'LineString') return stopDashAnimation();
+    function animateDashArray(timestamp=0) {
+        if (!animationRunning) return stopDashAnimation();
 
         const newStep = parseInt((timestamp / 50) % dashArraySequence.length);
 
@@ -361,10 +361,10 @@ const Select = function () {
     }
 
     // Call this when a feature is selected
-    function startDashAnimation(feature) {
+    function startDashAnimation() {
         if (!animationRunning) {
             animationRunning = true;
-            requestAnimationFrame(animateDashArray, feature);
+            requestAnimationFrame(animateDashArray);
         } else {
             stopDashAnimation();
         }
