@@ -1,18 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Mixin: Select | Documentation</title>
-
-					<link rel="manifest" href="./manifest.json">
-
-					<link rel="apple-touch-icon" sizes="180x180" href="https://geoflo.s3.us-east-1.amazonaws.com/apple-touch-icon.png">
-
-					<link rel="icon" type="image/png" sizes="32x32" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-32x32.png">
-
-					<link rel="icon" type="image/png" sizes="16x16" href="https://geoflo.s3.us-east-1.amazonaws.com/favicon-16x16.png">
-
-				
+    <title>Source: src/Features.js | Documentation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -68,1669 +60,495 @@
 
 
 
-
-<section>
-
-<header>
-    
-        <h2>
-            <span class="ancestors"><a href="module-geoflo.html">geoflo</a>.</span>Select</h2>
-        
-    
-</header>
-
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">This module provides the select functionality for the Geoflo application. It allows users to select features on the map by clicking on them.</div>
-            
-
-            
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        <dl>
-                
-
-<dt>
-    
-        <h4 class="name" id=".activate">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>activate<span class="signature">(options)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line39">line 39</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function activates the select feature functionality by enabling drag pan, setting buttons, and setting the active button to 'select'. It also triggers a 'select.activate' event with the provided options.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The options object for activation.
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The ID of the feature to select.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>feature</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The feature object to select.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if already activated.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".addPopup">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>addPopup<span class="signature">(features)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line141">line 141</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function creates a popup element with the specified features and adds it to the map at the click coordinates.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>features</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The features to be displayed in the popup.
-                <h6>Properties</h6>
-                
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The title of the popup.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>description</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The description of the popup.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>latitude</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The latitude coordinate for the popup location.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>longitude</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The longitude coordinate for the popup location.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".canHandle">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>canHandle<span class="signature">(modeName)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line80">line 80</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function determines if the given mode name is equal to the SELECT mode.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>modeName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The mode name to be checked.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true if the mode name is SELECT, false otherwise.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".deactivate">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>deactivate<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line63">line 63</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        This function deactivates the current feature by setting the 'activated' flag to false and triggering necessary actions.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if the feature is not activated.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".deselectCurrentFeature">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>deselectCurrentFeature<span class="signature">()</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line127">line 127</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Deselects the current feature by removing its selection.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleClick">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleClick<span class="signature">(event)</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line186">line 186</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the click event on the map and selects features based on the event.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object containing information about the click event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns false if geoflo.noSelect is true, otherwise selects features based on the event.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleDrag">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleDrag<span class="signature">(event)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line221">line 221</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the drag event triggered by a user interaction. It sets the map class to 'grabbing' to indicate dragging.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Event</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object representing the drag event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".handleMove">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>handleMove<span class="signature">(event)</span><span class="type-signature"></span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line175">line 175</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Handles the mouse move event.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Event</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The event object representing the mouse move event.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".removePopup">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>removePopup<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line164">line 164</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Removes the popup element from the DOM if it exists.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">boolean</span>
-
-
-
-
-
-- Returns true if the popup element was successfully removed, otherwise false.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-                
-
-<dt>
-    
-        <h4 class="name" id=".selectFeature">
-            
-                <span class="type-signature"><span class="icon green">static</span> </span>selectFeature<span class="signature">(id)</span><span class="type-signature"> &rarr; {Array}</span>
-                
-            
-            <div class="container-source members">
-                <code><a href="src_Select.js.html">src/Select.js</a></code>,
-                <code><a href="src_Select.js.html#line98">line 98</a></code>
-            </div>
-            
-        </h4>
-
-        
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Selects a feature by its ID, adds it to the selected features list, and optionally adds a popup.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-params">
-        <h5>Parameters:</h5>
-        
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ID of the feature to be selected.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <div class="container-returns">
-        <h5>Returns:</h5>
-        
-                
-
-
-
-<span class="param-type">Array</span>
-
-
-
-
-
-- - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
-
-
-
-
-            
-    </div>
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            </dl>
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @mixin
+ * @memberof module:geoflo
+ * @name Features
+ * @description This module provides the features functionality for the Geoflo application. It allows users to add, remove, update, and retrieve features from the map.
+ * @returns {Object} Returns the Features object.
+ * @throws {Error} Throws an error if no map object is provided.
+ */
+const Features = function () {
+    const geoflo = this.geoflo;
+    if (!geoflo.map) { throw new Error('No map object provided!') }
+
+    this.featuresMap = new Map();
+
+    this.getFeatures = function () {
+        return Array.from(this.featuresMap.values());
+    };
+
+    this.getFeatureById = function (id) {
+        if (Array.isArray(id) &amp;&amp; id.length > 1) return this.getFeaturesById(id);
+        if (typeof id === 'object') id = id.parent || id.properties.parent || id.id || id.properties.id;
+        return getFeatureByIdHelper.call(this, id);
+    };
+
+    this.getFeaturesById = function (ids = []) {
+        const addedIds = new Set();
+        const result = [];
+        ids.forEach((id) => {
+            const feature = this.getFeatureById(id);
+            if (feature &amp;&amp; !addedIds.has(id)) {
+                addedIds.add(id);
+                result.push(feature);
+            }
+        });
+        return result;
+    };
+
+    this.getType = function (feature) {
+        return getType(feature);
+    };
+
+    this.getUnit = function (feature) {
+        if (!feature) return false;
+        const type = feature.properties.type;
+        if (!type) return false;
+        if (!geoflo.options.units || !geoflo.options.units[type]) return false;
+        return geoflo.options.units[type];
+    };
+
+    this.getUnits = function (feature) {
+        const unit = this.getUnit(feature);
+        if (!unit || !feature) return false;
+        let units = 1;
+        const type = feature.properties.type;
+        if (type === "Polyline") {
+            units = turf.length(feature, { units: 'meters' });
+        } else if (type === 'Polygon' || type === 'Rectangle') {
+            units = turf.area(feature);
+        }
+        return units;
+    };
+
+    this.getFeatureState = function (id) {
+        if (!id) return false;
+        return geoflo.map.getFeatureState({ source: geoflo.statics.constants.sources.COLD, id: id });
+    };
+
+
+
+    this.setFeaturesState = function (features = [], state) {
+        if (!state || features.length === 0) return [];
+        features.forEach((feature) => {
+            const id = feature.id || feature.properties.id;
+            if (geoflo.hotFeature &amp;&amp; geoflo.hotFeature.id === id) return;
+            this.setFeatureState(id, state);
+        });
+        return features;
+    };
+
+    this.setFeatureState = function (id, state) {
+        if (!state || !id) return false;
+        const features = getFeaturesByParentHelper.call(this, id);
+        features.forEach((feature) => {
+            const fid = feature.id || feature.properties.id;
+            geoflo.map.setFeatureState({ source: feature.source, id: fid }, state);
+        });
+        return features;
+    };
+
+    this.setText = function (features = []) {
+        if (!geoflo.options.showFeatureText) return false;
+        let source = geoflo.statics.constants.sources.HOTTEXT;
+        let textFeaturesArr = [];
+        if (features.features) features = features.features;
+        if (!Array.isArray(features)) features = [features];
+        features.forEach((feature) => {
+            const type = feature.properties.type;
+            if (!type) return;
+            this.currentType = type;
+            if (type === 'Polyline' &amp;&amp; geoflo.Utilities.isValidLineString(feature) &amp;&amp; geoflo.options.showLineUnits) {
+                turf.segmentEach(feature, setLineText.bind(this));
+            } else {
+                source = geoflo.statics.constants.sources.SELECT;
+                const feat = geoflo.Utilities.cloneDeep(feature);
+                feat.properties = {
+                    type: 'Text',
+                    text: feature.properties.text,
+                    style: feature.properties.style
+                };
+                textFeaturesArr.push(feat);
+            }
+        });
+        geoflo.map.getSource(source).setData(turf.featureCollection(textFeaturesArr));
+        delete this.currentType;
+        return true;
+    };
+
+
+
+    this.addFeature = function (feature, source, properties = {}) {
+        if (!feature || !feature.properties) return false;
+        feature = turf.cleanCoords(feature);
+        feature = turf.truncate(feature, { precision: 6, coordinates: 3, mutate: true });
+        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties);
+        feature.source = source || feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+        delete feature.properties.source;
+        delete feature.properties.painting;
+        delete feature.properties.edit;
+        delete feature.properties.new;
+        delete feature.properties._selected;
+        delete feature.properties.hidden;
+        delete feature.properties.offset;
+        feature.properties.style = feature.properties.style || {};
+        this.addUnits(feature);
+        this.addFeatures([feature]);
+        return feature;
+    };
+
+    this.addFeatures = function (features, unselect, id) {
+        let update = false;
+        const sources = new Set();
+        features.forEach((feature) => {
+            feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
+            if (id &amp;&amp; feature.id !== id) return;
+            feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
+            feature.properties.id = feature.id;
+            feature.properties.type = this.getType(feature);
+            if (this.featuresMap.has(feature.id)) {
+                this.setFeatureState(feature.id, { hidden: !unselect });
+                this.featuresMap.set(feature.id, feature);
+                update = !unselect;
+                if (unselect) delete feature.properties._selected;
+            } else {
+                update = !this.updatingFeatures;
+                this.featuresMap.set(feature.id, feature);
+            }
+            if (unselect) delete feature.properties._selected;
+            sources.add(feature.source);
+        });
+        if (update) this.updateSource(Array.from(sources));
+        return features;
+    };
+
+    this.addUnits = function (feature, convertTo) {
+        const unit = convertTo || this.getUnit(feature);
+        if (!unit) return false;
+        const units = this.convertUnits(feature, null, convertTo);
+        feature.geometry.units = units;
+        feature.geometry.unit = unit;
+        return feature;
+    };
+
+
+
+    this.isFeatureHidden = function (id) {
+        if (!id) return false;
+        var state = this.getFeatureState(id);
+        return state.hidden;
+    }
+
+
+
+    this.updateFeatures = function (features, options = {}) {
+        features = features || [].concat(geoflo.getDrawnFeatures(), geoflo.getSelectedFeatures());
+        const sources = new Set();
+        const selectedFeatures = geoflo.getSelectedFeatures();
+
+        this.updatingFeatures = true;
+
+        features.forEach((feature) => {
+            const id = feature.id || feature.properties.id;
+            if (!id) return;
+            const originalFeature = this.getFeatureById(id);
+            if (!originalFeature) return this.addFeature(feature);
+            const selected = selectedFeatures.find((f) => f.id === id || f.properties.id === id);
+            if (selected &amp;&amp; !geoflo.noSelect) {
+                selected.geometry.coordinates = feature.geometry.coordinates;
+                selected.properties = feature.properties;
+                selected.properties._selected = true;
+                geoflo.map.getSource(geoflo.statics.constants.sources.SELECT)
+                    .setData(turf.featureCollection(selectedFeatures));
+                geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX)
+                    .setData(turf.featureCollection(selectedFeatures));
+                return;
+            } else if (!sources.has(originalFeature.source)) {
+                originalFeature.properties._selected = false;
+                sources.add(originalFeature.source);
+            }
+            originalFeature.geometry.coordinates = feature.geometry.coordinates;
+            originalFeature.properties = feature.properties;
+            if (options.addUnits) this.addUnits(originalFeature);
+        });
+
+        this.updatingFeatures = false;
+        if (sources.size === 0) return false;
+        requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
+    };
+
+    this.updateSource = function (sources) {
+        if (this._updateSourceTimeout) clearTimeout(this._updateSourceTimeout);
+
+        this._updateSourceTimeout = setTimeout(() => {
+            const sourceFeatures = {};
+            const unsourceFeatures = [];
+            const textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
+            const coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
+
+            geoflo.updatingSource = true;
+
+            if (textSource) textSource.setData(turf.featureCollection([]));
+            if (coldSource) coldSource.setData(turf.featureCollection([]));
+            geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
+
+            // Group features by source from the featuresMap
+            Array.from(this.featuresMap.values()).forEach((feature) => {
+                delete feature.properties.new;
+                delete feature.properties.offset;
+                const src = feature.source;
+                if (sources.length &amp;&amp; !sources.includes(src)) return;
+                if (!src) return unsourceFeatures.push(feature);
+                if (!sourceFeatures[src]) sourceFeatures[src] = [];
+                sourceFeatures[src].push(feature);
+            });
+
+            if (this.featuresMap.size === 0) {
+                geoflo.Layers.getCustomLayers().forEach((layer) => {
+                    if (!layer.details || !layer.details.source) return;
+                    const src = layer.details.source;
+                    if (!geoflo.map.getSource(src)) return;
+                    geoflo.map.getSource(src).setData(turf.featureCollection([]));
+                });
+            }
+
+            Object.entries(sourceFeatures).forEach(([src, features]) => {
+                if (!geoflo.map.getSource(src)) return unsourceFeatures.push(features);
+                setLineOffsetHelper(features, src);
+            });
+
+            setLineOffsetHelper(unsourceFeatures.flat(), geoflo.statics.constants.sources.COLD);
+            setTimeout(() => { this.setFeaturesState(Array.from(this.featuresMap.values()), { hidden: false }); }, 100);
+            geoflo.fire('features.update', { features: Array.from(this.featuresMap.values()) });
+            geoflo.updatingSource = false;
+        }, 50);
+
+        return Array.from(this.featuresMap.values());
+    }
+
+
+
+    this.removeFeature = function (id) {
+        const removedFeatures = [];
+        if (!this.featuresMap.has(id)) return removedFeatures;
+        const feature = this.featuresMap.get(id);
+        this.featuresMap.delete(id);
+        removedFeatures.push(feature);
+        this.updateSource([feature.source]);
+        return removedFeatures;
+    };
+
+    this.removeLayers = function (layerSources = [], options = {}) {
+        if (options.reset) return this.deleteFeatures();
+        const removedFeatures = [];
+        this.featuresMap.forEach((feature, fid) => {
+            if (layerSources.includes(feature.source)) {
+                removedFeatures.push(feature);
+                this.featuresMap.delete(fid);
+            }
+        });
+        this.updateSource(Array.from(new Set(removedFeatures.map(f => f.source))));
+    };
+
+
+
+    this.deleteFeatures = function () {
+        this.featuresMap.clear();
+        this.updateSource();
+    };
+
+    this.convertUnits = function (feature, units, convertTo) {
+        if (!feature) return 0;
+        const type = feature.properties.type;
+        const unit = convertTo || this.getUnit(feature);
+        units = units || this.getUnits(feature);
+        if (type === "Polyline") {
+            units = Math.round(turf.convertLength(units, 'meters', unit));
+        } else if (type === 'Polygon' || type === 'Rectangle') {
+            units = Math.round(turf.convertArea(units, 'meters', unit));
+        }
+        units = units ? Number(units.toFixed(2)) : 0;
+        return units;
+    };
+
+
+
+    function getFeatureByIdHelper(id) {
+        let feature = this.featuresMap.get(id);
+        if (!feature) {
+            feature = geoflo.getSelectedFeatures().find(f => f.id === id || f.properties.id === id);
+        }
+        return feature;
+    }
+
+    function getFeaturesByParentHelper(id) {
+        const feature = (typeof id === 'object' &amp;&amp; id.id) ? id : getFeatureByIdHelper.call(this, id);
+        if (!feature || !feature.source) return [];
+        const sourceData = geoflo.map.getSource(feature.source)?._data;
+        if (!sourceData) return [];
+        const field = geoflo.options.offsetOverlappingLines ? 'parent' : 'id';
+        return sourceData.features.filter(f => f[field] === id || f.properties[field] === id);
+    }
+
+    function createTextFeatures(feature) {
+        const isLine = geoflo.Utilities.isValidLineString(feature);
+        const segments = [];
+        if (isLine) {
+            turf.segmentEach(feature, function (currentSegment) {
+                const segment = geoflo.Utilities.cloneDeep(currentSegment);
+                let footage = Math.round(turf.length(segment, { units: 'miles' }) * 5280);
+                let mileage = Number(turf.length(segment, { units: 'miles' }).toFixed(3));
+                footage = Number(footage.toFixed(2));
+                mileage = Number(mileage.toFixed(2));
+                segment.properties.footage = footage;
+                segment.properties.mileage = mileage;
+                segment.properties.text = `${mileage} miles`;
+                segments.push(segment);
+            });
+        }
+        return segments;
+    }
+
+    function setLineText(segment) {
+        const seg = geoflo.Utilities.cloneDeep(segment);
+        seg.properties.type = this.currentType;
+        const text = turf.point(seg.geometry.coordinates[1]);
+        let units = this.getUnits(seg);
+        const unit = 'feet';
+        units = this.convertUnits(seg, units, unit);
+        text.properties.units = units;
+        text.properties.unit = unit;
+        text.properties.text = `${units} ${unit}`;
+        text.properties.transform = 'uppercase';
+        text.properties.anchor = 'bottom-left';
+        this.textFeatures.push(text);
+        return text;
+    }
+
+    function setLineOffsetHelper(features, src) {
+        if (!features || !features.length || !src || !geoflo.map.getSource(src)) return false;
+        if (!geoflo.options.offsetOverlappingLines)
+            return geoflo.map.getSource(src).setData(turf.featureCollection(features));
+        const mesh = new geoflo.Mesh(features, true);
+        const offsetFeatures = mesh.getFeatures();
+        offsetFeatures.forEach((feature) => {
+            const f = features.find((fe) => fe.id === feature.parent);
+            if (!f) return;
+            feature.source = src;
+            feature.properties.style = f.properties.style || feature.properties.style;
+            setOverlapOffsetHelper(offsetFeatures, feature);
+        });
+        geoflo.map.getSource(src).setData(turf.featureCollection(offsetFeatures));
+        geoflo.fire('features.offset', { features: features, offset: offsetFeatures, source: src });
+    }
+
+    function setOverlapOffsetHelper(features, feature) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+        if (!isPolylineHelper(feature)) return false;
+        if (feature.properties.offset) return false;
+        let offset = 6;
+        const overlaps = [];
+        features.forEach((f) => {
+            if (!isPolylineHelper(f)) return false;
+            if (f.parent === feature.parent) return false;
+            if (f.properties.offset) return false;
+            const overlap = turf.booleanOverlap(f, feature) || turf.booleanWithin(f, feature);
+            if (!overlap) return false;
+            overlaps.push(f);
+        });
+        overlaps.forEach((f) => {
+            f.properties.offset = offset;
+            offset = offset * 2;
+        });
+    }
+
+    function setWithinOffsetHelper(features) {
+        if (!geoflo.options.offsetOverlappingLines) return false;
+        const adder = 4;
+        const miles = 0.00189394; // 10 Feet
+        const explode = turf.explode(turf.featureCollection(features));
+        if (!explode || !explode.features.length) return;
+        explode.features.forEach((feature) => {
+            if (feature.properties.offset) return false;
+            const buffer = turf.buffer(feature, miles, { units: 'miles' });
+            const within = turf.pointsWithinPolygon(explode, buffer);
+            if (!within || !within.features.length) return;
+            let offset = adder;
+            within.features.forEach((f) => {
+                if (f.properties.id === feature.properties.id || f.properties.offset) return;
+                f.properties.offset = offset;
+                offset = offset + adder;
+            });
+        });
+    }
+
+    function isPolylineHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'LineString';
+    }
+
+    function isPolygonHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return turf.getType(feature) === 'Polygon' || feature.properties.type === 'Polygon' || type === 'Polygon';
+    }
+
+    function isRectangleHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        return (turf.getType(feature) === 'Polygon' &amp;&amp; feature.properties.type === 'Rectangle') || type === 'Rectangle';
+    }
+
+    function isPointHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (turf.getType(feature) === 'Point' &amp;&amp; (!feature.properties.type || feature.properties.type === 'Circle')) return true;
+        if (turf.getType(feature) === 'Point' &amp;&amp; (type === 'Point' || type === 'Circle')) return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; (feature.properties.type !== 'Text' &amp;&amp; feature.properties.type !== 'Icon' &amp;&amp; feature.properties.type !== 'Image');
+    }
+
+    function isTextHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Text') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Text';
+    }
+
+    function isIconHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Icon') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Icon';
+    }
+
+    function isImageHelper(feature) {
+        if (!feature) return false;
+        const type = geoflo.Layers.getLayerType(feature.source);
+        if (type === 'Image') return true;
+        return turf.getType(feature) === 'Point' &amp;&amp; feature.properties.type === 'Image';
+    }
+
+    function getType(feature) {
+        if (!feature) return null;
+        return isRectangleHelper(feature) ? 'Rectangle' :
+            isPolygonHelper(feature) ? 'Polygon' :
+                isPolylineHelper(feature) ? 'Polyline' :
+                    isTextHelper(feature) ? 'Text' :
+                        isIconHelper(feature) ? 'Icon' :
+                            isImageHelper(feature) ? 'Image' :
+                                isPointHelper(feature) ? 'Circle' :
+                                    null;
+    }
+};
+
+export default Features;</code></pre>
+        </article>
+    </section>
 
 
 
@@ -1747,7 +565,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:geoflo.Select_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
