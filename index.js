@@ -1467,15 +1467,15 @@ const GeoFlo = function () {
     this.addFeaturesToSelected = function (features, options={}) {
         if (!features || !features.length) return [];
 
-        const seleceted = this.getSelectedFeatures();
+        this.Layers.refresh({ select: true });
 
+        const seleceted = this.getSelectedFeatures();
         features = features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) });
         
         this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
         this.updateFeatures(features);
-        this.Layers.refresh({ select: true });
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
         if (options.text) this.Layers.addTextLayer({
