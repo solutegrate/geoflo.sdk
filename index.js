@@ -1474,26 +1474,20 @@ const GeoFlo = function () {
         this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
-        
-        this.Layers.refresh({ select: true });
         this.updateFeatures(features);
+        this.Layers.refresh({ select: true });
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
-
-        if (options.text) {
-            this.Layers.addTextLayer({
-                select: true,
-                ids: options.text.ids || this.getSelectedFeatureIds(),
-                field: options.text.field || 'text',
-                layout: options.text.layout || {
-                    'text-transform': 'uppercase',
-                    'text-size': 10,
-                    'text-offset': [0, 0.5]
-                }
-            });
-        } else {
-            //this.Features.setText(features);
-        }
+        if (options.text) this.Layers.addTextLayer({
+            select: true,
+            ids: options.text.ids || this.getSelectedFeatureIds(),
+            field: options.text.field || 'text',
+            layout: options.text.layout || {
+                'text-transform': 'uppercase',
+                'text-size': 10,
+                'text-offset': [0, 0.5]
+            }
+        });
 
         return this.getSelectedFeatures();
     }
@@ -1551,14 +1545,12 @@ const GeoFlo = function () {
 	 */
     this.removeSelection = function (id, options={}) {
         this.removePopup();
-        if (!this.hasSelection()) return this.Features.setText();
+        if (!this.hasSelection()) return 0;
         var features = this.Utilities.clone(this.getSelectedFeatures());
-        this.Features.addFeatures(features, true, id);
+        this.Features.addFeatures(features);
         this.getSelectedFeatures().splice(0, features.length);
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
-        this.Features.setText();
-        //this.updateFeatures(features);
         this.setButtons();
         if (options.extent) this.setViewport(), this.setExtent();
         if (options.removeText) this.Layers.removeTextLayer();

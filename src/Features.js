@@ -132,27 +132,17 @@ const Features = function () {
         return feature;
     };
 
-    this.addFeatures = function (features, unselect, id) {
-        let update = false;
+    this.addFeatures = function (features) {
+        let update = !this.updatingFeatures;
         const sources = new Set();
 
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
-            if (id && feature.id !== id) return;
-
             feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
             feature.properties.type = this.getType(feature);
-
-            if (this.featuresMap.has(feature.id)) {
-                this.setFeatureState(feature.id, { hidden: !unselect });
-                this.featuresMap.set(feature.id, feature);
-                update = !unselect;
-            } else {
-                update = !this.updatingFeatures;
-                this.featuresMap.set(feature.id, feature);
-            }
-
+            this.featuresMap.set(feature.id, feature);
+            this.setFeatureState(feature.id, { hidden: false });
             sources.add(feature.source);
         });
 
@@ -211,9 +201,8 @@ const Features = function () {
             if (options.addUnits) this.addUnits(originalFeature);
         });
 
+        if (sources.size > 0) requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
         this.updatingFeatures = false;
-        if (sources.size === 0) return features;
-        requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
     };
 
     this.updateSource = function (sources = []) {

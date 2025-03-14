@@ -68,7 +68,7 @@ const Pinning = function (mode) {
 
     this.saveFeatures = function () {
         const features = this.pinnedFeatures.map(function (feature) { return geoflo.Utilities.cloneDeep(feature) });
-        geoflo.addFeatures(features, true);
+        geoflo.addFeatures(features);
         geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
         this.coldFeatures = [];
         this.pinableFeatures = [];
@@ -127,7 +127,7 @@ const Pinning = function (mode) {
     this.resetFeatures = function () {
         if (!this.coldFeatures.length) return false;
         geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection([]));
-        geoflo.addFeatures(this.coldFeatures, true);
+        geoflo.addFeatures(this.coldFeatures);
     }
 
 	/**
