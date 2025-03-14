@@ -103,26 +103,34 @@ const Select = function () {
 	 * @param {string} id - The ID of the feature to be selected.
 	 * @returns {Array} - An array of removed features if wantingToEdit is false, otherwise returns the removed feature.
 	 */
-    this.selectFeature = function (id, options={}) {
+    this.selectFeature = function (id, options = {}) {
         const popup = geoflo.options.select.popup;
         const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
-        
-        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
-        
-        if (!id) return stopDashAnimation(), false;
-        if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
-        //if (geoflo.hasSelection()) geoflo.forEachSelectedFeature((feature) => { });
 
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
+        if (!id) { stopDashAnimation(); return false; }
+
+        if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
         selectedId = id;
         removedFeatures = geoflo.hideFeatures([id]);
         geoflo.addFeaturesToSelected(removedFeatures, options);
-        popup ? this.addPopup(removedFeatures) : false;
+
+        if (popup) this.addPopup(removedFeatures);
+
         if (removedFeatures[0]?.geometry.type !== 'LineString') stopDashAnimation();
-        geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
+
+        geoflo.fire('feature.select', {
+            ids: geoflo.getSelectedFeatureIds(),
+            features: geoflo.getSelectedFeatures()
+        });
+
         if (!geoflo.wantingToEdit) return removedFeatures;
-        if (removedFeatures.length == 1 && id === removedFeatures[0].id) editFeature(removedFeatures[0]);
+        if (removedFeatures.length === 1 && id === removedFeatures[0].id) {
+            editFeature(removedFeatures[0]);
+        }
         return removedFeatures;
     };
+
 
 	/**
 	 * @function

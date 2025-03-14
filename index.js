@@ -1364,6 +1364,7 @@ const GeoFlo = function () {
      * @returns {boolean|Object} Returns false if the feature is not found, otherwise returns the result of the selection.
      */
     this.selectFeature = function (id, options) {
+        if (!this.currentMode.selectFeature) return false;
         var selected = this.currentMode.selectFeature(id, options);       
         return selected;
     }
@@ -1652,8 +1653,8 @@ const GeoFlo = function () {
      */
     this.hideFeatures = function (ids=[]) {
         if (!ids.length) return false;
-        ids.forEach((id) => { this.Features.setFeatureState(id, { hidden: true }); }, this);
         const fire = { ids: ids, features: this.Features.getFeaturesById(ids) };
+        ids.forEach((id) => { this.Features.setFeatureState(id, { hidden: true }); }, this);
         this.fire('features.hide', fire);
         return fire.features;
     }
