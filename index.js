@@ -1388,7 +1388,6 @@ const GeoFlo = function () {
         }
 
         feature = this.Utilities.clone(feature);
-        delete feature.properties._selected;
 
         options.mode = 'edit';
         options.id = feature.id;

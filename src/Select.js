@@ -322,14 +322,19 @@ const Select = function () {
 
     function selectFeature(features, multipleSelect) {
         nearFeatures = features;
-
         if (!nearFeatures.length) return;
 
-        // Find index of currently selected feature
+        let selectedFeatures = geoflo.getSelectedFeatures();
         let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
         let currentId = selectedId;
         let nextIndex = currentIndex;
-        let loopCount = 0;  // Prevents infinite loops
+        let loopCount = 0; // Prevents infinite loops
+
+        // If all features are selected, exit early
+        if (nearFeatures.every(f => selectedFeatures.some(s => s.id === f.id))) {
+            console.warn("All features are already selected.");
+            return;
+        }
 
         // Find the next feature that is *not* already selected
         do {
@@ -342,9 +347,15 @@ const Select = function () {
                 return;
             }
 
-        } while (nearFeatures[nextIndex].properties['_selected']); // Skip selected features
+        } while (
+            selectedFeatures.some(feature => feature.id === nearFeatures[nextIndex]?.id) &&
+            nextIndex !== currentIndex
+        );
 
-        currentId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties['id'];
+        // Assign new ID safely
+        if (nearFeatures[nextIndex]) {
+            currentId = nearFeatures[nextIndex].id || nearFeatures[nextIndex].properties?.id;
+        }
 
         console.log("Selecting Feature:", currentId);
         geoflo.currentMode.selectFeature(currentId, { multipleSelect: multipleSelect });

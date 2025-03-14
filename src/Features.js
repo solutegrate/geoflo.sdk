@@ -127,7 +127,6 @@ const Features = function () {
         delete feature.properties.painting;
         delete feature.properties.edit;
         delete feature.properties.new;
-        delete feature.properties._selected;
         delete feature.properties.hidden;
         delete feature.properties.offset;
         feature.properties.style = feature.properties.style || {};
@@ -139,24 +138,27 @@ const Features = function () {
     this.addFeatures = function (features, unselect, id) {
         let update = false;
         const sources = new Set();
+
         features.forEach((feature) => {
             feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
             if (id && feature.id !== id) return;
+
             feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
             feature.properties.id = feature.id;
             feature.properties.type = this.getType(feature);
+
             if (this.featuresMap.has(feature.id)) {
                 this.setFeatureState(feature.id, { hidden: !unselect });
                 this.featuresMap.set(feature.id, feature);
                 update = !unselect;
-                if (unselect) delete feature.properties._selected;
             } else {
                 update = !this.updatingFeatures;
                 this.featuresMap.set(feature.id, feature);
             }
-            if (unselect) delete feature.properties._selected;
+
             sources.add(feature.source);
         });
+
         if (update) this.updateSource(Array.from(sources));
         return features;
     };
@@ -199,12 +201,10 @@ const Features = function () {
             if (selected && !geoflo.noSelect) {
                 selected.geometry.coordinates = feature.geometry.coordinates;
                 selected.properties = feature.properties;
-                selected.properties._selected = true;
                 geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selectedFeatures));
                 geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selectedFeatures));
                 return;
             } else if (!sources.has(originalFeature.source)) {
-                originalFeature.properties._selected = false;
                 sources.add(originalFeature.source);
             }
 
