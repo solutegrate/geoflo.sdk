@@ -491,12 +491,12 @@ const Layers = function () {
         if (!layer || !layer.id) return false;
         layer.metadata = layer.metadata || options;
         if (map.getLayer(layer.id)) {
-            if (!this.layersMap.has(layer.id)) this.layersMap.set(layer.id, layer);
+            if (!this.layersMap.has(layer.id)) this.layersMap.set(layer.id, map.getLayer(layer.id));
             return this.getLayer(layer.id);
         }
         map.addLayer(layer);
-        this.layersMap.set(layer.id, layer);
-        geoflo.fire('layer.add', { id: layer.id, layer });
+        this.layersMap.set(layer.id, map.getLayer(layer.id));
+        geoflo.fire('layer.add', { id: layer.id, layer: map.getLayer(layer.id) });
         return layer;
     };
 
