@@ -112,7 +112,7 @@ const Select = function () {
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
 
         selectedId = id;
-        selectedFeatures = options.feature || geoflo.Features.getFeaturesById([id]);
+        selectedFeatures = options.feature ? [options.feature] : options.features || geoflo.Features.getFeaturesById([id]);
         geoflo.addFeaturesToSelected(selectedFeatures, options);
 
         if (popup) this.addPopup(selectedFeatures);
