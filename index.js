@@ -1475,8 +1475,9 @@ const GeoFlo = function () {
         this.Layers.refresh({ select: true });
 
         const selected = this.getSelectedFeatures();
+        selectedFeatures = selected.filter((feature) => { return !features.find((f) => { return f.id === feature.id; }) });
         
-        this.getSelectedFeatures().push(...selected.filter((feature) => { return !features.find((f) => { return f.id === feature.id; }) }, this));
+        this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
         this.hideFeatures(this.getSelectedFeatures());
