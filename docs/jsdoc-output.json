@@ -48172,7 +48172,7 @@
         "meta": {
             "range": [
                 352,
-                19129
+                19124
             ],
             "filename": "Features.js",
             "lineno": 9,
@@ -49278,7 +49278,7 @@
         "meta": {
             "range": [
                 4106,
-                4574
+                4682
             ],
             "filename": "Features.js",
             "lineno": 121,
@@ -49296,8 +49296,9 @@
             },
             "vars": {
                 "defaultSource": "addFeature~defaultSource",
-                "feature.properties": "feature.properties",
-                "feature.source": "feature.source"
+                "feature": "addFeature~feature",
+                "feature.properties": "addFeature~feature.properties",
+                "feature.source": "addFeature~feature.source"
             }
         },
         "undocumented": true,
@@ -49337,7 +49338,7 @@
         "meta": {
             "range": [
                 4285,
-                4371
+                4383
             ],
             "filename": "Features.js",
             "lineno": 126,
@@ -49345,58 +49346,159 @@
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025732",
-                "name": "feature.properties",
+                "name": "feature",
                 "type": "CallExpression",
+                "funcscope": "addFeature",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "properties",
-        "longname": "feature.properties",
+        "name": "feature",
+        "longname": "addFeature~feature",
         "kind": "member",
-        "memberof": "feature",
-        "scope": "static"
+        "memberof": "addFeature",
+        "scope": "inner"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                4381,
-                4468
+                4338,
+                4350
+            ],
+            "filename": "Features.js",
+            "lineno": 126,
+            "columnno": 61,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
+            "code": {
+                "id": "astnode100025744",
+                "name": "precision",
+                "type": "Literal",
+                "value": 6
+            }
+        },
+        "undocumented": true,
+        "name": "precision",
+        "longname": "precision",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4352,
+                4366
+            ],
+            "filename": "Features.js",
+            "lineno": 126,
+            "columnno": 75,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
+            "code": {
+                "id": "astnode100025746",
+                "name": "coordinates",
+                "type": "Literal",
+                "value": 3
+            }
+        },
+        "undocumented": true,
+        "name": "coordinates",
+        "longname": "coordinates",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4368,
+                4380
+            ],
+            "filename": "Features.js",
+            "lineno": 126,
+            "columnno": 91,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
+            "code": {
+                "id": "astnode100025748",
+                "name": "mutate",
+                "type": "Literal",
+                "value": true
+            }
+        },
+        "undocumented": true,
+        "name": "mutate",
+        "longname": "mutate",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4393,
+                4479
             ],
             "filename": "Features.js",
             "lineno": 127,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025749",
-                "name": "feature.source",
-                "type": "LogicalExpression",
+                "id": "astnode100025751",
+                "name": "feature.properties",
+                "type": "CallExpression",
+                "funcscope": "addFeature",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "source",
-        "longname": "feature.source",
+        "name": "properties",
+        "longname": "addFeature~feature.properties",
         "kind": "member",
-        "memberof": "feature",
+        "memberof": "addFeature~feature",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                4581,
-                6216
+                4489,
+                4576
             ],
             "filename": "Features.js",
-            "lineno": 134,
+            "lineno": 128,
+            "columnno": 8,
+            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
+            "code": {
+                "id": "astnode100025768",
+                "name": "feature.source",
+                "type": "LogicalExpression",
+                "funcscope": "addFeature",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "source",
+        "longname": "addFeature~feature.source",
+        "kind": "member",
+        "memberof": "addFeature~feature",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4689,
+                6211
+            ],
+            "filename": "Features.js",
+            "lineno": 135,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025783",
+                "id": "astnode100025802",
                 "name": "this.addFeatures",
                 "type": "FunctionExpression",
                 "paramnames": [
@@ -49423,15 +49525,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4656,
-                4682
+                4764,
+                4790
             ],
             "filename": "Features.js",
-            "lineno": 135,
+            "lineno": 136,
             "columnno": 34,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025796",
+                "id": "astnode100025815",
                 "name": "this.addingFeatures",
                 "type": "Literal",
                 "value": true,
@@ -49448,15 +49550,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4699,
-                4718
+                4807,
+                4826
             ],
             "filename": "Features.js",
-            "lineno": 137,
+            "lineno": 138,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025802",
+                "id": "astnode100025821",
                 "name": "sources",
                 "type": "NewExpression",
                 "value": ""
@@ -49474,15 +49576,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4734,
-                4765
+                4842,
+                4873
             ],
             "filename": "Features.js",
-            "lineno": 138,
+            "lineno": 139,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025807",
+                "id": "astnode100025826",
                 "name": "update",
                 "type": "UnaryExpression",
                 "value": "!this.updatingFeatures"
@@ -49500,15 +49602,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4781,
-                4819
+                4889,
+                4927
             ],
             "filename": "Features.js",
-            "lineno": 139,
+            "lineno": 140,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025814",
+                "id": "astnode100025833",
                 "name": "themeColors",
                 "type": "MemberExpression",
                 "value": ".colors"
@@ -49526,15 +49628,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4835,
-                4888
+                4943,
+                4996
             ],
             "filename": "Features.js",
-            "lineno": 140,
+            "lineno": 141,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025823",
+                "id": "astnode100025842",
                 "name": "defaultSource",
                 "type": "MemberExpression",
                 "value": "geoflo.statics.constants.sources.COLD"
@@ -49552,15 +49654,15 @@
         "comment": "",
         "meta": {
             "range": [
-                4905,
-                6032
+                5013,
+                6027
             ],
             "filename": "Features.js",
-            "lineno": 142,
+            "lineno": 143,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
-                "id": "astnode100025835",
+                "id": "astnode100025854",
                 "name": "cleanedFeatures",
                 "type": "CallExpression",
                 "value": ""
@@ -49578,191 +49680,89 @@
         "comment": "",
         "meta": {
             "range": [
-                5003,
-                5101
+                5111,
+                5183
             ],
             "filename": "Features.js",
-            "lineno": 145,
-            "columnno": 12,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
-            "code": {
-                "id": "astnode100025852",
-                "name": "feature",
-                "type": "CallExpression",
-                "funcscope": "<anonymous>",
-                "value": "",
-                "paramnames": []
-            }
-        },
-        "undocumented": true,
-        "name": "feature",
-        "longname": "<anonymous>~feature",
-        "kind": "member",
-        "memberof": "<anonymous>",
-        "scope": "inner"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                5056,
-                5068
-            ],
-            "filename": "Features.js",
-            "lineno": 145,
-            "columnno": 65,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
-            "code": {
-                "id": "astnode100025864",
-                "name": "precision",
-                "type": "Literal",
-                "value": 6
-            }
-        },
-        "undocumented": true,
-        "name": "precision",
-        "longname": "precision",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                5070,
-                5084
-            ],
-            "filename": "Features.js",
-            "lineno": 145,
-            "columnno": 79,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
-            "code": {
-                "id": "astnode100025866",
-                "name": "coordinates",
-                "type": "Literal",
-                "value": 3
-            }
-        },
-        "undocumented": true,
-        "name": "coordinates",
-        "longname": "coordinates",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                5086,
-                5098
-            ],
-            "filename": "Features.js",
-            "lineno": 145,
-            "columnno": 95,
-            "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
-            "code": {
-                "id": "astnode100025868",
-                "name": "mutate",
-                "type": "Literal",
-                "value": true
-            }
-        },
-        "undocumented": true,
-        "name": "mutate",
-        "longname": "mutate",
-        "kind": "member",
-        "scope": "global"
-    },
-    {
-        "comment": "",
-        "meta": {
-            "range": [
-                5116,
-                5188
-            ],
-            "filename": "Features.js",
-            "lineno": 147,
+            "lineno": 146,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025871",
                 "name": "feature.id",
                 "type": "LogicalExpression",
-                "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
         "name": "id",
-        "longname": "<anonymous>~feature.id",
+        "longname": "feature.id",
         "kind": "member",
-        "memberof": "<anonymous>~feature",
+        "memberof": "feature",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5202,
-                5280
+                5197,
+                5275
             ],
             "filename": "Features.js",
-            "lineno": 148,
+            "lineno": 147,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025886",
                 "name": "feature.source",
                 "type": "LogicalExpression",
-                "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
         "name": "source",
-        "longname": "<anonymous>~feature.source",
+        "longname": "feature.source",
         "kind": "member",
-        "memberof": "<anonymous>~feature",
+        "memberof": "feature",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5295,
-                5519
+                5290,
+                5514
             ],
             "filename": "Features.js",
-            "lineno": 150,
+            "lineno": 149,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025898",
                 "name": "feature.properties",
                 "type": "ObjectExpression",
-                "funcscope": "<anonymous>",
                 "value": "{\"id\":\"\",\"type\":\"\",\"style\":\"\"}",
                 "paramnames": []
             }
         },
         "undocumented": true,
         "name": "properties",
-        "longname": "<anonymous>~feature.properties",
+        "longname": "feature.properties",
         "kind": "member",
-        "memberof": "<anonymous>~feature",
+        "memberof": "feature",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5373,
-                5387
+                5368,
+                5382
             ],
             "filename": "Features.js",
-            "lineno": 152,
+            "lineno": 151,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49774,20 +49774,20 @@
         },
         "undocumented": true,
         "name": "id",
-        "longname": "<anonymous>~feature.properties.id",
+        "longname": "feature.properties.id",
         "kind": "member",
-        "memberof": "<anonymous>~feature.properties",
+        "memberof": "feature.properties",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5405,
-                5432
+                5400,
+                5427
             ],
             "filename": "Features.js",
-            "lineno": 153,
+            "lineno": 152,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49799,20 +49799,20 @@
         },
         "undocumented": true,
         "name": "type",
-        "longname": "<anonymous>~feature.properties.type",
+        "longname": "feature.properties.type",
         "kind": "member",
-        "memberof": "<anonymous>~feature.properties",
+        "memberof": "feature.properties",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5450,
-                5505
+                5445,
+                5500
             ],
             "filename": "Features.js",
-            "lineno": 154,
+            "lineno": 153,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49824,74 +49824,72 @@
         },
         "undocumented": true,
         "name": "style",
-        "longname": "<anonymous>~feature.properties.style",
+        "longname": "feature.properties.style",
         "kind": "member",
-        "memberof": "<anonymous>~feature.properties",
+        "memberof": "feature.properties",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5534,
-                5579
+                5529,
+                5574
             ],
             "filename": "Features.js",
-            "lineno": 157,
+            "lineno": 156,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025924",
                 "name": "feature.geometry.unit",
                 "type": "CallExpression",
-                "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "geometry.unit",
-        "longname": "<anonymous>~feature.geometry.unit",
+        "name": "unit",
+        "longname": "feature.geometry.unit",
         "kind": "member",
-        "memberof": "<anonymous>~feature",
+        "memberof": "feature.geometry",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                5593,
-                5700
+                5588,
+                5695
             ],
             "filename": "Features.js",
-            "lineno": 158,
+            "lineno": 157,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
                 "id": "astnode100025936",
                 "name": "feature.geometry.units",
                 "type": "CallExpression",
-                "funcscope": "<anonymous>",
                 "value": "",
                 "paramnames": []
             }
         },
         "undocumented": true,
-        "name": "geometry.units",
-        "longname": "<anonymous>~feature.geometry.units",
+        "name": "units",
+        "longname": "feature.geometry.units",
         "kind": "member",
-        "memberof": "<anonymous>~feature",
+        "memberof": "feature.geometry",
         "scope": "static"
     },
     {
         "comment": "",
         "meta": {
             "range": [
-                6149,
-                6176
+                6144,
+                6171
             ],
             "filename": "Features.js",
-            "lineno": 170,
+            "lineno": 169,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49912,11 +49910,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6223,
-                6535
+                6218,
+                6530
             ],
             "filename": "Features.js",
-            "lineno": 175,
+            "lineno": 174,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49945,11 +49943,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6285,
-                6326
+                6280,
+                6321
             ],
             "filename": "Features.js",
-            "lineno": 176,
+            "lineno": 175,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49971,11 +49969,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6375,
-                6426
+                6370,
+                6421
             ],
             "filename": "Features.js",
-            "lineno": 178,
+            "lineno": 177,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -49997,11 +49995,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6436,
-                6466
+                6431,
+                6461
             ],
             "filename": "Features.js",
-            "lineno": 179,
+            "lineno": 178,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50023,11 +50021,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6476,
-                6504
+                6471,
+                6499
             ],
             "filename": "Features.js",
-            "lineno": 180,
+            "lineno": 179,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50049,11 +50047,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6544,
-                6694
+                6539,
+                6689
             ],
             "filename": "Features.js",
-            "lineno": 186,
+            "lineno": 185,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50078,11 +50076,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6626,
-                6658
+                6621,
+                6653
             ],
             "filename": "Features.js",
-            "lineno": 188,
+            "lineno": 187,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50104,11 +50102,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6702,
-                7617
+                6697,
+                7612
             ],
             "filename": "Features.js",
-            "lineno": 194,
+            "lineno": 193,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50137,11 +50135,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6768,
-                6857
+                6763,
+                6852
             ],
             "filename": "Features.js",
-            "lineno": 195,
+            "lineno": 194,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50164,11 +50162,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6882,
-                6901
+                6877,
+                6896
             ],
             "filename": "Features.js",
-            "lineno": 197,
+            "lineno": 196,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50190,11 +50188,11 @@
         "comment": "",
         "meta": {
             "range": [
-                6911,
-                6939
+                6906,
+                6934
             ],
             "filename": "Features.js",
-            "lineno": 198,
+            "lineno": 197,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50215,11 +50213,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7000,
-                7040
+                6995,
+                7035
             ],
             "filename": "Features.js",
-            "lineno": 201,
+            "lineno": 200,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50241,11 +50239,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7089,
-                7130
+                7084,
+                7125
             ],
             "filename": "Features.js",
-            "lineno": 203,
+            "lineno": 202,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50267,11 +50265,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7260,
-                7327
+                7255,
+                7322
             ],
             "filename": "Features.js",
-            "lineno": 206,
+            "lineno": 205,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50294,11 +50292,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7341,
-                7388
+                7336,
+                7383
             ],
             "filename": "Features.js",
-            "lineno": 207,
+            "lineno": 206,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50321,11 +50319,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7581,
-                7610
+                7576,
+                7605
             ],
             "filename": "Features.js",
-            "lineno": 212,
+            "lineno": 211,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50346,11 +50344,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7624,
-                10112
+                7619,
+                10107
             ],
             "filename": "Features.js",
-            "lineno": 215,
+            "lineno": 214,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50380,11 +50378,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7759,
-                7787
+                7754,
+                7782
             ],
             "filename": "Features.js",
-            "lineno": 218,
+            "lineno": 217,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50407,11 +50405,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7804,
-                7880
+                7799,
+                7875
             ],
             "filename": "Features.js",
-            "lineno": 220,
+            "lineno": 219,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50433,11 +50431,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7896,
-                7968
+                7891,
+                7963
             ],
             "filename": "Features.js",
-            "lineno": 221,
+            "lineno": 220,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50459,11 +50457,11 @@
         "comment": "",
         "meta": {
             "range": [
-                7984,
-                8062
+                7979,
+                8057
             ],
             "filename": "Features.js",
-            "lineno": 222,
+            "lineno": 221,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50485,11 +50483,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8073,
-                10050
+                8068,
+                10045
             ],
             "filename": "Features.js",
-            "lineno": 224,
+            "lineno": 223,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50510,11 +50508,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8138,
-                8157
+                8133,
+                8152
             ],
             "filename": "Features.js",
-            "lineno": 225,
+            "lineno": 224,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50536,11 +50534,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8177,
-                8198
+                8172,
+                8193
             ],
             "filename": "Features.js",
-            "lineno": 226,
+            "lineno": 225,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50562,11 +50560,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8639,
-                8659
+                8634,
+                8654
             ],
             "filename": "Features.js",
-            "lineno": 236,
+            "lineno": 235,
             "columnno": 22,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50588,11 +50586,11 @@
         "comment": "",
         "meta": {
             "range": [
-                8838,
-                8862
+                8833,
+                8857
             ],
             "filename": "Features.js",
-            "lineno": 239,
+            "lineno": 238,
             "columnno": 42,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50615,11 +50613,11 @@
         "comment": "",
         "meta": {
             "range": [
-                9147,
-                9173
+                9142,
+                9168
             ],
             "filename": "Features.js",
-            "lineno": 246,
+            "lineno": 245,
             "columnno": 26,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50641,11 +50639,11 @@
         "comment": "",
         "meta": {
             "range": [
-                9792,
-                9805
+                9787,
+                9800
             ],
             "filename": "Features.js",
-            "lineno": 260,
+            "lineno": 259,
             "columnno": 79,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50665,11 +50663,11 @@
         "comment": "",
         "meta": {
             "range": [
-                9859,
-                9906
+                9854,
+                9901
             ],
             "filename": "Features.js",
-            "lineno": 261,
+            "lineno": 260,
             "columnno": 49,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50689,11 +50687,11 @@
         "comment": "",
         "meta": {
             "range": [
-                9927,
-                9956
+                9922,
+                9951
             ],
             "filename": "Features.js",
-            "lineno": 262,
+            "lineno": 261,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50716,11 +50714,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10120,
-                10464
+                10115,
+                10459
             ],
             "filename": "Features.js",
-            "lineno": 272,
+            "lineno": 271,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50746,11 +50744,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10171,
-                10191
+                10166,
+                10186
             ],
             "filename": "Features.js",
-            "lineno": 273,
+            "lineno": 272,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50772,11 +50770,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10270,
-                10304
+                10265,
+                10299
             ],
             "filename": "Features.js",
-            "lineno": 275,
+            "lineno": 274,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50798,11 +50796,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10471,
-                10947
+                10466,
+                10942
             ],
             "filename": "Features.js",
-            "lineno": 282,
+            "lineno": 281,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50829,11 +50827,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10607,
-                10627
+                10602,
+                10622
             ],
             "filename": "Features.js",
-            "lineno": 284,
+            "lineno": 283,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50855,11 +50853,11 @@
         "comment": "",
         "meta": {
             "range": [
-                10956,
-                11060
+                10951,
+                11055
             ],
             "filename": "Features.js",
-            "lineno": 296,
+            "lineno": 295,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50879,11 +50877,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11067,
-                11649
+                11062,
+                11644
             ],
             "filename": "Features.js",
-            "lineno": 301,
+            "lineno": 300,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50912,11 +50910,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11172,
-                11202
+                11167,
+                11197
             ],
             "filename": "Features.js",
-            "lineno": 303,
+            "lineno": 302,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50938,11 +50936,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11218,
-                11259
+                11213,
+                11254
             ],
             "filename": "Features.js",
-            "lineno": 304,
+            "lineno": 303,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50964,11 +50962,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11269,
-                11308
+                11264,
+                11303
             ],
             "filename": "Features.js",
-            "lineno": 305,
+            "lineno": 304,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -50991,11 +50989,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11357,
-                11418
+                11352,
+                11413
             ],
             "filename": "Features.js",
-            "lineno": 307,
+            "lineno": 306,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51018,11 +51016,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11497,
-                11556
+                11492,
+                11551
             ],
             "filename": "Features.js",
-            "lineno": 309,
+            "lineno": 308,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51045,11 +51043,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11576,
-                11620
+                11571,
+                11615
             ],
             "filename": "Features.js",
-            "lineno": 311,
+            "lineno": 310,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51072,11 +51070,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11658,
-                11906
+                11653,
+                11901
             ],
             "filename": "Features.js",
-            "lineno": 317,
+            "lineno": 316,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51104,11 +51102,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11706,
-                11740
+                11701,
+                11735
             ],
             "filename": "Features.js",
-            "lineno": 318,
+            "lineno": 317,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51130,11 +51128,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11778,
-                11865
+                11773,
+                11860
             ],
             "filename": "Features.js",
-            "lineno": 320,
+            "lineno": 319,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51157,11 +51155,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11912,
-                12394
+                11907,
+                12389
             ],
             "filename": "Features.js",
-            "lineno": 325,
+            "lineno": 324,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51191,11 +51189,11 @@
         "comment": "",
         "meta": {
             "range": [
-                11967,
-                12053
+                11962,
+                12048
             ],
             "filename": "Features.js",
-            "lineno": 326,
+            "lineno": 325,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51217,11 +51215,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12121,
-                12177
+                12116,
+                12172
             ],
             "filename": "Features.js",
-            "lineno": 328,
+            "lineno": 327,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51243,11 +51241,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12229,
-                12292
+                12224,
+                12287
             ],
             "filename": "Features.js",
-            "lineno": 330,
+            "lineno": 329,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51269,11 +51267,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12400,
-                13256
+                12395,
+                13251
             ],
             "filename": "Features.js",
-            "lineno": 334,
+            "lineno": 333,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51302,11 +51300,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12453,
-                12505
+                12448,
+                12500
             ],
             "filename": "Features.js",
-            "lineno": 335,
+            "lineno": 334,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51328,11 +51326,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12521,
-                12534
+                12516,
+                12529
             ],
             "filename": "Features.js",
-            "lineno": 336,
+            "lineno": 335,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51354,11 +51352,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12646,
-                12698
+                12641,
+                12693
             ],
             "filename": "Features.js",
-            "lineno": 339,
+            "lineno": 338,
             "columnno": 22,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51380,11 +51378,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12720,
-                12789
+                12715,
+                12784
             ],
             "filename": "Features.js",
-            "lineno": 340,
+            "lineno": 339,
             "columnno": 20,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51406,11 +51404,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12764,
-                12778
+                12759,
+                12773
             ],
             "filename": "Features.js",
-            "lineno": 340,
+            "lineno": 339,
             "columnno": 64,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51430,11 +51428,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12811,
-                12880
+                12806,
+                12875
             ],
             "filename": "Features.js",
-            "lineno": 341,
+            "lineno": 340,
             "columnno": 20,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51456,11 +51454,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12851,
-                12865
+                12846,
+                12860
             ],
             "filename": "Features.js",
-            "lineno": 341,
+            "lineno": 340,
             "columnno": 60,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51480,11 +51478,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12898,
-                12934
+                12893,
+                12929
             ],
             "filename": "Features.js",
-            "lineno": 342,
+            "lineno": 341,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51507,11 +51505,11 @@
         "comment": "",
         "meta": {
             "range": [
-                12952,
-                12988
+                12947,
+                12983
             ],
             "filename": "Features.js",
-            "lineno": 343,
+            "lineno": 342,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51534,11 +51532,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13006,
-                13042
+                13001,
+                13037
             ],
             "filename": "Features.js",
-            "lineno": 344,
+            "lineno": 343,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51561,11 +51559,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13060,
-                13096
+                13055,
+                13091
             ],
             "filename": "Features.js",
-            "lineno": 345,
+            "lineno": 344,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51588,11 +51586,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13114,
-                13158
+                13109,
+                13153
             ],
             "filename": "Features.js",
-            "lineno": 346,
+            "lineno": 345,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51615,11 +51613,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13262,
-                13871
+                13257,
+                13866
             ],
             "filename": "Features.js",
-            "lineno": 353,
+            "lineno": 352,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51655,11 +51653,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13308,
-                13349
+                13303,
+                13344
             ],
             "filename": "Features.js",
-            "lineno": 354,
+            "lineno": 353,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51681,11 +51679,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13359,
-                13397
+                13354,
+                13392
             ],
             "filename": "Features.js",
-            "lineno": 355,
+            "lineno": 354,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51708,11 +51706,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13413,
-                13459
+                13408,
+                13454
             ],
             "filename": "Features.js",
-            "lineno": 356,
+            "lineno": 355,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51734,11 +51732,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13473,
-                13499
+                13468,
+                13494
             ],
             "filename": "Features.js",
-            "lineno": 357,
+            "lineno": 356,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51760,11 +51758,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13515,
-                13528
+                13510,
+                13523
             ],
             "filename": "Features.js",
-            "lineno": 358,
+            "lineno": 357,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51786,11 +51784,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13538,
-                13581
+                13533,
+                13576
             ],
             "filename": "Features.js",
-            "lineno": 359,
+            "lineno": 358,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51813,11 +51811,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13591,
-                13620
+                13586,
+                13615
             ],
             "filename": "Features.js",
-            "lineno": 360,
+            "lineno": 359,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51840,11 +51838,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13630,
-                13657
+                13625,
+                13652
             ],
             "filename": "Features.js",
-            "lineno": 361,
+            "lineno": 360,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51867,11 +51865,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13667,
-                13708
+                13662,
+                13703
             ],
             "filename": "Features.js",
-            "lineno": 362,
+            "lineno": 361,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51894,11 +51892,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13718,
-                13757
+                13713,
+                13752
             ],
             "filename": "Features.js",
-            "lineno": 363,
+            "lineno": 362,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51921,11 +51919,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13767,
-                13805
+                13762,
+                13800
             ],
             "filename": "Features.js",
-            "lineno": 364,
+            "lineno": 363,
             "columnno": 8,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51948,11 +51946,11 @@
         "comment": "",
         "meta": {
             "range": [
-                13877,
-                14791
+                13872,
+                14786
             ],
             "filename": "Features.js",
-            "lineno": 369,
+            "lineno": 368,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -51982,11 +51980,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14172,
-                14210
+                14167,
+                14205
             ],
             "filename": "Features.js",
-            "lineno": 373,
+            "lineno": 372,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52008,11 +52006,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14226,
-                14261
+                14221,
+                14256
             ],
             "filename": "Features.js",
-            "lineno": 374,
+            "lineno": 373,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52034,11 +52032,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14327,
-                14378
+                14322,
+                14373
             ],
             "filename": "Features.js",
-            "lineno": 376,
+            "lineno": 375,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52060,11 +52058,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14420,
-                14440
+                14415,
+                14435
             ],
             "filename": "Features.js",
-            "lineno": 378,
+            "lineno": 377,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52086,11 +52084,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14454,
-                14527
+                14449,
+                14522
             ],
             "filename": "Features.js",
-            "lineno": 379,
+            "lineno": 378,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52112,11 +52110,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14726,
-                14744
+                14721,
+                14739
             ],
             "filename": "Features.js",
-            "lineno": 383,
+            "lineno": 382,
             "columnno": 41,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52136,11 +52134,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14746,
-                14768
+                14741,
+                14763
             ],
             "filename": "Features.js",
-            "lineno": 383,
+            "lineno": 382,
             "columnno": 61,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52160,11 +52158,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14770,
-                14781
+                14765,
+                14776
             ],
             "filename": "Features.js",
-            "lineno": 383,
+            "lineno": 382,
             "columnno": 85,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52184,11 +52182,11 @@
         "comment": "",
         "meta": {
             "range": [
-                14797,
-                15575
+                14792,
+                15570
             ],
             "filename": "Features.js",
-            "lineno": 386,
+            "lineno": 385,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52218,11 +52216,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15035,
-                15045
+                15030,
+                15040
             ],
             "filename": "Features.js",
-            "lineno": 390,
+            "lineno": 389,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52244,11 +52242,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15061,
-                15074
+                15056,
+                15069
             ],
             "filename": "Features.js",
-            "lineno": 391,
+            "lineno": 390,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52270,11 +52268,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15290,
-                15365
+                15285,
+                15360
             ],
             "filename": "Features.js",
-            "lineno": 396,
+            "lineno": 395,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52296,11 +52294,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15495,
-                15523
+                15490,
+                15518
             ],
             "filename": "Features.js",
-            "lineno": 401,
+            "lineno": 400,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52322,11 +52320,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15537,
-                15556
+                15532,
+                15551
             ],
             "filename": "Features.js",
-            "lineno": 402,
+            "lineno": 401,
             "columnno": 12,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52349,11 +52347,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15581,
-                16492
+                15576,
+                16487
             ],
             "filename": "Features.js",
-            "lineno": 406,
+            "lineno": 405,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52383,11 +52381,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15704,
-                15713
+                15699,
+                15708
             ],
             "filename": "Features.js",
-            "lineno": 408,
+            "lineno": 407,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52409,11 +52407,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15729,
-                15747
+                15724,
+                15742
             ],
             "filename": "Features.js",
-            "lineno": 409,
+            "lineno": 408,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52435,11 +52433,11 @@
         "comment": "",
         "meta": {
             "range": [
-                15774,
-                15830
+                15769,
+                15825
             ],
             "filename": "Features.js",
-            "lineno": 410,
+            "lineno": 409,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52461,11 +52459,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16013,
-                16069
+                16008,
+                16064
             ],
             "filename": "Features.js",
-            "lineno": 414,
+            "lineno": 413,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52487,11 +52485,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16052,
-                16066
+                16047,
+                16061
             ],
             "filename": "Features.js",
-            "lineno": 414,
+            "lineno": 413,
             "columnno": 57,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52511,11 +52509,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16089,
-                16139
+                16084,
+                16134
             ],
             "filename": "Features.js",
-            "lineno": 415,
+            "lineno": 414,
             "columnno": 18,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52537,11 +52535,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16217,
-                16231
+                16212,
+                16226
             ],
             "filename": "Features.js",
-            "lineno": 417,
+            "lineno": 416,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52563,11 +52561,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16388,
-                16416
+                16383,
+                16411
             ],
             "filename": "Features.js",
-            "lineno": 420,
+            "lineno": 419,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52589,11 +52587,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16434,
-                16457
+                16429,
+                16452
             ],
             "filename": "Features.js",
-            "lineno": 421,
+            "lineno": 420,
             "columnno": 16,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52616,11 +52614,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16498,
-                16696
+                16493,
+                16691
             ],
             "filename": "Features.js",
-            "lineno": 426,
+            "lineno": 425,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52647,11 +52645,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16585,
-                16634
+                16580,
+                16629
             ],
             "filename": "Features.js",
-            "lineno": 428,
+            "lineno": 427,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52673,11 +52671,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16702,
-                16959
+                16697,
+                16954
             ],
             "filename": "Features.js",
-            "lineno": 432,
+            "lineno": 431,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52704,11 +52702,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16788,
-                16837
+                16783,
+                16832
             ],
             "filename": "Features.js",
-            "lineno": 434,
+            "lineno": 433,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52730,11 +52728,11 @@
         "comment": "",
         "meta": {
             "range": [
-                16965,
-                17230
+                16960,
+                17225
             ],
             "filename": "Features.js",
-            "lineno": 438,
+            "lineno": 437,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52761,11 +52759,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17053,
-                17102
+                17048,
+                17097
             ],
             "filename": "Features.js",
-            "lineno": 440,
+            "lineno": 439,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52787,11 +52785,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17236,
-                17776
+                17231,
+                17771
             ],
             "filename": "Features.js",
-            "lineno": 444,
+            "lineno": 443,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52818,11 +52816,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17320,
-                17369
+                17315,
+                17364
             ],
             "filename": "Features.js",
-            "lineno": 446,
+            "lineno": 445,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52844,11 +52842,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17782,
-                18051
+                17777,
+                18046
             ],
             "filename": "Features.js",
-            "lineno": 452,
+            "lineno": 451,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52875,11 +52873,11 @@
         "comment": "",
         "meta": {
             "range": [
-                17865,
-                17914
+                17860,
+                17909
             ],
             "filename": "Features.js",
-            "lineno": 454,
+            "lineno": 453,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52901,11 +52899,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18057,
-                18326
+                18052,
+                18321
             ],
             "filename": "Features.js",
-            "lineno": 459,
+            "lineno": 458,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52932,11 +52930,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18140,
-                18189
+                18135,
+                18184
             ],
             "filename": "Features.js",
-            "lineno": 461,
+            "lineno": 460,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52958,11 +52956,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18332,
-                18604
+                18327,
+                18599
             ],
             "filename": "Features.js",
-            "lineno": 466,
+            "lineno": 465,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -52989,11 +52987,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18416,
-                18465
+                18411,
+                18460
             ],
             "filename": "Features.js",
-            "lineno": 468,
+            "lineno": 467,
             "columnno": 14,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -53015,11 +53013,11 @@
         "comment": "",
         "meta": {
             "range": [
-                18610,
-                19127
+                18605,
+                19122
             ],
             "filename": "Features.js",
-            "lineno": 473,
+            "lineno": 472,
             "columnno": 4,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
@@ -53043,11 +53041,11 @@
         "comment": "",
         "meta": {
             "range": [
-                19132,
-                19156
+                19127,
+                19151
             ],
             "filename": "Features.js",
-            "lineno": 486,
+            "lineno": 485,
             "columnno": 0,
             "path": "/home/runner/work/geoflo.sdk/geoflo.sdk/src",
             "code": {
