@@ -548,13 +548,7 @@ const GeoFlo = function () {
             selectedFeatures.splice(0, selectedFeatures.length, ...features);
         }
 
-        this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
-        this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
-
-        this.fire('select.load', {
-            features: turf.featureCollection(this.getSelectedFeatures()),
-            source: this.map.getSource(this.statics.constants.sources.SELECT)
-        })
+        this.addFeaturesToSelected(selectedFeatures);
     }
 
 	/**
@@ -1480,9 +1474,9 @@ const GeoFlo = function () {
 
         this.Layers.refresh({ select: true });
 
-        const seleceted = this.getSelectedFeatures();
+        const selected = this.getSelectedFeatures();
         
-        this.getSelectedFeatures().push(...features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) }));
+        this.getSelectedFeatures().push(...selected.filter((feature) => { return !features.find((f) => { return f.id === feature.id; }) }, this));
         this.setViewport();
         this.setButtons();
         this.hideFeatures(this.getSelectedFeatures());
