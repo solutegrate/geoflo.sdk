@@ -318,6 +318,7 @@ const Select = function () {
         let currentId = selectedId;
         let nextIndex = currentIndex;
         let loopCount = 0; // Prevents infinite loops
+        let state; // Declare state outside the loop
 
         // If all features are selected, exit early
         if (nearFeatures.every(f => selected.some(s => s.id === f.id))) {
@@ -325,19 +326,24 @@ const Select = function () {
             return;
         }
 
-        // Find the next feature that is *not* already selected
+        // Find the next feature that is *not* already selected AND not hidden
         do {
             nextIndex = (nextIndex + 1) % nearFeatures.length;
             loopCount++;
 
-            // If we've looped through all options, break (prevents infinite loops)
+            // Prevent infinite loops
             if (loopCount > nearFeatures.length) {
                 console.warn("Looped through all features, no new selection available.");
                 return;
             }
 
+            let nextFeature = nearFeatures[nextIndex];
+            if (!nextFeature) continue;
+
+            // Read feature state for visibility
+            state = geoflo.map.getFeatureState({ source: nextFeature.source, id: nextFeature.id });
         } while (
-            selected.some(feature => feature.id === nearFeatures[nextIndex]?.id) &&
+            (selected.some(feature => feature.id === nearFeatures[nextIndex]?.id) || state?.hidden) &&
             nextIndex !== currentIndex
         );
 
