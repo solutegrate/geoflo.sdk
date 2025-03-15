@@ -124,7 +124,7 @@ const Draw = function () {
         if (feature) geoflo.hotFeature = feature;
         if (!geoflo.hotFeature || geoflo.overpassDownloading) return;
         geoflo.hotFeature.properties = geoflo.Utilities.assignDeep(geoflo.hotFeature.properties, properties || {});
-        geoflo.hotFeature.properties.style = geoflo.hotFeature.properties.style || {};
+        geoflo.hotFeature.properties.style = geoflo.hotFeature.properties.style || geoflo.getTheme().colors;
         geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection([geoflo.hotFeature]));
         geoflo.map.getSource(geoflo.statics.constants.sources.HOT).setData(turf.featureCollection([geoflo.hotFeature]));
         return geoflo.hotFeature;
@@ -812,8 +812,6 @@ const Draw = function () {
         var coords = geoflo.Utilities.isPoint(geoflo.hotFeature) ? geoflo.hotFeature.geometry.coordinates : geoflo.hotFeature.geometry.coordinates[geoflo.hotFeature.geometry.coordinates.length - 1];
         geoflo.lastClick = { coords: coords };
         geoflo.firstClick = { coords: coords };
-
-        setTimeout(function () { geoflo.hideFeatures([feature]); }, 100);
         return geoflo.currentMode.type;
     }
 

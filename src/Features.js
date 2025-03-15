@@ -62,7 +62,12 @@ const Features = function () {
 
     this.getFeatureState = function (id) {
         if (!id) return false;
-        return geoflo.map.getFeatureState({ source: geoflo.statics.constants.sources.COLD, id: id });
+        const feature = this.getFeatureById(id);
+        if (!feature) return false;
+        const isSelected = geoflo.getSelectedFeatures().find(f => f.id === id || f.properties.id === id);
+        const source = isSelected ? geoflo.statics.constants.sources.SELECT : feature.source;
+        if (!source) return false;
+        return geoflo.map.getFeatureState({ source: source, id: id });
     };
 
 
@@ -126,13 +131,15 @@ const Features = function () {
         delete feature.properties.new;
         delete feature.properties.hidden;
         delete feature.properties.offset;
-        feature.properties.style = feature.properties.style || {};
+        feature.properties.style = Object.assign(geoflo.getTheme().colors, feature.properties.style || {});
         this.addUnits(feature);
-        this.addFeatures([feature]);
+        if (!this.addingFeatures) this.addFeatures([feature]);
         return feature;
     };
 
     this.addFeatures = function (features) {
+        if (!this.addingFeatures) this.addingFeatures = true;
+
         let update = !this.updatingFeatures;
         const sources = new Set();
 
@@ -146,6 +153,7 @@ const Features = function () {
         });
 
         if (update) this.updateSource(Array.from(sources));
+        this.addingFeatures = false;
         return features;
     };
 

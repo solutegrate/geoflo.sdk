@@ -280,6 +280,12 @@ const GeoFlo = function () {
 	 */
     this.fire = function (type, detail) {
         if (!type) throw new Error('Type is required to fire an event!');
+
+        if (type === 'draw.activate' && (detail?.editing || detail?.data?.editing || this.editMode)) {
+            this.Features.setFeatureState(this.getHotFeature().id, { hidden: true });
+            this.fire('features.hide', { features: [this.getHotFeature()] });
+        }
+
         this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
     }
 
@@ -373,6 +379,7 @@ const GeoFlo = function () {
         }
 
         this.Layers.moveLayers();
+
         return this.currentMode;
     }
 
@@ -1560,7 +1567,7 @@ const GeoFlo = function () {
 	 */
     this.removeSelection = function (features, options = {}) {
         this.removePopup();
-        
+
         features = this.Utilities.clone(features || this.getSelectedFeatures());
         if (!features || !features.length) return 0;
 
@@ -1568,7 +1575,7 @@ const GeoFlo = function () {
         if (options.ids) features = features.filter(f => options.ids.includes(f.id));
 
         let selected = this.getSelectedFeatures();
-        selectedFeatures = selected.filter(f => !features.includes(f));
+        selectedFeatures = selected.filter(f => !features.find(s => s.id === f.id));
 
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));

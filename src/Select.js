@@ -132,7 +132,7 @@ const Select = function () {
 	 */
     this.deselectCurrentFeatures = function (options={}) {
         this.removePopup();
-        geoflo.removeSelection(options);
+        geoflo.removeSelection(null, options);
     };
 
 	/**

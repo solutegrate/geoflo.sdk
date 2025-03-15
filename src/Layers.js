@@ -35,7 +35,7 @@ const Layers = function () {
     this.init = function (options = {}) {
         this.options = { ...this.options, ...options };
 
-        this.defaultLayers = [
+        this.defaultLayers = this.defaultLayers = [
             {
                 source: geoflo.statics.constants.sources.COLD,
                 id: id + '-fill-cold',
@@ -51,7 +51,10 @@ const Layers = function () {
                 source: geoflo.statics.constants.sources.COLD,
                 id: id + '-line-cold',
                 type: 'line',
-                layout: { 'line-cap': 'round', 'line-join': 'miter' },
+                layout: {
+                    'line-cap': 'round',
+                    'line-join': 'miter'
+                },
                 paint: {
                     'line-color': geoflo.options.colors.primaryCold,
                     'line-width': 4,
@@ -66,7 +69,7 @@ const Layers = function () {
                 filter: ['all', ['==', ['get', 'type'], 'Circle'], ["!=", ["geometry-type"], "Polygon"]],
                 type: 'circle',
                 paint: {
-                    'circle-radius': { base: 6, stops: [[10, 8], [14, 10]] },
+                    'circle-radius': { 'base': 6, 'stops': [[10, 8], [14, 10]] },
                     'circle-stroke-width': 2,
                     'circle-color': geoflo.options.colors.primaryCold,
                     'circle-stroke-color': geoflo.options.colors.secondaryCold,
@@ -80,10 +83,13 @@ const Layers = function () {
                 type: 'symbol',
                 filter: ['==', ['get', 'type'], 'Icon'],
                 layout: {
-                    visibility: 'visible',
+                    'visibility': 'visible',
                     'icon-optional': true,
                     'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
-                    'text-size': { base: 16, stops: [[10, 16], [14, 12]] },
+                    'text-size': {
+                        'base': 16,
+                        'stops': [[10, 16], [14, 12]]
+                    },
                     'text-line-height': 1,
                     'text-padding': 0,
                     'text-offset': [0, 0.2],
@@ -134,10 +140,13 @@ const Layers = function () {
                 type: 'symbol',
                 filter: ['==', ['get', 'type'], 'Text'],
                 layout: {
-                    visibility: 'visible',
+                    'visibility': 'visible',
                     'icon-optional': true,
                     'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
-                    'text-size': { base: 16, stops: [[10, 16], [14, 12]] },
+                    'text-size': {
+                        'base': 16,
+                        'stops': [[10, 16], [14, 12]]
+                    },
                     'text-line-height': 1,
                     'text-padding': 0,
                     'text-offset': [0, 0.2],
@@ -175,64 +184,57 @@ const Layers = function () {
                     'circle-opacity': 0.3
                 }
             },
-            // ... (other default layers continue)
-        ];
-
-        this.selectLayers = [
             {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-line-select-background',
-                type: 'line',
-                layout: { visibility: 'visible', 'line-cap': 'round', 'line-join': 'round' },
-                paint: { 'line-color': geoflo.options.colors.primarySelect, 'line-width': 6, 'line-opacity': 0.4 },
-                metadata: { types: ['Polyline', 'Polygon', 'Rectangle'] }
-            },
-            {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-line-select',
-                type: 'line',
-                layout: { visibility: 'visible', 'line-cap': 'round', 'line-join': 'round' },
-                paint: { 'line-color': geoflo.options.colors.secondarySelect, 'line-width': 6, 'line-dasharray': [0, 4, 3] },
-                metadata: { types: ['Polyline', 'Polygon', 'Rectangle'] }
-            },
-            {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-fill-select',
+                source: geoflo.statics.constants.sources.HOT,
+                id: id + '-fill-hot',
                 type: 'fill',
                 layout: {},
                 filter: ["==", "$type", "Polygon"],
-                paint: { 'fill-color': geoflo.options.colors.primarySelect, 'fill-opacity': 0.4 },
-                metadata: { types: ['Polygon', 'Rectangle'] }
-            },
-            {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-point-select',
-                filter: ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"]],
-                type: 'circle',
-                layout: { visibility: 'visible' },
                 paint: {
-                    'circle-radius': 10,
-                    'circle-stroke-width': 3,
-                    'circle-color': geoflo.options.colors.primarySelect,
-                    'circle-stroke-color': geoflo.options.colors.secondarySelect,
-                    'circle-stroke-opacity': 1,
-                    'circle-opacity': 0.8
-                },
-                metadata: { types: ['Point', 'Circle', 'Marker', 'Icon'] }
+                    'fill-color': geoflo.options.colors.secondaryHot,
+                    'fill-opacity': ['case', ["boolean", ["has", "new"], true], 0.5, 0.1],
+                }
             },
             {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-symbol-select',
+                'source': geoflo.statics.constants.sources.HOT,
+                'id': id + '-line-hot',
+                'type': 'line',
+                'layout': {
+                    'line-cap': 'round',
+                    'line-join': 'round'
+                },
+                'paint': {
+                    'line-color': geoflo.options.colors.primaryHot,
+                    'line-width': 4,
+                    'line-dasharray': [1, 2],
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.HOT,
+                'id': id + '-point-hot',
+                'filter': ['==', '$type', 'Point'],
+                'type': 'circle',
+                //'filter': ["==", 0, ['number', ['get', 'painting']]],
+                'paint': {
+                    'circle-radius': ["match", ["get", "type"], "Circle", 10, 4],
+                    'circle-stroke-width': 2,
+                    'circle-color': geoflo.options.colors.primaryHot,
+                    'circle-stroke-color': geoflo.options.colors.secondaryHot
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.HOT,
+                id: id + '-icon-hot',
                 filter: ['==', ['get', 'type'], 'Icon'],
                 type: 'symbol',
                 layout: {
-                    visibility: 'visible',
+                    'visibility': 'visible',
                     'icon-optional': true,
-                    'symbol-placement': 'point',
-                    'text-rotation-alignment': 'viewport',
                     'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
-                    'text-rotate': ['get', 'rotate', ['get', 'style', ['properties']]],
-                    'text-size': 14,
+                    'text-size': {
+                        'base': 16,
+                        'stops': [[10, 16], [14, 12]]
+                    },
                     'text-line-height': 1,
                     'text-padding': 0,
                     'text-offset': [0, 0.2],
@@ -244,74 +246,436 @@ const Layers = function () {
                 },
                 paint: {
                     'text-translate-anchor': 'viewport',
-                    'text-halo-color': geoflo.options.colors.secondarySelect,
-                    'text-halo-width': 2,
-                    'text-color': geoflo.options.colors.primaryBackground
-                },
-                metadata: { types: ['Icon'] }
+                    'text-halo-color': geoflo.options.colors.primaryHot,
+                    'text-halo-width': 0, //[ 'case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0 ],
+                    'text-color': geoflo.options.colors.secondaryHot
+                }
             },
             {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-text-point-select',
-                filter: ['==', ['get', 'type'], 'Text'],
-                type: 'circle',
-                layout: { visibility: 'visible' },
-                paint: {
-                    'circle-radius': 4,
-                    'circle-stroke-width': 1,
-                    'circle-color': geoflo.options.colors.primaryColor,
-                    'circle-stroke-color': geoflo.options.colors.primaryBackground,
-                    'circle-stroke-opacity': 1,
-                    'circle-opacity': 1
-                },
-                metadata: { types: ['Text'] }
-            },
-            {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-text-select',
-                filter: ['==', ['get', 'type'], 'Text'],
-                type: 'symbol',
-                layout: {
-                    visibility: 'visible',
-                    "symbol-placement": "point",
-                    'text-rotation-alignment': 'viewport',
-                    'text-field': ['get', 'text'],
-                    'text-font': ['DIN Pro Regular', 'DIN Pro Italic', 'Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                    'text-keep-upright': true,
-                    'text-allow-overlap': true,
-                    'text-size': 18,
-                    'text-justify': ['get', 'justify'],
-                    'text-letter-spacing': 0.13,
-                    'text-line-height': 1.2,
-                    'text-max-angle': 10,
-                    'text-offset': [0, -1],
-                    'text-padding': 2,
-                    'text-rotate': 0,
-                    'text-transform': ['get', 'transform']
-                },
-                paint: {
-                    'text-color': geoflo.options.colors.primaryColor,
-                    'text-halo-color': geoflo.options.colors.primaryBackground,
-                    'text-halo-width': 2,
-                    'text-opacity': 1
-                },
-                metadata: { types: ['Text'] }
-            },
-            {
-                source: geoflo.statics.constants.sources.SELECT,
-                id: id + '-image-select',
+                source: geoflo.statics.constants.sources.HOT,
+                id: id + '-image-hot',
                 filter: ['==', ['get', 'type'], 'Image'],
                 type: 'symbol',
                 layout: {
-                    visibility: 'visible',
+                    'visibility': 'visible',
                     'icon-image': ['get', 'primaryImage', ['get', 'style', ['properties']]],
                     'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
                     'icon-allow-overlap': true,
                     'icon-anchor': 'bottom'
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.PIN,
+                id: id + '-fill-pin',
+                type: 'fill',
+                layout: {},
+                filter: ["==", "$type", "Polygon"],
+                paint: {
+                    'fill-color': geoflo.options.colors.primaryHot,
+                    'fill-opacity': ['case', ["boolean", ["has", "new"], true], 0.5, 0.1],
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.PIN,
+                'id': id + '-line-pin',
+                'type': 'line',
+                'layout': {
+                    'line-cap': 'round',
+                    'line-join': 'round'
                 },
-                metadata: { types: ['Image'] }
+                'paint': {
+                    'line-color': geoflo.options.colors.primaryDebug,
+                    'line-width': 4,
+                    'line-dasharray': [1, 2],
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.PIN,
+                'id': id + '-point-pin',
+                'filter': ['==', '$type', 'Point'],
+                'type': 'circle',
+                //'filter': ["==", 0, ['number', ['get', 'painting']]],
+                'paint': {
+                    'circle-radius': ["match", ["get", "type"], "Circle", 10, 4],
+                    'circle-stroke-width': 2,
+                    'circle-color': geoflo.options.colors.primaryDebug,
+                    'circle-stroke-color': geoflo.options.colors.primaryHot
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.PIN,
+                id: id + '-icon-pin',
+                filter: ['==', ['get', 'type'], 'Icon'],
+                type: 'symbol',
+                layout: {
+                    'visibility': 'visible',
+                    'icon-optional': true,
+                    'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
+                    'text-size': {
+                        'base': 16,
+                        'stops': [[10, 16], [14, 12]]
+                    },
+                    'text-line-height': 1,
+                    'text-padding': 0,
+                    'text-offset': [0, 0.2],
+                    'text-justify': 'auto',
+                    'text-anchor': 'center',
+                    'text-allow-overlap': true,
+                    'text-font': ['Font Awesome 6 Pro Solid'],
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-translate-anchor': 'viewport',
+                    'text-halo-color': geoflo.options.colors.primaryDebug,
+                    'text-halo-width': 0, //[ 'case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0 ],
+                    'text-color': geoflo.options.colors.primaryHot
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.PIN,
+                id: id + '-image-pin',
+                filter: ['==', ['get', 'type'], 'Image'],
+                type: 'symbol',
+                layout: {
+                    'visibility': 'visible',
+                    'icon-image': ['get', 'primaryImage', ['get', 'style', ['properties']]],
+                    'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                    'icon-allow-overlap': true,
+                    'icon-anchor': 'bottom'
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.HOTTEXT,
+                'id': id + '-text-hot',
+                'type': 'symbol',
+                'layout': {
+                    'symbol-placement': 'point',
+                    'text-field': ['get', 'text'],
+                    'text-font': ['Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                    'text-keep-upright': true,
+                    'text-anchor': ['get', 'anchor'],
+                    'text-size': 18,
+                    'text-justify': ['get', 'justify'],
+                    'text-letter-spacing': 0.1,
+                    'text-line-height': 1.2,
+                    'text-max-angle': 10,
+                    'text-offset': [0, -1.5],
+                    'text-padding': 2,
+                    'text-rotate': 0,
+                    'text-transform': ['get', 'transform']
+                },
+                'paint': {
+                    'text-color': geoflo.options.colors.primaryText,
+                    'text-halo-color': geoflo.options.colors.primaryBackground,
+                    'text-halo-width': 1,
+                    'text-opacity': 1,
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.SNAP,
+                'id': id + '-point-snap',
+                'type': 'circle',
+                'filter': ['==', '$type', 'Point'],
+                'paint': {
+                    'circle-radius': ["match", ["get", "type"], "Circle", 6, "Icon", 0, 6],
+                    'circle-stroke-width': 2,
+                    'circle-color': geoflo.options.colors.primarySnap,
+                    'circle-stroke-color': geoflo.options.colors.secondarySnap
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.SNAP,
+                id: id + '-icon-snap',
+                type: 'symbol',
+                filter: ['==', ['get', 'type'], 'Icon'],
+                layout: {
+                    'visibility': 'visible',
+                    'icon-optional': true,
+                    'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
+                    'text-size': {
+                        'base': 18,
+                        'stops': [[10, 18], [14, 16]]
+                    },
+                    'text-line-height': 1,
+                    'text-padding': 0,
+                    'text-offset': [0, 0.2],
+                    'text-justify': 'auto',
+                    'text-anchor': 'center',
+                    'text-allow-overlap': true,
+                    'text-font': ['Font Awesome 6 Pro Solid'],
+                    'text-ignore-placement': true
+                },
+                paint: {
+                    'text-translate-anchor': 'viewport',
+                    'text-halo-color': geoflo.options.colors.primarySnap,
+                    'text-halo-width': 0, //[ 'case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0 ],
+                    'text-color': geoflo.options.colors.secondarySnap
+                }
+            },
+            {
+                source: geoflo.statics.constants.sources.SNAP,
+                id: id + '-image-snap',
+                filter: ['==', ['get', 'type'], 'Image'],
+                type: 'symbol',
+                layout: {
+                    'visibility': 'visible',
+                    'icon-image': ['get', 'primaryImage', ['get', 'style', ['properties']]],
+                    'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                    'icon-allow-overlap': true,
+                    'icon-anchor': 'bottom'
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.SNAP,
+                'id': id + '-line-snap',
+                'type': 'line',
+                //'filter': ["==", "$type", "LineString"],
+                'layout': {
+                    'visibility': 'visible',
+                    'line-cap': 'round',
+                    'line-join': 'round'
+                },
+                'paint': {
+                    'line-color': geoflo.options.colors.secondarySnap,
+                    'line-width': 4,
+                    'line-dasharray': [1, 2]
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.ROUTE,
+                'id': id + '-line-route',
+                'type': 'line',
+                'filter': ["==", "$type", "LineString"],
+                'layout': {
+                    'visibility': 'visible',
+                    'line-cap': 'round',
+                    'line-join': 'round'
+                },
+                'paint': {
+                    'line-color': geoflo.options.colors.error,
+                    'line-width': 4,
+                    'line-dasharray': []
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.VERTEX,
+                'id': id + '-point-vertex',
+                'type': 'circle',
+                'filter': ['==', "$type", 'LineString'],
+                'paint': {
+                    'circle-radius': 4,
+                    'circle-stroke-width': 3,
+                    'circle-color': geoflo.options.colors.primaryVertex,
+                    'circle-stroke-color': geoflo.options.colors.secondaryVertex
+                }
+            },
+            {
+                'source': geoflo.statics.constants.sources.GAMEPAD,
+                'id': id + '-gamepad',
+                'type': 'symbol',
+                'layout': {
+                    'visibility': 'visible',
+                    'icon-image': 'gamepad',
+                    'icon-size': 0.25
+                }
             }
-        ];
+        ]
+
+        this.selectLayers = [{
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-line-select-background',
+            'type': 'line',
+            'layout': {
+                'visibility': 'visible',
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
+                'line-width': 6,
+                'line-opacity': 0.4,
+                'line-dasharray': [4, 3] 
+            },
+            'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
+        }, {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-line-select',
+            'type': 'line',
+            'layout': {
+                'visibility': 'visible',
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': [
+                    'case',
+                    ['has', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondaryColor', ['get', 'style', ['properties']]]
+                ],
+                'line-width': 6,
+                'line-dasharray': [0, 4, 3]
+            },
+            'metadata': { types: ['Polyline', 'Polygon', 'Rectangle'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-fill-select',
+            'type': 'fill',
+            'layout': {},
+            'filter': ["==", "$type", "Polygon"],
+            'paint': {
+                'fill-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
+                'fill-opacity': 0.4
+            },
+            'metadata': { types: ['Polygon', 'Rectangle'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-point-select',
+            'filter': ['all', ['!=', ['get', 'type'], 'Text'], ["==", ["geometry-type"], "Point"]],
+            'type': 'circle',
+            'layout': {
+                'visibility': 'visible',
+            },
+            'paint': {
+                'circle-radius': 10,
+                'circle-stroke-width': 3,
+                'circle-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
+                'circle-stroke-color': [
+                    'case',
+                    ['has', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondaryColor', ['get', 'style', ['properties']]]
+                ],
+                'circle-stroke-opacity': 1,
+                'circle-opacity': 0.8
+            },
+            'metadata': { types: ['Point', 'Circle', 'Marker', 'Icon'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-symbol-select',
+            'filter': ['==', ['get', 'type'], 'Icon'],
+            'type': 'symbol',
+            'layout': {
+                'visibility': 'visible',
+                'icon-optional': true,
+                'symbol-placement': 'point',
+                'text-rotation-alignment': 'viewport',
+                'text-field': ['get', 'primaryIcon', ['get', 'style', ['properties']]],
+                'text-rotate': ['get', 'rotate', ['get', 'style', ['properties']]],
+                'text-size': 14,
+                'text-line-height': 1,
+                'text-padding': 0,
+                'text-offset': [0, 0.2],
+                'text-justify': 'auto',
+                'text-anchor': 'center',
+                'text-allow-overlap': true,
+                'text-font': ['Font Awesome 6 Pro Solid'],
+                'text-ignore-placement': true
+            },
+            'paint': {
+                'text-translate-anchor': 'viewport',
+                'text-halo-color': [
+                    'case',
+                    ['has', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'secondaryColor', ['get', 'style', ['properties']]]
+                ],
+                'text-halo-width': 2,
+                'text-color': geoflo.options.colors.primaryBackground,
+            },
+            'metadata': { types: ['Icon'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-text-point-select',
+            'filter': ['==', ['get', 'type'], 'Text'],
+            'type': 'circle',
+            'layout': {
+                'visibility': 'visible',
+            },
+            'paint': {
+                'circle-radius': 4,
+                'circle-stroke-width': 1,
+                'circle-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
+                'circle-stroke-color': geoflo.options.colors.primaryBackground,
+                'circle-stroke-opacity': 1,
+                'circle-opacity': 1
+            },
+            'metadata': { types: ['Text'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-text-select',
+            'filter': ['==', ['get', 'type'], 'Text'],
+            'type': 'symbol',
+            'layout': {
+                'visibility': 'visible',
+                "symbol-placement": "point",
+                'text-rotation-alignment': 'viewport',
+                'text-field': ['get', 'text'],
+                'text-font': ['DIN Pro Regular', 'DIN Pro Italic', 'Arial Unicode MS Regular', 'DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                'text-keep-upright': true,
+                'text-allow-overlap': true,
+                'text-size': 18,
+                'text-justify': ['get', 'justify'],
+                'text-letter-spacing': 0.13,
+                'text-line-height': 1.2,
+                'text-max-angle': 10,
+                'text-offset': [0, -1],
+                'text-padding': 2,
+                'text-rotate': 0,
+                'text-transform': ['get', 'transform']
+            },
+            'paint': {
+                'text-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
+                'text-halo-color': geoflo.options.colors.primaryBackground,
+                'text-halo-width': 2,
+                'text-opacity': 1,
+            },
+            'metadata': { types: ['Text'] }
+        },
+        {
+            'source': geoflo.statics.constants.sources.SELECT,
+            'id': id + '-image-select',
+            'filter': ['==', ['get', 'type'], 'Image'],
+            'type': 'symbol',
+            'layout': {
+                'visibility': 'visible',
+                'icon-image': ['get', 'primaryImage', ['get', 'style', ['properties']]],
+                'icon-size': ['interpolate', ['linear'], ['zoom'], 1, 0.4, 15, 1],
+                'icon-allow-overlap': true,
+                'icon-anchor': 'bottom'
+            },
+            'metadata': { types: ['Image'] }
+        }]
 
         return this.refresh({ init: true });
     };
@@ -359,46 +723,24 @@ const Layers = function () {
         return this.getLayers();
     };
 
-
-
     this.addEventListeners = (options = {}) => buildEvents.call(this, { on: true, ...options });
-
     this.removeEventListeners = (options = {}) => buildEvents.call(this, { off: true, ...options });
-
     this.hasCustomLayers = () => this.customLayersMap.size;
-
-
-
     this.getCustomLayers = () => Array.from(this.customLayersMap.values());
-
     this.getCustomLayer = (id) => (id ? this.customLayersMap.get(id) : false);
-
     this.getSources = () => Array.from(this.sourcesMap.values());
-
     this.getSource = (id) => (id ? this.sourcesMap.get(id) : false);
-
     this.getSourceIds = () => Array.from(this.sourcesMap.keys());
-
     this.getLayers = () => Array.from(this.layersMap.values());
-
     this.getLayer = (id, custom = false) => id ? (custom ? this.customLayersMap.get(id) : this.layersMap.get(id)) : false;
-
     this.getLayerIds = (layers) => Array.isArray(layers) ? layers.map(l => (typeof l === 'object' ? l.id : l)) : Array.from(this.layersMap.keys());
-
     this.getLayerType = (id) => this.getLayer(id, true)?.details?.type || '';
-
     this.getLayerTypes = () => Array.from(this.layersMap.values()).map(l => l.details?.type || '');
-
     this.getLayerTypesBySource = (source) => Array.from(this.layersMap.values()).filter(l => l.source === source).map(l => l.details?.type || '');
-
     this.getLayerByType = (type) => Array.from(this.layersMap.values()).filter(l => l.details?.type === type);
-
     this.getLayerBySource = (source) => Array.from(this.layersMap.values()).filter(l => l.source === source);
-
     this.getLayerById = (id) => this.layersMap.get(id);
-
     this.getFeatures = (id) => this.getSource(id)?._data?.features || [];
-
     this.getFeature = (id) => this.getSource(id)?._data?.features?.find(f => f.id === id) || false;
 
     this.getSelection = (features = [], coords) => {
@@ -416,7 +758,6 @@ const Layers = function () {
         if (type === 'Image') return 'Image';
         return false;
     };
-
 
 
 
@@ -547,7 +888,12 @@ const Layers = function () {
 
             const paint = {
                 'text-translate-anchor': 'viewport',
-                'text-halo-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                'text-halo-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                 'text-halo-width': 1.2,
                 'text-color': ['get', 'secondaryColor', ['get', 'style', ['properties']]],
                 'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, ['get', 'opacity', ['get', 'style', ['properties']]]],
@@ -856,7 +1202,12 @@ const Layers = function () {
             if (type.includes('border')) {
                 layout = { visibility: options.visibility || 'visible', ...((style.border && style.border.layout) || {}) };
                 paint = {
-                    'line-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                    'line-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                     'line-width': ['case', ["boolean", ['has', 'width', ['get', 'style', ['properties']]], true],
                         ['get', 'width', ['get', 'style', ['properties']]], 2],
                     'line-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0, 0.8],
@@ -912,7 +1263,12 @@ const Layers = function () {
                     ...((style.line && style.line.layout) || {})
                 };
                 paint = {
-                    'line-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                    'line-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                     'line-width': ['case', ["boolean", ['has', 'width', ['get', 'style', ['properties']]], true],
                         ['get', 'width', ['get', 'style', ['properties']]], 4],
                     'line-offset': ['case', ["boolean", ["has", "offset"], true], ["get", "offset"], 0],
@@ -954,7 +1310,12 @@ const Layers = function () {
                     'circle-radius': 10,
                     'circle-stroke-width': 2,
                     'circle-color': ['get', 'secondaryColor', ['get', 'style', ['properties']]],
-                    'circle-stroke-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                    'circle-stroke-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                     'circle-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0,
                         ['case', ["boolean", ["feature-state", "hidden"], true], 0,
                             ['get', 'opacity', ['get', 'style', ['properties']]]]],
@@ -999,9 +1360,19 @@ const Layers = function () {
                 };
                 paint = {
                     'text-translate-anchor': 'viewport',
-                    'text-halo-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                    'text-halo-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                     'text-halo-width': 0,
-                    'text-color': ['get', 'primaryColor', ['get', 'style', ['properties']]],
+                    'text-color': [
+                    'case',
+                    ['has', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primarySelect', ['get', 'style', ['properties']]],
+                    ['get', 'primaryColor', ['get', 'style', ['properties']]]
+                ],
                     'text-opacity': ['case', ["boolean", ["feature-state", "hidden"], true], 0,
                         ['case', ["boolean", ["feature-state", "hidden"], true], 0,
                             ['get', 'opacity', ['get', 'style', ['properties']]]]],
