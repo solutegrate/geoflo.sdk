@@ -24,6 +24,7 @@ const events = [
     'features.export',
     'features.offset',
     'features.hide',
+    'features.show',
     'feature.add',
     'feature.remove',
     'feature.select',

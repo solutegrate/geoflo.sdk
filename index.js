@@ -1370,6 +1370,14 @@ const GeoFlo = function () {
         return selected;
     }
 
+    this.deselectFeature = function (id, options={}) {
+        if (!this.currentMode.deselectCurrentFeatures) return false;
+        options.preventFire = true;
+        options.id = id;
+        var deselected = this.currentMode.deselectCurrentFeatures(options);
+        return deselected;
+    }
+
 	/**
 	 * @function
      * @memberOf module:geoflo
@@ -1471,28 +1479,31 @@ const GeoFlo = function () {
         this.Layers.refresh({ select: true });
 
         const seleceted = this.getSelectedFeatures();
-        features = features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) });
         
-        this.getSelectedFeatures().push(...features);
+        this.getSelectedFeatures().push(...features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) }));
         this.setViewport();
         this.setButtons();
-        this.hideFeatures(features);
+
+        this.Features.setFeaturesState(this.getSelectedFeatures(), { hidden: true });
+        this.fire('features.hide', { features: this.getSelectedFeatures() });
+
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
 
-        if (options.zoom) this.zoomToFeatures(features, { center: options.center });
+        if (options.zoom) this.zoomToFeatures(this.getSelectedFeatures(), { center: options.center });
 
         if (options.text) this.Layers.addTextLayer({
             select: true,
-            ids: options.text.ids || this.getSelectedFeatureIds(),
-            field: options.text.field || 'text',
-            layout: options.text.layout || {
+            ids: options.text?.ids || this.getSelectedFeatureIds(),
+            field: options.text?.field || 'text',
+            layout: options.text?.layout || {
                 'text-transform': 'uppercase',
                 'text-size': 10,
                 'text-offset': [0, 0.5]
             }
         });
 
+        if (!options.preventFire) geoflo.fire('feature.select', { features: geoflo.getSelectedFeatures() });
         return this.getSelectedFeatures();
     }
 
@@ -1547,19 +1558,32 @@ const GeoFlo = function () {
 	 * @param {string} id - The ID of the feature to be deselected.
 	 * @returns {number} The number of features that were deselected.
 	 */
-    this.removeSelection = function (id, options={}) {
+    this.removeSelection = function (features, options = {}) {
         this.removePopup();
-        if (!this.hasSelection()) return 0;
-        var features = this.Utilities.clone(this.getSelectedFeatures());
-        this.Features.addFeatures(features);
-        this.getSelectedFeatures().splice(0, features.length);
+        
+        features = this.Utilities.clone(features || this.getSelectedFeatures());
+        if (!features || !features.length) return 0;
+
+        if (options.id) features = features.filter(f => f.id === options.id);
+        if (options.ids) features = features.filter(f => options.ids.includes(f.id));
+
+        let selected = this.getSelectedFeatures();
+        selectedFeatures = selected.filter(f => !features.includes(f));
+
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection([]));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection([]));
+
+        this.Features.setFeaturesState(features, { hidden: false });
+        this.fire('features.show', { features: features });
+
         this.setButtons();
         if (options.extent) this.setViewport(), this.setExtent();
         if (options.removeText) this.Layers.removeTextLayer();
+        if (!options.preventFire) geoflo.fire('feature.deselect', { features: features });
+
         return features.length;
-    }
+    };
+
 
     this.removeAllFeatures = function () {
         this.removeSelection();
@@ -1635,23 +1659,6 @@ const GeoFlo = function () {
         const controls = this.getControlIds();
         if (!controls.includes(id)) throw new Error(`Control ${id} not found`, `Controls: ${controls.join(', ')}`);
         this.controls.forEach(function (c) { if (c.getControl(id)) c.hideControl(id); });
-    }
-
-
-
-    /**
-     * @function
-     * @name hideFeatures
-     * @memberof module:geoflo
-     * @description Hides features by setting their state to hidden and firing a 'features.hide' event.
-     * @param {Array} ids - An array of feature IDs to be hidden.
-     * @returns {Array} The features that were hidden.
-     */
-    this.hideFeatures = function (features =[]) {
-        if (!features.length) return [];
-        this.Features.setFeaturesState(features, { hidden: true });
-        this.fire('features.hide', { features: features });
-        return features;
     }
 
     

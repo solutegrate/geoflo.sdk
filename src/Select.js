@@ -71,7 +71,7 @@ const Select = function () {
         if (!this.activated) return false;
 
         this.activated = false;
-        this.deselectCurrentFeature();
+        this.deselectCurrentFeatures();
         
         geoflo.setButtons();
         geoflo.fire('select.deactivate', { activated: true });
@@ -107,7 +107,7 @@ const Select = function () {
         const popup = geoflo.options.select.popup;
         const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
 
-        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature(options);
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeatures(options);
         if (!id) { stopDashAnimation(); return false; }
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
 
@@ -117,7 +117,6 @@ const Select = function () {
 
         if (popup) this.addPopup(selectedFeatures);
         if (selectedFeatures[0]?.geometry.type !== 'LineString') stopDashAnimation();
-        if (!options.preventFire) geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
         if (!geoflo.wantingToEdit) return selectedFeatures;
         if (selectedFeatures.length === 1 && id === selectedFeatures[0].id) editFeature(selectedFeatures[0]);
 
@@ -128,15 +127,12 @@ const Select = function () {
 	/**
 	 * @function
      * @memberof module:geoflo.Select
-	 * @name deselectCurrentFeature
-	 * @description Deselects the current feature by removing its selection.
+	 * @name deselectCurrentFeatures
+	 * @description Deselects the current features by removing its selection.
 	 */
-    this.deselectCurrentFeature = function (options={}) {
-        const ids = geoflo.getSelectedFeatureIds();
-        const features = geoflo.getSelectedFeatures();
+    this.deselectCurrentFeatures = function (options={}) {
         this.removePopup();
-        geoflo.removeSelection();
-        if (!options.preventFire) geoflo.fire('feature.deselect', { ids: ids, features: features });
+        geoflo.removeSelection(options);
     };
 
 	/**
@@ -215,7 +211,7 @@ const Select = function () {
             nearFeatures = [];
             clickCoords = false;
             selectedId = false;
-            this.deselectCurrentFeature();
+            this.deselectCurrentFeatures();
         }
     };
 
