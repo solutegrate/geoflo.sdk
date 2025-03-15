@@ -280,12 +280,7 @@ const GeoFlo = function () {
 	 */
     this.fire = function (type, detail) {
         if (!type) throw new Error('Type is required to fire an event!');
-
-        if (type === 'draw.activate' && (detail?.editing || detail?.data?.editing || this.editMode)) {
-            this.Features.setFeatureState(this.getHotFeature().id, { hidden: true });
-            this.fire('features.hide', { features: [this.getHotFeature()] });
-        }
-
+        if (type === 'draw.activate' && (detail?.editing || detail?.data?.editing || this.editMode)) this.hideFeatures([this.getHotFeature()]);
         this.map && type ? this.map.fire(this.id + ':' + type, { detail: detail }) : false;
     }
 
@@ -1490,9 +1485,7 @@ const GeoFlo = function () {
         this.getSelectedFeatures().push(...features.filter((feature) => { return !seleceted.find((f) => { return f.id === feature.id; }) }));
         this.setViewport();
         this.setButtons();
-
-        this.Features.setFeaturesState(this.getSelectedFeatures(), { hidden: true });
-        this.fire('features.hide', { features: this.getSelectedFeatures() });
+        this.hideFeatures(this.getSelectedFeatures());
 
         this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
         this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
@@ -2088,6 +2081,11 @@ const GeoFlo = function () {
 
 
     
+    this.hideFeatures = function (features=[]) {
+        if (!features || !features.length) return false;
+        this.Features.setFeaturesState(features, { hidden: true });
+        this.fire('features.hide', { features: features });
+    }
 
 	/**
 	 * @function

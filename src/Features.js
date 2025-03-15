@@ -76,7 +76,6 @@ const Features = function () {
         if (!state || features.length === 0) return [];
         features.forEach((feature) => {
             const id = feature.id || feature.properties.id;
-            if (geoflo.hotFeature && geoflo.hotFeature.id === id) return;
             this.setFeatureState(id, state);
         });
         return features;
@@ -120,41 +119,57 @@ const Features = function () {
 
 
     this.addFeature = function (feature, source, properties = {}) {
-        if (!feature || !feature.properties) return false;
-        feature = turf.cleanCoords(feature);
-        feature = turf.truncate(feature, { precision: 6, coordinates: 3, mutate: true });
-        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties);
-        feature.source = source || feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
-        delete feature.properties.source;
-        delete feature.properties.painting;
-        delete feature.properties.edit;
-        delete feature.properties.new;
-        delete feature.properties.hidden;
-        delete feature.properties.offset;
-        feature.properties.style = Object.assign(geoflo.getTheme().colors, feature.properties.style || {});
-        this.addUnits(feature);
-        if (!this.addingFeatures) this.addFeatures([feature]);
+        if (!feature) return false;
+
+        const defaultSource = geoflo.statics.constants.sources.COLD;
+
+        feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties || {});
+        feature.source = source || feature.source || feature.properties.source || defaultSource;
+
+        if (!this.addingFeatures) return this.addFeatures([feature])[0];
+
         return feature;
     };
 
     this.addFeatures = function (features) {
         if (!this.addingFeatures) this.addingFeatures = true;
 
-        let update = !this.updatingFeatures;
         const sources = new Set();
+        const update = !this.updatingFeatures;
+        const themeColors = geoflo.getTheme().colors;
+        const defaultSource = geoflo.statics.constants.sources.COLD;
 
-        features.forEach((feature) => {
-            feature.id = feature.id || feature.properties.id || URL.createObjectURL(new Blob([])).slice(-36);
-            feature.source = feature.source || feature.properties.source || geoflo.statics.constants.sources.COLD;
-            feature.properties.id = feature.id;
-            feature.properties.type = this.getType(feature);
+        const cleanedFeatures = features.map((feature) => {
+            if (!feature) return null;
+
+            feature = turf.truncate(turf.cleanCoords(feature), { precision: 6, coordinates: 3, mutate: true });
+
+            feature.id = feature.id || feature.properties?.id || crypto.randomUUID();
+            feature.source = feature.source || feature.properties?.source || defaultSource;
+
+            feature.properties = {
+                ...feature.properties,
+                id: feature.id,
+                type: this.getType(feature),
+                style: { ...themeColors, ...feature.properties?.style }
+            };
+
+            feature.geometry.unit = this.getUnit(feature);
+            feature.geometry.units = this.convertUnits(feature, null, feature.properties.unit || feature.geometry.unit);
+
+            // Remove unnecessary properties efficiently
+            ['source', 'painting', 'edit', 'new', 'hidden', 'offset'].forEach(prop => delete feature.properties[prop]);
+
             this.featuresMap.set(feature.id, feature);
             sources.add(feature.source);
-        });
 
-        if (update) this.updateSource(Array.from(sources));
+            return feature;
+        }).filter(Boolean); // Remove nulls if any invalid features were skipped
+
+        if (update) this.updateSource([...sources]);
         this.addingFeatures = false;
-        return features;
+
+        return cleanedFeatures;
     };
 
     this.addUnits = function (feature, convertTo) {
