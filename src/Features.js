@@ -123,6 +123,7 @@ const Features = function () {
 
         const defaultSource = geoflo.statics.constants.sources.COLD;
 
+        feature = turf.truncate(turf.cleanCoords(feature), { precision: 6, coordinates: 3, mutate: true });
         feature.properties = geoflo.Utilities.assignDeep(properties, feature.properties || {});
         feature.source = source || feature.source || feature.properties.source || defaultSource;
 
@@ -141,8 +142,6 @@ const Features = function () {
 
         const cleanedFeatures = features.map((feature) => {
             if (!feature) return null;
-
-            feature = turf.truncate(turf.cleanCoords(feature), { precision: 6, coordinates: 3, mutate: true });
 
             feature.id = feature.id || feature.properties?.id || crypto.randomUUID();
             feature.source = feature.source || feature.properties?.source || defaultSource;
