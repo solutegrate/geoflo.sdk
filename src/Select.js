@@ -9,7 +9,7 @@ const Select = function () {
     const geoflo = this.geoflo;
 
     var lastKnownSelectIds = [];
-    var removedFeatures = [];
+    var selectedFeatures = [];
     var nearFeatures = [];
     let animationRunning = false;
     let step = 0;
@@ -107,28 +107,21 @@ const Select = function () {
         const popup = geoflo.options.select.popup;
         const multipleSelect = options.multipleSelect || geoflo.options.select.multiple;
 
-        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature();
+        if (!multipleSelect) geoflo.currentMode.deselectCurrentFeature(options);
         if (!id) { stopDashAnimation(); return false; }
-
         if (lastKnownSelectIds.indexOf(id) === -1) lastKnownSelectIds.push(id);
+
         selectedId = id;
-        removedFeatures = geoflo.hideFeatures([id]);
-        geoflo.addFeaturesToSelected(removedFeatures, options);
+        selectedFeatures = geoflo.Features.getFeaturesById([id]);
+        geoflo.addFeaturesToSelected(selectedFeatures, options);
 
-        if (popup) this.addPopup(removedFeatures);
+        if (popup) this.addPopup(selectedFeatures);
+        if (selectedFeatures[0]?.geometry.type !== 'LineString') stopDashAnimation();
+        if (!options.preventFire) geoflo.fire('feature.select', { ids: geoflo.getSelectedFeatureIds(), features: geoflo.getSelectedFeatures() });
+        if (!geoflo.wantingToEdit) return selectedFeatures;
+        if (selectedFeatures.length === 1 && id === selectedFeatures[0].id) editFeature(selectedFeatures[0]);
 
-        if (removedFeatures[0]?.geometry.type !== 'LineString') stopDashAnimation();
-
-        geoflo.fire('feature.select', {
-            ids: geoflo.getSelectedFeatureIds(),
-            features: geoflo.getSelectedFeatures()
-        });
-
-        if (!geoflo.wantingToEdit) return removedFeatures;
-        if (removedFeatures.length === 1 && id === removedFeatures[0].id) {
-            editFeature(removedFeatures[0]);
-        }
-        return removedFeatures;
+        return selectedFeatures;
     };
 
 
@@ -138,12 +131,12 @@ const Select = function () {
 	 * @name deselectCurrentFeature
 	 * @description Deselects the current feature by removing its selection.
 	 */
-    this.deselectCurrentFeature = function () {
+    this.deselectCurrentFeature = function (options={}) {
         const ids = geoflo.getSelectedFeatureIds();
         const features = geoflo.getSelectedFeatures();
         this.removePopup();
         geoflo.removeSelection();
-        geoflo.fire('feature.deselect', { ids: ids, features: features });
+        if (!options.preventFire) geoflo.fire('feature.deselect', { ids: ids, features: features });
     };
 
 	/**
@@ -324,14 +317,14 @@ const Select = function () {
         nearFeatures = features;
         if (!nearFeatures.length) return;
 
-        let selectedFeatures = geoflo.getSelectedFeatures();
+        let selected = geoflo.getSelectedFeatures();
         let currentIndex = nearFeatures.findIndex(feature => feature.id === selectedId);
         let currentId = selectedId;
         let nextIndex = currentIndex;
         let loopCount = 0; // Prevents infinite loops
 
         // If all features are selected, exit early
-        if (nearFeatures.every(f => selectedFeatures.some(s => s.id === f.id))) {
+        if (nearFeatures.every(f => selected.some(s => s.id === f.id))) {
             console.warn("All features are already selected.");
             return;
         }
@@ -348,7 +341,7 @@ const Select = function () {
             }
 
         } while (
-            selectedFeatures.some(feature => feature.id === nearFeatures[nextIndex]?.id) &&
+            selected.some(feature => feature.id === nearFeatures[nextIndex]?.id) &&
             nextIndex !== currentIndex
         );
 

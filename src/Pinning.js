@@ -140,7 +140,7 @@ const Pinning = function (mode) {
     this.updateFeatures = function (point) {
         if (!this.enabled || !point || !this.pinableFeatures.length) return false;
         updateFeatures.call(this, this.pinableFeatures, point.geometry.coordinates);
-        geoflo.hideFeatures(this.coldFeatures.map(function (feature) { return feature.id }));
+        geoflo.hideFeatures(this.coldFeatures);
         geoflo.map.getSource(geoflo.statics.constants.sources.PIN).setData(turf.featureCollection(this.pinnedFeatures));
         geoflo.pinnedFeatures = geoflo.Utilities.cloneDeep(this.pinableFeatures);
         geoflo.fire('pinning.update', { feature: geoflo.hotFeature, point: point, pinned: this.pinnedFeatures });

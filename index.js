@@ -1363,8 +1363,9 @@ const GeoFlo = function () {
      * @param {string} id - The ID of the feature to be selected.
      * @returns {boolean|Object} Returns false if the feature is not found, otherwise returns the result of the selection.
      */
-    this.selectFeature = function (id, options) {
+    this.selectFeature = function (id, options={}) {
         if (!this.currentMode.selectFeature) return false;
+        options.preventFire = true;
         var selected = this.currentMode.selectFeature(id, options);       
         return selected;
     }
@@ -1475,9 +1476,12 @@ const GeoFlo = function () {
         this.getSelectedFeatures().push(...features);
         this.setViewport();
         this.setButtons();
-        this.updateFeatures(features);
+        this.hideFeatures(features);
+        this.map.getSource(this.statics.constants.sources.SELECT).setData(turf.featureCollection(this.getSelectedFeatures()));
+        this.map.getSource(this.statics.constants.sources.VERTEX).setData(turf.featureCollection(this.getSelectedFeatures()));
 
         if (options.zoom) this.zoomToFeatures(features, { center: options.center });
+
         if (options.text) this.Layers.addTextLayer({
             select: true,
             ids: options.text.ids || this.getSelectedFeatureIds(),
@@ -1643,12 +1647,11 @@ const GeoFlo = function () {
      * @param {Array} ids - An array of feature IDs to be hidden.
      * @returns {Array} The features that were hidden.
      */
-    this.hideFeatures = function (ids=[]) {
-        if (!ids.length) return false;
-        const fire = { ids: ids, features: this.Features.getFeaturesById(ids) };
-        ids.forEach((id) => { this.Features.setFeatureState(id, { hidden: true }); }, this);
-        this.fire('features.hide', fire);
-        return fire.features;
+    this.hideFeatures = function (features =[]) {
+        if (!features.length) return [];
+        this.Features.setFeaturesState(features, { hidden: true });
+        this.fire('features.hide', { features: features });
+        return features;
     }
 
     

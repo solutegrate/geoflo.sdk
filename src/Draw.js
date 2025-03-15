@@ -813,7 +813,7 @@ const Draw = function () {
         geoflo.lastClick = { coords: coords };
         geoflo.firstClick = { coords: coords };
 
-        setTimeout(function () { geoflo.hideFeatures([id]); }, 100);
+        setTimeout(function () { geoflo.hideFeatures([feature]); }, 100);
         return geoflo.currentMode.type;
     }
 

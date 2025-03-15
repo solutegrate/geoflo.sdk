@@ -142,7 +142,6 @@ const Features = function () {
             feature.properties.id = feature.id;
             feature.properties.type = this.getType(feature);
             this.featuresMap.set(feature.id, feature);
-            this.setFeatureState(feature.id, { hidden: false });
             sources.add(feature.source);
         });
 
@@ -173,58 +172,35 @@ const Features = function () {
         features = features || [].concat(geoflo.getDrawnFeatures(), geoflo.getSelectedFeatures());
         
         const sources = new Set();
-        const selectedFeatures = geoflo.getSelectedFeatures();
-
-        let selected = [];
-
         this.updatingFeatures = true;
 
         features.forEach((feature) => {
             const id = feature.id || feature.properties.id;
             if (!id) return;
-
             const originalFeature = this.getFeatureById(id);
             if (!originalFeature) return this.addFeature(feature);
-
-            let select = selectedFeatures.find((f) => f.id === id || f.properties.id === id);
-
-            if (select && !geoflo.noSelect) {
-                select.geometry.coordinates = feature.geometry.coordinates;
-                select.properties = feature.properties;
-                selected.push(select);
-            } else if (!sources.has(originalFeature.source)) {
-                sources.add(originalFeature.source);
-            }
-
-            if (select) return;
-
+            sources.add(originalFeature.source);
             originalFeature.geometry.coordinates = feature.geometry.coordinates;
             originalFeature.properties = feature.properties;
-
             if (options.addUnits) this.addUnits(originalFeature);
         });
 
-        if (sources.size > 0) {
-            requestAnimationFrame(() => { this.updateSource(Array.from(sources, selected)); });
-        } else {
-            geoflo.map.getSource(geoflo.statics.constants.sources.SELECT).setData(turf.featureCollection(selected));
-            geoflo.map.getSource(geoflo.statics.constants.sources.VERTEX).setData(turf.featureCollection(selected));
-        }
-        
+        if (sources.size > 0) requestAnimationFrame(() => { this.updateSource(Array.from(sources)); });
         this.updatingFeatures = false;
     };
 
-    this.updateSource = function (sources = [], selected = []) {
+    this.updateSource = function (sources = []) {
         if (this._updateSourceTimeout) clearTimeout(this._updateSourceTimeout);
+
+        geoflo.updatingSource = true;
+
+        const textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
+        const coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
+        const selectedSource = geoflo.map.getSource(geoflo.statics.constants.sources.SELECT);
 
         this._updateSourceTimeout = setTimeout(() => {
             const sourceFeatures = {};
             const unsourceFeatures = [];
-            const textSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLDTEXT);
-            const coldSource = geoflo.map.getSource(geoflo.statics.constants.sources.COLD);
-            const selectedSource = geoflo.map.getSource(geoflo.statics.constants.sources.SELECT);
-
-            geoflo.updatingSource = true;
 
             textSource.setData(turf.featureCollection([]));
             coldSource.setData(turf.featureCollection([]));
@@ -259,9 +235,9 @@ const Features = function () {
 
             setTimeout(() => {
                 this.setFeaturesState(Array.from(this.featuresMap.values()), { hidden: false });
-                selectedSource.setData(turf.featureCollection(selected));
                 geoflo.fire('features.update', { features: Array.from(this.featuresMap.values()) });
                 geoflo.updatingSource = false;
+                clearTimeout(this._updateSourceTimeout);
             }, 100);
         }, 50);
 
